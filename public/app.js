@@ -764,7 +764,8 @@ function topicRow(t) {
 }
 
 async function loadDashboard() {
-  const { report } = await api('GET', '/api/dashboard');
+  const { report, profile } = await api('GET', '/api/dashboard');
+  renderProfile(profile);
   const t = report.totals;
   $('#stat-row').innerHTML = `
     <div class="card stat-card"><div class="stat-value">${t.overallAccuracy === null ? '—' : `${t.overallAccuracy}%`}</div><div class="stat-label">Accuracy</div></div>
@@ -1074,6 +1075,56 @@ function startChatPolling() {
   }, 4000);
 }
 function stopChatPolling() { if (chat.timer) clearInterval(chat.timer); chat.timer = null; }
+
+/**
+ * The learning profile card.
+ *
+ * Deliberately NOT a streak warning. It states what the app has figured out
+ * about this student so far, which grows on its own the more they use it. The
+ * value is real rather than manufactured: a rival app genuinely does start
+ * from nothing, because this is a model of one person, not a pile of content.
+ */
+function renderProfile(p) {
+  const host = $('#profile-card');
+  if (!host) return;
+  if (!p || p.answered === 0) {
+    host.innerHTML = `
+      <h2>Your learning profile</h2>
+      <p class="muted">
+        Answer a few questions and this fills in. Whetstone starts building a
+        picture of which topics you personally keep missing, and that picture
+        is what makes the practice worth doing.
+      </p>`;
+    return;
+  }
+
+  const acc = Math.round((p.correct / p.answered) * 100);
+  const weak = p.weakest.length
+    ? p.weakest.map((t) => `<span class="chip chip-weak">${esc(t)}</span>`).join('')
+    : '<span class="muted">Nothing clearly weak yet.</span>';
+
+  host.innerHTML = `
+    <h2>What Whetstone knows about you</h2>
+    <p class="muted" style="font-size:.92rem;margin-bottom:1rem">
+      Built from ${p.answered} answer${p.answered === 1 ? '' : 's'} across
+      ${p.daysStudied} day${p.daysStudied === 1 ? '' : 's'}.
+    </p>
+
+    <div class="profile-grid">
+      <div><span class="profile-num">${p.topicsTracked}</span><span class="profile-lbl">topics tracked</span></div>
+      <div><span class="profile-num" style="color:var(--good)">${p.topicsMastered}</span><span class="profile-lbl">mastered</span></div>
+      <div><span class="profile-num">${acc}%</span><span class="profile-lbl">accuracy</span></div>
+      <div><span class="profile-num">${p.dueNow}</span><span class="profile-lbl">queued for review</span></div>
+    </div>
+
+    <div class="label" style="margin:1.1rem 0 .45rem">Your specific weak spots</div>
+    <div class="chip-row">${weak}</div>
+
+    <p class="muted" style="font-size:.85rem;margin-top:1.1rem">
+      This profile is yours. It is not a list of popular topics, it is what
+      <em>you</em> keep missing, and it gets sharper every session.
+    </p>`;
+}
 
 // ------------------------------------------------------------------ settings
 async function loadSettings() {

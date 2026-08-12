@@ -369,6 +369,11 @@
   <section id="view-progress" class="view hidden">
     <h1 style="font-size:1.9rem;margin-bottom:1.25rem">Your progress</h1>
     <div class="grid-4" id="stat-row" style="margin-bottom:1.25rem"></div>
+
+    <!-- The retention feature. Not a streak guilt-trip: a visible record of
+         what this app has worked out about this specific student, which is
+         the one thing a competitor cannot copy or import. -->
+    <div class="card profile-card" id="profile-card"></div>
     <div class="card">
       <h2>Weak spots</h2>
       <p class="muted" style="font-size:.9rem">The engine sends these back to you most often.</p>
@@ -596,7 +601,7 @@
     <button data-view="courses"><span class="mn-icon">▦</span>Courses</button>
     <button data-view="progress"><span class="mn-icon">◱</span>Progress</button>
     <button data-view="group"><span class="mn-icon">◆</span>Group</button>
-    <button data-view="plan"><span class="mn-icon">☰</span>Plan</button>
+    <button data-view="settings"><span class="mn-icon">☰</span>Settings</button>
   </div>
 </nav>
 

@@ -688,7 +688,7 @@ input:focus, select:focus {
 }
 
 @media (max-width: 380px) {
-  .choice-grid { grid-template-columns: 1fr; }
+  .choices { grid-template-columns: 1fr; }
   .brand span:not(.brand-mark) { display: none; }
 }
 
@@ -891,3 +891,70 @@ input:focus, select:focus {
 
 .form-row { display: flex; flex-direction: column; gap: .35rem; margin-bottom: .85rem; }
 .form-row label { font-size: .85rem; color: var(--dim); }
+
+/* ==========================================================================
+   Mobile pass
+   Most testers are on phones. These fix the things that make a web app feel
+   like a web app instead of an app.
+   ========================================================================== */
+
+/* iOS zooms the whole page when a focused input is under 16px. That zoom is
+   not reversible by the user and it wrecks the layout mid-signup. */
+input, textarea, select { font-size: 16px; }
+
+/* Kill the grey flash on tap and the 300ms delay browsers add for
+   double-tap zoom. Both make every button feel laggy. */
+* { -webkit-tap-highlight-color: transparent; }
+button, .choice-btn, .match-tile, .course-card, .nav-btn { touch-action: manipulation; }
+
+/* Stop the whole page rubber-banding when a scrollable panel hits its end. */
+body { overscroll-behavior-y: none; }
+
+@media (max-width: 720px) {
+  /* Respect the notch and the home indicator. Without this the bottom nav
+     sits under the indicator and the last item is hard to hit. */
+  .mobile-nav { padding-bottom: env(safe-area-inset-bottom, 0); }
+  .shell { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom, 0px) + 2rem); }
+  .topbar { padding-top: env(safe-area-inset-top, 0); }
+
+  /* THUMB REACH. On a tall phone the answer choices sat at the top of the
+     screen, which is the hardest area to reach one-handed. Pin the prompt at
+     the top and push the choices into the lower half where the thumb is. */
+  #quiz-card { display: flex; flex-direction: column; min-height: calc(100dvh - var(--nav-h) - 9rem); }
+  .q-prompt {
+    position: sticky; top: 0; z-index: 5;
+    background: var(--card); margin: 0 -1.25rem; padding: .5rem 1.25rem 1rem;
+  }
+  /* Push the choices into the lower half of the screen, where a thumb
+     actually reaches on a 6-inch phone. */
+  .choices { margin-top: auto; }
+  .choice-btn { min-height: 56px; text-align: left; }
+
+  /* Bigger targets across the board. 44px is Apple's floor, not a target. */
+  .btn, .btn-secondary, .nav-btn { min-height: 48px; }
+  .mobile-nav button { min-height: 56px; }
+  .match-tile { min-height: 92px; }
+
+  /* Long course names were clipping mid-word instead of wrapping. */
+  .course-card, .topic-row, .lb-row { overflow-wrap: anywhere; }
+
+  /* Modals were taller than the viewport with no way to scroll to the close
+     button, which trapped you on the Terms dialog. */
+  .modal { max-height: 82dvh; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* Landscape phones are short. Reclaim vertical space. */
+@media (max-height: 500px) and (orientation: landscape) {
+  .flash-card { min-height: 180px; }
+  .q-prompt { font-size: 1rem; }
+  .choice-btn { min-height: 44px; }
+}
+
+/* ---- learning profile card ---- */
+.profile-card { border-color: color-mix(in srgb, var(--accent) 35%, var(--border)); }
+.profile-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center; }
+.profile-num { display: block; font-family: var(--font-head); font-size: 1.85rem; font-weight: 700; line-height: 1.1; }
+.profile-lbl { display: block; font-size: .78rem; color: var(--dim); margin-top: .2rem; }
+.chip-row { display: flex; flex-wrap: wrap; gap: .4rem; }
+.chip-weak { background: color-mix(in srgb, var(--bad) 18%, transparent); border: 1px solid color-mix(in srgb, var(--bad) 40%, transparent); }
+@media (max-width: 720px) { .profile-grid { grid-template-columns: repeat(2, 1fr); gap: 1.1rem .5rem; } }

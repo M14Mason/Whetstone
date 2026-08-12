@@ -705,6 +705,7 @@ const routes = {
     sendJson(res, 200, {
       report: adaptive.buildMasteryReport(user.id),
       quota: plans.checkQuota(user.id),
+      profile: adaptive.learningProfile(user.id),
     });
   },
 

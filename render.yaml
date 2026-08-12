@@ -1,0 +1,44 @@
+# Render Blueprint. Render reads this automatically when you connect the repo,
+# so there is nothing to configure by hand in the dashboard.
+#
+# KNOWN LIMIT OF THE FREE PLAN: there is no persistent disk. DATABASE_PATH
+# points at /tmp, which Render wipes on every redeploy and on every wake from
+# sleep. Accounts and progress do not survive. That is acceptable for a short
+# friend test and not acceptable for real users. To make data persist, move to
+# a paid plan with a disk, or deploy on Fly.io using the fly.toml in this repo.
+
+services:
+  - type: web
+    name: whetstone
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    region: oregon
+
+    # Render restarts the service if this endpoint stops returning 200.
+    healthCheckPath: /api/health
+
+    envVars:
+      - key: NODE_ENV
+        value: production
+
+      # Overrides the Dockerfile default of /data, which does not exist on the
+      # free plan. The container runs as the non-root "node" user and /tmp is
+      # the one location it can reliably write to.
+      - key: DATABASE_PATH
+        value: /tmp/whetstone.db
+
+      - key: BACKUP_DIR
+        value: /tmp/backups
+
+      # Signs session cookies. Render generates a strong random value and keeps
+      # it out of the repo. Never hardcode this.
+      - key: SESSION_SECRET
+        generateValue: true
+
+      # Used to build absolute links in emails. Render fills in the live URL.
+      - key: PUBLIC_URL
+        fromService:
+          type: web
+          name: whetstone
+          envVarKey: RENDER_EXTERNAL_URL

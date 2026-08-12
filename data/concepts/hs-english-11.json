@@ -1,0 +1,129 @@
+{
+  "courseId": "hs-english-11",
+  "subject": "English",
+  "units": {
+    "Colonial and Puritan Literature": [
+      ["Puritanism", "Belief system emphasising hard work, predestination, and human sinfulness"],
+      ["Plain style", "Puritan writing valuing clarity and directness over ornament"],
+      ["Sermon", "A religious speech intended to persuade and instruct a congregation"],
+      ["Jeremiad", "A sermon lamenting moral decline and warning of judgement"],
+      ["Captivity narrative", "An account of being taken prisoner, popular in colonial America"],
+      ["Providence", "The Puritan belief that God directs all events"],
+      ["Typology", "Reading events as fulfilments of biblical patterns"],
+      ["Anne Bradstreet", "First published American poet, writing on family and faith"],
+      ["Jonathan Edwards", "Preacher of Sinners in the Hands of an Angry God"],
+      ["Allusion", "A reference to another text, person, or event"]
+    ],
+    "Revolutionary and Early National Writing": [
+      ["Rhetoric", "The art of persuasive speaking and writing"],
+      ["Ethos", "A persuasive appeal based on the speaker's credibility"],
+      ["Pathos", "A persuasive appeal to the audience's emotions"],
+      ["Logos", "A persuasive appeal based on logic and evidence"],
+      ["Aphorism", "A short statement expressing a general truth"],
+      ["Declaration of Independence", "Jefferson's argument for separation grounded in natural rights"],
+      ["Benjamin Franklin", "Author of an influential autobiography built on self-improvement"],
+      ["Patrick Henry", "Orator known for Give me liberty or give me death"],
+      ["Parallelism", "Repeating grammatical structure for rhythm and emphasis"],
+      ["Rhetorical question", "A question asked for effect rather than an answer"]
+    ],
+    "Romanticism and Transcendentalism": [
+      ["Romanticism", "Movement valuing emotion, nature, imagination, and the individual"],
+      ["Transcendentalism", "Belief in innate goodness, self-reliance, and truth found beyond the senses"],
+      ["Ralph Waldo Emerson", "Essayist of Self-Reliance and Nature"],
+      ["Henry David Thoreau", "Author of Walden and Civil Disobedience"],
+      ["Civil disobedience", "Peaceful refusal to obey unjust laws"],
+      ["Over-Soul", "Emerson's idea of a universal spirit connecting all beings"],
+      ["Individualism", "Emphasis on personal independence over conformity"],
+      ["Nature as teacher", "Romantic belief that the natural world reveals moral truth"],
+      ["Free verse", "Poetry without regular meter or rhyme"],
+      ["Walt Whitman", "Poet of Leaves of Grass who pioneered free verse in America"]
+    ],
+    "Gothic and Dark Romanticism": [
+      ["Dark Romanticism", "A strand of Romanticism exploring guilt, sin, and human darkness"],
+      ["Gothic literature", "Writing using gloom, decay, and terror to create atmosphere"],
+      ["Edgar Allan Poe", "Master of the Gothic tale and originator of detective fiction"],
+      ["Nathaniel Hawthorne", "Novelist exploring Puritan guilt in The Scarlet Letter"],
+      ["Unreliable narrator", "A narrator whose account cannot be fully trusted"],
+      ["Symbolism", "Using an object to represent a larger abstract idea"],
+      ["Foreshadowing", "Hints planted early about what will happen later"],
+      ["Mood", "The emotional atmosphere a text creates in the reader"],
+      ["Single effect", "Poe's principle that every element should serve one unified impression"],
+      ["Psychological realism", "Focusing on the inner workings of a character's mind"]
+    ],
+    "Realism and Naturalism": [
+      ["Realism", "Depicting ordinary life accurately, without romantic idealisation"],
+      ["Naturalism", "An intense realism showing characters shaped by environment and heredity"],
+      ["Regionalism", "Writing that captures the speech and customs of a specific place"],
+      ["Local color", "Detail conveying the distinctive character of a region"],
+      ["Vernacular", "Everyday spoken language used in writing"],
+      ["Mark Twain", "Author of Huckleberry Finn, a landmark in American vernacular"],
+      ["Determinism", "The naturalist view that forces beyond a character's control decide fate"],
+      ["Satire", "Using humour and irony to criticise human failings"],
+      ["Verisimilitude", "The quality of seeming true to life"],
+      ["Social criticism", "Writing that exposes flaws in society"]
+    ],
+    "The Harlem Renaissance": [
+      ["Harlem Renaissance", "1920s flowering of African American literature, music, and art"],
+      ["Langston Hughes", "Poet who brought jazz and blues rhythms into verse"],
+      ["Zora Neale Hurston", "Novelist and folklorist who recorded Black Southern speech"],
+      ["Double consciousness", "Du Bois's idea of seeing oneself through the eyes of a hostile society"],
+      ["Blues poetry", "Verse built on the repetition and structure of blues music"],
+      ["Jazz influence", "Improvisation and syncopation shaping literary rhythm"],
+      ["The New Negro", "Term for a generation asserting pride and cultural authority"],
+      ["Great Migration", "Movement of Black Americans from the rural South to Northern cities"],
+      ["Dialect", "Regional or social speech reproduced in writing"],
+      ["Refrain", "A repeated line or phrase in a poem or song"]
+    ],
+    "Modernism": [
+      ["Modernism", "Early twentieth-century movement breaking with traditional forms"],
+      ["Lost Generation", "Writers disillusioned by the First World War"],
+      ["Stream of consciousness", "Narration following the unfiltered flow of a character's thoughts"],
+      ["Fragmentation", "Deliberately broken structure reflecting a disordered world"],
+      ["Imagism", "Poetry built on precise, concrete images and spare language"],
+      ["F. Scott Fitzgerald", "Chronicler of the Jazz Age in The Great Gatsby"],
+      ["Ernest Hemingway", "Novelist known for stripped-down prose and understatement"],
+      ["Iceberg theory", "Hemingway's idea that most meaning stays beneath the surface"],
+      ["Disillusionment", "Loss of faith in inherited ideals, central to modernist writing"],
+      ["The American Dream", "The belief that effort brings success, frequently interrogated in this era"]
+    ],
+    "Contemporary American Voices": [
+      ["Postmodernism", "Writing that questions objective truth and plays with form"],
+      ["Metafiction", "Fiction that draws attention to its own status as fiction"],
+      ["Magical realism", "Realistic narrative containing accepted supernatural elements"],
+      ["Multicultural literature", "Writing centring the experience of varied cultural communities"],
+      ["Memoir", "A nonfiction account of a portion of the author's own life"],
+      ["Confessional poetry", "Verse drawing directly on private personal experience"],
+      ["Voice in writing", "The distinctive personality and style of an author"],
+      ["Intertextuality", "The way texts refer to and depend on other texts"],
+      ["Unreliable memory", "A narrator's recollection presented as incomplete or distorted"],
+      ["Identity in literature", "Exploration of how culture, race, and gender shape the self"]
+    ],
+    "Rhetorical Analysis": [
+      ["Rhetorical analysis", "Examining how a text persuades rather than just what it says"],
+      ["Speaker", "The voice presenting the argument, real or constructed"],
+      ["Audience", "The intended readers or listeners a text is shaped for"],
+      ["Purpose", "What the writer wants the audience to think, feel, or do"],
+      ["Context", "The circumstances surrounding a text that shape its meaning"],
+      ["Tone", "The writer's attitude toward the subject"],
+      ["Diction", "Word choice and its effect on meaning and tone"],
+      ["Syntax", "Sentence structure and its rhetorical effect"],
+      ["Juxtaposition", "Placing two ideas side by side to sharpen a contrast"],
+      ["Concession and rebuttal", "Acknowledging an opposing point, then answering it"],
+      ["Anaphora", "Repeating a word or phrase at the start of successive clauses"]
+    ],
+    "Research and Synthesis Writing": [
+      ["Synthesis", "Combining several sources into one coherent argument"],
+      ["Thesis statement", "The central claim a paper sets out to prove"],
+      ["Primary source", "An original record from the time being studied"],
+      ["Secondary source", "A later analysis or interpretation of primary material"],
+      ["Credible source", "A source that is current, authoritative, and free of obvious bias"],
+      ["Plagiarism", "Presenting someone else's words or ideas as your own"],
+      ["Paraphrase", "Restating a source fully in your own words, still cited"],
+      ["Direct quotation", "Using a source's exact words inside quotation marks"],
+      ["MLA citation", "The documentation style commonly used in English courses"],
+      ["Works Cited page", "The alphabetical list of every source referenced"],
+      ["Counterargument", "The strongest opposing view, addressed directly in your paper"],
+      ["Annotated bibliography", "A source list with a short summary and evaluation of each entry"]
+    ]
+  }
+}

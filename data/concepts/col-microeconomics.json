@@ -1,0 +1,638 @@
+{
+  "courseId": "col-microeconomics",
+  "subject": "Business and Economics",
+  "units": {
+    "Ten Principles of Economics": [
+      [
+        "Scarcity",
+        "The limited nature of society's resources"
+      ],
+      [
+        "Opportunity cost",
+        "What must be given up to obtain something"
+      ],
+      [
+        "Rational actor",
+        "A decision maker who systematically does the best they can"
+      ],
+      [
+        "Marginal change",
+        "A small incremental adjustment to a plan of action"
+      ],
+      [
+        "Incentive",
+        "Something inducing a person to act"
+      ],
+      [
+        "Gains from trade",
+        "The mutual benefit when parties specialise and exchange"
+      ],
+      [
+        "Market economy",
+        "An economy allocating resources through decentralised decisions"
+      ],
+      [
+        "Invisible hand",
+        "Smith's idea that self-interest can produce socially good outcomes"
+      ],
+      [
+        "Property rights",
+        "The ability to own and control a scarce resource"
+      ],
+      [
+        "Efficiency versus equity",
+        "Maximising total benefit versus distributing it fairly"
+      ]
+    ],
+    "Thinking Like an Economist": [
+      [
+        "Positive statement",
+        "A descriptive claim about how the world is"
+      ],
+      [
+        "Normative statement",
+        "A prescriptive claim about how the world ought to be"
+      ],
+      [
+        "Ceteris paribus",
+        "Holding all other variables constant"
+      ],
+      [
+        "Production possibilities frontier",
+        "A graph showing the maximum combinations producible"
+      ],
+      [
+        "Microeconomics",
+        "The study of individual households and firms"
+      ],
+      [
+        "Macroeconomics",
+        "The study of economy-wide phenomena"
+      ],
+      [
+        "Comparative advantage",
+        "The ability to produce at a lower opportunity cost"
+      ],
+      [
+        "Absolute advantage",
+        "The ability to produce more with the same inputs"
+      ],
+      [
+        "Circular flow diagram",
+        "A model of money and goods moving between households and firms"
+      ],
+      [
+        "Economic model",
+        "A simplified representation used to understand real behaviour"
+      ]
+    ],
+    "Supply and Demand": [
+      [
+        "Law of demand",
+        "Quantity demanded falls as price rises"
+      ],
+      [
+        "Demand schedule",
+        "A table relating price to quantity demanded"
+      ],
+      [
+        "Change in quantity demanded",
+        "Movement along the demand curve caused by a price change"
+      ],
+      [
+        "Change in demand",
+        "A shift of the entire curve caused by a non-price factor"
+      ],
+      [
+        "Normal good",
+        "A good whose demand rises as income rises"
+      ],
+      [
+        "Inferior good",
+        "A good whose demand falls as income rises"
+      ],
+      [
+        "Substitutes",
+        "Goods used in place of each other"
+      ],
+      [
+        "Complements",
+        "Goods consumed together"
+      ],
+      [
+        "Law of supply",
+        "Quantity supplied rises as price rises"
+      ],
+      [
+        "Market equilibrium",
+        "The price where quantity supplied equals quantity demanded"
+      ],
+      [
+        "Surplus",
+        "Excess quantity supplied at a price above equilibrium"
+      ],
+      [
+        "Shortage",
+        "Excess quantity demanded at a price below equilibrium"
+      ]
+    ],
+    "Elasticity": [
+      [
+        "Price elasticity of demand",
+        "The responsiveness of quantity demanded to a price change"
+      ],
+      [
+        "Elastic demand",
+        "Elasticity greater than one, where quantity responds strongly"
+      ],
+      [
+        "Inelastic demand",
+        "Elasticity less than one, where quantity barely responds"
+      ],
+      [
+        "Unit elastic",
+        "Elasticity of exactly one, where revenue does not change with price"
+      ],
+      [
+        "Determinants of elasticity",
+        "Substitutes, necessity, time horizon, and share of income"
+      ],
+      [
+        "Total revenue test",
+        "Raising price increases revenue only when demand is inelastic"
+      ],
+      [
+        "Income elasticity of demand",
+        "How demand responds to a change in income"
+      ],
+      [
+        "Cross-price elasticity",
+        "How demand for one good responds to another good's price"
+      ],
+      [
+        "Price elasticity of supply",
+        "How responsive quantity supplied is to price"
+      ],
+      [
+        "Perfectly inelastic demand",
+        "A vertical curve where quantity never changes with price"
+      ]
+    ],
+    "Consumer Surplus and Efficiency": [
+      [
+        "Willingness to pay",
+        "The maximum a buyer would pay for a good"
+      ],
+      [
+        "Consumer surplus",
+        "Willingness to pay minus the price actually paid"
+      ],
+      [
+        "Producer surplus",
+        "Price received minus the seller's cost"
+      ],
+      [
+        "Total surplus",
+        "Consumer plus producer surplus, a measure of market gain"
+      ],
+      [
+        "Allocative efficiency",
+        "Resources allocated so total surplus is maximised"
+      ],
+      [
+        "Market efficiency",
+        "The outcome where no reallocation could make someone better off without harming another"
+      ],
+      [
+        "Cost to a seller",
+        "The value of everything a seller gives up to produce"
+      ],
+      [
+        "Efficient market outcome",
+        "Goods going to the buyers who value them most"
+      ],
+      [
+        "Welfare economics",
+        "The study of how resource allocation affects wellbeing"
+      ],
+      [
+        "Market failure",
+        "A situation where free markets fail to allocate efficiently"
+      ]
+    ],
+    "Taxes and Deadweight Loss": [
+      [
+        "Tax incidence",
+        "Who actually bears the burden of a tax"
+      ],
+      [
+        "Tax wedge",
+        "The gap a tax creates between what buyers pay and sellers receive"
+      ],
+      [
+        "Deadweight loss",
+        "The lost surplus from transactions a tax prevents"
+      ],
+      [
+        "Elasticity and tax burden",
+        "The more inelastic side of the market bears more of the tax"
+      ],
+      [
+        "Price ceiling",
+        "A legal maximum price, producing shortages when binding"
+      ],
+      [
+        "Price floor",
+        "A legal minimum price, producing surpluses when binding"
+      ],
+      [
+        "Binding constraint",
+        "A price control set on the restrictive side of equilibrium"
+      ],
+      [
+        "Subsidy",
+        "A government payment that lowers effective price and raises quantity"
+      ],
+      [
+        "Laffer curve",
+        "The idea that beyond some rate, higher taxes reduce revenue"
+      ],
+      [
+        "Lump-sum tax",
+        "A fixed tax that does not distort behaviour at the margin"
+      ]
+    ],
+    "Externalities and Public Goods": [
+      [
+        "Externality",
+        "A cost or benefit falling on a third party"
+      ],
+      [
+        "Negative externality",
+        "A spillover cost such as pollution"
+      ],
+      [
+        "Positive externality",
+        "A spillover benefit such as education"
+      ],
+      [
+        "Social cost",
+        "Private cost plus external cost"
+      ],
+      [
+        "Internalizing an externality",
+        "Making decision makers face the full social cost"
+      ],
+      [
+        "Pigovian tax",
+        "A tax set to correct a negative externality"
+      ],
+      [
+        "Coase theorem",
+        "Private bargaining can solve externalities when transaction costs are low"
+      ],
+      [
+        "Tradable pollution permits",
+        "A market-based mechanism for allocating emissions rights"
+      ],
+      [
+        "Public good",
+        "A good that is non-rival and non-excludable"
+      ],
+      [
+        "Free rider problem",
+        "Benefiting from a good without paying for it"
+      ],
+      [
+        "Common resource",
+        "A rival but non-excludable good prone to overuse"
+      ],
+      [
+        "Tragedy of the commons",
+        "Depletion of a shared resource through individual self-interest"
+      ]
+    ],
+    "Costs of Production": [
+      [
+        "Explicit cost",
+        "A direct monetary payment for an input"
+      ],
+      [
+        "Implicit cost",
+        "An opportunity cost requiring no monetary outlay"
+      ],
+      [
+        "Economic profit",
+        "Revenue minus both explicit and implicit costs"
+      ],
+      [
+        "Accounting profit",
+        "Revenue minus explicit costs only"
+      ],
+      [
+        "Fixed cost",
+        "A cost that does not vary with output"
+      ],
+      [
+        "Variable cost",
+        "A cost that rises with output"
+      ],
+      [
+        "Marginal cost",
+        "The additional cost of producing one more unit"
+      ],
+      [
+        "Average total cost",
+        "Total cost divided by quantity produced"
+      ],
+      [
+        "Diminishing marginal product",
+        "Each additional input unit adding less output than the last"
+      ],
+      [
+        "Economies of scale",
+        "Average cost falling as output expands"
+      ],
+      [
+        "Diseconomies of scale",
+        "Average cost rising as output expands beyond an efficient size"
+      ],
+      [
+        "Efficient scale",
+        "The output level minimising average total cost"
+      ],
+      [
+        "Sunk cost",
+        "A cost already incurred and irrelevant to future decisions"
+      ]
+    ],
+    "Perfect Competition": [
+      [
+        "Perfectly competitive market",
+        "Many buyers and sellers of an identical product with free entry"
+      ],
+      [
+        "Price taker",
+        "A firm that must accept the prevailing market price"
+      ],
+      [
+        "Marginal revenue",
+        "The additional revenue from selling one more unit"
+      ],
+      [
+        "Profit maximisation rule",
+        "Produce where marginal revenue equals marginal cost"
+      ],
+      [
+        "Shutdown decision",
+        "Stop producing in the short run when price falls below average variable cost"
+      ],
+      [
+        "Exit decision",
+        "Leave the industry long run when price is below average total cost"
+      ],
+      [
+        "Short-run supply curve",
+        "The marginal cost curve above average variable cost"
+      ],
+      [
+        "Long-run equilibrium",
+        "Zero economic profit with price equal to minimum average total cost"
+      ],
+      [
+        "Free entry and exit",
+        "The mechanism driving long-run profit toward zero"
+      ],
+      [
+        "Constant cost industry",
+        "An industry whose long-run supply curve is horizontal"
+      ]
+    ],
+    "Monopoly": [
+      [
+        "Monopoly",
+        "A single seller facing the entire market demand curve"
+      ],
+      [
+        "Barrier to entry",
+        "An obstacle preventing competitors from entering"
+      ],
+      [
+        "Natural monopoly",
+        "An industry where one firm can supply at lowest total cost"
+      ],
+      [
+        "Market power",
+        "The ability to influence the market price"
+      ],
+      [
+        "Marginal revenue under monopoly",
+        "Below price, because selling more requires cutting price on all units"
+      ],
+      [
+        "Monopoly output rule",
+        "Produce where marginal revenue equals marginal cost, then charge what demand allows"
+      ],
+      [
+        "Deadweight loss of monopoly",
+        "Lost surplus from restricting output below the efficient level"
+      ],
+      [
+        "Price discrimination",
+        "Charging different buyers different prices for the same good"
+      ],
+      [
+        "Perfect price discrimination",
+        "Charging each buyer exactly their willingness to pay"
+      ],
+      [
+        "Antitrust law",
+        "Legislation limiting anticompetitive conduct and market concentration"
+      ],
+      [
+        "Regulation of natural monopoly",
+        "Setting price near marginal or average cost"
+      ]
+    ],
+    "Monopolistic Competition": [
+      [
+        "Monopolistic competition",
+        "Many firms selling differentiated products with free entry"
+      ],
+      [
+        "Product differentiation",
+        "Making a product distinct from close substitutes"
+      ],
+      [
+        "Excess capacity",
+        "Producing below efficient scale, a feature of this market structure"
+      ],
+      [
+        "Markup over marginal cost",
+        "Price exceeding marginal cost, unlike perfect competition"
+      ],
+      [
+        "Advertising",
+        "Spending intended to shift demand and build brand loyalty"
+      ],
+      [
+        "Brand name",
+        "A signal of consistent quality that also creates market power"
+      ],
+      [
+        "Long-run zero profit",
+        "Entry eroding profit until price equals average total cost"
+      ],
+      [
+        "Downward-sloping firm demand",
+        "Each firm's own demand curve slopes down due to differentiation"
+      ],
+      [
+        "Comparison to monopoly",
+        "Similar markup but no long-run profit due to free entry"
+      ],
+      [
+        "Comparison to perfect competition",
+        "Differentiated products and excess capacity rather than efficient scale"
+      ]
+    ],
+    "Oligopoly and Game Theory": [
+      [
+        "Oligopoly",
+        "A market dominated by a few interdependent firms"
+      ],
+      [
+        "Strategic interaction",
+        "Each firm's best move depending on what rivals do"
+      ],
+      [
+        "Collusion",
+        "An agreement among firms to restrict output and raise price"
+      ],
+      [
+        "Cartel",
+        "A formal collusive arrangement acting like a joint monopoly"
+      ],
+      [
+        "Game theory",
+        "The study of strategic decision making among interdependent actors"
+      ],
+      [
+        "Dominant strategy",
+        "A choice best regardless of what others do"
+      ],
+      [
+        "Nash equilibrium",
+        "An outcome where no player benefits from changing strategy alone"
+      ],
+      [
+        "Prisoner's dilemma",
+        "A game where individually rational choices produce a worse joint outcome"
+      ],
+      [
+        "Tit-for-tat",
+        "A repeated-game strategy of mirroring the opponent's last move"
+      ],
+      [
+        "Price war",
+        "Competitive undercutting that erodes profits across an industry"
+      ],
+      [
+        "Concentration ratio",
+        "The share of market held by the largest firms"
+      ]
+    ],
+    "Labor Markets": [
+      [
+        "Derived demand",
+        "Demand for an input driven by demand for the output it produces"
+      ],
+      [
+        "Marginal product of labour",
+        "The extra output from one more worker"
+      ],
+      [
+        "Value of the marginal product",
+        "Marginal product multiplied by the output price"
+      ],
+      [
+        "Labour demand curve",
+        "The value of marginal product curve for a competitive firm"
+      ],
+      [
+        "Labour supply",
+        "The trade-off workers make between labour and leisure"
+      ],
+      [
+        "Equilibrium wage",
+        "The wage where labour supplied equals labour demanded"
+      ],
+      [
+        "Human capital",
+        "The knowledge and skills embodied in workers"
+      ],
+      [
+        "Compensating differential",
+        "Extra pay offsetting undesirable job characteristics"
+      ],
+      [
+        "Monopsony",
+        "A market with a single buyer, which suppresses wages"
+      ],
+      [
+        "Labour union",
+        "A worker organisation bargaining collectively over pay and conditions"
+      ],
+      [
+        "Efficiency wages",
+        "Paying above market rate to raise productivity and retention"
+      ]
+    ],
+    "Income Inequality and Poverty": [
+      [
+        "Asymmetric information",
+        "One party to a transaction knowing more than the other"
+      ],
+      [
+        "Adverse selection",
+        "Hidden characteristics driving good participants out of a market"
+      ],
+      [
+        "Moral hazard",
+        "Hidden behaviour changing after an agreement is made"
+      ],
+      [
+        "Signalling",
+        "Taking a costly action to credibly convey private information"
+      ],
+      [
+        "Screening",
+        "An uninformed party acting to induce revelation of information"
+      ],
+      [
+        "Principal-agent problem",
+        "Conflict when an agent's incentives diverge from the principal's"
+      ],
+      [
+        "Poverty line",
+        "The income threshold defining official poverty"
+      ],
+      [
+        "Gini coefficient",
+        "A single number summarising income inequality"
+      ],
+      [
+        "In-kind transfer",
+        "Assistance delivered as goods or services rather than cash"
+      ],
+      [
+        "Negative income tax",
+        "A system paying households below a certain income level"
+      ],
+      [
+        "Progressive taxation",
+        "Higher earners paying a larger share of income in tax"
+      ]
+    ]
+  }
+}

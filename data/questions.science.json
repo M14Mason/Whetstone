@@ -1,0 +1,232 @@
+[
+  {
+    "id": "sci-cell-001",
+    "subject": "Science",
+    "topic": "Cell Biology",
+    "difficulty": "easy",
+    "prompt": "Which organelle is primarily responsible for producing ATP in eukaryotic cells?",
+    "choices": ["Mitochondrion", "Ribosome", "Golgi apparatus", "Nucleus"],
+    "answer": 0,
+    "explanation": "Mitochondria carry out cellular respiration, converting glucose and oxygen into ATP, the cell's usable energy currency."
+  },
+  {
+    "id": "sci-cell-002",
+    "subject": "Science",
+    "topic": "Cell Biology",
+    "difficulty": "medium",
+    "prompt": "What is the primary function of ribosomes?",
+    "choices": ["Protein synthesis", "Energy production", "Waste breakdown", "DNA replication"],
+    "answer": 0,
+    "explanation": "Ribosomes read messenger RNA and assemble amino acids into proteins. They are found in both prokaryotes and eukaryotes."
+  },
+  {
+    "id": "sci-cell-003",
+    "subject": "Science",
+    "topic": "Cell Biology",
+    "difficulty": "hard",
+    "prompt": "Which structure is found in plant cells but NOT in animal cells?",
+    "choices": ["Cell wall", "Cell membrane", "Mitochondrion", "Nucleus"],
+    "answer": 0,
+    "explanation": "Plant cells have a rigid cellulose cell wall outside the membrane, plus chloroplasts. Animal cells have a membrane but no wall."
+  },
+  {
+    "id": "sci-gen-001",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "easy",
+    "prompt": "Two heterozygous parents (Aa x Aa) have a child. What is the probability the child is homozygous recessive (aa)?",
+    "choices": ["25%", "50%", "75%", "0%"],
+    "answer": 0,
+    "explanation": "The Punnett square gives AA, Aa, aA, aa. Only one of the four outcomes is aa, so 25%."
+  },
+  {
+    "id": "sci-gen-002",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "medium",
+    "prompt": "In a cross between Aa and aa, what percentage of offspring are expected to be heterozygous?",
+    "choices": ["50%", "25%", "75%", "100%"],
+    "answer": 0,
+    "explanation": "The cross produces Aa, Aa, aa, aa. Two of the four are heterozygous, so 50%."
+  },
+  {
+    "id": "sci-gen-003",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "hard",
+    "prompt": "In a cross of Aa x Aa where A is completely dominant, what is the expected PHENOTYPE ratio?",
+    "choices": ["3 dominant : 1 recessive", "1 dominant : 1 recessive", "1 : 2 : 1", "4 dominant : 0 recessive"],
+    "answer": 0,
+    "explanation": "AA, Aa, and aA all show the dominant trait; only aa shows the recessive one. The 1:2:1 answer is the genotype ratio, a very common mix-up."
+  },
+  {
+    "id": "sci-bond-001",
+    "subject": "Science",
+    "topic": "Chemical Bonding",
+    "difficulty": "easy",
+    "prompt": "What type of bond holds sodium chloride (NaCl) together?",
+    "choices": ["Ionic", "Covalent", "Hydrogen", "Metallic"],
+    "answer": 0,
+    "explanation": "Sodium transfers an electron to chlorine, creating oppositely charged ions that attract. Transferring electrons means ionic bonding."
+  },
+  {
+    "id": "sci-bond-002",
+    "subject": "Science",
+    "topic": "Chemical Bonding",
+    "difficulty": "medium",
+    "prompt": "What distinguishes a covalent bond from an ionic bond?",
+    "choices": [
+      "Electrons are shared rather than transferred",
+      "It only occurs between metals",
+      "It produces a net electrical charge",
+      "It only forms in liquids"
+    ],
+    "answer": 0,
+    "explanation": "Covalent bonds share electron pairs between atoms, typically between nonmetals. Ionic bonds transfer electrons outright."
+  },
+  {
+    "id": "sci-stoi-001",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "How many moles are in 36 grams of water (molar mass 18 g/mol)?",
+    "choices": ["2 moles", "1 mole", "18 moles", "36 moles"],
+    "answer": 0,
+    "explanation": "Moles = mass / molar mass = 36 / 18 = 2 moles."
+  },
+  {
+    "id": "sci-stoi-002",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "hard",
+    "prompt": "For the reaction 2H2 + O2 -> 2H2O, how many moles of O2 are needed to fully react with 4 moles of H2?",
+    "choices": ["2 moles", "4 moles", "1 mole", "8 moles"],
+    "answer": 0,
+    "explanation": "The coefficients give a 2:1 ratio of H2 to O2. With 4 moles of H2, you need 4/2 = 2 moles of O2."
+  },
+  {
+    "id": "sci-per-001",
+    "subject": "Science",
+    "topic": "Periodic Trends",
+    "difficulty": "easy",
+    "prompt": "Elements in Group 18 of the periodic table are known as what?",
+    "choices": ["Noble gases", "Alkali metals", "Halogens", "Transition metals"],
+    "answer": 0,
+    "explanation": "Group 18 elements have full valence shells, making them highly unreactive. They are the noble gases."
+  },
+  {
+    "id": "sci-per-002",
+    "subject": "Science",
+    "topic": "Periodic Trends",
+    "difficulty": "medium",
+    "prompt": "What happens to atomic radius as you move LEFT to RIGHT across a period?",
+    "choices": [
+      "It decreases",
+      "It increases",
+      "It stays the same",
+      "It increases then decreases"
+    ],
+    "answer": 0,
+    "explanation": "Protons are added without adding a new electron shell, so the stronger nuclear charge pulls the electrons in tighter and the atom shrinks."
+  },
+  {
+    "id": "sci-newt-001",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "easy",
+    "prompt": "A 10 kg object accelerates at 2 m/s^2. What net force acts on it?",
+    "choices": ["20 N", "5 N", "12 N", "0.2 N"],
+    "answer": 0,
+    "explanation": "F = ma = 10 kg x 2 m/s^2 = 20 newtons."
+  },
+  {
+    "id": "sci-newt-002",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "Newton's third law states that for every action there is an equal and opposite reaction. These two forces act on what?",
+    "choices": [
+      "Two different objects",
+      "The same object",
+      "Only the heavier object",
+      "Only the moving object"
+    ],
+    "answer": 0,
+    "explanation": "Action-reaction pairs always act on different objects. That is why they never cancel out; forces only cancel when they act on the same object."
+  },
+  {
+    "id": "sci-newt-003",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "hard",
+    "prompt": "If the net force on a moving object is zero, what happens to the object?",
+    "choices": [
+      "It continues at constant velocity",
+      "It immediately stops",
+      "It slows down gradually",
+      "It accelerates in the direction of motion"
+    ],
+    "answer": 0,
+    "explanation": "Newton's first law: with no net force there is no acceleration, so the object keeps moving at the same speed and direction. Zero force does not mean zero motion."
+  },
+  {
+    "id": "sci-en-001",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "easy",
+    "prompt": "What is the kinetic energy of a 2 kg object moving at 3 m/s?",
+    "choices": ["9 J", "6 J", "18 J", "3 J"],
+    "answer": 0,
+    "explanation": "KE = (1/2)mv^2 = 0.5 x 2 x 9 = 9 joules. Forgetting to square the velocity gives 3 J."
+  },
+  {
+    "id": "sci-en-002",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "According to the law of conservation of energy, what happens to energy in a closed system?",
+    "choices": [
+      "It changes form but the total stays constant",
+      "It is gradually destroyed",
+      "It increases over time",
+      "It only exists as heat"
+    ],
+    "answer": 0,
+    "explanation": "Energy cannot be created or destroyed, only converted between forms such as potential, kinetic, and thermal."
+  },
+  {
+    "id": "sci-wav-001",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "medium",
+    "prompt": "A wave has a frequency of 5 Hz and a wavelength of 2 m. What is its speed?",
+    "choices": ["10 m/s", "2.5 m/s", "7 m/s", "0.4 m/s"],
+    "answer": 0,
+    "explanation": "Wave speed v = f x lambda = 5 Hz x 2 m = 10 m/s."
+  },
+  {
+    "id": "sci-wav-002",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "hard",
+    "prompt": "For waves traveling at the same speed, what happens to wavelength as frequency increases?",
+    "choices": [
+      "Wavelength decreases",
+      "Wavelength increases",
+      "Wavelength stays the same",
+      "Wavelength doubles"
+    ],
+    "answer": 0,
+    "explanation": "Since v = f x lambda and v is fixed, frequency and wavelength are inversely proportional. Higher frequency means shorter wavelength."
+  },
+  {
+    "id": "sci-mat-001",
+    "subject": "Science",
+    "topic": "States of Matter",
+    "difficulty": "easy",
+    "prompt": "What is the term for a substance changing directly from solid to gas?",
+    "choices": ["Sublimation", "Evaporation", "Condensation", "Melting"],
+    "answer": 0,
+    "explanation": "Sublimation skips the liquid phase entirely. Dry ice turning into carbon dioxide gas is the classic example."
+  }
+]

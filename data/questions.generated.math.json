@@ -1,0 +1,4427 @@
+[
+  {
+    "id": "gen-math-lin1-001",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "easy",
+    "prompt": "Solve for x:  6x - 1 = 59",
+    "choices": [
+      "-10",
+      "10",
+      "60",
+      "9.67"
+    ],
+    "answer": 1,
+    "explanation": "Subtract -1 from both sides: 6x = 60. Divide by 6: x = 10."
+  },
+  {
+    "id": "gen-math-lin1-002",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "easy",
+    "prompt": "Solve for x:  3x + 12 = 12",
+    "choices": [
+      "8",
+      "0",
+      "-1",
+      "1"
+    ],
+    "answer": 1,
+    "explanation": "Subtract 12 from both sides: 3x = 0. Divide by 3: x = 0."
+  },
+  {
+    "id": "gen-math-lin1-003",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "easy",
+    "prompt": "Solve for x:  7x + 10 = 17",
+    "choices": [
+      "1",
+      "-1",
+      "3.86",
+      "7"
+    ],
+    "answer": 0,
+    "explanation": "Subtract 10 from both sides: 7x = 7. Divide by 7: x = 1."
+  },
+  {
+    "id": "gen-math-lin1-004",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "easy",
+    "prompt": "Solve for x:  6x - 4 = -58",
+    "choices": [
+      "-54",
+      "9",
+      "-10.33",
+      "-9"
+    ],
+    "answer": 3,
+    "explanation": "Subtract -4 from both sides: 6x = -54. Divide by 6: x = -9."
+  },
+  {
+    "id": "gen-math-lin1-005",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "easy",
+    "prompt": "Solve for x:  8x + 3 = 51",
+    "choices": [
+      "6.75",
+      "6",
+      "-6",
+      "48"
+    ],
+    "answer": 1,
+    "explanation": "Subtract 3 from both sides: 8x = 48. Divide by 8: x = 6."
+  },
+  {
+    "id": "gen-math-lin1-006",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "easy",
+    "prompt": "Solve for x:  8x + 9 = -39",
+    "choices": [
+      "6",
+      "-48",
+      "-6",
+      "-3.75"
+    ],
+    "answer": 2,
+    "explanation": "Subtract 9 from both sides: 8x = -48. Divide by 8: x = -6."
+  },
+  {
+    "id": "gen-math-lin1-007",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "easy",
+    "prompt": "Solve for x:  7x - 14 = 0",
+    "choices": [
+      "-2",
+      "3",
+      "2",
+      "14"
+    ],
+    "answer": 2,
+    "explanation": "Subtract -14 from both sides: 7x = 14. Divide by 7: x = 2."
+  },
+  {
+    "id": "gen-math-lin1-008",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "easy",
+    "prompt": "Solve for x:  7x - 1 = 48",
+    "choices": [
+      "49",
+      "-7",
+      "6.71",
+      "7"
+    ],
+    "answer": 3,
+    "explanation": "Subtract -1 from both sides: 7x = 49. Divide by 7: x = 7."
+  },
+  {
+    "id": "gen-math-lin1-009",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "easy",
+    "prompt": "Solve for x:  7x + 12 = 47",
+    "choices": [
+      "8.43",
+      "-5",
+      "35",
+      "5"
+    ],
+    "answer": 3,
+    "explanation": "Subtract 12 from both sides: 7x = 35. Divide by 7: x = 5."
+  },
+  {
+    "id": "gen-math-lin2-001",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  7x + 11 = 2x + 1",
+    "choices": [
+      "2",
+      "-1.11",
+      "-1",
+      "-2"
+    ],
+    "answer": 3,
+    "explanation": "Move the x terms together: 5x = -10. Divide by 5: x = -2."
+  },
+  {
+    "id": "gen-math-lin2-002",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  3x + 10 = 2x + 3",
+    "choices": [
+      "-6",
+      "-1.4",
+      "7",
+      "-7"
+    ],
+    "answer": 3,
+    "explanation": "Move the x terms together: 1x = -7. Divide by 1: x = -7."
+  },
+  {
+    "id": "gen-math-lin2-003",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  8x + 11 = 4x + 27",
+    "choices": [
+      "5",
+      "4",
+      "1.33",
+      "-4"
+    ],
+    "answer": 1,
+    "explanation": "Move the x terms together: 4x = 16. Divide by 4: x = 4."
+  },
+  {
+    "id": "gen-math-lin2-004",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  2x - 6 = 5x - 21",
+    "choices": [
+      "-5",
+      "-2.14",
+      "5",
+      "6"
+    ],
+    "answer": 2,
+    "explanation": "Move the x terms together: -3x = -15. Divide by -3: x = 5."
+  },
+  {
+    "id": "gen-math-lin2-005",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  8x + 11 = 2x + 5",
+    "choices": [
+      "1",
+      "0",
+      "-1",
+      "-0.6"
+    ],
+    "answer": 2,
+    "explanation": "Move the x terms together: 6x = -6. Divide by 6: x = -1."
+  },
+  {
+    "id": "gen-math-lin2-006",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  3x - 7 = 7x + 25",
+    "choices": [
+      "-7",
+      "-8",
+      "3.2",
+      "8"
+    ],
+    "answer": 1,
+    "explanation": "Move the x terms together: -4x = 32. Divide by -4: x = -8."
+  },
+  {
+    "id": "gen-math-lin2-007",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  5x + 6 = 2x + 6",
+    "choices": [
+      "2",
+      "0",
+      "-1",
+      "1"
+    ],
+    "answer": 1,
+    "explanation": "Move the x terms together: 3x = 0. Divide by 3: x = 0."
+  },
+  {
+    "id": "gen-math-lin2-008",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  4x + 7 = 3x + 3",
+    "choices": [
+      "-0.57",
+      "-3",
+      "-4",
+      "4"
+    ],
+    "answer": 2,
+    "explanation": "Move the x terms together: 1x = -4. Divide by 1: x = -4."
+  },
+  {
+    "id": "gen-math-lin2-009",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  7x + 5 = 6x + 12",
+    "choices": [
+      "7",
+      "-7",
+      "8",
+      "0.54"
+    ],
+    "answer": 0,
+    "explanation": "Move the x terms together: 1x = 7. Divide by 1: x = 7."
+  },
+  {
+    "id": "gen-math-lin3-001",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  4(x + 4) = 40",
+    "choices": [
+      "14",
+      "36",
+      "6",
+      "10"
+    ],
+    "answer": 2,
+    "explanation": "Divide both sides by 4: x + 4 = 10. Then x = 6."
+  },
+  {
+    "id": "gen-math-lin3-002",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  6(x + 4) = -12",
+    "choices": [
+      "-6",
+      "-16",
+      "2",
+      "-2"
+    ],
+    "answer": 0,
+    "explanation": "Divide both sides by 6: x + 4 = -2. Then x = -6."
+  },
+  {
+    "id": "gen-math-lin3-003",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  6(x - 4) = -24",
+    "choices": [
+      "-8",
+      "-20",
+      "-4",
+      "0"
+    ],
+    "answer": 3,
+    "explanation": "Divide both sides by 6: x - 4 = -4. Then x = 0."
+  },
+  {
+    "id": "gen-math-lin3-004",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  5(x - 3) = -25",
+    "choices": [
+      "-5",
+      "-22",
+      "-8",
+      "-2"
+    ],
+    "answer": 3,
+    "explanation": "Divide both sides by 5: x - 3 = -5. Then x = -2."
+  },
+  {
+    "id": "gen-math-lin3-005",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  2(x - 4) = 10",
+    "choices": [
+      "9",
+      "1",
+      "5",
+      "14"
+    ],
+    "answer": 0,
+    "explanation": "Divide both sides by 2: x - 4 = 5. Then x = 9."
+  },
+  {
+    "id": "gen-math-lin3-006",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  5(x - 6) = 0",
+    "choices": [
+      "7",
+      "0",
+      "-6",
+      "6"
+    ],
+    "answer": 3,
+    "explanation": "Divide both sides by 5: x - 6 = 0. Then x = 6."
+  },
+  {
+    "id": "gen-math-lin3-007",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  5(x + 1) = -10",
+    "choices": [
+      "-3",
+      "-11",
+      "-1",
+      "-2"
+    ],
+    "answer": 0,
+    "explanation": "Divide both sides by 5: x + 1 = -2. Then x = -3."
+  },
+  {
+    "id": "gen-math-lin3-008",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  6(x - 5) = -66",
+    "choices": [
+      "-6",
+      "-61",
+      "-16",
+      "-11"
+    ],
+    "answer": 0,
+    "explanation": "Divide both sides by 6: x - 5 = -11. Then x = -6."
+  },
+  {
+    "id": "gen-math-lin3-009",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  3(x - 3) = 6",
+    "choices": [
+      "-1",
+      "2",
+      "5",
+      "9"
+    ],
+    "answer": 2,
+    "explanation": "Divide both sides by 3: x - 3 = 2. Then x = 5."
+  },
+  {
+    "id": "gen-math-lin4-001",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "If 7x - 7 = 49, what is the value of 3x?",
+    "choices": [
+      "17",
+      "24",
+      "8",
+      "32"
+    ],
+    "answer": 1,
+    "explanation": "First 7x = 56, so x = 8. The question asks for 3x, which is 24. Solving for x and stopping there is the trap."
+  },
+  {
+    "id": "gen-math-lin4-002",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "If 7x + 4 = 32, what is the value of 3x?",
+    "choices": [
+      "12",
+      "16",
+      "13",
+      "4"
+    ],
+    "answer": 0,
+    "explanation": "First 7x = 28, so x = 4. The question asks for 3x, which is 12. Solving for x and stopping there is the trap."
+  },
+  {
+    "id": "gen-math-lin4-003",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "If 4x + 2 = 26, what is the value of 4x?",
+    "choices": [
+      "24",
+      "30",
+      "26",
+      "6"
+    ],
+    "answer": 0,
+    "explanation": "First 4x = 24, so x = 6. The question asks for 4x, which is 24. Solving for x and stopping there is the trap."
+  },
+  {
+    "id": "gen-math-lin4-004",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "If 4x + 8 = 20, what is the value of 2x?",
+    "choices": [
+      "6",
+      "3",
+      "14",
+      "9"
+    ],
+    "answer": 0,
+    "explanation": "First 4x = 12, so x = 3. The question asks for 2x, which is 6. Solving for x and stopping there is the trap."
+  },
+  {
+    "id": "gen-math-lin4-005",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "If 5x + 1 = 11, what is the value of 3x?",
+    "choices": [
+      "8",
+      "6",
+      "7",
+      "2"
+    ],
+    "answer": 1,
+    "explanation": "First 5x = 10, so x = 2. The question asks for 3x, which is 6. Solving for x and stopping there is the trap."
+  },
+  {
+    "id": "gen-math-lin4-006",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "If 6x + 1 = 25, what is the value of 2x?",
+    "choices": [
+      "12",
+      "8",
+      "9",
+      "4"
+    ],
+    "answer": 1,
+    "explanation": "First 6x = 24, so x = 4. The question asks for 2x, which is 8. Solving for x and stopping there is the trap."
+  },
+  {
+    "id": "gen-math-lin4-007",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "If 6x - 3 = 9, what is the value of 2x?",
+    "choices": [
+      "4",
+      "6",
+      "2",
+      "1"
+    ],
+    "answer": 0,
+    "explanation": "First 6x = 12, so x = 2. The question asks for 2x, which is 4. Solving for x and stopping there is the trap."
+  },
+  {
+    "id": "gen-math-lin4-008",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "If 6x + 3 = 27, what is the value of 4x?",
+    "choices": [
+      "19",
+      "20",
+      "4",
+      "16"
+    ],
+    "answer": 3,
+    "explanation": "First 6x = 24, so x = 4. The question asks for 4x, which is 16. Solving for x and stopping there is the trap."
+  },
+  {
+    "id": "gen-math-lin4-009",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "If 7x + 9 = 30, what is the value of 4x?",
+    "choices": [
+      "15",
+      "21",
+      "3",
+      "12"
+    ],
+    "answer": 3,
+    "explanation": "First 7x = 21, so x = 3. The question asks for 4x, which is 12. Solving for x and stopping there is the trap."
+  },
+  {
+    "id": "gen-math-slope-001",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "What is the slope of the line through (-6, 5) and (-5, 6)?",
+    "choices": [
+      "1",
+      "2",
+      "0",
+      "-1"
+    ],
+    "answer": 0,
+    "explanation": "Slope = (6 - 5) / (-5 - -6) = 1/1 = 1."
+  },
+  {
+    "id": "gen-math-slope-002",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "What is the slope of the line through (2, -3) and (5, -9)?",
+    "choices": [
+      "-0.5",
+      "-1.71",
+      "-2",
+      "2"
+    ],
+    "answer": 2,
+    "explanation": "Slope = (-9 - -3) / (5 - 2) = -6/3 = -2."
+  },
+  {
+    "id": "gen-math-slope-003",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "What is the slope of the line through (-4, 0) and (-1, 3)?",
+    "choices": [
+      "-1",
+      "2",
+      "1",
+      "-0.6"
+    ],
+    "answer": 2,
+    "explanation": "Slope = (3 - 0) / (-1 - -4) = 3/3 = 1."
+  },
+  {
+    "id": "gen-math-slope-004",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "What is the slope of the line through (-2, -6) and (-1, -1)?",
+    "choices": [
+      "0.2",
+      "2.33",
+      "-5",
+      "5"
+    ],
+    "answer": 3,
+    "explanation": "Slope = (-1 - -6) / (-1 - -2) = 5/1 = 5."
+  },
+  {
+    "id": "gen-math-slope-005",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "What is the slope of the line through (2, 5) and (5, 8)?",
+    "choices": [
+      "2",
+      "1",
+      "1.86",
+      "-1"
+    ],
+    "answer": 1,
+    "explanation": "Slope = (8 - 5) / (5 - 2) = 3/3 = 1."
+  },
+  {
+    "id": "gen-math-slope-006",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "What is the slope of the line through (1, 0) and (7, -24)?",
+    "choices": [
+      "4",
+      "-3",
+      "-4",
+      "-0.25"
+    ],
+    "answer": 2,
+    "explanation": "Slope = (-24 - 0) / (7 - 1) = -24/6 = -4."
+  },
+  {
+    "id": "gen-math-slope-007",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "What is the slope of the line through (-2, 1) and (-1, -4)?",
+    "choices": [
+      "-5",
+      "-0.2",
+      "1",
+      "5"
+    ],
+    "answer": 0,
+    "explanation": "Slope = (-4 - 1) / (-1 - -2) = -5/1 = -5."
+  },
+  {
+    "id": "gen-math-slope-008",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "What is the slope of the line through (2, 3) and (5, -9)?",
+    "choices": [
+      "-0.25",
+      "4",
+      "-0.86",
+      "-4"
+    ],
+    "answer": 3,
+    "explanation": "Slope = (-9 - 3) / (5 - 2) = -12/3 = -4."
+  },
+  {
+    "id": "gen-math-slope-009",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "What is the slope of the line through (2, 8) and (3, 9)?",
+    "choices": [
+      "3.4",
+      "2",
+      "1",
+      "-1"
+    ],
+    "answer": 2,
+    "explanation": "Slope = (9 - 8) / (3 - 2) = 1/1 = 1."
+  },
+  {
+    "id": "gen-math-yint-001",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "A line passes through (5, -18) and (7, -24). What is its y-intercept?",
+    "choices": [
+      "-3",
+      "3",
+      "-18",
+      "-2"
+    ],
+    "answer": 0,
+    "explanation": "Slope = -6/2 = -3. Using y = -3x + b with (5, -18): -18 = -15 + b, so b = -3."
+  },
+  {
+    "id": "gen-math-yint-002",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "A line passes through (4, 7) and (5, 10). What is its y-intercept?",
+    "choices": [
+      "3",
+      "-5",
+      "5",
+      "7"
+    ],
+    "answer": 1,
+    "explanation": "Slope = 3/1 = 3. Using y = 3x + b with (4, 7): 7 = 12 + b, so b = -5."
+  },
+  {
+    "id": "gen-math-yint-003",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "A line passes through (3, 1) and (4, -1). What is its y-intercept?",
+    "choices": [
+      "-7",
+      "-2",
+      "7",
+      "1"
+    ],
+    "answer": 2,
+    "explanation": "Slope = -2/1 = -2. Using y = -2x + b with (3, 1): 1 = -6 + b, so b = 7."
+  },
+  {
+    "id": "gen-math-yint-004",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "A line passes through (5, 14) and (7, 16). What is its y-intercept?",
+    "choices": [
+      "-9",
+      "9",
+      "14",
+      "1"
+    ],
+    "answer": 1,
+    "explanation": "Slope = 2/2 = 1. Using y = 1x + b with (5, 14): 14 = 5 + b, so b = 9."
+  },
+  {
+    "id": "gen-math-yint-005",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "A line passes through (2, -13) and (5, -19). What is its y-intercept?",
+    "choices": [
+      "-2",
+      "9",
+      "-9",
+      "-13"
+    ],
+    "answer": 2,
+    "explanation": "Slope = -6/3 = -2. Using y = -2x + b with (2, -13): -13 = -4 + b, so b = -9."
+  },
+  {
+    "id": "gen-math-yint-006",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "A line passes through (4, -8) and (7, -11). What is its y-intercept?",
+    "choices": [
+      "-1",
+      "-8",
+      "-4",
+      "4"
+    ],
+    "answer": 2,
+    "explanation": "Slope = -3/3 = -1. Using y = -1x + b with (4, -8): -8 = -4 + b, so b = -4."
+  },
+  {
+    "id": "gen-math-yint-007",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "A line passes through (5, -2) and (8, 1). What is its y-intercept?",
+    "choices": [
+      "1",
+      "-7",
+      "-2",
+      "7"
+    ],
+    "answer": 1,
+    "explanation": "Slope = 3/3 = 1. Using y = 1x + b with (5, -2): -2 = 5 + b, so b = -7."
+  },
+  {
+    "id": "gen-math-yint-008",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "A line passes through (4, -2) and (8, -10). What is its y-intercept?",
+    "choices": [
+      "-2",
+      "7",
+      "6",
+      "-6"
+    ],
+    "answer": 2,
+    "explanation": "Slope = -8/4 = -2. Using y = -2x + b with (4, -2): -2 = -8 + b, so b = 6."
+  },
+  {
+    "id": "gen-math-yint-009",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "A line passes through (5, -5) and (10, -15). What is its y-intercept?",
+    "choices": [
+      "6",
+      "5",
+      "-5",
+      "-2"
+    ],
+    "answer": 1,
+    "explanation": "Slope = -10/5 = -2. Using y = -2x + b with (5, -5): -5 = -10 + b, so b = 5."
+  },
+  {
+    "id": "gen-math-quad1-001",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What are the solutions to x^2 + 0x - 1 = 0?",
+    "choices": [
+      "x = 1 and x = -1",
+      "x = -1 and x = 1",
+      "x = 0 and x = -1",
+      "x = -1 and x = -1"
+    ],
+    "answer": 1,
+    "explanation": "Factor into (x + 1)(x - 1) = 0, which gives x = -1 and x = 1."
+  },
+  {
+    "id": "gen-math-quad1-002",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What are the solutions to x^2 - 2x - 35 = 0?",
+    "choices": [
+      "x = 5 and x = -7",
+      "x = -5 and x = -7",
+      "x = -2 and x = -35",
+      "x = -5 and x = 7"
+    ],
+    "answer": 3,
+    "explanation": "Factor into (x + 5)(x - 7) = 0, which gives x = -5 and x = 7."
+  },
+  {
+    "id": "gen-math-quad1-003",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What are the solutions to x^2 + 1x - 56 = 0?",
+    "choices": [
+      "x = 8 and x = -7",
+      "x = -8 and x = 7",
+      "x = -8 and x = -7",
+      "x = 1 and x = -56"
+    ],
+    "answer": 1,
+    "explanation": "Factor into (x + 8)(x - 7) = 0, which gives x = -8 and x = 7."
+  },
+  {
+    "id": "gen-math-quad1-004",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What are the solutions to x^2 - 4x - 5 = 0?",
+    "choices": [
+      "x = 1 and x = -5",
+      "x = -4 and x = -5",
+      "x = -1 and x = -5",
+      "x = -1 and x = 5"
+    ],
+    "answer": 3,
+    "explanation": "Factor into (x + 1)(x - 5) = 0, which gives x = -1 and x = 5."
+  },
+  {
+    "id": "gen-math-quad1-005",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What are the solutions to x^2 + 6x + 8 = 0?",
+    "choices": [
+      "x = -4 and x = -2",
+      "x = 4 and x = 2",
+      "x = 6 and x = 8",
+      "x = -4 and x = 2"
+    ],
+    "answer": 0,
+    "explanation": "Factor into (x + 2)(x + 4) = 0, which gives x = -4 and x = -2."
+  },
+  {
+    "id": "gen-math-quad1-006",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What are the solutions to x^2 + 5x - 14 = 0?",
+    "choices": [
+      "x = -7 and x = -2",
+      "x = 5 and x = -14",
+      "x = 7 and x = -2",
+      "x = -7 and x = 2"
+    ],
+    "answer": 3,
+    "explanation": "Factor into (x + 7)(x - 2) = 0, which gives x = -7 and x = 2."
+  },
+  {
+    "id": "gen-math-quad1-007",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What are the solutions to x^2 - 2x - 48 = 0?",
+    "choices": [
+      "x = 6 and x = -8",
+      "x = -6 and x = -8",
+      "x = -6 and x = 8",
+      "x = -2 and x = -48"
+    ],
+    "answer": 2,
+    "explanation": "Factor into (x - 8)(x + 6) = 0, which gives x = -6 and x = 8."
+  },
+  {
+    "id": "gen-math-quad1-008",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What are the solutions to x^2 + 1x - 6 = 0?",
+    "choices": [
+      "x = 1 and x = -6",
+      "x = -3 and x = 2",
+      "x = -3 and x = -2",
+      "x = 3 and x = -2"
+    ],
+    "answer": 1,
+    "explanation": "Factor into (x + 3)(x - 2) = 0, which gives x = -3 and x = 2."
+  },
+  {
+    "id": "gen-math-quad1-009",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What are the solutions to x^2 - 14x + 48 = 0?",
+    "choices": [
+      "x = -6 and x = -8",
+      "x = 6 and x = -8",
+      "x = 6 and x = 8",
+      "x = -14 and x = 48"
+    ],
+    "answer": 2,
+    "explanation": "Factor into (x - 6)(x - 8) = 0, which gives x = 6 and x = 8."
+  },
+  {
+    "id": "gen-math-quad2-001",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What is the vertex of the parabola y = x^2 + 6x + 9?",
+    "choices": [
+      "(-2, -1)",
+      "(3, 0)",
+      "(-3, 0)",
+      "(6, 9)"
+    ],
+    "answer": 2,
+    "explanation": "Vertex x = -b/(2a) = -3. Substituting: y = -3^2 - 18 + 9 = 0. The vertex is (-3, 0)."
+  },
+  {
+    "id": "gen-math-quad2-002",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What is the vertex of the parabola y = x^2 + 0x + 0?",
+    "choices": [
+      "(1, -1)",
+      "(2, -2)",
+      "(0, 0)",
+      "(3, -3)"
+    ],
+    "answer": 2,
+    "explanation": "Vertex x = -b/(2a) = 0. Substituting: y = 0^2 + 0 + 0 = 0. The vertex is (0, 0)."
+  },
+  {
+    "id": "gen-math-quad2-003",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What is the vertex of the parabola y = x^2 - 2x - 6?",
+    "choices": [
+      "(1, 7)",
+      "(1, -7)",
+      "(-2, -6)",
+      "(-1, -7)"
+    ],
+    "answer": 1,
+    "explanation": "Vertex x = -b/(2a) = 1. Substituting: y = 1^2 - 2 - 6 = -7. The vertex is (1, -7)."
+  },
+  {
+    "id": "gen-math-quad2-004",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What is the vertex of the parabola y = x^2 + 4x - 3?",
+    "choices": [
+      "(4, -3)",
+      "(2, -7)",
+      "(-2, 7)",
+      "(-2, -7)"
+    ],
+    "answer": 3,
+    "explanation": "Vertex x = -b/(2a) = -2. Substituting: y = -2^2 - 8 - 3 = -7. The vertex is (-2, -7)."
+  },
+  {
+    "id": "gen-math-quad2-005",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What is the vertex of the parabola y = x^2 + 8x + 18?",
+    "choices": [
+      "(-4, 2)",
+      "(-4, -2)",
+      "(8, 18)",
+      "(4, 2)"
+    ],
+    "answer": 0,
+    "explanation": "Vertex x = -b/(2a) = -4. Substituting: y = -4^2 - 32 + 18 = 2. The vertex is (-4, 2)."
+  },
+  {
+    "id": "gen-math-quad2-006",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What is the vertex of the parabola y = x^2 + 10x + 22?",
+    "choices": [
+      "(5, -3)",
+      "(10, 22)",
+      "(-5, -3)",
+      "(-5, 3)"
+    ],
+    "answer": 2,
+    "explanation": "Vertex x = -b/(2a) = -5. Substituting: y = -5^2 - 50 + 22 = -3. The vertex is (-5, -3)."
+  },
+  {
+    "id": "gen-math-quad2-007",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What is the vertex of the parabola y = x^2 - 6x + 13?",
+    "choices": [
+      "(3, -4)",
+      "(3, 4)",
+      "(-3, 4)",
+      "(-6, 13)"
+    ],
+    "answer": 1,
+    "explanation": "Vertex x = -b/(2a) = 3. Substituting: y = 3^2 - 18 + 13 = 4. The vertex is (3, 4)."
+  },
+  {
+    "id": "gen-math-quad2-008",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What is the vertex of the parabola y = x^2 + 6x + 4?",
+    "choices": [
+      "(-3, 5)",
+      "(-3, -5)",
+      "(6, 4)",
+      "(3, -5)"
+    ],
+    "answer": 1,
+    "explanation": "Vertex x = -b/(2a) = -3. Substituting: y = -3^2 - 18 + 4 = -5. The vertex is (-3, -5)."
+  },
+  {
+    "id": "gen-math-quad2-009",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What is the vertex of the parabola y = x^2 + 6x + 3?",
+    "choices": [
+      "(6, 3)",
+      "(-3, -6)",
+      "(-3, 6)",
+      "(3, -6)"
+    ],
+    "answer": 1,
+    "explanation": "Vertex x = -b/(2a) = -3. Substituting: y = -3^2 - 18 + 3 = -6. The vertex is (-3, -6)."
+  },
+  {
+    "id": "gen-math-quad3-001",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "hard",
+    "prompt": "How many real solutions does 3x^2 + 8x + 5 = 0 have?",
+    "choices": [
+      "Infinitely many",
+      "Exactly one",
+      "Two",
+      "None"
+    ],
+    "answer": 2,
+    "explanation": "The discriminant is b^2 - 4ac = 64 - 60 = 4. A positive discriminant means two real solutions."
+  },
+  {
+    "id": "gen-math-quad3-002",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "hard",
+    "prompt": "How many real solutions does 1x^2 + 6x + 1 = 0 have?",
+    "choices": [
+      "Exactly one",
+      "None",
+      "Infinitely many",
+      "Two"
+    ],
+    "answer": 3,
+    "explanation": "The discriminant is b^2 - 4ac = 36 - 4 = 32. A positive discriminant means two real solutions."
+  },
+  {
+    "id": "gen-math-quad3-003",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "hard",
+    "prompt": "How many real solutions does 3x^2 + 4x - 2 = 0 have?",
+    "choices": [
+      "Exactly one",
+      "Infinitely many",
+      "Two",
+      "None"
+    ],
+    "answer": 2,
+    "explanation": "The discriminant is b^2 - 4ac = 16 - -24 = 40. A positive discriminant means two real solutions."
+  },
+  {
+    "id": "gen-math-quad3-004",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "hard",
+    "prompt": "How many real solutions does 2x^2 - 7x + 4 = 0 have?",
+    "choices": [
+      "None",
+      "Exactly one",
+      "Two",
+      "Infinitely many"
+    ],
+    "answer": 2,
+    "explanation": "The discriminant is b^2 - 4ac = 49 - 32 = 17. A positive discriminant means two real solutions."
+  },
+  {
+    "id": "gen-math-quad3-005",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "hard",
+    "prompt": "How many real solutions does 2x^2 - 6x - 2 = 0 have?",
+    "choices": [
+      "Exactly one",
+      "None",
+      "Two",
+      "Infinitely many"
+    ],
+    "answer": 2,
+    "explanation": "The discriminant is b^2 - 4ac = 36 - -16 = 52. A positive discriminant means two real solutions."
+  },
+  {
+    "id": "gen-math-quad3-006",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "hard",
+    "prompt": "How many real solutions does 1x^2 - 5x + 5 = 0 have?",
+    "choices": [
+      "Two",
+      "None",
+      "Exactly one",
+      "Infinitely many"
+    ],
+    "answer": 0,
+    "explanation": "The discriminant is b^2 - 4ac = 25 - 20 = 5. A positive discriminant means two real solutions."
+  },
+  {
+    "id": "gen-math-quad3-007",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "hard",
+    "prompt": "How many real solutions does 1x^2 + 5x - 1 = 0 have?",
+    "choices": [
+      "None",
+      "Infinitely many",
+      "Two",
+      "Exactly one"
+    ],
+    "answer": 2,
+    "explanation": "The discriminant is b^2 - 4ac = 25 - -4 = 29. A positive discriminant means two real solutions."
+  },
+  {
+    "id": "gen-math-quad3-008",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "hard",
+    "prompt": "How many real solutions does 2x^2 - 1x - 3 = 0 have?",
+    "choices": [
+      "None",
+      "Exactly one",
+      "Two",
+      "Infinitely many"
+    ],
+    "answer": 2,
+    "explanation": "The discriminant is b^2 - 4ac = 1 - -24 = 25. A positive discriminant means two real solutions."
+  },
+  {
+    "id": "gen-math-quad3-009",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "hard",
+    "prompt": "How many real solutions does 3x^2 - 3x + 5 = 0 have?",
+    "choices": [
+      "None",
+      "Infinitely many",
+      "Exactly one",
+      "Two"
+    ],
+    "answer": 0,
+    "explanation": "The discriminant is b^2 - 4ac = 9 - 60 = -51. A negative discriminant means none real solution."
+  },
+  {
+    "id": "gen-math-sys1-001",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "medium",
+    "prompt": "If x + y = 17 and x - y = 7, what is the value of xy?",
+    "choices": [
+      "7",
+      "17",
+      "77",
+      "60"
+    ],
+    "answer": 3,
+    "explanation": "Adding the equations gives 2x = 24, so x = 12 and y = 5. Therefore xy = 60."
+  },
+  {
+    "id": "gen-math-sys1-002",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "medium",
+    "prompt": "If x + y = 17 and x - y = -7, what is the value of xy?",
+    "choices": [
+      "17",
+      "77",
+      "-7",
+      "60"
+    ],
+    "answer": 3,
+    "explanation": "Adding the equations gives 2x = 10, so x = 5 and y = 12. Therefore xy = 60."
+  },
+  {
+    "id": "gen-math-sys1-003",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "medium",
+    "prompt": "If x + y = 22 and x - y = -2, what is the value of xy?",
+    "choices": [
+      "-2",
+      "22",
+      "142",
+      "120"
+    ],
+    "answer": 3,
+    "explanation": "Adding the equations gives 2x = 20, so x = 10 and y = 12. Therefore xy = 120."
+  },
+  {
+    "id": "gen-math-sys1-004",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "medium",
+    "prompt": "If x + y = 10 and x - y = -8, what is the value of xy?",
+    "choices": [
+      "9",
+      "10",
+      "-8",
+      "19"
+    ],
+    "answer": 0,
+    "explanation": "Adding the equations gives 2x = 2, so x = 1 and y = 9. Therefore xy = 9."
+  },
+  {
+    "id": "gen-math-sys1-005",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "medium",
+    "prompt": "If x + y = 20 and x - y = -2, what is the value of xy?",
+    "choices": [
+      "119",
+      "-2",
+      "99",
+      "20"
+    ],
+    "answer": 2,
+    "explanation": "Adding the equations gives 2x = 18, so x = 9 and y = 11. Therefore xy = 99."
+  },
+  {
+    "id": "gen-math-sys1-006",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "medium",
+    "prompt": "If x + y = 12 and x - y = 10, what is the value of xy?",
+    "choices": [
+      "11",
+      "23",
+      "12",
+      "10"
+    ],
+    "answer": 0,
+    "explanation": "Adding the equations gives 2x = 22, so x = 11 and y = 1. Therefore xy = 11."
+  },
+  {
+    "id": "gen-math-sys1-007",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "medium",
+    "prompt": "If x + y = 12 and x - y = -8, what is the value of xy?",
+    "choices": [
+      "32",
+      "20",
+      "-8",
+      "12"
+    ],
+    "answer": 1,
+    "explanation": "Adding the equations gives 2x = 4, so x = 2 and y = 10. Therefore xy = 20."
+  },
+  {
+    "id": "gen-math-sys1-008",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "medium",
+    "prompt": "If x + y = 12 and x - y = 4, what is the value of xy?",
+    "choices": [
+      "12",
+      "44",
+      "4",
+      "32"
+    ],
+    "answer": 3,
+    "explanation": "Adding the equations gives 2x = 16, so x = 8 and y = 4. Therefore xy = 32."
+  },
+  {
+    "id": "gen-math-sys1-009",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "medium",
+    "prompt": "If x + y = 9 and x - y = 1, what is the value of xy?",
+    "choices": [
+      "1",
+      "29",
+      "20",
+      "9"
+    ],
+    "answer": 2,
+    "explanation": "Adding the equations gives 2x = 10, so x = 5 and y = 4. Therefore xy = 20."
+  },
+  {
+    "id": "gen-math-sys2-001",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "hard",
+    "prompt": "Solve for x:  5x + 3y = 42 and x = y + 2",
+    "choices": [
+      "4",
+      "6",
+      "2",
+      "8"
+    ],
+    "answer": 1,
+    "explanation": "Substitute: 5(y + 2) + 3y = 42, so 8y = 32 and y = 4. Then x = 4 + 2 = 6."
+  },
+  {
+    "id": "gen-math-sys2-002",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "hard",
+    "prompt": "Solve for x:  5x + 3y = 73 and x = y + 5",
+    "choices": [
+      "16",
+      "11",
+      "6",
+      "1"
+    ],
+    "answer": 1,
+    "explanation": "Substitute: 5(y + 5) + 3y = 73, so 8y = 48 and y = 6. Then x = 6 + 5 = 11."
+  },
+  {
+    "id": "gen-math-sys2-003",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "hard",
+    "prompt": "Solve for x:  5x + 3y = 38 and x = y + 6",
+    "choices": [
+      "7",
+      "-5",
+      "1",
+      "13"
+    ],
+    "answer": 0,
+    "explanation": "Substitute: 5(y + 6) + 3y = 38, so 8y = 8 and y = 1. Then x = 1 + 6 = 7."
+  },
+  {
+    "id": "gen-math-sys2-004",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "hard",
+    "prompt": "Solve for x:  4x + 3y = 51 and x = y + 4",
+    "choices": [
+      "13",
+      "1",
+      "9",
+      "5"
+    ],
+    "answer": 2,
+    "explanation": "Substitute: 4(y + 4) + 3y = 51, so 7y = 35 and y = 5. Then x = 5 + 4 = 9."
+  },
+  {
+    "id": "gen-math-sys2-005",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "hard",
+    "prompt": "Solve for x:  3x + 2y = 45 and x = y + 5",
+    "choices": [
+      "16",
+      "1",
+      "6",
+      "11"
+    ],
+    "answer": 3,
+    "explanation": "Substitute: 3(y + 5) + 2y = 45, so 5y = 30 and y = 6. Then x = 6 + 5 = 11."
+  },
+  {
+    "id": "gen-math-sys2-006",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "hard",
+    "prompt": "Solve for x:  4x + 2y = 72 and x = y + 6",
+    "choices": [
+      "8",
+      "20",
+      "14",
+      "2"
+    ],
+    "answer": 2,
+    "explanation": "Substitute: 4(y + 6) + 2y = 72, so 6y = 48 and y = 8. Then x = 8 + 6 = 14."
+  },
+  {
+    "id": "gen-math-sys2-007",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "hard",
+    "prompt": "Solve for x:  3x + 5y = 66 and x = y + 6",
+    "choices": [
+      "6",
+      "18",
+      "0",
+      "12"
+    ],
+    "answer": 3,
+    "explanation": "Substitute: 3(y + 6) + 5y = 66, so 8y = 48 and y = 6. Then x = 6 + 6 = 12."
+  },
+  {
+    "id": "gen-math-sys2-008",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "hard",
+    "prompt": "Solve for x:  5x + 3y = 69 and x = y + 1",
+    "choices": [
+      "8",
+      "9",
+      "10",
+      "7"
+    ],
+    "answer": 1,
+    "explanation": "Substitute: 5(y + 1) + 3y = 69, so 8y = 64 and y = 8. Then x = 8 + 1 = 9."
+  },
+  {
+    "id": "gen-math-sys2-009",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "hard",
+    "prompt": "Solve for x:  3x + 3y = 63 and x = y + 5",
+    "choices": [
+      "18",
+      "13",
+      "3",
+      "8"
+    ],
+    "answer": 1,
+    "explanation": "Substitute: 3(y + 5) + 3y = 63, so 6y = 48 and y = 8. Then x = 8 + 5 = 13."
+  },
+  {
+    "id": "gen-math-exp1-001",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "easy",
+    "prompt": "What is the value of (3^2)^3?",
+    "choices": [
+      "729",
+      "243",
+      "27",
+      "18"
+    ],
+    "answer": 0,
+    "explanation": "Raising a power to a power multiplies exponents: 3^(2 x 3) = 3^6 = 729."
+  },
+  {
+    "id": "gen-math-exp1-002",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "easy",
+    "prompt": "What is the value of (3^3)^3?",
+    "choices": [
+      "81",
+      "27",
+      "19683",
+      "729"
+    ],
+    "answer": 2,
+    "explanation": "Raising a power to a power multiplies exponents: 3^(3 x 3) = 3^9 = 19683."
+  },
+  {
+    "id": "gen-math-exp1-003",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "easy",
+    "prompt": "What is the value of (2^2)^2?",
+    "choices": [
+      "16",
+      "15",
+      "8",
+      "17"
+    ],
+    "answer": 0,
+    "explanation": "Raising a power to a power multiplies exponents: 2^(2 x 2) = 2^4 = 16."
+  },
+  {
+    "id": "gen-math-exp1-004",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "easy",
+    "prompt": "What is the value of (2^3)^3?",
+    "choices": [
+      "512",
+      "18",
+      "24",
+      "64"
+    ],
+    "answer": 0,
+    "explanation": "Raising a power to a power multiplies exponents: 2^(3 x 3) = 2^9 = 512."
+  },
+  {
+    "id": "gen-math-exp1-005",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "easy",
+    "prompt": "What is the value of (5^2)^2?",
+    "choices": [
+      "625",
+      "626",
+      "20",
+      "50"
+    ],
+    "answer": 0,
+    "explanation": "Raising a power to a power multiplies exponents: 5^(2 x 2) = 5^4 = 625."
+  },
+  {
+    "id": "gen-math-exp1-006",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "easy",
+    "prompt": "What is the value of (2^3)^2?",
+    "choices": [
+      "16",
+      "32",
+      "12",
+      "64"
+    ],
+    "answer": 3,
+    "explanation": "Raising a power to a power multiplies exponents: 2^(3 x 2) = 2^6 = 64."
+  },
+  {
+    "id": "gen-math-exp1-007",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "easy",
+    "prompt": "What is the value of (2^2)^3?",
+    "choices": [
+      "64",
+      "32",
+      "65",
+      "12"
+    ],
+    "answer": 0,
+    "explanation": "Raising a power to a power multiplies exponents: 2^(2 x 3) = 2^6 = 64."
+  },
+  {
+    "id": "gen-math-exp1-008",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "easy",
+    "prompt": "What is the value of (3^3)^2?",
+    "choices": [
+      "18",
+      "54",
+      "243",
+      "729"
+    ],
+    "answer": 3,
+    "explanation": "Raising a power to a power multiplies exponents: 3^(3 x 2) = 3^6 = 729."
+  },
+  {
+    "id": "gen-math-exp1-009",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "easy",
+    "prompt": "What is the value of (3^2)^2?",
+    "choices": [
+      "12",
+      "81",
+      "82",
+      "18"
+    ],
+    "answer": 1,
+    "explanation": "Raising a power to a power multiplies exponents: 3^(2 x 2) = 3^4 = 81."
+  },
+  {
+    "id": "gen-math-exp2-001",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "medium",
+    "prompt": "Simplify:  (x^8 / x^1) * x^3",
+    "choices": [
+      "x^10",
+      "x^4",
+      "x^12",
+      "x^24"
+    ],
+    "answer": 0,
+    "explanation": "Dividing subtracts exponents: x^7. Multiplying adds: x^7 * x^3 = x^10."
+  },
+  {
+    "id": "gen-math-exp2-002",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "medium",
+    "prompt": "Simplify:  (x^11 / x^1) * x^2",
+    "choices": [
+      "x^14",
+      "x^22",
+      "x^8",
+      "x^12"
+    ],
+    "answer": 3,
+    "explanation": "Dividing subtracts exponents: x^10. Multiplying adds: x^10 * x^2 = x^12."
+  },
+  {
+    "id": "gen-math-exp2-003",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "medium",
+    "prompt": "Simplify:  (x^9 / x^2) * x^2",
+    "choices": [
+      "x^9",
+      "x^5",
+      "x^13",
+      "x^36"
+    ],
+    "answer": 0,
+    "explanation": "Dividing subtracts exponents: x^7. Multiplying adds: x^7 * x^2 = x^9."
+  },
+  {
+    "id": "gen-math-exp2-004",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "medium",
+    "prompt": "Simplify:  (x^10 / x^3) * x^2",
+    "choices": [
+      "x^9",
+      "x^15",
+      "x^5",
+      "x^60"
+    ],
+    "answer": 0,
+    "explanation": "Dividing subtracts exponents: x^7. Multiplying adds: x^7 * x^2 = x^9."
+  },
+  {
+    "id": "gen-math-exp2-005",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "medium",
+    "prompt": "Simplify:  (x^6 / x^2) * x^3",
+    "choices": [
+      "x^11",
+      "x^1",
+      "x^36",
+      "x^7"
+    ],
+    "answer": 3,
+    "explanation": "Dividing subtracts exponents: x^4. Multiplying adds: x^4 * x^3 = x^7."
+  },
+  {
+    "id": "gen-math-exp2-006",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "medium",
+    "prompt": "Simplify:  (x^9 / x^3) * x^3",
+    "choices": [
+      "x^3",
+      "x^15",
+      "x^9",
+      "x^81"
+    ],
+    "answer": 2,
+    "explanation": "Dividing subtracts exponents: x^6. Multiplying adds: x^6 * x^3 = x^9."
+  },
+  {
+    "id": "gen-math-exp2-007",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "medium",
+    "prompt": "Simplify:  (x^9 / x^1) * x^3",
+    "choices": [
+      "x^27",
+      "x^11",
+      "x^13",
+      "x^5"
+    ],
+    "answer": 1,
+    "explanation": "Dividing subtracts exponents: x^8. Multiplying adds: x^8 * x^3 = x^11."
+  },
+  {
+    "id": "gen-math-exp2-008",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "medium",
+    "prompt": "Simplify:  (x^6 / x^1) * x^3",
+    "choices": [
+      "x^8",
+      "x^2",
+      "x^18",
+      "x^10"
+    ],
+    "answer": 0,
+    "explanation": "Dividing subtracts exponents: x^5. Multiplying adds: x^5 * x^3 = x^8."
+  },
+  {
+    "id": "gen-math-exp2-009",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "medium",
+    "prompt": "Simplify:  (x^8 / x^3) * x^2",
+    "choices": [
+      "x^48",
+      "x^7",
+      "x^3",
+      "x^13"
+    ],
+    "answer": 1,
+    "explanation": "Dividing subtracts exponents: x^5. Multiplying adds: x^5 * x^2 = x^7."
+  },
+  {
+    "id": "gen-math-exp3-001",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "hard",
+    "prompt": "If 4^x = 64, what is x?",
+    "choices": [
+      "12",
+      "6",
+      "3",
+      "2"
+    ],
+    "answer": 2,
+    "explanation": "Write both sides in base 2: (2^2)^x = 2^6, so 2x = 6 and x = 3."
+  },
+  {
+    "id": "gen-math-exp3-002",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "hard",
+    "prompt": "If 8^x = 8, what is x?",
+    "choices": [
+      "3",
+      "9",
+      "1",
+      "2"
+    ],
+    "answer": 2,
+    "explanation": "Write both sides in base 2: (2^3)^x = 2^3, so 3x = 3 and x = 1."
+  },
+  {
+    "id": "gen-math-exp3-003",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "hard",
+    "prompt": "If 27^x = 729, what is x?",
+    "choices": [
+      "18",
+      "6",
+      "3",
+      "2"
+    ],
+    "answer": 3,
+    "explanation": "Write both sides in base 3: (3^3)^x = 3^6, so 3x = 6 and x = 2."
+  },
+  {
+    "id": "gen-math-exp3-004",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "hard",
+    "prompt": "If 9^x = 27, what is x?",
+    "choices": [
+      "1.5",
+      "6",
+      "3",
+      "2"
+    ],
+    "answer": 0,
+    "explanation": "Write both sides in base 3: (3^2)^x = 3^3, so 2x = 3 and x = 1.5."
+  },
+  {
+    "id": "gen-math-exp3-005",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "hard",
+    "prompt": "If 27^x = 81, what is x?",
+    "choices": [
+      "12",
+      "1.33",
+      "4",
+      "3"
+    ],
+    "answer": 1,
+    "explanation": "Write both sides in base 3: (3^3)^x = 3^4, so 3x = 4 and x = 1.33."
+  },
+  {
+    "id": "gen-math-exp3-006",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "hard",
+    "prompt": "If 4^x = 16, what is x?",
+    "choices": [
+      "3",
+      "8",
+      "4",
+      "2"
+    ],
+    "answer": 3,
+    "explanation": "Write both sides in base 2: (2^2)^x = 2^4, so 2x = 4 and x = 2."
+  },
+  {
+    "id": "gen-math-exp3-007",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "hard",
+    "prompt": "If 9^x = 729, what is x?",
+    "choices": [
+      "2",
+      "3",
+      "12",
+      "6"
+    ],
+    "answer": 1,
+    "explanation": "Write both sides in base 3: (3^2)^x = 3^6, so 2x = 6 and x = 3."
+  },
+  {
+    "id": "gen-math-exp3-008",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "hard",
+    "prompt": "If 8^x = 32, what is x?",
+    "choices": [
+      "1.67",
+      "15",
+      "5",
+      "3"
+    ],
+    "answer": 0,
+    "explanation": "Write both sides in base 2: (2^3)^x = 2^5, so 3x = 5 and x = 1.67."
+  },
+  {
+    "id": "gen-math-exp3-009",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "hard",
+    "prompt": "If 27^x = 27, what is x?",
+    "choices": [
+      "9",
+      "2",
+      "1",
+      "3"
+    ],
+    "answer": 2,
+    "explanation": "Write both sides in base 3: (3^3)^x = 3^3, so 3x = 3 and x = 1."
+  },
+  {
+    "id": "gen-math-pyth-001",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "easy",
+    "prompt": "A right triangle has legs of length 5 and 12. What is the length of the hypotenuse?",
+    "choices": [
+      "7",
+      "14",
+      "17",
+      "13"
+    ],
+    "answer": 3,
+    "explanation": "5^2 + 12^2 = 25 + 144 = 169, and the square root of 169 is 13."
+  },
+  {
+    "id": "gen-math-pyth-002",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "easy",
+    "prompt": "A right triangle has legs of length 6 and 8. What is the length of the hypotenuse?",
+    "choices": [
+      "2",
+      "11",
+      "10",
+      "14"
+    ],
+    "answer": 2,
+    "explanation": "6^2 + 8^2 = 36 + 64 = 100, and the square root of 100 is 10."
+  },
+  {
+    "id": "gen-math-pyth-003",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "easy",
+    "prompt": "A right triangle has legs of length 3 and 4. What is the length of the hypotenuse?",
+    "choices": [
+      "7",
+      "5",
+      "1",
+      "6"
+    ],
+    "answer": 1,
+    "explanation": "3^2 + 4^2 = 9 + 16 = 25, and the square root of 25 is 5."
+  },
+  {
+    "id": "gen-math-pyth-004",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "easy",
+    "prompt": "A right triangle has legs of length 8 and 15. What is the length of the hypotenuse?",
+    "choices": [
+      "7",
+      "23",
+      "18",
+      "17"
+    ],
+    "answer": 3,
+    "explanation": "8^2 + 15^2 = 64 + 225 = 289, and the square root of 289 is 17."
+  },
+  {
+    "id": "gen-math-pyth-005",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "easy",
+    "prompt": "A right triangle has legs of length 9 and 12. What is the length of the hypotenuse?",
+    "choices": [
+      "16",
+      "21",
+      "15",
+      "3"
+    ],
+    "answer": 2,
+    "explanation": "9^2 + 12^2 = 81 + 144 = 225, and the square root of 225 is 15."
+  },
+  {
+    "id": "gen-math-pyth-006",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "easy",
+    "prompt": "A right triangle has legs of length 20 and 21. What is the length of the hypotenuse?",
+    "choices": [
+      "29",
+      "30",
+      "1",
+      "41"
+    ],
+    "answer": 0,
+    "explanation": "20^2 + 21^2 = 400 + 441 = 841, and the square root of 841 is 29."
+  },
+  {
+    "id": "gen-math-pyth-007",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "easy",
+    "prompt": "A right triangle has legs of length 15 and 20. What is the length of the hypotenuse?",
+    "choices": [
+      "25",
+      "35",
+      "26",
+      "5"
+    ],
+    "answer": 0,
+    "explanation": "15^2 + 20^2 = 225 + 400 = 625, and the square root of 625 is 25."
+  },
+  {
+    "id": "gen-math-pyth-008",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "easy",
+    "prompt": "A right triangle has legs of length 7 and 24. What is the length of the hypotenuse?",
+    "choices": [
+      "17",
+      "31",
+      "26",
+      "25"
+    ],
+    "answer": 3,
+    "explanation": "7^2 + 24^2 = 49 + 576 = 625, and the square root of 625 is 25."
+  },
+  {
+    "id": "gen-math-pyth-009",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "easy",
+    "prompt": "A right triangle has legs of length 18 and 24. What is the length of the hypotenuse?",
+    "choices": [
+      "31",
+      "6",
+      "42",
+      "30"
+    ],
+    "answer": 3,
+    "explanation": "18^2 + 24^2 = 324 + 576 = 900, and the square root of 900 is 30."
+  },
+  {
+    "id": "gen-math-pyth2-001",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "A right triangle has a hypotenuse of 50 and one leg of 14. What is the other leg?",
+    "choices": [
+      "64",
+      "48",
+      "36",
+      "52"
+    ],
+    "answer": 1,
+    "explanation": "50^2 - 14^2 = 2500 - 196 = 2304, and the square root of 2304 is 48."
+  },
+  {
+    "id": "gen-math-pyth2-002",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "A right triangle has a hypotenuse of 34 and one leg of 16. What is the other leg?",
+    "choices": [
+      "30",
+      "38",
+      "18",
+      "50"
+    ],
+    "answer": 0,
+    "explanation": "34^2 - 16^2 = 1156 - 256 = 900, and the square root of 900 is 30."
+  },
+  {
+    "id": "gen-math-pyth2-003",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "A right triangle has a hypotenuse of 26 and one leg of 10. What is the other leg?",
+    "choices": [
+      "36",
+      "28",
+      "24",
+      "16"
+    ],
+    "answer": 2,
+    "explanation": "26^2 - 10^2 = 676 - 100 = 576, and the square root of 576 is 24."
+  },
+  {
+    "id": "gen-math-pyth2-004",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "A right triangle has a hypotenuse of 15 and one leg of 9. What is the other leg?",
+    "choices": [
+      "6",
+      "12",
+      "24",
+      "17"
+    ],
+    "answer": 1,
+    "explanation": "15^2 - 9^2 = 225 - 81 = 144, and the square root of 144 is 12."
+  },
+  {
+    "id": "gen-math-pyth2-005",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "A right triangle has a hypotenuse of 13 and one leg of 5. What is the other leg?",
+    "choices": [
+      "8",
+      "18",
+      "14",
+      "12"
+    ],
+    "answer": 3,
+    "explanation": "13^2 - 5^2 = 169 - 25 = 144, and the square root of 144 is 12."
+  },
+  {
+    "id": "gen-math-pyth2-006",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "A right triangle has a hypotenuse of 10 and one leg of 6. What is the other leg?",
+    "choices": [
+      "12",
+      "8",
+      "16",
+      "4"
+    ],
+    "answer": 1,
+    "explanation": "10^2 - 6^2 = 100 - 36 = 64, and the square root of 64 is 8."
+  },
+  {
+    "id": "gen-math-pyth2-007",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "A right triangle has a hypotenuse of 29 and one leg of 20. What is the other leg?",
+    "choices": [
+      "35",
+      "9",
+      "49",
+      "21"
+    ],
+    "answer": 3,
+    "explanation": "29^2 - 20^2 = 841 - 400 = 441, and the square root of 441 is 21."
+  },
+  {
+    "id": "gen-math-pyth2-008",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "A right triangle has a hypotenuse of 25 and one leg of 7. What is the other leg?",
+    "choices": [
+      "24",
+      "18",
+      "26",
+      "32"
+    ],
+    "answer": 0,
+    "explanation": "25^2 - 7^2 = 625 - 49 = 576, and the square root of 576 is 24."
+  },
+  {
+    "id": "gen-math-pyth2-009",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "A right triangle has a hypotenuse of 25 and one leg of 15. What is the other leg?",
+    "choices": [
+      "29",
+      "10",
+      "20",
+      "40"
+    ],
+    "answer": 2,
+    "explanation": "25^2 - 15^2 = 625 - 225 = 400, and the square root of 400 is 20."
+  },
+  {
+    "id": "gen-math-triang-001",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "The angles of a triangle are in the ratio 2:3:4. What is the measure of the largest angle?",
+    "choices": [
+      "85 degrees",
+      "40 degrees",
+      "80 degrees",
+      "20 degrees"
+    ],
+    "answer": 2,
+    "explanation": "The ratio has 9 parts and the angles sum to 180, so each part is 20 degrees. The largest angle is 4 x 20 = 80 degrees."
+  },
+  {
+    "id": "gen-math-triang-002",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "The angles of a triangle are in the ratio 1:2:3. What is the measure of the largest angle?",
+    "choices": [
+      "100 degrees",
+      "30 degrees",
+      "95 degrees",
+      "90 degrees"
+    ],
+    "answer": 3,
+    "explanation": "The ratio has 6 parts and the angles sum to 180, so each part is 30 degrees. The largest angle is 3 x 30 = 90 degrees."
+  },
+  {
+    "id": "gen-math-triang-003",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "The angles of a triangle are in the ratio 4:5:6. What is the measure of the largest angle?",
+    "choices": [
+      "12 degrees",
+      "72 degrees",
+      "48 degrees",
+      "60 degrees"
+    ],
+    "answer": 1,
+    "explanation": "The ratio has 15 parts and the angles sum to 180, so each part is 12 degrees. The largest angle is 6 x 12 = 72 degrees."
+  },
+  {
+    "id": "gen-math-triang-004",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "The angles of a triangle are in the ratio 1:1:2. What is the measure of the largest angle?",
+    "choices": [
+      "95 degrees",
+      "20 degrees",
+      "90 degrees",
+      "45 degrees"
+    ],
+    "answer": 2,
+    "explanation": "The ratio has 4 parts and the angles sum to 180, so each part is 45 degrees. The largest angle is 2 x 45 = 90 degrees."
+  },
+  {
+    "id": "gen-math-triang-005",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "The angles of a triangle are in the ratio 2:2:5. What is the measure of the largest angle?",
+    "choices": [
+      "20 degrees",
+      "40 degrees",
+      "50 degrees",
+      "100 degrees"
+    ],
+    "answer": 3,
+    "explanation": "The ratio has 9 parts and the angles sum to 180, so each part is 20 degrees. The largest angle is 5 x 20 = 100 degrees."
+  },
+  {
+    "id": "gen-math-triang-006",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "The angles of a triangle are in the ratio 1:3:5. What is the measure of the largest angle?",
+    "choices": [
+      "50 degrees",
+      "100 degrees",
+      "20 degrees",
+      "105 degrees"
+    ],
+    "answer": 1,
+    "explanation": "The ratio has 9 parts and the angles sum to 180, so each part is 20 degrees. The largest angle is 5 x 20 = 100 degrees."
+  },
+  {
+    "id": "gen-math-triang-007",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "The angles of a triangle are in the ratio 3:4:5. What is the measure of the largest angle?",
+    "choices": [
+      "75 degrees",
+      "45 degrees",
+      "15 degrees",
+      "50 degrees"
+    ],
+    "answer": 0,
+    "explanation": "The ratio has 12 parts and the angles sum to 180, so each part is 15 degrees. The largest angle is 5 x 15 = 75 degrees."
+  },
+  {
+    "id": "gen-math-tarea-001",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "What is the area of a triangle with a base of 10 and a height of 5?",
+    "choices": [
+      "25",
+      "15",
+      "100",
+      "50"
+    ],
+    "answer": 0,
+    "explanation": "Area = (1/2) x base x height = (1/2) x 10 x 5 = 25."
+  },
+  {
+    "id": "gen-math-tarea-002",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "What is the area of a triangle with a base of 4 and a height of 6?",
+    "choices": [
+      "10",
+      "24",
+      "48",
+      "12"
+    ],
+    "answer": 3,
+    "explanation": "Area = (1/2) x base x height = (1/2) x 4 x 6 = 12."
+  },
+  {
+    "id": "gen-math-tarea-003",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "What is the area of a triangle with a base of 9 and a height of 13?",
+    "choices": [
+      "58.5",
+      "234",
+      "117",
+      "22"
+    ],
+    "answer": 0,
+    "explanation": "Area = (1/2) x base x height = (1/2) x 9 x 13 = 58.5."
+  },
+  {
+    "id": "gen-math-tarea-004",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "What is the area of a triangle with a base of 6 and a height of 5?",
+    "choices": [
+      "11",
+      "60",
+      "15",
+      "30"
+    ],
+    "answer": 2,
+    "explanation": "Area = (1/2) x base x height = (1/2) x 6 x 5 = 15."
+  },
+  {
+    "id": "gen-math-tarea-005",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "What is the area of a triangle with a base of 2 and a height of 6?",
+    "choices": [
+      "6",
+      "12",
+      "24",
+      "8"
+    ],
+    "answer": 0,
+    "explanation": "Area = (1/2) x base x height = (1/2) x 2 x 6 = 6."
+  },
+  {
+    "id": "gen-math-tarea-006",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "What is the area of a triangle with a base of 4 and a height of 8?",
+    "choices": [
+      "16",
+      "32",
+      "64",
+      "12"
+    ],
+    "answer": 0,
+    "explanation": "Area = (1/2) x base x height = (1/2) x 4 x 8 = 16."
+  },
+  {
+    "id": "gen-math-tarea-007",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "What is the area of a triangle with a base of 11 and a height of 5?",
+    "choices": [
+      "27.5",
+      "110",
+      "55",
+      "16"
+    ],
+    "answer": 0,
+    "explanation": "Area = (1/2) x base x height = (1/2) x 11 x 5 = 27.5."
+  },
+  {
+    "id": "gen-math-tarea-008",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "What is the area of a triangle with a base of 6 and a height of 12?",
+    "choices": [
+      "18",
+      "36",
+      "72",
+      "144"
+    ],
+    "answer": 1,
+    "explanation": "Area = (1/2) x base x height = (1/2) x 6 x 12 = 36."
+  },
+  {
+    "id": "gen-math-tarea-009",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "What is the area of a triangle with a base of 7 and a height of 9?",
+    "choices": [
+      "16",
+      "63",
+      "31.5",
+      "126"
+    ],
+    "answer": 2,
+    "explanation": "Area = (1/2) x base x height = (1/2) x 7 x 9 = 31.5."
+  },
+  {
+    "id": "gen-math-circ1-001",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "easy",
+    "prompt": "What is the area of a circle with radius 8?",
+    "choices": [
+      "64 pi",
+      "128 pi",
+      "16 pi",
+      "8 pi"
+    ],
+    "answer": 0,
+    "explanation": "Area = pi * r^2 = pi * 8^2 = 64 pi. (16 pi is the circumference, a common trap.)"
+  },
+  {
+    "id": "gen-math-circ1-002",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "easy",
+    "prompt": "What is the area of a circle with radius 11?",
+    "choices": [
+      "242 pi",
+      "22 pi",
+      "121 pi",
+      "11 pi"
+    ],
+    "answer": 2,
+    "explanation": "Area = pi * r^2 = pi * 11^2 = 121 pi. (22 pi is the circumference, a common trap.)"
+  },
+  {
+    "id": "gen-math-circ1-003",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "easy",
+    "prompt": "What is the area of a circle with radius 14?",
+    "choices": [
+      "196 pi",
+      "392 pi",
+      "14 pi",
+      "28 pi"
+    ],
+    "answer": 0,
+    "explanation": "Area = pi * r^2 = pi * 14^2 = 196 pi. (28 pi is the circumference, a common trap.)"
+  },
+  {
+    "id": "gen-math-circ1-004",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "easy",
+    "prompt": "What is the area of a circle with radius 13?",
+    "choices": [
+      "169 pi",
+      "26 pi",
+      "13 pi",
+      "338 pi"
+    ],
+    "answer": 0,
+    "explanation": "Area = pi * r^2 = pi * 13^2 = 169 pi. (26 pi is the circumference, a common trap.)"
+  },
+  {
+    "id": "gen-math-circ1-005",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "easy",
+    "prompt": "What is the area of a circle with radius 5?",
+    "choices": [
+      "5 pi",
+      "10 pi",
+      "25 pi",
+      "50 pi"
+    ],
+    "answer": 2,
+    "explanation": "Area = pi * r^2 = pi * 5^2 = 25 pi. (10 pi is the circumference, a common trap.)"
+  },
+  {
+    "id": "gen-math-circ1-006",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "easy",
+    "prompt": "What is the area of a circle with radius 7?",
+    "choices": [
+      "14 pi",
+      "7 pi",
+      "49 pi",
+      "98 pi"
+    ],
+    "answer": 2,
+    "explanation": "Area = pi * r^2 = pi * 7^2 = 49 pi. (14 pi is the circumference, a common trap.)"
+  },
+  {
+    "id": "gen-math-circ1-007",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "easy",
+    "prompt": "What is the area of a circle with radius 2?",
+    "choices": [
+      "7 pi",
+      "4 pi",
+      "2 pi",
+      "8 pi"
+    ],
+    "answer": 1,
+    "explanation": "Area = pi * r^2 = pi * 2^2 = 4 pi. (4 pi is the circumference, a common trap.)"
+  },
+  {
+    "id": "gen-math-circ1-008",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "easy",
+    "prompt": "What is the area of a circle with radius 6?",
+    "choices": [
+      "72 pi",
+      "36 pi",
+      "6 pi",
+      "12 pi"
+    ],
+    "answer": 1,
+    "explanation": "Area = pi * r^2 = pi * 6^2 = 36 pi. (12 pi is the circumference, a common trap.)"
+  },
+  {
+    "id": "gen-math-circ1-009",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "easy",
+    "prompt": "What is the area of a circle with radius 4?",
+    "choices": [
+      "8 pi",
+      "4 pi",
+      "32 pi",
+      "16 pi"
+    ],
+    "answer": 3,
+    "explanation": "Area = pi * r^2 = pi * 4^2 = 16 pi. (8 pi is the circumference, a common trap.)"
+  },
+  {
+    "id": "gen-math-circ2-001",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "medium",
+    "prompt": "A circle has a circumference of 10 pi. What is its area?",
+    "choices": [
+      "10 pi",
+      "100 pi",
+      "25 pi",
+      "5 pi"
+    ],
+    "answer": 2,
+    "explanation": "Circumference = 2 pi r = 10 pi, so r = 5. Area = pi r^2 = 25 pi."
+  },
+  {
+    "id": "gen-math-circ2-002",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "medium",
+    "prompt": "A circle has a circumference of 8 pi. What is its area?",
+    "choices": [
+      "8 pi",
+      "4 pi",
+      "16 pi",
+      "64 pi"
+    ],
+    "answer": 2,
+    "explanation": "Circumference = 2 pi r = 8 pi, so r = 4. Area = pi r^2 = 16 pi."
+  },
+  {
+    "id": "gen-math-circ2-003",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "medium",
+    "prompt": "A circle has a circumference of 22 pi. What is its area?",
+    "choices": [
+      "22 pi",
+      "484 pi",
+      "11 pi",
+      "121 pi"
+    ],
+    "answer": 3,
+    "explanation": "Circumference = 2 pi r = 22 pi, so r = 11. Area = pi r^2 = 121 pi."
+  },
+  {
+    "id": "gen-math-circ2-004",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "medium",
+    "prompt": "A circle has a circumference of 12 pi. What is its area?",
+    "choices": [
+      "12 pi",
+      "6 pi",
+      "36 pi",
+      "144 pi"
+    ],
+    "answer": 2,
+    "explanation": "Circumference = 2 pi r = 12 pi, so r = 6. Area = pi r^2 = 36 pi."
+  },
+  {
+    "id": "gen-math-circ2-005",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "medium",
+    "prompt": "A circle has a circumference of 4 pi. What is its area?",
+    "choices": [
+      "4 pi",
+      "2 pi",
+      "16 pi",
+      "8 pi"
+    ],
+    "answer": 0,
+    "explanation": "Circumference = 2 pi r = 4 pi, so r = 2. Area = pi r^2 = 4 pi."
+  },
+  {
+    "id": "gen-math-circ2-006",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "medium",
+    "prompt": "A circle has a circumference of 6 pi. What is its area?",
+    "choices": [
+      "9 pi",
+      "36 pi",
+      "3 pi",
+      "6 pi"
+    ],
+    "answer": 0,
+    "explanation": "Circumference = 2 pi r = 6 pi, so r = 3. Area = pi r^2 = 9 pi."
+  },
+  {
+    "id": "gen-math-circ2-007",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "medium",
+    "prompt": "A circle has a circumference of 14 pi. What is its area?",
+    "choices": [
+      "196 pi",
+      "14 pi",
+      "49 pi",
+      "7 pi"
+    ],
+    "answer": 2,
+    "explanation": "Circumference = 2 pi r = 14 pi, so r = 7. Area = pi r^2 = 49 pi."
+  },
+  {
+    "id": "gen-math-circ2-008",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "medium",
+    "prompt": "A circle has a circumference of 24 pi. What is its area?",
+    "choices": [
+      "24 pi",
+      "12 pi",
+      "144 pi",
+      "576 pi"
+    ],
+    "answer": 2,
+    "explanation": "Circumference = 2 pi r = 24 pi, so r = 12. Area = pi r^2 = 144 pi."
+  },
+  {
+    "id": "gen-math-circ2-009",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "medium",
+    "prompt": "A circle has a circumference of 20 pi. What is its area?",
+    "choices": [
+      "100 pi",
+      "20 pi",
+      "10 pi",
+      "400 pi"
+    ],
+    "answer": 0,
+    "explanation": "Circumference = 2 pi r = 20 pi, so r = 10. Area = pi r^2 = 100 pi."
+  },
+  {
+    "id": "gen-math-dist-001",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "medium",
+    "prompt": "What is the distance between (4, 3) and (13, 43)?",
+    "choices": [
+      "31",
+      "41",
+      "82",
+      "49"
+    ],
+    "answer": 1,
+    "explanation": "The horizontal change is 9 and the vertical change is 40. Distance = sqrt(81 + 1600) = sqrt(1681) = 41."
+  },
+  {
+    "id": "gen-math-dist-002",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "medium",
+    "prompt": "What is the distance between (-1, 6) and (5, 14)?",
+    "choices": [
+      "10",
+      "20",
+      "14",
+      "2"
+    ],
+    "answer": 0,
+    "explanation": "The horizontal change is 6 and the vertical change is 8. Distance = sqrt(36 + 64) = sqrt(100) = 10."
+  },
+  {
+    "id": "gen-math-dist-003",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "medium",
+    "prompt": "What is the distance between (-4, -2) and (6, 22)?",
+    "choices": [
+      "26",
+      "34",
+      "52",
+      "14"
+    ],
+    "answer": 0,
+    "explanation": "The horizontal change is 10 and the vertical change is 24. Distance = sqrt(100 + 576) = sqrt(676) = 26."
+  },
+  {
+    "id": "gen-math-dist-004",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "medium",
+    "prompt": "What is the distance between (2, 6) and (17, 26)?",
+    "choices": [
+      "25",
+      "50",
+      "35",
+      "5"
+    ],
+    "answer": 0,
+    "explanation": "The horizontal change is 15 and the vertical change is 20. Distance = sqrt(225 + 400) = sqrt(625) = 25."
+  },
+  {
+    "id": "gen-math-dist-005",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "medium",
+    "prompt": "What is the distance between (3, 5) and (18, 25)?",
+    "choices": [
+      "25",
+      "35",
+      "50",
+      "5"
+    ],
+    "answer": 0,
+    "explanation": "The horizontal change is 15 and the vertical change is 20. Distance = sqrt(225 + 400) = sqrt(625) = 25."
+  },
+  {
+    "id": "gen-math-dist-006",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "medium",
+    "prompt": "What is the distance between (-3, -2) and (11, 46)?",
+    "choices": [
+      "62",
+      "100",
+      "34",
+      "50"
+    ],
+    "answer": 3,
+    "explanation": "The horizontal change is 14 and the vertical change is 48. Distance = sqrt(196 + 2304) = sqrt(2500) = 50."
+  },
+  {
+    "id": "gen-math-dist-007",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "medium",
+    "prompt": "What is the distance between (3, -3) and (11, 12)?",
+    "choices": [
+      "34",
+      "7",
+      "17",
+      "23"
+    ],
+    "answer": 2,
+    "explanation": "The horizontal change is 8 and the vertical change is 15. Distance = sqrt(64 + 225) = sqrt(289) = 17."
+  },
+  {
+    "id": "gen-math-dist-008",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "medium",
+    "prompt": "What is the distance between (2, 5) and (18, 35)?",
+    "choices": [
+      "14",
+      "46",
+      "34",
+      "68"
+    ],
+    "answer": 2,
+    "explanation": "The horizontal change is 16 and the vertical change is 30. Distance = sqrt(256 + 900) = sqrt(1156) = 34."
+  },
+  {
+    "id": "gen-math-dist-009",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "medium",
+    "prompt": "What is the distance between (0, 2) and (18, 26)?",
+    "choices": [
+      "60",
+      "42",
+      "30",
+      "6"
+    ],
+    "answer": 2,
+    "explanation": "The horizontal change is 18 and the vertical change is 24. Distance = sqrt(324 + 576) = sqrt(900) = 30."
+  },
+  {
+    "id": "gen-math-mid-001",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "easy",
+    "prompt": "What is the midpoint of the segment joining (0, -8) and (4, 4)?",
+    "choices": [
+      "(2, -2)",
+      "(4, 12)",
+      "(-2, 2)",
+      "(4, 4)"
+    ],
+    "answer": 0,
+    "explanation": "Midpoint = ((0 + 4)/2, (-8 + 4)/2) = (2, -2)."
+  },
+  {
+    "id": "gen-math-mid-002",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "easy",
+    "prompt": "What is the midpoint of the segment joining (-8, -3) and (-6, 5)?",
+    "choices": [
+      "(-6, 5)",
+      "(-7, 1)",
+      "(2, 8)",
+      "(1, -7)"
+    ],
+    "answer": 1,
+    "explanation": "Midpoint = ((-8 + -6)/2, (-3 + 5)/2) = (-7, 1)."
+  },
+  {
+    "id": "gen-math-mid-003",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "easy",
+    "prompt": "What is the midpoint of the segment joining (1, -7) and (13, -1)?",
+    "choices": [
+      "(-4, 7)",
+      "(13, -1)",
+      "(12, 6)",
+      "(7, -4)"
+    ],
+    "answer": 3,
+    "explanation": "Midpoint = ((1 + 13)/2, (-7 + -1)/2) = (7, -4)."
+  },
+  {
+    "id": "gen-math-mid-004",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "easy",
+    "prompt": "What is the midpoint of the segment joining (2, -10) and (6, 4)?",
+    "choices": [
+      "(4, -3)",
+      "(-3, 4)",
+      "(6, 4)",
+      "(4, 14)"
+    ],
+    "answer": 0,
+    "explanation": "Midpoint = ((2 + 6)/2, (-10 + 4)/2) = (4, -3)."
+  },
+  {
+    "id": "gen-math-mid-005",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "easy",
+    "prompt": "What is the midpoint of the segment joining (-4, -4) and (2, 6)?",
+    "choices": [
+      "(6, 10)",
+      "(-1, 1)",
+      "(1, -1)",
+      "(2, 6)"
+    ],
+    "answer": 1,
+    "explanation": "Midpoint = ((-4 + 2)/2, (-4 + 6)/2) = (-1, 1)."
+  },
+  {
+    "id": "gen-math-mid-006",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "easy",
+    "prompt": "What is the midpoint of the segment joining (-3, -11) and (3, -1)?",
+    "choices": [
+      "(0, -6)",
+      "(3, -1)",
+      "(-6, 0)",
+      "(6, 10)"
+    ],
+    "answer": 0,
+    "explanation": "Midpoint = ((-3 + 3)/2, (-11 + -1)/2) = (0, -6)."
+  },
+  {
+    "id": "gen-math-mid-007",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "easy",
+    "prompt": "What is the midpoint of the segment joining (-13, 5) and (1, 7)?",
+    "choices": [
+      "(-6, 6)",
+      "(14, 2)",
+      "(6, -6)",
+      "(1, 7)"
+    ],
+    "answer": 0,
+    "explanation": "Midpoint = ((-13 + 1)/2, (5 + 7)/2) = (-6, 6)."
+  },
+  {
+    "id": "gen-math-mid-008",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "easy",
+    "prompt": "What is the midpoint of the segment joining (-7, -5) and (-1, 9)?",
+    "choices": [
+      "(-1, 9)",
+      "(-4, 2)",
+      "(2, -4)",
+      "(6, 14)"
+    ],
+    "answer": 1,
+    "explanation": "Midpoint = ((-7 + -1)/2, (-5 + 9)/2) = (-4, 2)."
+  },
+  {
+    "id": "gen-math-mid-009",
+    "subject": "Math",
+    "topic": "Coordinate Geometry",
+    "difficulty": "easy",
+    "prompt": "What is the midpoint of the segment joining (-3, -5) and (1, 1)?",
+    "choices": [
+      "(1, 1)",
+      "(-2, -1)",
+      "(4, 6)",
+      "(-1, -2)"
+    ],
+    "answer": 3,
+    "explanation": "Midpoint = ((-3 + 1)/2, (-5 + 1)/2) = (-1, -2)."
+  },
+  {
+    "id": "gen-math-fn1-001",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "medium",
+    "prompt": "If f(x) = 4x^2 - 9, what is f(-5)?",
+    "choices": [
+      "91",
+      "-91",
+      "-29",
+      "-109"
+    ],
+    "answer": 0,
+    "explanation": "f(-5) = 4(-5)^2 - 9 = 4(25) - 9 = 91. Squaring removes the negative before multiplying."
+  },
+  {
+    "id": "gen-math-fn1-002",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "medium",
+    "prompt": "If f(x) = 5x^2 - 5, what is f(-3)?",
+    "choices": [
+      "-20",
+      "-40",
+      "-50",
+      "40"
+    ],
+    "answer": 3,
+    "explanation": "f(-3) = 5(-3)^2 - 5 = 5(9) - 5 = 40. Squaring removes the negative before multiplying."
+  },
+  {
+    "id": "gen-math-fn1-003",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "medium",
+    "prompt": "If f(x) = 5x^2 - 7, what is f(-4)?",
+    "choices": [
+      "-73",
+      "73",
+      "-87",
+      "-27"
+    ],
+    "answer": 1,
+    "explanation": "f(-4) = 5(-4)^2 - 7 = 5(16) - 7 = 73. Squaring removes the negative before multiplying."
+  },
+  {
+    "id": "gen-math-fn1-004",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "medium",
+    "prompt": "If f(x) = 5x^2 + 9, what is f(-2)?",
+    "choices": [
+      "29",
+      "-11",
+      "-29",
+      "-1"
+    ],
+    "answer": 0,
+    "explanation": "f(-2) = 5(-2)^2 + 9 = 5(4) + 9 = 29. Squaring removes the negative before multiplying."
+  },
+  {
+    "id": "gen-math-fn1-005",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "medium",
+    "prompt": "If f(x) = 5x^2 + 1, what is f(-1)?",
+    "choices": [
+      "6",
+      "7",
+      "-4",
+      "-6"
+    ],
+    "answer": 0,
+    "explanation": "f(-1) = 5(-1)^2 + 1 = 5(1) + 1 = 6. Squaring removes the negative before multiplying."
+  },
+  {
+    "id": "gen-math-fn1-006",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "medium",
+    "prompt": "If f(x) = 2x^2 + 8, what is f(-4)?",
+    "choices": [
+      "-24",
+      "40",
+      "-40",
+      "0"
+    ],
+    "answer": 1,
+    "explanation": "f(-4) = 2(-4)^2 + 8 = 2(16) + 8 = 40. Squaring removes the negative before multiplying."
+  },
+  {
+    "id": "gen-math-fn1-007",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "medium",
+    "prompt": "If f(x) = 5x^2 - 7, what is f(-2)?",
+    "choices": [
+      "13",
+      "-27",
+      "-17",
+      "-13"
+    ],
+    "answer": 0,
+    "explanation": "f(-2) = 5(-2)^2 - 7 = 5(4) - 7 = 13. Squaring removes the negative before multiplying."
+  },
+  {
+    "id": "gen-math-fn1-008",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "medium",
+    "prompt": "If f(x) = 5x^2 + 8, what is f(-3)?",
+    "choices": [
+      "-37",
+      "53",
+      "-7",
+      "-53"
+    ],
+    "answer": 1,
+    "explanation": "f(-3) = 5(-3)^2 + 8 = 5(9) + 8 = 53. Squaring removes the negative before multiplying."
+  },
+  {
+    "id": "gen-math-fn1-009",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "medium",
+    "prompt": "If f(x) = 5x^2 + 1, what is f(-2)?",
+    "choices": [
+      "-21",
+      "-9",
+      "-19",
+      "21"
+    ],
+    "answer": 3,
+    "explanation": "f(-2) = 5(-2)^2 + 1 = 5(4) + 1 = 21. Squaring removes the negative before multiplying."
+  },
+  {
+    "id": "gen-math-fn2-001",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "hard",
+    "prompt": "If f(x) = 4x + 3 and g(x) = x^2, what is f(g(2))?",
+    "choices": [
+      "4",
+      "19",
+      "121",
+      "11"
+    ],
+    "answer": 1,
+    "explanation": "Work inside out: g(2) = 4, then f(4) = 4(4) + 3 = 19. Applying them in the wrong order gives 121."
+  },
+  {
+    "id": "gen-math-fn2-002",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "hard",
+    "prompt": "If f(x) = 4x + 6 and g(x) = x^2, what is f(g(4))?",
+    "choices": [
+      "484",
+      "22",
+      "70",
+      "16"
+    ],
+    "answer": 2,
+    "explanation": "Work inside out: g(4) = 16, then f(16) = 4(16) + 6 = 70. Applying them in the wrong order gives 484."
+  },
+  {
+    "id": "gen-math-fn2-003",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "hard",
+    "prompt": "If f(x) = 3x + 3 and g(x) = x^2, what is f(g(4))?",
+    "choices": [
+      "16",
+      "225",
+      "15",
+      "51"
+    ],
+    "answer": 3,
+    "explanation": "Work inside out: g(4) = 16, then f(16) = 3(16) + 3 = 51. Applying them in the wrong order gives 225."
+  },
+  {
+    "id": "gen-math-fn2-004",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "hard",
+    "prompt": "If f(x) = 2x + 3 and g(x) = x^2, what is f(g(4))?",
+    "choices": [
+      "121",
+      "35",
+      "16",
+      "11"
+    ],
+    "answer": 1,
+    "explanation": "Work inside out: g(4) = 16, then f(16) = 2(16) + 3 = 35. Applying them in the wrong order gives 121."
+  },
+  {
+    "id": "gen-math-fn2-005",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "hard",
+    "prompt": "If f(x) = 3x - 4 and g(x) = x^2, what is f(g(3))?",
+    "choices": [
+      "23",
+      "9",
+      "5",
+      "25"
+    ],
+    "answer": 0,
+    "explanation": "Work inside out: g(3) = 9, then f(9) = 3(9) - 4 = 23. Applying them in the wrong order gives 25."
+  },
+  {
+    "id": "gen-math-fn2-006",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "hard",
+    "prompt": "If f(x) = 3x + 1 and g(x) = x^2, what is f(g(2))?",
+    "choices": [
+      "4",
+      "7",
+      "49",
+      "13"
+    ],
+    "answer": 3,
+    "explanation": "Work inside out: g(2) = 4, then f(4) = 3(4) + 1 = 13. Applying them in the wrong order gives 49."
+  },
+  {
+    "id": "gen-math-fn2-007",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "hard",
+    "prompt": "If f(x) = 2x - 2 and g(x) = x^2, what is f(g(5))?",
+    "choices": [
+      "48",
+      "8",
+      "64",
+      "25"
+    ],
+    "answer": 0,
+    "explanation": "Work inside out: g(5) = 25, then f(25) = 2(25) - 2 = 48. Applying them in the wrong order gives 64."
+  },
+  {
+    "id": "gen-math-fn2-008",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "hard",
+    "prompt": "If f(x) = 4x - 5 and g(x) = x^2, what is f(g(3))?",
+    "choices": [
+      "49",
+      "31",
+      "9",
+      "7"
+    ],
+    "answer": 1,
+    "explanation": "Work inside out: g(3) = 9, then f(9) = 4(9) - 5 = 31. Applying them in the wrong order gives 49."
+  },
+  {
+    "id": "gen-math-fn2-009",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "hard",
+    "prompt": "If f(x) = 2x + 5 and g(x) = x^2, what is f(g(4))?",
+    "choices": [
+      "16",
+      "13",
+      "37",
+      "169"
+    ],
+    "answer": 2,
+    "explanation": "Work inside out: g(4) = 16, then f(16) = 2(16) + 5 = 37. Applying them in the wrong order gives 169."
+  },
+  {
+    "id": "gen-math-ratio-001",
+    "subject": "Math",
+    "topic": "Ratios and Proportions",
+    "difficulty": "easy",
+    "prompt": "Two numbers are in the ratio 4:9 and add up to 39. What is the larger number?",
+    "choices": [
+      "3",
+      "19.5",
+      "27",
+      "12"
+    ],
+    "answer": 2,
+    "explanation": "There are 4 + 9 = 13 parts, so each part is 39/13 = 3. The larger number is 9 x 3 = 27."
+  },
+  {
+    "id": "gen-math-ratio-002",
+    "subject": "Math",
+    "topic": "Ratios and Proportions",
+    "difficulty": "easy",
+    "prompt": "Two numbers are in the ratio 1:4 and add up to 10. What is the larger number?",
+    "choices": [
+      "2",
+      "8",
+      "5",
+      "9"
+    ],
+    "answer": 1,
+    "explanation": "There are 1 + 4 = 5 parts, so each part is 10/5 = 2. The larger number is 4 x 2 = 8."
+  },
+  {
+    "id": "gen-math-ratio-003",
+    "subject": "Math",
+    "topic": "Ratios and Proportions",
+    "difficulty": "easy",
+    "prompt": "Two numbers are in the ratio 6:7 and add up to 91. What is the larger number?",
+    "choices": [
+      "45.5",
+      "7",
+      "42",
+      "49"
+    ],
+    "answer": 3,
+    "explanation": "There are 6 + 7 = 13 parts, so each part is 91/13 = 7. The larger number is 7 x 7 = 49."
+  },
+  {
+    "id": "gen-math-ratio-004",
+    "subject": "Math",
+    "topic": "Ratios and Proportions",
+    "difficulty": "easy",
+    "prompt": "Two numbers are in the ratio 2:9 and add up to 33. What is the larger number?",
+    "choices": [
+      "3",
+      "6",
+      "27",
+      "16.5"
+    ],
+    "answer": 2,
+    "explanation": "There are 2 + 9 = 11 parts, so each part is 33/11 = 3. The larger number is 9 x 3 = 27."
+  },
+  {
+    "id": "gen-math-ratio-005",
+    "subject": "Math",
+    "topic": "Ratios and Proportions",
+    "difficulty": "easy",
+    "prompt": "Two numbers are in the ratio 6:7 and add up to 26. What is the larger number?",
+    "choices": [
+      "14",
+      "13",
+      "2",
+      "12"
+    ],
+    "answer": 0,
+    "explanation": "There are 6 + 7 = 13 parts, so each part is 26/13 = 2. The larger number is 7 x 2 = 14."
+  },
+  {
+    "id": "gen-math-ratio-006",
+    "subject": "Math",
+    "topic": "Ratios and Proportions",
+    "difficulty": "easy",
+    "prompt": "Two numbers are in the ratio 2:4 and add up to 12. What is the larger number?",
+    "choices": [
+      "2",
+      "4",
+      "6",
+      "8"
+    ],
+    "answer": 3,
+    "explanation": "There are 2 + 4 = 6 parts, so each part is 12/6 = 2. The larger number is 4 x 2 = 8."
+  },
+  {
+    "id": "gen-math-ratio-007",
+    "subject": "Math",
+    "topic": "Ratios and Proportions",
+    "difficulty": "easy",
+    "prompt": "Two numbers are in the ratio 5:6 and add up to 44. What is the larger number?",
+    "choices": [
+      "22",
+      "20",
+      "4",
+      "24"
+    ],
+    "answer": 3,
+    "explanation": "There are 5 + 6 = 11 parts, so each part is 44/11 = 4. The larger number is 6 x 4 = 24."
+  },
+  {
+    "id": "gen-math-ratio-008",
+    "subject": "Math",
+    "topic": "Ratios and Proportions",
+    "difficulty": "easy",
+    "prompt": "Two numbers are in the ratio 5:7 and add up to 60. What is the larger number?",
+    "choices": [
+      "5",
+      "30",
+      "35",
+      "25"
+    ],
+    "answer": 2,
+    "explanation": "There are 5 + 7 = 12 parts, so each part is 60/12 = 5. The larger number is 7 x 5 = 35."
+  },
+  {
+    "id": "gen-math-ratio-009",
+    "subject": "Math",
+    "topic": "Ratios and Proportions",
+    "difficulty": "easy",
+    "prompt": "Two numbers are in the ratio 1:4 and add up to 25. What is the larger number?",
+    "choices": [
+      "20",
+      "21",
+      "5",
+      "12.5"
+    ],
+    "answer": 0,
+    "explanation": "There are 1 + 4 = 5 parts, so each part is 25/5 = 5. The larger number is 4 x 5 = 20."
+  },
+  {
+    "id": "gen-math-pct1-001",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "medium",
+    "prompt": "An item costs $100. It is marked down 50%, and then an additional 10% is taken off the sale price. What is the final price?",
+    "choices": [
+      "$40",
+      "$47",
+      "$45",
+      "$50"
+    ],
+    "answer": 2,
+    "explanation": "100 x 0.5 = 50, then x 0.9 = 45. Successive discounts multiply; they do not add to 60%."
+  },
+  {
+    "id": "gen-math-pct1-002",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "medium",
+    "prompt": "An item costs $100. It is marked down 20%, and then an additional 10% is taken off the sale price. What is the final price?",
+    "choices": [
+      "$70",
+      "$72",
+      "$74",
+      "$80"
+    ],
+    "answer": 1,
+    "explanation": "100 x 0.8 = 80, then x 0.9 = 72. Successive discounts multiply; they do not add to 30%."
+  },
+  {
+    "id": "gen-math-pct1-003",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "medium",
+    "prompt": "An item costs $40. It is marked down 10%, and then an additional 10% is taken off the sale price. What is the final price?",
+    "choices": [
+      "$20",
+      "$32",
+      "$36",
+      "$32.4"
+    ],
+    "answer": 3,
+    "explanation": "40 x 0.9 = 36, then x 0.9 = 32.4. Successive discounts multiply; they do not add to 20%."
+  },
+  {
+    "id": "gen-math-pct1-004",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "medium",
+    "prompt": "An item costs $200. It is marked down 50%, and then an additional 20% is taken off the sale price. What is the final price?",
+    "choices": [
+      "$100",
+      "$130",
+      "$60",
+      "$80"
+    ],
+    "answer": 3,
+    "explanation": "200 x 0.5 = 100, then x 0.8 = 80. Successive discounts multiply; they do not add to 70%."
+  },
+  {
+    "id": "gen-math-pct1-005",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "medium",
+    "prompt": "An item costs $80. It is marked down 50%, and then an additional 10% is taken off the sale price. What is the final price?",
+    "choices": [
+      "$32",
+      "$36",
+      "$40",
+      "$20"
+    ],
+    "answer": 1,
+    "explanation": "80 x 0.5 = 40, then x 0.9 = 36. Successive discounts multiply; they do not add to 60%."
+  },
+  {
+    "id": "gen-math-pct1-006",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "medium",
+    "prompt": "An item costs $20. It is marked down 10%, and then an additional 20% is taken off the sale price. What is the final price?",
+    "choices": [
+      "$14",
+      "$18",
+      "$-10",
+      "$14.4"
+    ],
+    "answer": 3,
+    "explanation": "20 x 0.9 = 18, then x 0.8 = 14.4. Successive discounts multiply; they do not add to 30%."
+  },
+  {
+    "id": "gen-math-pct1-007",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "medium",
+    "prompt": "An item costs $100. It is marked down 20%, and then an additional 25% is taken off the sale price. What is the final price?",
+    "choices": [
+      "$80",
+      "$55",
+      "$60",
+      "$62"
+    ],
+    "answer": 2,
+    "explanation": "100 x 0.8 = 80, then x 0.75 = 60. Successive discounts multiply; they do not add to 45%."
+  },
+  {
+    "id": "gen-math-pct1-008",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "medium",
+    "prompt": "An item costs $40. It is marked down 50%, and then an additional 10% is taken off the sale price. What is the final price?",
+    "choices": [
+      "$18",
+      "$16",
+      "$-20",
+      "$20"
+    ],
+    "answer": 0,
+    "explanation": "40 x 0.5 = 20, then x 0.9 = 18. Successive discounts multiply; they do not add to 60%."
+  },
+  {
+    "id": "gen-math-pct1-009",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "medium",
+    "prompt": "An item costs $80. It is marked down 25%, and then an additional 20% is taken off the sale price. What is the final price?",
+    "choices": [
+      "$44",
+      "$60",
+      "$35",
+      "$48"
+    ],
+    "answer": 3,
+    "explanation": "80 x 0.75 = 60, then x 0.8 = 48. Successive discounts multiply; they do not add to 45%."
+  },
+  {
+    "id": "gen-math-pct2-001",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "hard",
+    "prompt": "After a 10% increase, a number becomes 275. What was the original number?",
+    "choices": [
+      "250",
+      "247.5",
+      "275",
+      "265"
+    ],
+    "answer": 0,
+    "explanation": "If n is the original, then 1.1n = 275, so n = 275/1.1 = 250. Subtracting 10% from 275 gives 247.5, which is the trap."
+  },
+  {
+    "id": "gen-math-pct2-002",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "hard",
+    "prompt": "After a 20% increase, a number becomes 180. What was the original number?",
+    "choices": [
+      "144",
+      "180",
+      "150",
+      "160"
+    ],
+    "answer": 2,
+    "explanation": "If n is the original, then 1.2n = 180, so n = 180/1.2 = 150. Subtracting 20% from 180 gives 144, which is the trap."
+  },
+  {
+    "id": "gen-math-pct2-003",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "hard",
+    "prompt": "After a 20% increase, a number becomes 60. What was the original number?",
+    "choices": [
+      "48",
+      "40",
+      "60",
+      "50"
+    ],
+    "answer": 3,
+    "explanation": "If n is the original, then 1.2n = 60, so n = 60/1.2 = 50. Subtracting 20% from 60 gives 48, which is the trap."
+  },
+  {
+    "id": "gen-math-pct2-004",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "hard",
+    "prompt": "After a 50% increase, a number becomes 225. What was the original number?",
+    "choices": [
+      "112.5",
+      "150",
+      "175",
+      "225"
+    ],
+    "answer": 1,
+    "explanation": "If n is the original, then 1.5n = 225, so n = 225/1.5 = 150. Subtracting 50% from 225 gives 112.5, which is the trap."
+  },
+  {
+    "id": "gen-math-pct2-005",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "hard",
+    "prompt": "After a 25% increase, a number becomes 75. What was the original number?",
+    "choices": [
+      "75",
+      "50",
+      "60",
+      "56.25"
+    ],
+    "answer": 2,
+    "explanation": "If n is the original, then 1.25n = 75, so n = 75/1.25 = 60. Subtracting 25% from 75 gives 56.25, which is the trap."
+  },
+  {
+    "id": "gen-math-pct2-006",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "hard",
+    "prompt": "After a 50% increase, a number becomes 180. What was the original number?",
+    "choices": [
+      "120",
+      "90",
+      "180",
+      "130"
+    ],
+    "answer": 0,
+    "explanation": "If n is the original, then 1.5n = 180, so n = 180/1.5 = 120. Subtracting 50% from 180 gives 90, which is the trap."
+  },
+  {
+    "id": "gen-math-pct2-007",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "hard",
+    "prompt": "After a 50% increase, a number becomes 90. What was the original number?",
+    "choices": [
+      "40",
+      "90",
+      "60",
+      "45"
+    ],
+    "answer": 2,
+    "explanation": "If n is the original, then 1.5n = 90, so n = 90/1.5 = 60. Subtracting 50% from 90 gives 45, which is the trap."
+  },
+  {
+    "id": "gen-math-pct2-008",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "hard",
+    "prompt": "After a 25% increase, a number becomes 250. What was the original number?",
+    "choices": [
+      "200",
+      "225",
+      "250",
+      "187.5"
+    ],
+    "answer": 0,
+    "explanation": "If n is the original, then 1.25n = 250, so n = 250/1.25 = 200. Subtracting 25% from 250 gives 187.5, which is the trap."
+  },
+  {
+    "id": "gen-math-pct2-009",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "hard",
+    "prompt": "After a 20% increase, a number becomes 72. What was the original number?",
+    "choices": [
+      "52",
+      "57.6",
+      "60",
+      "72"
+    ],
+    "answer": 2,
+    "explanation": "If n is the original, then 1.2n = 72, so n = 72/1.2 = 60. Subtracting 20% from 72 gives 57.6, which is the trap."
+  },
+  {
+    "id": "gen-math-pct3-001",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "easy",
+    "prompt": "What is 10% of 120?",
+    "choices": [
+      "108",
+      "13",
+      "12",
+      "120"
+    ],
+    "answer": 2,
+    "explanation": "10% of 120 = 0.1 x 120 = 12."
+  },
+  {
+    "id": "gen-math-pct3-002",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "easy",
+    "prompt": "What is 60% of 200?",
+    "choices": [
+      "80",
+      "120",
+      "3.33",
+      "1200"
+    ],
+    "answer": 1,
+    "explanation": "60% of 200 = 0.6 x 200 = 120."
+  },
+  {
+    "id": "gen-math-pct3-003",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "easy",
+    "prompt": "What is 5% of 50?",
+    "choices": [
+      "47.5",
+      "2.5",
+      "25",
+      "10"
+    ],
+    "answer": 1,
+    "explanation": "5% of 50 = 0.05 x 50 = 2.5."
+  },
+  {
+    "id": "gen-math-pct3-004",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "easy",
+    "prompt": "What is 60% of 20?",
+    "choices": [
+      "120",
+      "0.33",
+      "12",
+      "8"
+    ],
+    "answer": 2,
+    "explanation": "60% of 20 = 0.6 x 20 = 12."
+  },
+  {
+    "id": "gen-math-pct3-005",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "easy",
+    "prompt": "What is 25% of 200?",
+    "choices": [
+      "8",
+      "500",
+      "50",
+      "150"
+    ],
+    "answer": 2,
+    "explanation": "25% of 200 = 0.25 x 200 = 50."
+  },
+  {
+    "id": "gen-math-pct3-006",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "easy",
+    "prompt": "What is 30% of 200?",
+    "choices": [
+      "6.67",
+      "60",
+      "600",
+      "140"
+    ],
+    "answer": 1,
+    "explanation": "30% of 200 = 0.3 x 200 = 60."
+  },
+  {
+    "id": "gen-math-pct3-007",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "easy",
+    "prompt": "What is 15% of 120?",
+    "choices": [
+      "8",
+      "102",
+      "18",
+      "180"
+    ],
+    "answer": 2,
+    "explanation": "15% of 120 = 0.15 x 120 = 18."
+  },
+  {
+    "id": "gen-math-pct3-008",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "easy",
+    "prompt": "What is 30% of 120?",
+    "choices": [
+      "84",
+      "360",
+      "36",
+      "4"
+    ],
+    "answer": 2,
+    "explanation": "30% of 120 = 0.3 x 120 = 36."
+  },
+  {
+    "id": "gen-math-pct3-009",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "easy",
+    "prompt": "What is 10% of 60?",
+    "choices": [
+      "7",
+      "54",
+      "6",
+      "60"
+    ],
+    "answer": 2,
+    "explanation": "10% of 60 = 0.1 x 60 = 6."
+  },
+  {
+    "id": "gen-math-mean-001",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the mean of the set {20, 24, 14, 13}?",
+    "choices": [
+      "11",
+      "17",
+      "71",
+      "17.75"
+    ],
+    "answer": 3,
+    "explanation": "The sum is 71 and there are 4 values, so the mean is 71/4 = 17.75. (17 is the median, a common mix-up.)"
+  },
+  {
+    "id": "gen-math-mean-002",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the mean of the set {2, 17, 14, 19, 5}?",
+    "choices": [
+      "57",
+      "11.4",
+      "17",
+      "14"
+    ],
+    "answer": 1,
+    "explanation": "The sum is 57 and there are 5 values, so the mean is 57/5 = 11.4. (14 is the median, a common mix-up.)"
+  },
+  {
+    "id": "gen-math-mean-003",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the mean of the set {27, 25, 12, 3}?",
+    "choices": [
+      "18.5",
+      "16.75",
+      "67",
+      "24"
+    ],
+    "answer": 1,
+    "explanation": "The sum is 67 and there are 4 values, so the mean is 67/4 = 16.75. (18.5 is the median, a common mix-up.)"
+  },
+  {
+    "id": "gen-math-mean-004",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the mean of the set {19, 7, 28, 25, 18, 8}?",
+    "choices": [
+      "17.5",
+      "105",
+      "18.5",
+      "21"
+    ],
+    "answer": 0,
+    "explanation": "The sum is 105 and there are 6 values, so the mean is 105/6 = 17.5. (18.5 is the median, a common mix-up.)"
+  },
+  {
+    "id": "gen-math-mean-005",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the mean of the set {3, 15, 17, 30, 1}?",
+    "choices": [
+      "29",
+      "15",
+      "13.2",
+      "66"
+    ],
+    "answer": 2,
+    "explanation": "The sum is 66 and there are 5 values, so the mean is 66/5 = 13.2. (15 is the median, a common mix-up.)"
+  },
+  {
+    "id": "gen-math-mean-006",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the mean of the set {30, 16, 12, 12}?",
+    "choices": [
+      "17.5",
+      "70",
+      "14",
+      "18"
+    ],
+    "answer": 0,
+    "explanation": "The sum is 70 and there are 4 values, so the mean is 70/4 = 17.5. (14 is the median, a common mix-up.)"
+  },
+  {
+    "id": "gen-math-mean-007",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the mean of the set {17, 15, 21, 5}?",
+    "choices": [
+      "15.5",
+      "16",
+      "14.5",
+      "58"
+    ],
+    "answer": 2,
+    "explanation": "The sum is 58 and there are 4 values, so the mean is 58/4 = 14.5. (16 is the median, a common mix-up.)"
+  },
+  {
+    "id": "gen-math-mean-008",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the mean of the set {17, 14, 29, 15, 7}?",
+    "choices": [
+      "16.4",
+      "22",
+      "82",
+      "15"
+    ],
+    "answer": 0,
+    "explanation": "The sum is 82 and there are 5 values, so the mean is 82/5 = 16.4. (15 is the median, a common mix-up.)"
+  },
+  {
+    "id": "gen-math-mean-009",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the mean of the set {9, 20, 23, 14, 24}?",
+    "choices": [
+      "20",
+      "90",
+      "18",
+      "15"
+    ],
+    "answer": 2,
+    "explanation": "The sum is 90 and there are 5 values, so the mean is 90/5 = 18. (20 is the median, a common mix-up.)"
+  },
+  {
+    "id": "gen-math-median-001",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the median of the set {27, 36, 1, 33, 36}?",
+    "choices": [
+      "33",
+      "26.6",
+      "1",
+      "36"
+    ],
+    "answer": 0,
+    "explanation": "Sorted, the set is {1, 27, 33, 36, 36}. With 5 values the middle one is 33."
+  },
+  {
+    "id": "gen-math-median-002",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the median of the set {21, 39, 40, 33, 23}?",
+    "choices": [
+      "40",
+      "31.2",
+      "33",
+      "34"
+    ],
+    "answer": 2,
+    "explanation": "Sorted, the set is {21, 23, 33, 39, 40}. With 5 values the middle one is 33."
+  },
+  {
+    "id": "gen-math-median-003",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the median of the set {17, 9, 34, 18, 35}?",
+    "choices": [
+      "35",
+      "22.6",
+      "18",
+      "34"
+    ],
+    "answer": 2,
+    "explanation": "Sorted, the set is {9, 17, 18, 34, 35}. With 5 values the middle one is 18."
+  },
+  {
+    "id": "gen-math-median-004",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the median of the set {32, 4, 30, 34, 6, 11, 9}?",
+    "choices": [
+      "34",
+      "12",
+      "11",
+      "18"
+    ],
+    "answer": 2,
+    "explanation": "Sorted, the set is {4, 6, 9, 11, 30, 32, 34}. With 7 values the middle one is 11."
+  },
+  {
+    "id": "gen-math-median-005",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the median of the set {13, 5, 10, 32, 24, 29, 4}?",
+    "choices": [
+      "13",
+      "14",
+      "16.71",
+      "32"
+    ],
+    "answer": 0,
+    "explanation": "Sorted, the set is {4, 5, 10, 13, 24, 29, 32}. With 7 values the middle one is 13."
+  },
+  {
+    "id": "gen-math-median-006",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the median of the set {38, 9, 1, 4, 32, 2, 30}?",
+    "choices": [
+      "9",
+      "4",
+      "16.57",
+      "38"
+    ],
+    "answer": 0,
+    "explanation": "Sorted, the set is {1, 2, 4, 9, 30, 32, 38}. With 7 values the middle one is 9."
+  },
+  {
+    "id": "gen-math-median-007",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the median of the set {33, 13, 29, 21, 24, 23, 38}?",
+    "choices": [
+      "25.86",
+      "24",
+      "21",
+      "38"
+    ],
+    "answer": 1,
+    "explanation": "Sorted, the set is {13, 21, 23, 24, 29, 33, 38}. With 7 values the middle one is 24."
+  },
+  {
+    "id": "gen-math-median-008",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the median of the set {37, 32, 14, 38, 19, 33, 29}?",
+    "choices": [
+      "33",
+      "38",
+      "28.86",
+      "32"
+    ],
+    "answer": 3,
+    "explanation": "Sorted, the set is {14, 19, 29, 32, 33, 37, 38}. With 7 values the middle one is 32."
+  },
+  {
+    "id": "gen-math-median-009",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the median of the set {12, 29, 15, 6, 24, 28, 23}?",
+    "choices": [
+      "6",
+      "23",
+      "19.57",
+      "29"
+    ],
+    "answer": 1,
+    "explanation": "Sorted, the set is {6, 12, 15, 23, 24, 28, 29}. With 7 values the middle one is 23."
+  },
+  {
+    "id": "gen-math-range-001",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "easy",
+    "prompt": "What is the range of the set {22, 46, 22, 18, 20}?",
+    "choices": [
+      "46",
+      "18",
+      "28",
+      "25.6"
+    ],
+    "answer": 2,
+    "explanation": "Range = largest minus smallest = 46 - 18 = 28."
+  },
+  {
+    "id": "gen-math-range-002",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "easy",
+    "prompt": "What is the range of the set {36, 35, 13, 40, 35, 47}?",
+    "choices": [
+      "47",
+      "34",
+      "34.33",
+      "13"
+    ],
+    "answer": 1,
+    "explanation": "Range = largest minus smallest = 47 - 13 = 34."
+  },
+  {
+    "id": "gen-math-range-003",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "easy",
+    "prompt": "What is the range of the set {31, 28, 45, 5, 44}?",
+    "choices": [
+      "5",
+      "45",
+      "30.6",
+      "40"
+    ],
+    "answer": 3,
+    "explanation": "Range = largest minus smallest = 45 - 5 = 40."
+  },
+  {
+    "id": "gen-math-range-004",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "easy",
+    "prompt": "What is the range of the set {35, 2, 10, 33}?",
+    "choices": [
+      "35",
+      "20",
+      "33",
+      "2"
+    ],
+    "answer": 2,
+    "explanation": "Range = largest minus smallest = 35 - 2 = 33."
+  },
+  {
+    "id": "gen-math-range-005",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "easy",
+    "prompt": "What is the range of the set {35, 50, 24, 18, 16}?",
+    "choices": [
+      "16",
+      "28.6",
+      "34",
+      "50"
+    ],
+    "answer": 2,
+    "explanation": "Range = largest minus smallest = 50 - 16 = 34."
+  },
+  {
+    "id": "gen-math-range-006",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "easy",
+    "prompt": "What is the range of the set {15, 9, 15, 45, 38, 11}?",
+    "choices": [
+      "22.17",
+      "36",
+      "9",
+      "45"
+    ],
+    "answer": 1,
+    "explanation": "Range = largest minus smallest = 45 - 9 = 36."
+  },
+  {
+    "id": "gen-math-range-007",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "easy",
+    "prompt": "What is the range of the set {42, 31, 21, 43, 25, 13}?",
+    "choices": [
+      "29.17",
+      "43",
+      "13",
+      "30"
+    ],
+    "answer": 3,
+    "explanation": "Range = largest minus smallest = 43 - 13 = 30."
+  },
+  {
+    "id": "gen-math-range-008",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "easy",
+    "prompt": "What is the range of the set {29, 24, 8, 3, 24, 6}?",
+    "choices": [
+      "29",
+      "15.67",
+      "26",
+      "3"
+    ],
+    "answer": 2,
+    "explanation": "Range = largest minus smallest = 29 - 3 = 26."
+  },
+  {
+    "id": "gen-math-range-009",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "easy",
+    "prompt": "What is the range of the set {19, 50, 36, 43, 41, 8}?",
+    "choices": [
+      "42",
+      "8",
+      "32.83",
+      "50"
+    ],
+    "answer": 0,
+    "explanation": "Range = largest minus smallest = 50 - 8 = 42."
+  },
+  {
+    "id": "gen-math-rate-001",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "medium",
+    "prompt": "A cyclist travels 75 miles in 3 hours at a constant speed. What is the speed in miles per hour?",
+    "choices": [
+      "25",
+      "72",
+      "225",
+      "0.04"
+    ],
+    "answer": 0,
+    "explanation": "Speed = distance / time = 75 / 3 = 25 miles per hour."
+  },
+  {
+    "id": "gen-math-rate-002",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "medium",
+    "prompt": "A cyclist travels 60 miles in 4 hours at a constant speed. What is the speed in miles per hour?",
+    "choices": [
+      "240",
+      "15",
+      "0.07",
+      "56"
+    ],
+    "answer": 1,
+    "explanation": "Speed = distance / time = 60 / 4 = 15 miles per hour."
+  },
+  {
+    "id": "gen-math-rate-003",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "medium",
+    "prompt": "A cyclist travels 150 miles in 3 hours at a constant speed. What is the speed in miles per hour?",
+    "choices": [
+      "50",
+      "450",
+      "0.02",
+      "147"
+    ],
+    "answer": 0,
+    "explanation": "Speed = distance / time = 150 / 3 = 50 miles per hour."
+  },
+  {
+    "id": "gen-math-rate-004",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "medium",
+    "prompt": "A cyclist travels 270 miles in 6 hours at a constant speed. What is the speed in miles per hour?",
+    "choices": [
+      "45",
+      "1620",
+      "264",
+      "0.02"
+    ],
+    "answer": 0,
+    "explanation": "Speed = distance / time = 270 / 6 = 45 miles per hour."
+  },
+  {
+    "id": "gen-math-rate-005",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "medium",
+    "prompt": "A cyclist travels 75 miles in 5 hours at a constant speed. What is the speed in miles per hour?",
+    "choices": [
+      "70",
+      "0.07",
+      "375",
+      "15"
+    ],
+    "answer": 3,
+    "explanation": "Speed = distance / time = 75 / 5 = 15 miles per hour."
+  },
+  {
+    "id": "gen-math-rate-006",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "medium",
+    "prompt": "A cyclist travels 320 miles in 8 hours at a constant speed. What is the speed in miles per hour?",
+    "choices": [
+      "40",
+      "0.03",
+      "312",
+      "2560"
+    ],
+    "answer": 0,
+    "explanation": "Speed = distance / time = 320 / 8 = 40 miles per hour."
+  },
+  {
+    "id": "gen-math-rate-007",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "medium",
+    "prompt": "A cyclist travels 100 miles in 2 hours at a constant speed. What is the speed in miles per hour?",
+    "choices": [
+      "98",
+      "0.02",
+      "200",
+      "50"
+    ],
+    "answer": 3,
+    "explanation": "Speed = distance / time = 100 / 2 = 50 miles per hour."
+  },
+  {
+    "id": "gen-math-rate-008",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "medium",
+    "prompt": "A cyclist travels 140 miles in 7 hours at a constant speed. What is the speed in miles per hour?",
+    "choices": [
+      "20",
+      "0.05",
+      "980",
+      "133"
+    ],
+    "answer": 0,
+    "explanation": "Speed = distance / time = 140 / 7 = 20 miles per hour."
+  },
+  {
+    "id": "gen-math-rate-009",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "medium",
+    "prompt": "A cyclist travels 180 miles in 6 hours at a constant speed. What is the speed in miles per hour?",
+    "choices": [
+      "30",
+      "1080",
+      "0.03",
+      "174"
+    ],
+    "answer": 0,
+    "explanation": "Speed = distance / time = 180 / 6 = 30 miles per hour."
+  },
+  {
+    "id": "gen-math-work-001",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "hard",
+    "prompt": "Each worker assembles 8 units per hour. How many units do 5 workers assemble in 4 hours?",
+    "choices": [
+      "17",
+      "32",
+      "160",
+      "40"
+    ],
+    "answer": 2,
+    "explanation": "8 units/hour x 5 workers = 40 units per hour for the team, and over 4 hours that is 160 units."
+  },
+  {
+    "id": "gen-math-work-002",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "hard",
+    "prompt": "Each worker assembles 3 units per hour. How many units do 6 workers assemble in 5 hours?",
+    "choices": [
+      "14",
+      "15",
+      "90",
+      "18"
+    ],
+    "answer": 2,
+    "explanation": "3 units/hour x 6 workers = 18 units per hour for the team, and over 5 hours that is 90 units."
+  },
+  {
+    "id": "gen-math-work-003",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "hard",
+    "prompt": "Each worker assembles 10 units per hour. How many units do 4 workers assemble in 6 hours?",
+    "choices": [
+      "240",
+      "20",
+      "60",
+      "40"
+    ],
+    "answer": 0,
+    "explanation": "10 units/hour x 4 workers = 40 units per hour for the team, and over 6 hours that is 240 units."
+  },
+  {
+    "id": "gen-math-work-004",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "hard",
+    "prompt": "Each worker assembles 4 units per hour. How many units do 3 workers assemble in 2 hours?",
+    "choices": [
+      "9",
+      "24",
+      "8",
+      "12"
+    ],
+    "answer": 1,
+    "explanation": "4 units/hour x 3 workers = 12 units per hour for the team, and over 2 hours that is 24 units."
+  },
+  {
+    "id": "gen-math-work-005",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "hard",
+    "prompt": "Each worker assembles 7 units per hour. How many units do 6 workers assemble in 3 hours?",
+    "choices": [
+      "21",
+      "42",
+      "126",
+      "16"
+    ],
+    "answer": 2,
+    "explanation": "7 units/hour x 6 workers = 42 units per hour for the team, and over 3 hours that is 126 units."
+  },
+  {
+    "id": "gen-math-work-006",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "hard",
+    "prompt": "Each worker assembles 5 units per hour. How many units do 6 workers assemble in 8 hours?",
+    "choices": [
+      "40",
+      "19",
+      "240",
+      "30"
+    ],
+    "answer": 2,
+    "explanation": "5 units/hour x 6 workers = 30 units per hour for the team, and over 8 hours that is 240 units."
+  },
+  {
+    "id": "gen-math-work-007",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "hard",
+    "prompt": "Each worker assembles 9 units per hour. How many units do 2 workers assemble in 5 hours?",
+    "choices": [
+      "90",
+      "16",
+      "45",
+      "18"
+    ],
+    "answer": 0,
+    "explanation": "9 units/hour x 2 workers = 18 units per hour for the team, and over 5 hours that is 90 units."
+  },
+  {
+    "id": "gen-math-work-008",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "hard",
+    "prompt": "Each worker assembles 12 units per hour. How many units do 5 workers assemble in 7 hours?",
+    "choices": [
+      "420",
+      "24",
+      "84",
+      "60"
+    ],
+    "answer": 0,
+    "explanation": "12 units/hour x 5 workers = 60 units per hour for the team, and over 7 hours that is 420 units."
+  },
+  {
+    "id": "gen-math-work-009",
+    "subject": "Math",
+    "topic": "Rates and Word Problems",
+    "difficulty": "hard",
+    "prompt": "Each worker assembles 3 units per hour. How many units do 2 workers assemble in 8 hours?",
+    "choices": [
+      "48",
+      "24",
+      "6",
+      "13"
+    ],
+    "answer": 0,
+    "explanation": "3 units/hour x 2 workers = 6 units per hour for the team, and over 8 hours that is 48 units."
+  }
+]

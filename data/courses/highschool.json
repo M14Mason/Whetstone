@@ -1,0 +1,126 @@
+[
+  {
+    "id": "hs-english-9", "name": "English 9", "level": "regular", "category": "English", "grades": [9],
+    "units": ["Reading Fiction and Narrative", "Reading Nonfiction and Informational Texts", "Introduction to Poetry", "Drama and Shakespeare", "Grammar and Sentence Structure", "Vocabulary and Word Study", "The Writing Process", "Narrative Writing", "Expository Writing", "Research and Citation Basics"]
+  },
+  {
+    "id": "hs-english-10", "name": "English 10", "level": "regular", "category": "English", "grades": [10],
+    "units": ["World Literature", "Literary Analysis and Theme", "Rhetoric and Persuasion", "Poetry and Figurative Language", "Drama and Tragedy", "Advanced Grammar and Usage", "Argumentative Writing", "Comparative Essays", "Research Writing", "Public Speaking and Presentation"]
+  },
+  {
+    "id": "hs-english-11", "name": "English 11: American Literature", "level": "regular", "category": "English", "grades": [11],
+    "units": ["Colonial and Puritan Literature", "Revolutionary and Early National Writing", "Romanticism and Transcendentalism", "Gothic and Dark Romanticism", "Realism and Naturalism", "The Harlem Renaissance", "Modernism", "Contemporary American Voices", "Rhetorical Analysis", "Research and Synthesis Writing"]
+  },
+  {
+    "id": "hs-english-12", "name": "English 12: British and World Literature", "level": "regular", "category": "English", "grades": [12],
+    "units": ["Anglo-Saxon and Medieval Literature", "The Renaissance and Shakespeare", "The Restoration and 18th Century", "Romantic Poetry", "Victorian Literature", "Modern British Literature", "Postcolonial and World Literature", "Literary Criticism", "College Application Writing", "Capstone Research Project"]
+  },
+  {
+    "id": "hs-prealgebra", "name": "Pre-Algebra", "level": "regular", "category": "Math", "grades": [9],
+    "units": ["Integers and Rational Numbers", "Ratios, Rates, and Proportions", "Percentages and Applications", "Expressions and Properties", "One- and Two-Step Equations", "Inequalities", "Introduction to Functions", "Geometry Basics", "Area, Surface Area, and Volume", "Data, Statistics, and Probability"]
+  },
+  {
+    "id": "hs-algebra-1", "name": "Algebra 1", "level": "regular", "category": "Math", "grades": [9, 10],
+    "units": ["Expressions, Variables, and Properties", "Solving Linear Equations", "Inequalities and Compound Inequalities", "Introduction to Functions", "Linear Functions and Graphing", "Systems of Equations and Inequalities", "Exponents and Exponential Functions", "Polynomials and Operations", "Factoring", "Quadratic Functions and Equations", "Radicals and Rational Expressions", "Data Analysis and Statistics"]
+  },
+  {
+    "id": "hs-geometry", "name": "Geometry", "level": "regular", "category": "Math", "grades": [9, 10, 11],
+    "units": ["Foundations: Points, Lines, and Planes", "Logic and Proof", "Parallel and Perpendicular Lines", "Congruent Triangles", "Relationships Within Triangles", "Similarity", "Right Triangles and Trigonometry", "Quadrilaterals and Polygons", "Circles", "Area and Perimeter", "Surface Area and Volume", "Transformations and Symmetry", "Coordinate Geometry", "Probability in Geometry"]
+  },
+  {
+    "id": "hs-algebra-2", "name": "Algebra 2", "level": "regular", "category": "Math", "grades": [10, 11],
+    "units": ["Linear Functions and Systems", "Quadratic Functions and Complex Numbers", "Polynomial Functions", "Rational Expressions and Functions", "Radical Functions and Rational Exponents", "Exponential and Logarithmic Functions", "Sequences and Series", "Trigonometric Functions", "Trigonometric Identities and Equations", "Conic Sections", "Matrices", "Probability and Statistics"]
+  },
+  {
+    "id": "hs-precalculus", "name": "Precalculus", "level": "regular", "category": "Math", "grades": [11, 12],
+    "units": ["Functions and Their Graphs", "Polynomial and Rational Functions", "Exponential and Logarithmic Functions", "Trigonometric Functions and the Unit Circle", "Analytic Trigonometry and Identities", "Applications of Trigonometry", "Systems and Matrices", "Sequences, Series, and Induction", "Conic Sections", "Parametric and Polar Equations", "Vectors", "Introduction to Limits"]
+  },
+  {
+    "id": "hs-trigonometry", "name": "Trigonometry", "level": "regular", "category": "Math", "grades": [10, 11, 12],
+    "units": ["Angles and Angle Measure", "Right Triangle Trigonometry", "The Unit Circle", "Graphs of Trigonometric Functions", "Inverse Trigonometric Functions", "Trigonometric Identities", "Solving Trigonometric Equations", "Law of Sines and Law of Cosines", "Vectors and Applications", "Polar Coordinates and Complex Numbers"]
+  },
+  {
+    "id": "hs-statistics", "name": "Statistics", "level": "regular", "category": "Math", "grades": [11, 12],
+    "units": ["Types of Data and Sampling", "Displaying Univariate Data", "Measures of Center and Spread", "Bivariate Data and Correlation", "Linear Regression", "Probability Fundamentals", "Random Variables and Distributions", "The Normal Distribution", "Sampling Distributions", "Confidence Intervals", "Hypothesis Testing", "Chi-Square and Inference"]
+  },
+  {
+    "id": "hs-calculus", "name": "Calculus", "level": "regular", "category": "Math", "grades": [12],
+    "units": ["Limits and Continuity", "The Derivative", "Rules of Differentiation", "Applications of Derivatives", "Related Rates and Optimization", "The Definite Integral", "The Fundamental Theorem of Calculus", "Techniques of Integration", "Applications of Integration", "Differential Equations"]
+  },
+  {
+    "id": "hs-personal-finance-math", "name": "Consumer and Financial Math", "level": "regular", "category": "Math", "grades": [11, 12],
+    "units": ["Earning Income and Payroll", "Taxes and Deductions", "Banking and Checking Accounts", "Budgeting", "Credit and Credit Scores", "Loans and Interest", "Investing Basics", "Insurance", "Housing and Rent Versus Buy", "Retirement Planning"]
+  },
+  {
+    "id": "hs-physical-science", "name": "Physical Science", "level": "regular", "category": "Science", "grades": [9],
+    "units": ["Scientific Method and Measurement", "Properties of Matter", "Atomic Structure", "The Periodic Table", "Chemical Bonding and Reactions", "Motion and Forces", "Work, Energy, and Machines", "Heat and Thermal Energy", "Waves and Sound", "Light and Optics", "Electricity and Magnetism"]
+  },
+  {
+    "id": "hs-earth-science", "name": "Earth and Space Science", "level": "regular", "category": "Science", "grades": [9, 10],
+    "units": ["Introduction to Earth Science", "Minerals and Rocks", "Plate Tectonics", "Earthquakes and Volcanoes", "Weathering, Erosion, and Soil", "Earth's History and Geologic Time", "Oceanography", "The Atmosphere and Weather", "Climate and Climate Change", "Astronomy and the Solar System", "Stars and the Universe"]
+  },
+  {
+    "id": "hs-biology", "name": "Biology", "level": "regular", "category": "Science", "grades": [9, 10],
+    "units": ["Scientific Method and Characteristics of Life", "Biochemistry and Macromolecules", "Cell Structure and Function", "Cell Transport and Homeostasis", "Photosynthesis and Cellular Respiration", "Cell Division: Mitosis and Meiosis", "Mendelian Genetics", "DNA, RNA, and Protein Synthesis", "Biotechnology", "Evolution and Natural Selection", "Classification and Taxonomy", "Ecology and Ecosystems", "Human Body Systems"]
+  },
+  {
+    "id": "hs-chemistry", "name": "Chemistry", "level": "regular", "category": "Science", "grades": [10, 11],
+    "units": ["Matter and Measurement", "Atomic Structure and Theory", "Electron Configuration", "The Periodic Table and Trends", "Ionic and Metallic Bonding", "Covalent Bonding and Molecular Geometry", "Chemical Nomenclature", "Chemical Reactions and Equations", "Stoichiometry", "States of Matter and Gas Laws", "Solutions and Solubility", "Acids, Bases, and pH", "Thermochemistry", "Reaction Rates and Equilibrium", "Nuclear Chemistry"]
+  },
+  {
+    "id": "hs-physics", "name": "Physics", "level": "regular", "category": "Science", "grades": [11, 12],
+    "units": ["Measurement and Vectors", "Kinematics in One Dimension", "Kinematics in Two Dimensions", "Newton's Laws of Motion", "Friction and Circular Motion", "Work, Energy, and Power", "Momentum and Collisions", "Rotational Motion", "Gravitation", "Simple Harmonic Motion", "Waves and Sound", "Light and Optics", "Electrostatics", "Electric Circuits", "Magnetism", "Modern Physics"]
+  },
+  {
+    "id": "hs-anatomy", "name": "Anatomy and Physiology", "level": "regular", "category": "Science", "grades": [11, 12],
+    "units": ["Organization of the Body", "Biochemistry and Cells", "Tissues", "The Integumentary System", "The Skeletal System", "The Muscular System", "The Nervous System", "The Endocrine System", "The Cardiovascular System", "The Respiratory System", "The Digestive System", "The Urinary System", "The Immune and Lymphatic Systems", "The Reproductive System"]
+  },
+  {
+    "id": "hs-environmental-science", "name": "Environmental Science", "level": "regular", "category": "Science", "grades": [10, 11, 12],
+    "units": ["Introduction to Environmental Science", "Ecosystems and Energy Flow", "Biodiversity and Conservation", "Human Population Dynamics", "Soil and Agriculture", "Water Resources and Pollution", "Air Pollution and the Atmosphere", "Energy Resources", "Renewable Energy", "Waste Management", "Climate Change", "Environmental Policy and Sustainability"]
+  },
+  {
+    "id": "hs-forensic-science", "name": "Forensic Science", "level": "regular", "category": "Science", "grades": [11, 12],
+    "units": ["Introduction to Forensic Science", "Crime Scene Investigation", "Fingerprint Analysis", "Trace Evidence: Hair and Fiber", "Blood and Bloodstain Patterns", "DNA Analysis", "Toxicology and Drugs", "Firearms and Toolmarks", "Document and Handwriting Analysis", "Forensic Anthropology", "Entomology and Time of Death", "Courtroom Testimony and Ethics"]
+  },
+  {
+    "id": "hs-astronomy", "name": "Astronomy", "level": "regular", "category": "Science", "grades": [10, 11, 12],
+    "units": ["History of Astronomy", "Telescopes and Observation", "The Earth-Moon System", "The Solar System", "Terrestrial and Gas Planets", "Comets, Asteroids, and Meteors", "The Sun", "Stellar Classification and Evolution", "Black Holes and Neutron Stars", "Galaxies", "Cosmology and the Big Bang", "The Search for Life"]
+  },
+  {
+    "id": "hs-world-history", "name": "World History", "level": "regular", "category": "Social Studies", "grades": [9, 10],
+    "units": ["Early Humans and River Valley Civilizations", "Classical Greece and Rome", "Classical India and China", "The Rise of Islam", "Medieval Europe", "African and American Civilizations", "The Renaissance and Reformation", "Age of Exploration", "The Scientific Revolution and Enlightenment", "Political Revolutions", "The Industrial Revolution", "Imperialism", "World War I", "The Interwar Period and World War II", "The Cold War", "Decolonization and Globalization"]
+  },
+  {
+    "id": "hs-us-history", "name": "United States History", "level": "regular", "category": "Social Studies", "grades": [10, 11],
+    "units": ["Colonial America", "The American Revolution", "Constitution and the New Republic", "Westward Expansion and Manifest Destiny", "Sectionalism and the Road to War", "The Civil War", "Reconstruction", "Industrialization and Immigration", "The Progressive Era", "Imperialism and World War I", "The Roaring Twenties", "The Great Depression and New Deal", "World War II", "The Cold War", "The Civil Rights Movement", "Vietnam and the 1970s", "Modern America"]
+  },
+  {
+    "id": "hs-us-government", "name": "United States Government and Civics", "level": "regular", "category": "Social Studies", "grades": [11, 12],
+    "units": ["Foundations of Government", "The Constitution and Federalism", "The Legislative Branch", "The Executive Branch", "The Judicial Branch", "Civil Liberties and the Bill of Rights", "Civil Rights", "Political Parties and Elections", "Interest Groups and Media", "Public Policy", "State and Local Government", "Comparative Political Systems"]
+  },
+  {
+    "id": "hs-economics", "name": "Economics", "level": "regular", "category": "Business and Economics", "grades": [11, 12],
+    "units": ["Fundamental Economic Concepts", "Supply and Demand", "Market Structures", "Business Organizations", "Labor and Wages", "Money and Banking", "Government and the Economy", "Fiscal and Monetary Policy", "Measuring the Economy", "International Trade", "Economic Development", "Personal Finance and Economics"]
+  },
+  {
+    "id": "hs-geography", "name": "World Geography", "level": "regular", "category": "Social Studies", "grades": [9, 10],
+    "units": ["Map Skills and Geographic Tools", "Physical Geography and Landforms", "Climate and Vegetation Regions", "Population and Migration", "Culture and Cultural Diffusion", "Political Geography", "Economic Geography", "Urban Geography", "North America", "Latin America", "Europe and Russia", "Africa", "Asia and Oceania"]
+  },
+  {
+    "id": "hs-psychology", "name": "Psychology", "level": "regular", "category": "Social Studies", "grades": [10, 11, 12],
+    "units": ["History and Approaches", "Research Methods", "Biological Bases of Behavior", "Sensation and Perception", "States of Consciousness", "Learning", "Memory", "Cognition and Language", "Motivation and Emotion", "Developmental Psychology", "Personality", "Psychological Disorders and Treatment", "Social Psychology"]
+  },
+  {
+    "id": "hs-sociology", "name": "Sociology", "level": "regular", "category": "Social Studies", "grades": [10, 11, 12],
+    "units": ["The Sociological Perspective", "Research Methods in Sociology", "Culture and Society", "Socialization", "Social Structure and Interaction", "Groups and Organizations", "Deviance and Social Control", "Social Stratification", "Race and Ethnicity", "Gender and Age", "Family and Education", "Social Change and Movements"]
+  },
+  {
+    "id": "hs-health", "name": "Health", "level": "regular", "category": "Health and PE", "grades": [9, 10],
+    "units": ["Wellness and Healthy Decisions", "Nutrition", "Physical Fitness", "Mental and Emotional Health", "Stress Management", "Substance Use and Abuse", "Human Body Systems", "Disease Prevention", "First Aid and Emergency Care", "Relationships and Communication", "Consumer Health and Media Literacy"]
+  },
+  {
+    "id": "hs-pe", "name": "Physical Education", "level": "regular", "category": "Health and PE", "grades": [9, 10, 11, 12],
+    "units": ["Components of Fitness", "Cardiovascular Training", "Strength Training Principles", "Flexibility and Mobility", "Team Sports Skills and Rules", "Individual and Lifetime Sports", "Nutrition for Performance", "Injury Prevention and Safety", "Goal Setting and Personal Fitness Plans"]
+  }
+]

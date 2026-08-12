@@ -1,0 +1,2747 @@
+[
+  {
+    "id": "gen-sci-force-001",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "easy",
+    "prompt": "A 12 kg object accelerates at 10 m/s^2. What net force acts on it?",
+    "choices": [
+      "22 N",
+      "60 N",
+      "120 N",
+      "1.2 N"
+    ],
+    "answer": 2,
+    "explanation": "F = ma = 12 kg x 10 m/s^2 = 120 N."
+  },
+  {
+    "id": "gen-sci-force-002",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "easy",
+    "prompt": "A 10 kg object accelerates at 3 m/s^2. What net force acts on it?",
+    "choices": [
+      "30 N",
+      "13 N",
+      "15 N",
+      "3.33 N"
+    ],
+    "answer": 0,
+    "explanation": "F = ma = 10 kg x 3 m/s^2 = 30 N."
+  },
+  {
+    "id": "gen-sci-force-003",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "easy",
+    "prompt": "A 12 kg object accelerates at 8 m/s^2. What net force acts on it?",
+    "choices": [
+      "48 N",
+      "96 N",
+      "20 N",
+      "1.5 N"
+    ],
+    "answer": 1,
+    "explanation": "F = ma = 12 kg x 8 m/s^2 = 96 N."
+  },
+  {
+    "id": "gen-sci-force-004",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "easy",
+    "prompt": "A 25 kg object accelerates at 5 m/s^2. What net force acts on it?",
+    "choices": [
+      "125 N",
+      "62.5 N",
+      "30 N",
+      "5 N"
+    ],
+    "answer": 0,
+    "explanation": "F = ma = 25 kg x 5 m/s^2 = 125 N."
+  },
+  {
+    "id": "gen-sci-force-005",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "easy",
+    "prompt": "A 2 kg object accelerates at 4 m/s^2. What net force acts on it?",
+    "choices": [
+      "6 N",
+      "4 N",
+      "0.5 N",
+      "8 N"
+    ],
+    "answer": 3,
+    "explanation": "F = ma = 2 kg x 4 m/s^2 = 8 N."
+  },
+  {
+    "id": "gen-sci-force-006",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "easy",
+    "prompt": "A 20 kg object accelerates at 8 m/s^2. What net force acts on it?",
+    "choices": [
+      "160 N",
+      "80 N",
+      "2.5 N",
+      "28 N"
+    ],
+    "answer": 0,
+    "explanation": "F = ma = 20 kg x 8 m/s^2 = 160 N."
+  },
+  {
+    "id": "gen-sci-force-007",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "easy",
+    "prompt": "A 2 kg object accelerates at 8 m/s^2. What net force acts on it?",
+    "choices": [
+      "0.25 N",
+      "8 N",
+      "10 N",
+      "16 N"
+    ],
+    "answer": 3,
+    "explanation": "F = ma = 2 kg x 8 m/s^2 = 16 N."
+  },
+  {
+    "id": "gen-sci-force-008",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "easy",
+    "prompt": "A 20 kg object accelerates at 2 m/s^2. What net force acts on it?",
+    "choices": [
+      "40 N",
+      "20 N",
+      "22 N",
+      "10 N"
+    ],
+    "answer": 0,
+    "explanation": "F = ma = 20 kg x 2 m/s^2 = 40 N."
+  },
+  {
+    "id": "gen-sci-force-009",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "easy",
+    "prompt": "A 10 kg object accelerates at 2 m/s^2. What net force acts on it?",
+    "choices": [
+      "10 N",
+      "5 N",
+      "20 N",
+      "12 N"
+    ],
+    "answer": 2,
+    "explanation": "F = ma = 10 kg x 2 m/s^2 = 20 N."
+  },
+  {
+    "id": "gen-sci-force-010",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "easy",
+    "prompt": "A 15 kg object accelerates at 10 m/s^2. What net force acts on it?",
+    "choices": [
+      "1.5 N",
+      "75 N",
+      "25 N",
+      "150 N"
+    ],
+    "answer": 3,
+    "explanation": "F = ma = 15 kg x 10 m/s^2 = 150 N."
+  },
+  {
+    "id": "gen-sci-force-011",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "easy",
+    "prompt": "A 15 kg object accelerates at 8 m/s^2. What net force acts on it?",
+    "choices": [
+      "60 N",
+      "23 N",
+      "1.88 N",
+      "120 N"
+    ],
+    "answer": 3,
+    "explanation": "F = ma = 15 kg x 8 m/s^2 = 120 N."
+  },
+  {
+    "id": "gen-sci-accel-001",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "A net force of 40 N acts on a 20 kg object. What is its acceleration?",
+    "choices": [
+      "2 m/s^2",
+      "0.5 m/s^2",
+      "20 m/s^2",
+      "800 m/s^2"
+    ],
+    "answer": 0,
+    "explanation": "Rearranging F = ma gives a = F/m = 40 / 20 = 2 m/s^2."
+  },
+  {
+    "id": "gen-sci-accel-002",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "A net force of 8 N acts on a 4 kg object. What is its acceleration?",
+    "choices": [
+      "4 m/s^2",
+      "0.5 m/s^2",
+      "2 m/s^2",
+      "32 m/s^2"
+    ],
+    "answer": 2,
+    "explanation": "Rearranging F = ma gives a = F/m = 8 / 4 = 2 m/s^2."
+  },
+  {
+    "id": "gen-sci-accel-003",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "A net force of 12 N acts on a 2 kg object. What is its acceleration?",
+    "choices": [
+      "10 m/s^2",
+      "0.17 m/s^2",
+      "24 m/s^2",
+      "6 m/s^2"
+    ],
+    "answer": 3,
+    "explanation": "Rearranging F = ma gives a = F/m = 12 / 2 = 6 m/s^2."
+  },
+  {
+    "id": "gen-sci-accel-004",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "A net force of 100 N acts on a 25 kg object. What is its acceleration?",
+    "choices": [
+      "2500 m/s^2",
+      "4 m/s^2",
+      "75 m/s^2",
+      "0.25 m/s^2"
+    ],
+    "answer": 1,
+    "explanation": "Rearranging F = ma gives a = F/m = 100 / 25 = 4 m/s^2."
+  },
+  {
+    "id": "gen-sci-accel-005",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "A net force of 75 N acts on a 25 kg object. What is its acceleration?",
+    "choices": [
+      "50 m/s^2",
+      "0.33 m/s^2",
+      "1875 m/s^2",
+      "3 m/s^2"
+    ],
+    "answer": 3,
+    "explanation": "Rearranging F = ma gives a = F/m = 75 / 25 = 3 m/s^2."
+  },
+  {
+    "id": "gen-sci-accel-006",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "A net force of 24 N acts on a 4 kg object. What is its acceleration?",
+    "choices": [
+      "20 m/s^2",
+      "0.17 m/s^2",
+      "96 m/s^2",
+      "6 m/s^2"
+    ],
+    "answer": 3,
+    "explanation": "Rearranging F = ma gives a = F/m = 24 / 4 = 6 m/s^2."
+  },
+  {
+    "id": "gen-sci-accel-007",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "A net force of 6 N acts on a 2 kg object. What is its acceleration?",
+    "choices": [
+      "12 m/s^2",
+      "3 m/s^2",
+      "0.33 m/s^2",
+      "4 m/s^2"
+    ],
+    "answer": 1,
+    "explanation": "Rearranging F = ma gives a = F/m = 6 / 2 = 3 m/s^2."
+  },
+  {
+    "id": "gen-sci-accel-008",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "A net force of 16 N acts on a 8 kg object. What is its acceleration?",
+    "choices": [
+      "128 m/s^2",
+      "0.5 m/s^2",
+      "2 m/s^2",
+      "8 m/s^2"
+    ],
+    "answer": 2,
+    "explanation": "Rearranging F = ma gives a = F/m = 16 / 8 = 2 m/s^2."
+  },
+  {
+    "id": "gen-sci-accel-009",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "A net force of 40 N acts on a 8 kg object. What is its acceleration?",
+    "choices": [
+      "0.2 m/s^2",
+      "32 m/s^2",
+      "320 m/s^2",
+      "5 m/s^2"
+    ],
+    "answer": 3,
+    "explanation": "Rearranging F = ma gives a = F/m = 40 / 8 = 5 m/s^2."
+  },
+  {
+    "id": "gen-sci-accel-010",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "A net force of 15 N acts on a 5 kg object. What is its acceleration?",
+    "choices": [
+      "10 m/s^2",
+      "3 m/s^2",
+      "0.33 m/s^2",
+      "75 m/s^2"
+    ],
+    "answer": 1,
+    "explanation": "Rearranging F = ma gives a = F/m = 15 / 5 = 3 m/s^2."
+  },
+  {
+    "id": "gen-sci-accel-011",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "A net force of 40 N acts on a 10 kg object. What is its acceleration?",
+    "choices": [
+      "400 m/s^2",
+      "4 m/s^2",
+      "0.25 m/s^2",
+      "30 m/s^2"
+    ],
+    "answer": 1,
+    "explanation": "Rearranging F = ma gives a = F/m = 40 / 10 = 4 m/s^2."
+  },
+  {
+    "id": "gen-sci-weight-001",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the weight of a 15 kg object on Earth?",
+    "choices": [
+      "150 N",
+      "15 N",
+      "160 N",
+      "294 N"
+    ],
+    "answer": 0,
+    "explanation": "Weight is a force: W = mg = 15 x 10 = 150 N. Mass in kilograms and weight in newtons are different quantities."
+  },
+  {
+    "id": "gen-sci-weight-002",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the weight of a 10 kg object on Earth?",
+    "choices": [
+      "110 N",
+      "10 N",
+      "196 N",
+      "100 N"
+    ],
+    "answer": 3,
+    "explanation": "Weight is a force: W = mg = 10 x 10 = 100 N. Mass in kilograms and weight in newtons are different quantities."
+  },
+  {
+    "id": "gen-sci-weight-003",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the weight of a 2 kg object on Earth?",
+    "choices": [
+      "20 N",
+      "39.2 N",
+      "2 N",
+      "30 N"
+    ],
+    "answer": 0,
+    "explanation": "Weight is a force: W = mg = 2 x 10 = 20 N. Mass in kilograms and weight in newtons are different quantities."
+  },
+  {
+    "id": "gen-sci-weight-004",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the weight of a 50 kg object on Earth?",
+    "choices": [
+      "980 N",
+      "500 N",
+      "510 N",
+      "50 N"
+    ],
+    "answer": 1,
+    "explanation": "Weight is a force: W = mg = 50 x 10 = 500 N. Mass in kilograms and weight in newtons are different quantities."
+  },
+  {
+    "id": "gen-sci-weight-005",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the weight of a 5 kg object on Earth?",
+    "choices": [
+      "98 N",
+      "50 N",
+      "60 N",
+      "5 N"
+    ],
+    "answer": 1,
+    "explanation": "Weight is a force: W = mg = 5 x 10 = 50 N. Mass in kilograms and weight in newtons are different quantities."
+  },
+  {
+    "id": "gen-sci-weight-006",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the weight of a 40 kg object on Earth?",
+    "choices": [
+      "410 N",
+      "784 N",
+      "40 N",
+      "400 N"
+    ],
+    "answer": 3,
+    "explanation": "Weight is a force: W = mg = 40 x 10 = 400 N. Mass in kilograms and weight in newtons are different quantities."
+  },
+  {
+    "id": "gen-sci-weight-007",
+    "subject": "Science",
+    "topic": "Newton's Laws",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the weight of a 20 kg object on Earth?",
+    "choices": [
+      "210 N",
+      "20 N",
+      "200 N",
+      "392 N"
+    ],
+    "answer": 2,
+    "explanation": "Weight is a force: W = mg = 20 x 10 = 200 N. Mass in kilograms and weight in newtons are different quantities."
+  },
+  {
+    "id": "gen-sci-ke-001",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "What is the kinetic energy of a 20 kg object moving at 10 m/s?",
+    "choices": [
+      "200 J",
+      "2000 J",
+      "100 J",
+      "1000 J"
+    ],
+    "answer": 3,
+    "explanation": "KE = (1/2)mv^2 = 0.5 x 20 x 100 = 1000 J. Forgetting to square the velocity gives 100 J."
+  },
+  {
+    "id": "gen-sci-ke-002",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "What is the kinetic energy of a 10 kg object moving at 4 m/s?",
+    "choices": [
+      "80 J",
+      "160 J",
+      "20 J",
+      "40 J"
+    ],
+    "answer": 0,
+    "explanation": "KE = (1/2)mv^2 = 0.5 x 10 x 16 = 80 J. Forgetting to square the velocity gives 20 J."
+  },
+  {
+    "id": "gen-sci-ke-003",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "What is the kinetic energy of a 8 kg object moving at 4 m/s?",
+    "choices": [
+      "32 J",
+      "64 J",
+      "128 J",
+      "16 J"
+    ],
+    "answer": 1,
+    "explanation": "KE = (1/2)mv^2 = 0.5 x 8 x 16 = 64 J. Forgetting to square the velocity gives 16 J."
+  },
+  {
+    "id": "gen-sci-ke-004",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "What is the kinetic energy of a 10 kg object moving at 5 m/s?",
+    "choices": [
+      "50 J",
+      "25 J",
+      "125 J",
+      "250 J"
+    ],
+    "answer": 2,
+    "explanation": "KE = (1/2)mv^2 = 0.5 x 10 x 25 = 125 J. Forgetting to square the velocity gives 25 J."
+  },
+  {
+    "id": "gen-sci-ke-005",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "What is the kinetic energy of a 12 kg object moving at 4 m/s?",
+    "choices": [
+      "24 J",
+      "48 J",
+      "192 J",
+      "96 J"
+    ],
+    "answer": 3,
+    "explanation": "KE = (1/2)mv^2 = 0.5 x 12 x 16 = 96 J. Forgetting to square the velocity gives 24 J."
+  },
+  {
+    "id": "gen-sci-ke-006",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "What is the kinetic energy of a 12 kg object moving at 6 m/s?",
+    "choices": [
+      "72 J",
+      "216 J",
+      "36 J",
+      "432 J"
+    ],
+    "answer": 1,
+    "explanation": "KE = (1/2)mv^2 = 0.5 x 12 x 36 = 216 J. Forgetting to square the velocity gives 36 J."
+  },
+  {
+    "id": "gen-sci-ke-007",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "What is the kinetic energy of a 12 kg object moving at 3 m/s?",
+    "choices": [
+      "18 J",
+      "36 J",
+      "54 J",
+      "108 J"
+    ],
+    "answer": 2,
+    "explanation": "KE = (1/2)mv^2 = 0.5 x 12 x 9 = 54 J. Forgetting to square the velocity gives 18 J."
+  },
+  {
+    "id": "gen-sci-ke-008",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "What is the kinetic energy of a 20 kg object moving at 3 m/s?",
+    "choices": [
+      "30 J",
+      "180 J",
+      "90 J",
+      "60 J"
+    ],
+    "answer": 2,
+    "explanation": "KE = (1/2)mv^2 = 0.5 x 20 x 9 = 90 J. Forgetting to square the velocity gives 30 J."
+  },
+  {
+    "id": "gen-sci-ke-009",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "What is the kinetic energy of a 4 kg object moving at 5 m/s?",
+    "choices": [
+      "50 J",
+      "100 J",
+      "20 J",
+      "10 J"
+    ],
+    "answer": 0,
+    "explanation": "KE = (1/2)mv^2 = 0.5 x 4 x 25 = 50 J. Forgetting to square the velocity gives 10 J."
+  },
+  {
+    "id": "gen-sci-ke-010",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "What is the kinetic energy of a 6 kg object moving at 5 m/s?",
+    "choices": [
+      "15 J",
+      "150 J",
+      "75 J",
+      "30 J"
+    ],
+    "answer": 2,
+    "explanation": "KE = (1/2)mv^2 = 0.5 x 6 x 25 = 75 J. Forgetting to square the velocity gives 15 J."
+  },
+  {
+    "id": "gen-sci-ke-011",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "What is the kinetic energy of a 2 kg object moving at 10 m/s?",
+    "choices": [
+      "20 J",
+      "10 J",
+      "200 J",
+      "100 J"
+    ],
+    "answer": 3,
+    "explanation": "KE = (1/2)mv^2 = 0.5 x 2 x 100 = 100 J. Forgetting to square the velocity gives 10 J."
+  },
+  {
+    "id": "gen-sci-pe-001",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the gravitational potential energy of a 3 kg object at a height of 2 m?",
+    "choices": [
+      "60 J",
+      "30 J",
+      "5 J",
+      "6 J"
+    ],
+    "answer": 0,
+    "explanation": "PE = mgh = 3 x 10 x 2 = 60 J."
+  },
+  {
+    "id": "gen-sci-pe-002",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the gravitational potential energy of a 5 kg object at a height of 4 m?",
+    "choices": [
+      "20 J",
+      "200 J",
+      "9 J",
+      "100 J"
+    ],
+    "answer": 1,
+    "explanation": "PE = mgh = 5 x 10 x 4 = 200 J."
+  },
+  {
+    "id": "gen-sci-pe-003",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the gravitational potential energy of a 3 kg object at a height of 4 m?",
+    "choices": [
+      "60 J",
+      "7 J",
+      "120 J",
+      "12 J"
+    ],
+    "answer": 2,
+    "explanation": "PE = mgh = 3 x 10 x 4 = 120 J."
+  },
+  {
+    "id": "gen-sci-pe-004",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the gravitational potential energy of a 5 kg object at a height of 5 m?",
+    "choices": [
+      "250 J",
+      "10 J",
+      "25 J",
+      "125 J"
+    ],
+    "answer": 0,
+    "explanation": "PE = mgh = 5 x 10 x 5 = 250 J."
+  },
+  {
+    "id": "gen-sci-pe-005",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the gravitational potential energy of a 2 kg object at a height of 4 m?",
+    "choices": [
+      "40 J",
+      "6 J",
+      "80 J",
+      "8 J"
+    ],
+    "answer": 2,
+    "explanation": "PE = mgh = 2 x 10 x 4 = 80 J."
+  },
+  {
+    "id": "gen-sci-pe-006",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the gravitational potential energy of a 3 kg object at a height of 3 m?",
+    "choices": [
+      "45 J",
+      "6 J",
+      "90 J",
+      "9 J"
+    ],
+    "answer": 2,
+    "explanation": "PE = mgh = 3 x 10 x 3 = 90 J."
+  },
+  {
+    "id": "gen-sci-pe-007",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the gravitational potential energy of a 2 kg object at a height of 12 m?",
+    "choices": [
+      "120 J",
+      "24 J",
+      "240 J",
+      "14 J"
+    ],
+    "answer": 2,
+    "explanation": "PE = mgh = 2 x 10 x 12 = 240 J."
+  },
+  {
+    "id": "gen-sci-pe-008",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the gravitational potential energy of a 8 kg object at a height of 4 m?",
+    "choices": [
+      "160 J",
+      "12 J",
+      "32 J",
+      "320 J"
+    ],
+    "answer": 3,
+    "explanation": "PE = mgh = 8 x 10 x 4 = 320 J."
+  },
+  {
+    "id": "gen-sci-pe-009",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the gravitational potential energy of a 2 kg object at a height of 5 m?",
+    "choices": [
+      "100 J",
+      "50 J",
+      "7 J",
+      "10 J"
+    ],
+    "answer": 0,
+    "explanation": "PE = mgh = 2 x 10 x 5 = 100 J."
+  },
+  {
+    "id": "gen-sci-pe-010",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the gravitational potential energy of a 15 kg object at a height of 5 m?",
+    "choices": [
+      "375 J",
+      "20 J",
+      "75 J",
+      "750 J"
+    ],
+    "answer": 3,
+    "explanation": "PE = mgh = 15 x 10 x 5 = 750 J."
+  },
+  {
+    "id": "gen-sci-pe-011",
+    "subject": "Science",
+    "topic": "Energy",
+    "difficulty": "medium",
+    "prompt": "Using g = 10 m/s^2, what is the gravitational potential energy of a 5 kg object at a height of 20 m?",
+    "choices": [
+      "500 J",
+      "100 J",
+      "1000 J",
+      "25 J"
+    ],
+    "answer": 2,
+    "explanation": "PE = mgh = 5 x 10 x 20 = 1000 J."
+  },
+  {
+    "id": "gen-sci-wave1-001",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "medium",
+    "prompt": "A wave has a frequency of 3 Hz and a wavelength of 3 m. What is its speed?",
+    "choices": [
+      "6 m/s",
+      "1 m/s",
+      "9 m/s",
+      "12 m/s"
+    ],
+    "answer": 2,
+    "explanation": "v = f x lambda = 3 x 3 = 9 m/s."
+  },
+  {
+    "id": "gen-sci-wave1-002",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "medium",
+    "prompt": "A wave has a frequency of 12 Hz and a wavelength of 10 m. What is its speed?",
+    "choices": [
+      "0.83 m/s",
+      "1.2 m/s",
+      "120 m/s",
+      "22 m/s"
+    ],
+    "answer": 2,
+    "explanation": "v = f x lambda = 12 x 10 = 120 m/s."
+  },
+  {
+    "id": "gen-sci-wave1-003",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "medium",
+    "prompt": "A wave has a frequency of 2 Hz and a wavelength of 5 m. What is its speed?",
+    "choices": [
+      "0.4 m/s",
+      "2.5 m/s",
+      "10 m/s",
+      "7 m/s"
+    ],
+    "answer": 2,
+    "explanation": "v = f x lambda = 2 x 5 = 10 m/s."
+  },
+  {
+    "id": "gen-sci-wave1-004",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "medium",
+    "prompt": "A wave has a frequency of 12 Hz and a wavelength of 3 m. What is its speed?",
+    "choices": [
+      "4 m/s",
+      "0.25 m/s",
+      "15 m/s",
+      "36 m/s"
+    ],
+    "answer": 3,
+    "explanation": "v = f x lambda = 12 x 3 = 36 m/s."
+  },
+  {
+    "id": "gen-sci-wave1-005",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "medium",
+    "prompt": "A wave has a frequency of 10 Hz and a wavelength of 4 m. What is its speed?",
+    "choices": [
+      "2.5 m/s",
+      "40 m/s",
+      "14 m/s",
+      "0.4 m/s"
+    ],
+    "answer": 1,
+    "explanation": "v = f x lambda = 10 x 4 = 40 m/s."
+  },
+  {
+    "id": "gen-sci-wave1-006",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "medium",
+    "prompt": "A wave has a frequency of 5 Hz and a wavelength of 4 m. What is its speed?",
+    "choices": [
+      "1.25 m/s",
+      "9 m/s",
+      "0.8 m/s",
+      "20 m/s"
+    ],
+    "answer": 3,
+    "explanation": "v = f x lambda = 5 x 4 = 20 m/s."
+  },
+  {
+    "id": "gen-sci-wave1-007",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "medium",
+    "prompt": "A wave has a frequency of 3 Hz and a wavelength of 4 m. What is its speed?",
+    "choices": [
+      "0.75 m/s",
+      "7 m/s",
+      "12 m/s",
+      "1.33 m/s"
+    ],
+    "answer": 2,
+    "explanation": "v = f x lambda = 3 x 4 = 12 m/s."
+  },
+  {
+    "id": "gen-sci-wave1-008",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "medium",
+    "prompt": "A wave has a frequency of 5 Hz and a wavelength of 2 m. What is its speed?",
+    "choices": [
+      "10 m/s",
+      "7 m/s",
+      "2.5 m/s",
+      "0.4 m/s"
+    ],
+    "answer": 0,
+    "explanation": "v = f x lambda = 5 x 2 = 10 m/s."
+  },
+  {
+    "id": "gen-sci-wave1-009",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "medium",
+    "prompt": "A wave has a frequency of 4 Hz and a wavelength of 2 m. What is its speed?",
+    "choices": [
+      "0.5 m/s",
+      "2 m/s",
+      "8 m/s",
+      "6 m/s"
+    ],
+    "answer": 2,
+    "explanation": "v = f x lambda = 4 x 2 = 8 m/s."
+  },
+  {
+    "id": "gen-sci-wave1-010",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "medium",
+    "prompt": "A wave has a frequency of 8 Hz and a wavelength of 5 m. What is its speed?",
+    "choices": [
+      "13 m/s",
+      "40 m/s",
+      "1.6 m/s",
+      "0.63 m/s"
+    ],
+    "answer": 1,
+    "explanation": "v = f x lambda = 8 x 5 = 40 m/s."
+  },
+  {
+    "id": "gen-sci-wave1-011",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "medium",
+    "prompt": "A wave has a frequency of 12 Hz and a wavelength of 5 m. What is its speed?",
+    "choices": [
+      "2.4 m/s",
+      "60 m/s",
+      "0.42 m/s",
+      "17 m/s"
+    ],
+    "answer": 1,
+    "explanation": "v = f x lambda = 12 x 5 = 60 m/s."
+  },
+  {
+    "id": "gen-sci-wave2-001",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "hard",
+    "prompt": "A wave travels at 32 m/s with a frequency of 8 Hz. What is its wavelength?",
+    "choices": [
+      "256 m",
+      "4 m",
+      "24 m",
+      "0.25 m"
+    ],
+    "answer": 1,
+    "explanation": "Rearranging v = f x lambda gives lambda = v/f = 32 / 8 = 4 m."
+  },
+  {
+    "id": "gen-sci-wave2-002",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "hard",
+    "prompt": "A wave travels at 40 m/s with a frequency of 4 Hz. What is its wavelength?",
+    "choices": [
+      "160 m",
+      "0.1 m",
+      "36 m",
+      "10 m"
+    ],
+    "answer": 3,
+    "explanation": "Rearranging v = f x lambda gives lambda = v/f = 40 / 4 = 10 m."
+  },
+  {
+    "id": "gen-sci-wave2-003",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "hard",
+    "prompt": "A wave travels at 20 m/s with a frequency of 2 Hz. What is its wavelength?",
+    "choices": [
+      "40 m",
+      "10 m",
+      "0.1 m",
+      "18 m"
+    ],
+    "answer": 1,
+    "explanation": "Rearranging v = f x lambda gives lambda = v/f = 20 / 2 = 10 m."
+  },
+  {
+    "id": "gen-sci-wave2-004",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "hard",
+    "prompt": "A wave travels at 40 m/s with a frequency of 8 Hz. What is its wavelength?",
+    "choices": [
+      "0.2 m",
+      "5 m",
+      "320 m",
+      "32 m"
+    ],
+    "answer": 1,
+    "explanation": "Rearranging v = f x lambda gives lambda = v/f = 40 / 8 = 5 m."
+  },
+  {
+    "id": "gen-sci-wave2-005",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "hard",
+    "prompt": "A wave travels at 50 m/s with a frequency of 5 Hz. What is its wavelength?",
+    "choices": [
+      "250 m",
+      "45 m",
+      "0.1 m",
+      "10 m"
+    ],
+    "answer": 3,
+    "explanation": "Rearranging v = f x lambda gives lambda = v/f = 50 / 5 = 10 m."
+  },
+  {
+    "id": "gen-sci-wave2-006",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "hard",
+    "prompt": "A wave travels at 10 m/s with a frequency of 5 Hz. What is its wavelength?",
+    "choices": [
+      "2 m",
+      "50 m",
+      "5 m",
+      "0.5 m"
+    ],
+    "answer": 0,
+    "explanation": "Rearranging v = f x lambda gives lambda = v/f = 10 / 5 = 2 m."
+  },
+  {
+    "id": "gen-sci-wave2-007",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "hard",
+    "prompt": "A wave travels at 80 m/s with a frequency of 20 Hz. What is its wavelength?",
+    "choices": [
+      "1600 m",
+      "60 m",
+      "4 m",
+      "0.25 m"
+    ],
+    "answer": 2,
+    "explanation": "Rearranging v = f x lambda gives lambda = v/f = 80 / 20 = 4 m."
+  },
+  {
+    "id": "gen-sci-wave2-008",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "hard",
+    "prompt": "A wave travels at 16 m/s with a frequency of 8 Hz. What is its wavelength?",
+    "choices": [
+      "128 m",
+      "8 m",
+      "2 m",
+      "0.5 m"
+    ],
+    "answer": 2,
+    "explanation": "Rearranging v = f x lambda gives lambda = v/f = 16 / 8 = 2 m."
+  },
+  {
+    "id": "gen-sci-wave2-009",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "hard",
+    "prompt": "A wave travels at 16 m/s with a frequency of 4 Hz. What is its wavelength?",
+    "choices": [
+      "4 m",
+      "12 m",
+      "64 m",
+      "0.25 m"
+    ],
+    "answer": 0,
+    "explanation": "Rearranging v = f x lambda gives lambda = v/f = 16 / 4 = 4 m."
+  },
+  {
+    "id": "gen-sci-wave2-010",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "hard",
+    "prompt": "A wave travels at 80 m/s with a frequency of 8 Hz. What is its wavelength?",
+    "choices": [
+      "72 m",
+      "0.1 m",
+      "10 m",
+      "640 m"
+    ],
+    "answer": 2,
+    "explanation": "Rearranging v = f x lambda gives lambda = v/f = 80 / 8 = 10 m."
+  },
+  {
+    "id": "gen-sci-wave2-011",
+    "subject": "Science",
+    "topic": "Waves",
+    "difficulty": "hard",
+    "prompt": "A wave travels at 100 m/s with a frequency of 25 Hz. What is its wavelength?",
+    "choices": [
+      "4 m",
+      "75 m",
+      "0.25 m",
+      "2500 m"
+    ],
+    "answer": 0,
+    "explanation": "Rearranging v = f x lambda gives lambda = v/f = 100 / 25 = 4 m."
+  },
+  {
+    "id": "gen-sci-moles1-001",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "How many moles are in 176 grams of carbon dioxide (CO2, molar mass 44 g/mol)?",
+    "choices": [
+      "176 mol",
+      "7744 mol",
+      "4 mol",
+      "0.25 mol"
+    ],
+    "answer": 2,
+    "explanation": "Moles = mass / molar mass = 176 / 44 = 4 mol."
+  },
+  {
+    "id": "gen-sci-moles1-002",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "How many moles are in 96 grams of oxygen gas (O2, molar mass 32 g/mol)?",
+    "choices": [
+      "3072 mol",
+      "0.33 mol",
+      "3 mol",
+      "96 mol"
+    ],
+    "answer": 2,
+    "explanation": "Moles = mass / molar mass = 96 / 32 = 3 mol."
+  },
+  {
+    "id": "gen-sci-moles1-003",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "How many moles are in 8 grams of methane (CH4, molar mass 16 g/mol)?",
+    "choices": [
+      "2 mol",
+      "0.5 mol",
+      "8 mol",
+      "128 mol"
+    ],
+    "answer": 1,
+    "explanation": "Moles = mass / molar mass = 8 / 16 = 0.5 mol."
+  },
+  {
+    "id": "gen-sci-moles1-004",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "How many moles are in 29.25 grams of sodium chloride (NaCl, molar mass 58.5 g/mol)?",
+    "choices": [
+      "29.25 mol",
+      "1711.13 mol",
+      "2 mol",
+      "0.5 mol"
+    ],
+    "answer": 3,
+    "explanation": "Moles = mass / molar mass = 29.25 / 58.5 = 0.5 mol."
+  },
+  {
+    "id": "gen-sci-moles1-005",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "How many moles are in 54 grams of water (H2O, molar mass 18 g/mol)?",
+    "choices": [
+      "972 mol",
+      "54 mol",
+      "3 mol",
+      "0.33 mol"
+    ],
+    "answer": 2,
+    "explanation": "Moles = mass / molar mass = 54 / 18 = 3 mol."
+  },
+  {
+    "id": "gen-sci-moles1-006",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "How many moles are in 85 grams of ammonia (NH3, molar mass 17 g/mol)?",
+    "choices": [
+      "0.2 mol",
+      "5 mol",
+      "1445 mol",
+      "85 mol"
+    ],
+    "answer": 1,
+    "explanation": "Moles = mass / molar mass = 85 / 17 = 5 mol."
+  },
+  {
+    "id": "gen-sci-moles1-007",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "How many moles are in 117 grams of sodium chloride (NaCl, molar mass 58.5 g/mol)?",
+    "choices": [
+      "0.5 mol",
+      "2 mol",
+      "117 mol",
+      "6844.5 mol"
+    ],
+    "answer": 1,
+    "explanation": "Moles = mass / molar mass = 117 / 58.5 = 2 mol."
+  },
+  {
+    "id": "gen-sci-moles1-008",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "How many moles are in 90 grams of water (H2O, molar mass 18 g/mol)?",
+    "choices": [
+      "0.2 mol",
+      "1620 mol",
+      "5 mol",
+      "90 mol"
+    ],
+    "answer": 2,
+    "explanation": "Moles = mass / molar mass = 90 / 18 = 5 mol."
+  },
+  {
+    "id": "gen-sci-moles1-009",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "How many moles are in 80 grams of methane (CH4, molar mass 16 g/mol)?",
+    "choices": [
+      "80 mol",
+      "0.2 mol",
+      "1280 mol",
+      "5 mol"
+    ],
+    "answer": 3,
+    "explanation": "Moles = mass / molar mass = 80 / 16 = 5 mol."
+  },
+  {
+    "id": "gen-sci-moles1-010",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "How many moles are in 64 grams of oxygen gas (O2, molar mass 32 g/mol)?",
+    "choices": [
+      "2048 mol",
+      "64 mol",
+      "2 mol",
+      "0.5 mol"
+    ],
+    "answer": 2,
+    "explanation": "Moles = mass / molar mass = 64 / 32 = 2 mol."
+  },
+  {
+    "id": "gen-sci-moles1-011",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "How many moles are in 48 grams of methane (CH4, molar mass 16 g/mol)?",
+    "choices": [
+      "768 mol",
+      "48 mol",
+      "0.33 mol",
+      "3 mol"
+    ],
+    "answer": 3,
+    "explanation": "Moles = mass / molar mass = 48 / 16 = 3 mol."
+  },
+  {
+    "id": "gen-sci-moles2-001",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "What is the mass of 0.5 moles of ammonia (NH3, molar mass 17 g/mol)?",
+    "choices": [
+      "34 g",
+      "8.5 g",
+      "0.5 g",
+      "17 g"
+    ],
+    "answer": 1,
+    "explanation": "Mass = moles x molar mass = 0.5 x 17 = 8.5 g."
+  },
+  {
+    "id": "gen-sci-moles2-002",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "What is the mass of 2 moles of ammonia (NH3, molar mass 17 g/mol)?",
+    "choices": [
+      "17 g",
+      "34 g",
+      "8.5 g",
+      "2 g"
+    ],
+    "answer": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 17 = 34 g."
+  },
+  {
+    "id": "gen-sci-moles2-003",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "What is the mass of 4 moles of carbon dioxide (CO2, molar mass 44 g/mol)?",
+    "choices": [
+      "11 g",
+      "176 g",
+      "4 g",
+      "44 g"
+    ],
+    "answer": 1,
+    "explanation": "Mass = moles x molar mass = 4 x 44 = 176 g."
+  },
+  {
+    "id": "gen-sci-moles2-004",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "What is the mass of 5 moles of hydrogen gas (H2, molar mass 2 g/mol)?",
+    "choices": [
+      "2 g",
+      "5 g",
+      "10 g",
+      "0.4 g"
+    ],
+    "answer": 2,
+    "explanation": "Mass = moles x molar mass = 5 x 2 = 10 g."
+  },
+  {
+    "id": "gen-sci-moles2-005",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "What is the mass of 2 moles of sodium chloride (NaCl, molar mass 58.5 g/mol)?",
+    "choices": [
+      "2 g",
+      "117 g",
+      "58.5 g",
+      "29.25 g"
+    ],
+    "answer": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 58.5 = 117 g."
+  },
+  {
+    "id": "gen-sci-moles2-006",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "What is the mass of 2 moles of oxygen gas (O2, molar mass 32 g/mol)?",
+    "choices": [
+      "2 g",
+      "16 g",
+      "32 g",
+      "64 g"
+    ],
+    "answer": 3,
+    "explanation": "Mass = moles x molar mass = 2 x 32 = 64 g."
+  },
+  {
+    "id": "gen-sci-moles2-007",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "What is the mass of 0.5 moles of sodium chloride (NaCl, molar mass 58.5 g/mol)?",
+    "choices": [
+      "117 g",
+      "0.5 g",
+      "58.5 g",
+      "29.25 g"
+    ],
+    "answer": 3,
+    "explanation": "Mass = moles x molar mass = 0.5 x 58.5 = 29.25 g."
+  },
+  {
+    "id": "gen-sci-moles2-008",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "What is the mass of 0.5 moles of carbon dioxide (CO2, molar mass 44 g/mol)?",
+    "choices": [
+      "22 g",
+      "44 g",
+      "0.5 g",
+      "88 g"
+    ],
+    "answer": 0,
+    "explanation": "Mass = moles x molar mass = 0.5 x 44 = 22 g."
+  },
+  {
+    "id": "gen-sci-moles2-009",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "What is the mass of 5 moles of sodium chloride (NaCl, molar mass 58.5 g/mol)?",
+    "choices": [
+      "292.5 g",
+      "5 g",
+      "58.5 g",
+      "11.7 g"
+    ],
+    "answer": 0,
+    "explanation": "Mass = moles x molar mass = 5 x 58.5 = 292.5 g."
+  },
+  {
+    "id": "gen-sci-moles2-010",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "What is the mass of 4 moles of water (H2O, molar mass 18 g/mol)?",
+    "choices": [
+      "4.5 g",
+      "4 g",
+      "18 g",
+      "72 g"
+    ],
+    "answer": 3,
+    "explanation": "Mass = moles x molar mass = 4 x 18 = 72 g."
+  },
+  {
+    "id": "gen-sci-moles2-011",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "medium",
+    "prompt": "What is the mass of 2 moles of carbon dioxide (CO2, molar mass 44 g/mol)?",
+    "choices": [
+      "2 g",
+      "88 g",
+      "22 g",
+      "44 g"
+    ],
+    "answer": 1,
+    "explanation": "Mass = moles x molar mass = 2 x 44 = 88 g."
+  },
+  {
+    "id": "gen-sci-stoich-001",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "hard",
+    "prompt": "For the reaction CH4 + 2O2 -> CO2 + 2H2O, how many moles of O2 are involved when 4 moles of CH4 react completely?",
+    "choices": [
+      "2 mol",
+      "4 mol",
+      "16 mol",
+      "8 mol"
+    ],
+    "answer": 3,
+    "explanation": "The balanced coefficients set the mole ratio of CH4 to O2. Multiplying 4 mol by 2 gives 8 mol of O2."
+  },
+  {
+    "id": "gen-sci-stoich-002",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "hard",
+    "prompt": "For the reaction N2 + 3H2 -> 2NH3, how many moles of H2 are involved when 10 moles of N2 react completely?",
+    "choices": [
+      "10 mol",
+      "60 mol",
+      "3.33 mol",
+      "30 mol"
+    ],
+    "answer": 3,
+    "explanation": "The balanced coefficients set the mole ratio of N2 to H2. Multiplying 10 mol by 3 gives 30 mol of H2."
+  },
+  {
+    "id": "gen-sci-stoich-003",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "hard",
+    "prompt": "For the reaction 2Na + Cl2 -> 2NaCl, how many moles of NaCl are involved when 10 moles of Na react completely?",
+    "choices": [
+      "11 mol",
+      "20 mol",
+      "12 mol",
+      "10 mol"
+    ],
+    "answer": 3,
+    "explanation": "The balanced coefficients set the mole ratio of Na to NaCl. Multiplying 10 mol by 1 gives 10 mol of NaCl."
+  },
+  {
+    "id": "gen-sci-stoich-004",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "hard",
+    "prompt": "For the reaction 2H2 + O2 -> 2H2O, how many moles of O2 are involved when 8 moles of H2 react completely?",
+    "choices": [
+      "4 mol",
+      "8 mol",
+      "16 mol",
+      "5 mol"
+    ],
+    "answer": 0,
+    "explanation": "The balanced coefficients set the mole ratio of H2 to O2. Multiplying 8 mol by 0.5 gives 4 mol of O2."
+  },
+  {
+    "id": "gen-sci-stoich-005",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "hard",
+    "prompt": "For the reaction N2 + 3H2 -> 2NH3, how many moles of NH3 are involved when 6 moles of N2 react completely?",
+    "choices": [
+      "3 mol",
+      "6 mol",
+      "12 mol",
+      "24 mol"
+    ],
+    "answer": 2,
+    "explanation": "The balanced coefficients set the mole ratio of N2 to NH3. Multiplying 6 mol by 2 gives 12 mol of NH3."
+  },
+  {
+    "id": "gen-sci-stoich-006",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "hard",
+    "prompt": "For the reaction N2 + 3H2 -> 2NH3, how many moles of NH3 are involved when 8 moles of N2 react completely?",
+    "choices": [
+      "8 mol",
+      "32 mol",
+      "4 mol",
+      "16 mol"
+    ],
+    "answer": 3,
+    "explanation": "The balanced coefficients set the mole ratio of N2 to NH3. Multiplying 8 mol by 2 gives 16 mol of NH3."
+  },
+  {
+    "id": "gen-sci-stoich-007",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "hard",
+    "prompt": "For the reaction 2Na + Cl2 -> 2NaCl, how many moles of NaCl are involved when 2 moles of Na react completely?",
+    "choices": [
+      "4 mol",
+      "5 mol",
+      "2 mol",
+      "3 mol"
+    ],
+    "answer": 2,
+    "explanation": "The balanced coefficients set the mole ratio of Na to NaCl. Multiplying 2 mol by 1 gives 2 mol of NaCl."
+  },
+  {
+    "id": "gen-sci-stoich-008",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "hard",
+    "prompt": "For the reaction CH4 + 2O2 -> CO2 + 2H2O, how many moles of O2 are involved when 2 moles of CH4 react completely?",
+    "choices": [
+      "8 mol",
+      "1 mol",
+      "4 mol",
+      "2 mol"
+    ],
+    "answer": 2,
+    "explanation": "The balanced coefficients set the mole ratio of CH4 to O2. Multiplying 2 mol by 2 gives 4 mol of O2."
+  },
+  {
+    "id": "gen-sci-stoich-009",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "hard",
+    "prompt": "For the reaction 2H2 + O2 -> 2H2O, how many moles of H2O are involved when 2 moles of O2 react completely?",
+    "choices": [
+      "8 mol",
+      "2 mol",
+      "4 mol",
+      "1 mol"
+    ],
+    "answer": 2,
+    "explanation": "The balanced coefficients set the mole ratio of O2 to H2O. Multiplying 2 mol by 2 gives 4 mol of H2O."
+  },
+  {
+    "id": "gen-sci-stoich-010",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "hard",
+    "prompt": "For the reaction 2H2 + O2 -> 2H2O, how many moles of H2O are involved when 6 moles of O2 react completely?",
+    "choices": [
+      "12 mol",
+      "3 mol",
+      "6 mol",
+      "24 mol"
+    ],
+    "answer": 0,
+    "explanation": "The balanced coefficients set the mole ratio of O2 to H2O. Multiplying 6 mol by 2 gives 12 mol of H2O."
+  },
+  {
+    "id": "gen-sci-stoich-011",
+    "subject": "Science",
+    "topic": "Stoichiometry",
+    "difficulty": "hard",
+    "prompt": "For the reaction CH4 + 2O2 -> CO2 + 2H2O, how many moles of O2 are involved when 8 moles of CH4 react completely?",
+    "choices": [
+      "16 mol",
+      "8 mol",
+      "4 mol",
+      "32 mol"
+    ],
+    "answer": 0,
+    "explanation": "The balanced coefficients set the mole ratio of CH4 to O2. Multiplying 8 mol by 2 gives 16 mol of O2."
+  },
+  {
+    "id": "gen-sci-density-001",
+    "subject": "Science",
+    "topic": "Density",
+    "difficulty": "easy",
+    "prompt": "An object has a mass of 40 g and a volume of 4 cm^3. What is its density?",
+    "choices": [
+      "160 g/cm^3",
+      "36 g/cm^3",
+      "10 g/cm^3",
+      "0.1 g/cm^3"
+    ],
+    "answer": 2,
+    "explanation": "Density = mass / volume = 40 / 4 = 10 g/cm^3."
+  },
+  {
+    "id": "gen-sci-density-002",
+    "subject": "Science",
+    "topic": "Density",
+    "difficulty": "easy",
+    "prompt": "An object has a mass of 32 g and a volume of 4 cm^3. What is its density?",
+    "choices": [
+      "8 g/cm^3",
+      "128 g/cm^3",
+      "0.13 g/cm^3",
+      "28 g/cm^3"
+    ],
+    "answer": 0,
+    "explanation": "Density = mass / volume = 32 / 4 = 8 g/cm^3."
+  },
+  {
+    "id": "gen-sci-density-003",
+    "subject": "Science",
+    "topic": "Density",
+    "difficulty": "easy",
+    "prompt": "An object has a mass of 160 g and a volume of 20 cm^3. What is its density?",
+    "choices": [
+      "140 g/cm^3",
+      "0.13 g/cm^3",
+      "8 g/cm^3",
+      "3200 g/cm^3"
+    ],
+    "answer": 2,
+    "explanation": "Density = mass / volume = 160 / 20 = 8 g/cm^3."
+  },
+  {
+    "id": "gen-sci-density-004",
+    "subject": "Science",
+    "topic": "Density",
+    "difficulty": "easy",
+    "prompt": "An object has a mass of 5 g and a volume of 2 cm^3. What is its density?",
+    "choices": [
+      "2.5 g/cm^3",
+      "10 g/cm^3",
+      "0.4 g/cm^3",
+      "3 g/cm^3"
+    ],
+    "answer": 0,
+    "explanation": "Density = mass / volume = 5 / 2 = 2.5 g/cm^3."
+  },
+  {
+    "id": "gen-sci-density-005",
+    "subject": "Science",
+    "topic": "Density",
+    "difficulty": "easy",
+    "prompt": "An object has a mass of 100 g and a volume of 10 cm^3. What is its density?",
+    "choices": [
+      "10 g/cm^3",
+      "1000 g/cm^3",
+      "90 g/cm^3",
+      "0.1 g/cm^3"
+    ],
+    "answer": 0,
+    "explanation": "Density = mass / volume = 100 / 10 = 10 g/cm^3."
+  },
+  {
+    "id": "gen-sci-density-006",
+    "subject": "Science",
+    "topic": "Density",
+    "difficulty": "easy",
+    "prompt": "An object has a mass of 8 g and a volume of 2 cm^3. What is its density?",
+    "choices": [
+      "16 g/cm^3",
+      "4 g/cm^3",
+      "0.25 g/cm^3",
+      "6 g/cm^3"
+    ],
+    "answer": 1,
+    "explanation": "Density = mass / volume = 8 / 2 = 4 g/cm^3."
+  },
+  {
+    "id": "gen-sci-density-007",
+    "subject": "Science",
+    "topic": "Density",
+    "difficulty": "easy",
+    "prompt": "An object has a mass of 50 g and a volume of 10 cm^3. What is its density?",
+    "choices": [
+      "500 g/cm^3",
+      "40 g/cm^3",
+      "0.2 g/cm^3",
+      "5 g/cm^3"
+    ],
+    "answer": 3,
+    "explanation": "Density = mass / volume = 50 / 10 = 5 g/cm^3."
+  },
+  {
+    "id": "gen-sci-density-008",
+    "subject": "Science",
+    "topic": "Density",
+    "difficulty": "easy",
+    "prompt": "An object has a mass of 20 g and a volume of 4 cm^3. What is its density?",
+    "choices": [
+      "5 g/cm^3",
+      "0.2 g/cm^3",
+      "80 g/cm^3",
+      "16 g/cm^3"
+    ],
+    "answer": 0,
+    "explanation": "Density = mass / volume = 20 / 4 = 5 g/cm^3."
+  },
+  {
+    "id": "gen-sci-density-009",
+    "subject": "Science",
+    "topic": "Density",
+    "difficulty": "easy",
+    "prompt": "An object has a mass of 12.5 g and a volume of 5 cm^3. What is its density?",
+    "choices": [
+      "2.5 g/cm^3",
+      "7.5 g/cm^3",
+      "62.5 g/cm^3",
+      "0.4 g/cm^3"
+    ],
+    "answer": 0,
+    "explanation": "Density = mass / volume = 12.5 / 5 = 2.5 g/cm^3."
+  },
+  {
+    "id": "gen-sci-density-010",
+    "subject": "Science",
+    "topic": "Density",
+    "difficulty": "easy",
+    "prompt": "An object has a mass of 20 g and a volume of 2 cm^3. What is its density?",
+    "choices": [
+      "18 g/cm^3",
+      "40 g/cm^3",
+      "0.1 g/cm^3",
+      "10 g/cm^3"
+    ],
+    "answer": 3,
+    "explanation": "Density = mass / volume = 20 / 2 = 10 g/cm^3."
+  },
+  {
+    "id": "gen-sci-density-011",
+    "subject": "Science",
+    "topic": "Density",
+    "difficulty": "easy",
+    "prompt": "An object has a mass of 80 g and a volume of 20 cm^3. What is its density?",
+    "choices": [
+      "60 g/cm^3",
+      "0.25 g/cm^3",
+      "1600 g/cm^3",
+      "4 g/cm^3"
+    ],
+    "answer": 3,
+    "explanation": "Density = mass / volume = 80 / 20 = 4 g/cm^3."
+  },
+  {
+    "id": "gen-sci-ohm1-001",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "medium",
+    "prompt": "A current of 4 A flows through a 6 ohm resistor. What is the voltage across it?",
+    "choices": [
+      "24 V",
+      "1.5 V",
+      "10 V",
+      "0.67 V"
+    ],
+    "answer": 0,
+    "explanation": "Ohm's law: V = IR = 4 x 6 = 24 V."
+  },
+  {
+    "id": "gen-sci-ohm1-002",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "medium",
+    "prompt": "A current of 0.5 A flows through a 12 ohm resistor. What is the voltage across it?",
+    "choices": [
+      "24 V",
+      "6 V",
+      "12.5 V",
+      "0.04 V"
+    ],
+    "answer": 1,
+    "explanation": "Ohm's law: V = IR = 0.5 x 12 = 6 V."
+  },
+  {
+    "id": "gen-sci-ohm1-003",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "medium",
+    "prompt": "A current of 3 A flows through a 50 ohm resistor. What is the voltage across it?",
+    "choices": [
+      "53 V",
+      "0.06 V",
+      "150 V",
+      "16.67 V"
+    ],
+    "answer": 2,
+    "explanation": "Ohm's law: V = IR = 3 x 50 = 150 V."
+  },
+  {
+    "id": "gen-sci-ohm1-004",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "medium",
+    "prompt": "A current of 5 A flows through a 12 ohm resistor. What is the voltage across it?",
+    "choices": [
+      "0.42 V",
+      "60 V",
+      "2.4 V",
+      "17 V"
+    ],
+    "answer": 1,
+    "explanation": "Ohm's law: V = IR = 5 x 12 = 60 V."
+  },
+  {
+    "id": "gen-sci-ohm1-005",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "medium",
+    "prompt": "A current of 0.5 A flows through a 8 ohm resistor. What is the voltage across it?",
+    "choices": [
+      "16 V",
+      "8.5 V",
+      "0.06 V",
+      "4 V"
+    ],
+    "answer": 3,
+    "explanation": "Ohm's law: V = IR = 0.5 x 8 = 4 V."
+  },
+  {
+    "id": "gen-sci-ohm1-006",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "medium",
+    "prompt": "A current of 0.5 A flows through a 20 ohm resistor. What is the voltage across it?",
+    "choices": [
+      "10 V",
+      "20.5 V",
+      "0.03 V",
+      "40 V"
+    ],
+    "answer": 0,
+    "explanation": "Ohm's law: V = IR = 0.5 x 20 = 10 V."
+  },
+  {
+    "id": "gen-sci-ohm1-007",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "medium",
+    "prompt": "A current of 5 A flows through a 10 ohm resistor. What is the voltage across it?",
+    "choices": [
+      "0.5 V",
+      "2 V",
+      "15 V",
+      "50 V"
+    ],
+    "answer": 3,
+    "explanation": "Ohm's law: V = IR = 5 x 10 = 50 V."
+  },
+  {
+    "id": "gen-sci-ohm1-008",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "medium",
+    "prompt": "A current of 0.5 A flows through a 4 ohm resistor. What is the voltage across it?",
+    "choices": [
+      "4.5 V",
+      "2 V",
+      "8 V",
+      "0.13 V"
+    ],
+    "answer": 1,
+    "explanation": "Ohm's law: V = IR = 0.5 x 4 = 2 V."
+  },
+  {
+    "id": "gen-sci-ohm1-009",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "medium",
+    "prompt": "A current of 2 A flows through a 12 ohm resistor. What is the voltage across it?",
+    "choices": [
+      "0.17 V",
+      "6 V",
+      "14 V",
+      "24 V"
+    ],
+    "answer": 3,
+    "explanation": "Ohm's law: V = IR = 2 x 12 = 24 V."
+  },
+  {
+    "id": "gen-sci-ohm1-010",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "medium",
+    "prompt": "A current of 5 A flows through a 50 ohm resistor. What is the voltage across it?",
+    "choices": [
+      "250 V",
+      "55 V",
+      "10 V",
+      "0.1 V"
+    ],
+    "answer": 0,
+    "explanation": "Ohm's law: V = IR = 5 x 50 = 250 V."
+  },
+  {
+    "id": "gen-sci-ohm1-011",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "medium",
+    "prompt": "A current of 5 A flows through a 8 ohm resistor. What is the voltage across it?",
+    "choices": [
+      "40 V",
+      "13 V",
+      "1.6 V",
+      "0.63 V"
+    ],
+    "answer": 0,
+    "explanation": "Ohm's law: V = IR = 5 x 8 = 40 V."
+  },
+  {
+    "id": "gen-sci-ohm2-001",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "hard",
+    "prompt": "A 12 V battery drives 3 A through a circuit. What is the resistance?",
+    "choices": [
+      "4 ohms",
+      "36 ohms",
+      "0.25 ohms",
+      "9 ohms"
+    ],
+    "answer": 0,
+    "explanation": "Rearranging V = IR gives R = V/I = 12 / 3 = 4 ohms."
+  },
+  {
+    "id": "gen-sci-ohm2-002",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "hard",
+    "prompt": "A 48 V battery drives 4 A through a circuit. What is the resistance?",
+    "choices": [
+      "0.08 ohms",
+      "44 ohms",
+      "192 ohms",
+      "12 ohms"
+    ],
+    "answer": 3,
+    "explanation": "Rearranging V = IR gives R = V/I = 48 / 4 = 12 ohms."
+  },
+  {
+    "id": "gen-sci-ohm2-003",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "hard",
+    "prompt": "A 24 V battery drives 4 A through a circuit. What is the resistance?",
+    "choices": [
+      "20 ohms",
+      "96 ohms",
+      "6 ohms",
+      "0.17 ohms"
+    ],
+    "answer": 2,
+    "explanation": "Rearranging V = IR gives R = V/I = 24 / 4 = 6 ohms."
+  },
+  {
+    "id": "gen-sci-ohm2-004",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "hard",
+    "prompt": "A 60 V battery drives 5 A through a circuit. What is the resistance?",
+    "choices": [
+      "12 ohms",
+      "300 ohms",
+      "55 ohms",
+      "0.08 ohms"
+    ],
+    "answer": 0,
+    "explanation": "Rearranging V = IR gives R = V/I = 60 / 5 = 12 ohms."
+  },
+  {
+    "id": "gen-sci-ohm2-005",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "hard",
+    "prompt": "A 36 V battery drives 3 A through a circuit. What is the resistance?",
+    "choices": [
+      "108 ohms",
+      "12 ohms",
+      "33 ohms",
+      "0.08 ohms"
+    ],
+    "answer": 1,
+    "explanation": "Rearranging V = IR gives R = V/I = 36 / 3 = 12 ohms."
+  },
+  {
+    "id": "gen-sci-ohm2-006",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "hard",
+    "prompt": "A 60 V battery drives 3 A through a circuit. What is the resistance?",
+    "choices": [
+      "0.05 ohms",
+      "180 ohms",
+      "57 ohms",
+      "20 ohms"
+    ],
+    "answer": 3,
+    "explanation": "Rearranging V = IR gives R = V/I = 60 / 3 = 20 ohms."
+  },
+  {
+    "id": "gen-sci-ohm2-007",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "hard",
+    "prompt": "A 20 V battery drives 2 A through a circuit. What is the resistance?",
+    "choices": [
+      "40 ohms",
+      "18 ohms",
+      "0.1 ohms",
+      "10 ohms"
+    ],
+    "answer": 3,
+    "explanation": "Rearranging V = IR gives R = V/I = 20 / 2 = 10 ohms."
+  },
+  {
+    "id": "gen-sci-ohm2-008",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "hard",
+    "prompt": "A 32 V battery drives 4 A through a circuit. What is the resistance?",
+    "choices": [
+      "0.13 ohms",
+      "128 ohms",
+      "28 ohms",
+      "8 ohms"
+    ],
+    "answer": 3,
+    "explanation": "Rearranging V = IR gives R = V/I = 32 / 4 = 8 ohms."
+  },
+  {
+    "id": "gen-sci-ohm2-009",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "hard",
+    "prompt": "A 80 V battery drives 4 A through a circuit. What is the resistance?",
+    "choices": [
+      "20 ohms",
+      "0.05 ohms",
+      "320 ohms",
+      "76 ohms"
+    ],
+    "answer": 0,
+    "explanation": "Rearranging V = IR gives R = V/I = 80 / 4 = 20 ohms."
+  },
+  {
+    "id": "gen-sci-ohm2-010",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "hard",
+    "prompt": "A 30 V battery drives 3 A through a circuit. What is the resistance?",
+    "choices": [
+      "0.1 ohms",
+      "27 ohms",
+      "10 ohms",
+      "90 ohms"
+    ],
+    "answer": 2,
+    "explanation": "Rearranging V = IR gives R = V/I = 30 / 3 = 10 ohms."
+  },
+  {
+    "id": "gen-sci-ohm2-011",
+    "subject": "Science",
+    "topic": "Electricity",
+    "difficulty": "hard",
+    "prompt": "A 24 V battery drives 3 A through a circuit. What is the resistance?",
+    "choices": [
+      "8 ohms",
+      "0.13 ohms",
+      "21 ohms",
+      "72 ohms"
+    ],
+    "answer": 0,
+    "explanation": "Rearranging V = IR gives R = V/I = 24 / 3 = 8 ohms."
+  },
+  {
+    "id": "gen-sci-speed-001",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "easy",
+    "prompt": "An object travels 4 m in 2 s at a constant speed. What is its speed?",
+    "choices": [
+      "0.5 m/s",
+      "2 m/s",
+      "8 m/s",
+      "3 m/s"
+    ],
+    "answer": 1,
+    "explanation": "Speed = distance / time = 4 / 2 = 2 m/s."
+  },
+  {
+    "id": "gen-sci-speed-002",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "easy",
+    "prompt": "An object travels 40 m in 4 s at a constant speed. What is its speed?",
+    "choices": [
+      "0.1 m/s",
+      "160 m/s",
+      "10 m/s",
+      "36 m/s"
+    ],
+    "answer": 2,
+    "explanation": "Speed = distance / time = 40 / 4 = 10 m/s."
+  },
+  {
+    "id": "gen-sci-speed-003",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "easy",
+    "prompt": "An object travels 15 m in 3 s at a constant speed. What is its speed?",
+    "choices": [
+      "5 m/s",
+      "45 m/s",
+      "0.2 m/s",
+      "12 m/s"
+    ],
+    "answer": 0,
+    "explanation": "Speed = distance / time = 15 / 3 = 5 m/s."
+  },
+  {
+    "id": "gen-sci-speed-004",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "easy",
+    "prompt": "An object travels 40 m in 10 s at a constant speed. What is its speed?",
+    "choices": [
+      "30 m/s",
+      "4 m/s",
+      "400 m/s",
+      "0.25 m/s"
+    ],
+    "answer": 1,
+    "explanation": "Speed = distance / time = 40 / 10 = 4 m/s."
+  },
+  {
+    "id": "gen-sci-speed-005",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "easy",
+    "prompt": "An object travels 12 m in 6 s at a constant speed. What is its speed?",
+    "choices": [
+      "2 m/s",
+      "72 m/s",
+      "6 m/s",
+      "0.5 m/s"
+    ],
+    "answer": 0,
+    "explanation": "Speed = distance / time = 12 / 6 = 2 m/s."
+  },
+  {
+    "id": "gen-sci-speed-006",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "easy",
+    "prompt": "An object travels 60 m in 3 s at a constant speed. What is its speed?",
+    "choices": [
+      "57 m/s",
+      "20 m/s",
+      "180 m/s",
+      "0.05 m/s"
+    ],
+    "answer": 1,
+    "explanation": "Speed = distance / time = 60 / 3 = 20 m/s."
+  },
+  {
+    "id": "gen-sci-speed-007",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "easy",
+    "prompt": "An object travels 75 m in 5 s at a constant speed. What is its speed?",
+    "choices": [
+      "15 m/s",
+      "70 m/s",
+      "0.07 m/s",
+      "375 m/s"
+    ],
+    "answer": 0,
+    "explanation": "Speed = distance / time = 75 / 5 = 15 m/s."
+  },
+  {
+    "id": "gen-sci-speed-008",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "easy",
+    "prompt": "An object travels 20 m in 2 s at a constant speed. What is its speed?",
+    "choices": [
+      "40 m/s",
+      "18 m/s",
+      "10 m/s",
+      "0.1 m/s"
+    ],
+    "answer": 2,
+    "explanation": "Speed = distance / time = 20 / 2 = 10 m/s."
+  },
+  {
+    "id": "gen-sci-speed-009",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "easy",
+    "prompt": "An object travels 100 m in 5 s at a constant speed. What is its speed?",
+    "choices": [
+      "95 m/s",
+      "0.05 m/s",
+      "500 m/s",
+      "20 m/s"
+    ],
+    "answer": 3,
+    "explanation": "Speed = distance / time = 100 / 5 = 20 m/s."
+  },
+  {
+    "id": "gen-sci-speed-010",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "easy",
+    "prompt": "An object travels 50 m in 10 s at a constant speed. What is its speed?",
+    "choices": [
+      "0.2 m/s",
+      "5 m/s",
+      "40 m/s",
+      "500 m/s"
+    ],
+    "answer": 1,
+    "explanation": "Speed = distance / time = 50 / 10 = 5 m/s."
+  },
+  {
+    "id": "gen-sci-speed-011",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "easy",
+    "prompt": "An object travels 32 m in 4 s at a constant speed. What is its speed?",
+    "choices": [
+      "8 m/s",
+      "28 m/s",
+      "0.13 m/s",
+      "128 m/s"
+    ],
+    "answer": 0,
+    "explanation": "Speed = distance / time = 32 / 4 = 8 m/s."
+  },
+  {
+    "id": "gen-sci-accel2-001",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "medium",
+    "prompt": "An object starts at 0 m/s and accelerates at 2 m/s^2 for 4 s. What is its final velocity?",
+    "choices": [
+      "2 m/s",
+      "9 m/s",
+      "8 m/s",
+      "0 m/s"
+    ],
+    "answer": 2,
+    "explanation": "v = v0 + at = 0 + 2 x 4 = 8 m/s."
+  },
+  {
+    "id": "gen-sci-accel2-002",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "medium",
+    "prompt": "An object starts at 5 m/s and accelerates at 2 m/s^2 for 2 s. What is its final velocity?",
+    "choices": [
+      "20 m/s",
+      "7 m/s",
+      "9 m/s",
+      "4 m/s"
+    ],
+    "answer": 2,
+    "explanation": "v = v0 + at = 5 + 2 x 2 = 9 m/s."
+  },
+  {
+    "id": "gen-sci-accel2-003",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "medium",
+    "prompt": "An object starts at 0 m/s and accelerates at 4 m/s^2 for 5 s. What is its final velocity?",
+    "choices": [
+      "21 m/s",
+      "0 m/s",
+      "20 m/s",
+      "4 m/s"
+    ],
+    "answer": 2,
+    "explanation": "v = v0 + at = 0 + 4 x 5 = 20 m/s."
+  },
+  {
+    "id": "gen-sci-accel2-004",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "medium",
+    "prompt": "An object starts at 10 m/s and accelerates at 5 m/s^2 for 3 s. What is its final velocity?",
+    "choices": [
+      "150 m/s",
+      "15 m/s",
+      "25 m/s",
+      "26 m/s"
+    ],
+    "answer": 2,
+    "explanation": "v = v0 + at = 10 + 5 x 3 = 25 m/s."
+  },
+  {
+    "id": "gen-sci-accel2-005",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "medium",
+    "prompt": "An object starts at 0 m/s and accelerates at 5 m/s^2 for 4 s. What is its final velocity?",
+    "choices": [
+      "21 m/s",
+      "20 m/s",
+      "5 m/s",
+      "0 m/s"
+    ],
+    "answer": 1,
+    "explanation": "v = v0 + at = 0 + 5 x 4 = 20 m/s."
+  },
+  {
+    "id": "gen-sci-accel2-006",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "medium",
+    "prompt": "An object starts at 5 m/s and accelerates at 5 m/s^2 for 2 s. What is its final velocity?",
+    "choices": [
+      "50 m/s",
+      "16 m/s",
+      "10 m/s",
+      "15 m/s"
+    ],
+    "answer": 3,
+    "explanation": "v = v0 + at = 5 + 5 x 2 = 15 m/s."
+  },
+  {
+    "id": "gen-sci-accel2-007",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "medium",
+    "prompt": "An object starts at 5 m/s and accelerates at 5 m/s^2 for 5 s. What is its final velocity?",
+    "choices": [
+      "125 m/s",
+      "30 m/s",
+      "25 m/s",
+      "10 m/s"
+    ],
+    "answer": 1,
+    "explanation": "v = v0 + at = 5 + 5 x 5 = 30 m/s."
+  },
+  {
+    "id": "gen-sci-accel2-008",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "medium",
+    "prompt": "An object starts at 0 m/s and accelerates at 5 m/s^2 for 3 s. What is its final velocity?",
+    "choices": [
+      "16 m/s",
+      "5 m/s",
+      "0 m/s",
+      "15 m/s"
+    ],
+    "answer": 3,
+    "explanation": "v = v0 + at = 0 + 5 x 3 = 15 m/s."
+  },
+  {
+    "id": "gen-sci-accel2-009",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "medium",
+    "prompt": "An object starts at 0 m/s and accelerates at 5 m/s^2 for 6 s. What is its final velocity?",
+    "choices": [
+      "0 m/s",
+      "5 m/s",
+      "30 m/s",
+      "31 m/s"
+    ],
+    "answer": 2,
+    "explanation": "v = v0 + at = 0 + 5 x 6 = 30 m/s."
+  },
+  {
+    "id": "gen-sci-accel2-010",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "medium",
+    "prompt": "An object starts at 5 m/s and accelerates at 5 m/s^2 for 6 s. What is its final velocity?",
+    "choices": [
+      "10 m/s",
+      "150 m/s",
+      "30 m/s",
+      "35 m/s"
+    ],
+    "answer": 3,
+    "explanation": "v = v0 + at = 5 + 5 x 6 = 35 m/s."
+  },
+  {
+    "id": "gen-sci-accel2-011",
+    "subject": "Science",
+    "topic": "Motion",
+    "difficulty": "medium",
+    "prompt": "An object starts at 2 m/s and accelerates at 4 m/s^2 for 3 s. What is its final velocity?",
+    "choices": [
+      "12 m/s",
+      "6 m/s",
+      "24 m/s",
+      "14 m/s"
+    ],
+    "answer": 3,
+    "explanation": "v = v0 + at = 2 + 4 x 3 = 14 m/s."
+  },
+  {
+    "id": "gen-sci-punnett-001",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "medium",
+    "prompt": "In a cross between AA and Aa (A is completely dominant), what percentage of offspring are expected to be showing the dominant phenotype?",
+    "choices": [
+      "10%",
+      "0%",
+      "100%",
+      "50%"
+    ],
+    "answer": 2,
+    "explanation": "Draw the Punnett square for AA x Aa. The proportion showing the dominant phenotype is 100%."
+  },
+  {
+    "id": "gen-sci-punnett-002",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "medium",
+    "prompt": "In a cross between AA and aa (A is completely dominant), what percentage of offspring are expected to be heterozygous (Aa)?",
+    "choices": [
+      "10%",
+      "100%",
+      "0%",
+      "33%"
+    ],
+    "answer": 1,
+    "explanation": "Draw the Punnett square for AA x aa. The proportion heterozygous (Aa) is 100%."
+  },
+  {
+    "id": "gen-sci-punnett-003",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "medium",
+    "prompt": "In a cross between Aa and Aa (A is completely dominant), what percentage of offspring are expected to be showing the dominant phenotype?",
+    "choices": [
+      "75%",
+      "25%",
+      "50%",
+      "0%"
+    ],
+    "answer": 0,
+    "explanation": "Draw the Punnett square for Aa x Aa. The proportion showing the dominant phenotype is 75%."
+  },
+  {
+    "id": "gen-sci-punnett-004",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "medium",
+    "prompt": "In a cross between AA and aa (A is completely dominant), what percentage of offspring are expected to be homozygous recessive (aa)?",
+    "choices": [
+      "100%",
+      "0%",
+      "10%",
+      "33%"
+    ],
+    "answer": 1,
+    "explanation": "Draw the Punnett square for AA x aa. The proportion homozygous recessive (aa) is 0%."
+  },
+  {
+    "id": "gen-sci-punnett-005",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "medium",
+    "prompt": "In a cross between Aa and Aa (A is completely dominant), what percentage of offspring are expected to be homozygous recessive (aa)?",
+    "choices": [
+      "0%",
+      "75%",
+      "25%",
+      "50%"
+    ],
+    "answer": 2,
+    "explanation": "Draw the Punnett square for Aa x Aa. The proportion homozygous recessive (aa) is 25%."
+  },
+  {
+    "id": "gen-sci-punnett-006",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "medium",
+    "prompt": "In a cross between Aa and aa (A is completely dominant), what percentage of offspring are expected to be showing the dominant phenotype?",
+    "choices": [
+      "100%",
+      "50%",
+      "10%",
+      "0%"
+    ],
+    "answer": 1,
+    "explanation": "Draw the Punnett square for Aa x aa. The proportion showing the dominant phenotype is 50%."
+  },
+  {
+    "id": "gen-sci-punnett-007",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "medium",
+    "prompt": "In a cross between AA and Aa (A is completely dominant), what percentage of offspring are expected to be heterozygous (Aa)?",
+    "choices": [
+      "50%",
+      "10%",
+      "100%",
+      "0%"
+    ],
+    "answer": 0,
+    "explanation": "Draw the Punnett square for AA x Aa. The proportion heterozygous (Aa) is 50%."
+  },
+  {
+    "id": "gen-sci-punnett-008",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "medium",
+    "prompt": "In a cross between AA and Aa (A is completely dominant), what percentage of offspring are expected to be homozygous recessive (aa)?",
+    "choices": [
+      "0%",
+      "50%",
+      "10%",
+      "100%"
+    ],
+    "answer": 0,
+    "explanation": "Draw the Punnett square for AA x Aa. The proportion homozygous recessive (aa) is 0%."
+  },
+  {
+    "id": "gen-sci-punnett-009",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "medium",
+    "prompt": "In a cross between Aa and Aa (A is completely dominant), what percentage of offspring are expected to be heterozygous (Aa)?",
+    "choices": [
+      "25%",
+      "75%",
+      "50%",
+      "0%"
+    ],
+    "answer": 2,
+    "explanation": "Draw the Punnett square for Aa x Aa. The proportion heterozygous (Aa) is 50%."
+  },
+  {
+    "id": "gen-sci-punnett-010",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "medium",
+    "prompt": "In a cross between AA and aa (A is completely dominant), what percentage of offspring are expected to be showing the dominant phenotype?",
+    "choices": [
+      "100%",
+      "33%",
+      "10%",
+      "0%"
+    ],
+    "answer": 0,
+    "explanation": "Draw the Punnett square for AA x aa. The proportion showing the dominant phenotype is 100%."
+  },
+  {
+    "id": "gen-sci-punnett-011",
+    "subject": "Science",
+    "topic": "Genetics",
+    "difficulty": "medium",
+    "prompt": "In a cross between Aa and aa (A is completely dominant), what percentage of offspring are expected to be heterozygous (Aa)?",
+    "choices": [
+      "0%",
+      "10%",
+      "100%",
+      "50%"
+    ],
+    "answer": 3,
+    "explanation": "Draw the Punnett square for Aa x aa. The proportion heterozygous (Aa) is 50%."
+  },
+  {
+    "id": "gen-sci-halflife-001",
+    "subject": "Science",
+    "topic": "Radioactivity",
+    "difficulty": "hard",
+    "prompt": "A sample of 100 g has a half-life of 10 years. How much remains after 20 years?",
+    "choices": [
+      "50 g",
+      "80 g",
+      "25 g",
+      "30 g"
+    ],
+    "answer": 2,
+    "explanation": "20 years is 2 half-lives. Each halves the sample: 100 / 2^2 = 25 g."
+  },
+  {
+    "id": "gen-sci-halflife-002",
+    "subject": "Science",
+    "topic": "Radioactivity",
+    "difficulty": "hard",
+    "prompt": "A sample of 800 g has a half-life of 10 years. How much remains after 40 years?",
+    "choices": [
+      "400 g",
+      "50 g",
+      "200 g",
+      "760 g"
+    ],
+    "answer": 1,
+    "explanation": "40 years is 4 half-lives. Each halves the sample: 800 / 2^4 = 50 g."
+  },
+  {
+    "id": "gen-sci-halflife-003",
+    "subject": "Science",
+    "topic": "Radioactivity",
+    "difficulty": "hard",
+    "prompt": "A sample of 200 g has a half-life of 5 years. How much remains after 10 years?",
+    "choices": [
+      "100 g",
+      "55 g",
+      "190 g",
+      "50 g"
+    ],
+    "answer": 3,
+    "explanation": "10 years is 2 half-lives. Each halves the sample: 200 / 2^2 = 50 g."
+  },
+  {
+    "id": "gen-sci-halflife-004",
+    "subject": "Science",
+    "topic": "Radioactivity",
+    "difficulty": "hard",
+    "prompt": "A sample of 80 g has a half-life of 10 years. How much remains after 30 years?",
+    "choices": [
+      "50 g",
+      "40 g",
+      "10 g",
+      "26.67 g"
+    ],
+    "answer": 2,
+    "explanation": "30 years is 3 half-lives. Each halves the sample: 80 / 2^3 = 10 g."
+  },
+  {
+    "id": "gen-sci-halflife-005",
+    "subject": "Science",
+    "topic": "Radioactivity",
+    "difficulty": "hard",
+    "prompt": "A sample of 800 g has a half-life of 10 years. How much remains after 20 years?",
+    "choices": [
+      "200 g",
+      "400 g",
+      "205 g",
+      "780 g"
+    ],
+    "answer": 0,
+    "explanation": "20 years is 2 half-lives. Each halves the sample: 800 / 2^2 = 200 g."
+  },
+  {
+    "id": "gen-sci-halflife-006",
+    "subject": "Science",
+    "topic": "Radioactivity",
+    "difficulty": "hard",
+    "prompt": "A sample of 160 g has a half-life of 5 years. How much remains after 10 years?",
+    "choices": [
+      "150 g",
+      "40 g",
+      "45 g",
+      "80 g"
+    ],
+    "answer": 1,
+    "explanation": "10 years is 2 half-lives. Each halves the sample: 160 / 2^2 = 40 g."
+  },
+  {
+    "id": "gen-sci-halflife-007",
+    "subject": "Science",
+    "topic": "Radioactivity",
+    "difficulty": "hard",
+    "prompt": "A sample of 800 g has a half-life of 2 years. How much remains after 6 years?",
+    "choices": [
+      "400 g",
+      "100 g",
+      "266.67 g",
+      "794 g"
+    ],
+    "answer": 1,
+    "explanation": "6 years is 3 half-lives. Each halves the sample: 800 / 2^3 = 100 g."
+  },
+  {
+    "id": "gen-sci-halflife-008",
+    "subject": "Science",
+    "topic": "Radioactivity",
+    "difficulty": "hard",
+    "prompt": "A sample of 320 g has a half-life of 2 years. How much remains after 4 years?",
+    "choices": [
+      "160 g",
+      "316 g",
+      "80 g",
+      "85 g"
+    ],
+    "answer": 2,
+    "explanation": "4 years is 2 half-lives. Each halves the sample: 320 / 2^2 = 80 g."
+  },
+  {
+    "id": "gen-sci-halflife-009",
+    "subject": "Science",
+    "topic": "Radioactivity",
+    "difficulty": "hard",
+    "prompt": "A sample of 160 g has a half-life of 20 years. How much remains after 80 years?",
+    "choices": [
+      "10 g",
+      "15 g",
+      "40 g",
+      "80 g"
+    ],
+    "answer": 0,
+    "explanation": "80 years is 4 half-lives. Each halves the sample: 160 / 2^4 = 10 g."
+  },
+  {
+    "id": "gen-sci-halflife-010",
+    "subject": "Science",
+    "topic": "Radioactivity",
+    "difficulty": "hard",
+    "prompt": "A sample of 160 g has a half-life of 2 years. How much remains after 8 years?",
+    "choices": [
+      "40 g",
+      "152 g",
+      "10 g",
+      "80 g"
+    ],
+    "answer": 2,
+    "explanation": "8 years is 4 half-lives. Each halves the sample: 160 / 2^4 = 10 g."
+  },
+  {
+    "id": "gen-sci-halflife-011",
+    "subject": "Science",
+    "topic": "Radioactivity",
+    "difficulty": "hard",
+    "prompt": "A sample of 800 g has a half-life of 5 years. How much remains after 15 years?",
+    "choices": [
+      "100 g",
+      "400 g",
+      "785 g",
+      "266.67 g"
+    ],
+    "answer": 0,
+    "explanation": "15 years is 3 half-lives. Each halves the sample: 800 / 2^3 = 100 g."
+  }
+]

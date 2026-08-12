@@ -1,0 +1,242 @@
+[
+  {
+    "id": "math-lin-001",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "easy",
+    "prompt": "Solve for x:  3x + 7 = 22",
+    "choices": ["3", "5", "7", "15"],
+    "answer": 1,
+    "explanation": "Subtract 7 from both sides: 3x = 15. Divide by 3: x = 5."
+  },
+  {
+    "id": "math-lin-002",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "Solve for x:  2(x - 3) = 4x + 6",
+    "choices": ["-6", "-3", "3", "6"],
+    "answer": 0,
+    "explanation": "Distribute: 2x - 6 = 4x + 6. Subtract 2x: -6 = 2x + 6. Subtract 6: -12 = 2x, so x = -6."
+  },
+  {
+    "id": "math-lin-003",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "hard",
+    "prompt": "A line passes through the points (2, 5) and (6, 13). What is its y-intercept?",
+    "choices": ["1", "2", "3", "5"],
+    "answer": 0,
+    "explanation": "Slope = (13 - 5) / (6 - 2) = 8/4 = 2. Using y = 2x + b with the point (2, 5): 5 = 4 + b, so b = 1."
+  },
+  {
+    "id": "math-lin-004",
+    "subject": "Math",
+    "topic": "Linear Equations",
+    "difficulty": "medium",
+    "prompt": "If 5x - 2 = 3x + 10, what is the value of 2x?",
+    "choices": ["6", "12", "18", "24"],
+    "answer": 1,
+    "explanation": "5x - 2 = 3x + 10 gives 2x = 12. The question asks for 2x, not x, so the answer is 12 directly. (x = 6 is the trap.)"
+  },
+  {
+    "id": "math-quad-001",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "easy",
+    "prompt": "What are the solutions to x^2 - 5x + 6 = 0?",
+    "choices": ["x = 2 and x = 3", "x = -2 and x = -3", "x = 1 and x = 6", "x = -1 and x = -6"],
+    "answer": 0,
+    "explanation": "Factor: (x - 2)(x - 3) = 0. The factors must multiply to +6 and add to -5, so both are negative in the factored form, giving roots x = 2 and x = 3."
+  },
+  {
+    "id": "math-quad-002",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "medium",
+    "prompt": "What is the vertex of the parabola y = x^2 - 6x + 11?",
+    "choices": ["(3, 2)", "(-3, 2)", "(3, -2)", "(6, 11)"],
+    "answer": 0,
+    "explanation": "Vertex x = -b/(2a) = 6/2 = 3. Substitute: y = 9 - 18 + 11 = 2. The vertex is (3, 2)."
+  },
+  {
+    "id": "math-quad-003",
+    "subject": "Math",
+    "topic": "Quadratics",
+    "difficulty": "hard",
+    "prompt": "How many real solutions does 2x^2 + 4x + 5 = 0 have?",
+    "choices": ["None", "Exactly one", "Exactly two", "Infinitely many"],
+    "answer": 0,
+    "explanation": "The discriminant is b^2 - 4ac = 16 - 4(2)(5) = 16 - 40 = -24. A negative discriminant means no real solutions."
+  },
+  {
+    "id": "math-sys-001",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "medium",
+    "prompt": "If x + y = 10 and x - y = 4, what is the value of xy?",
+    "choices": ["21", "24", "28", "30"],
+    "answer": 0,
+    "explanation": "Adding the equations: 2x = 14, so x = 7. Then y = 3. Therefore xy = 21."
+  },
+  {
+    "id": "math-sys-002",
+    "subject": "Math",
+    "topic": "Systems of Equations",
+    "difficulty": "hard",
+    "prompt": "Solve for x:  3x + 2y = 16 and x = y + 2",
+    "choices": ["2", "3", "4", "6"],
+    "answer": 2,
+    "explanation": "Substitute x = y + 2 into the first equation: 3(y + 2) + 2y = 16, so 5y + 6 = 16 and y = 2. Then x = 4."
+  },
+  {
+    "id": "math-exp-001",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "easy",
+    "prompt": "What is the value of (2^3)^2?",
+    "choices": ["32", "64", "128", "12"],
+    "answer": 1,
+    "explanation": "Raising a power to a power multiplies exponents: 2^(3 x 2) = 2^6 = 64."
+  },
+  {
+    "id": "math-exp-002",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "medium",
+    "prompt": "Simplify:  (x^5 / x^2) * x",
+    "choices": ["x^4", "x^3", "x^6", "x^8"],
+    "answer": 0,
+    "explanation": "Dividing subtracts exponents: x^5 / x^2 = x^3. Multiplying adds: x^3 * x^1 = x^4."
+  },
+  {
+    "id": "math-exp-003",
+    "subject": "Math",
+    "topic": "Exponents and Radicals",
+    "difficulty": "hard",
+    "prompt": "If 4^x = 8, what is x?",
+    "choices": ["1.5", "2", "0.5", "3"],
+    "answer": 0,
+    "explanation": "Write both sides in base 2: (2^2)^x = 2^3, so 2^(2x) = 2^3. Therefore 2x = 3 and x = 1.5."
+  },
+  {
+    "id": "math-tri-001",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "easy",
+    "prompt": "A right triangle has legs of length 3 and 4. What is the length of the hypotenuse?",
+    "choices": ["5", "6", "7", "12"],
+    "answer": 0,
+    "explanation": "By the Pythagorean theorem: 3^2 + 4^2 = 9 + 16 = 25, and the square root of 25 is 5."
+  },
+  {
+    "id": "math-tri-002",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "medium",
+    "prompt": "The angles of a triangle are in the ratio 3:4:5. What is the measure of the largest angle?",
+    "choices": ["75 degrees", "60 degrees", "90 degrees", "45 degrees"],
+    "answer": 0,
+    "explanation": "The ratio has 3 + 4 + 5 = 12 parts, and angles sum to 180, so each part is 15 degrees. The largest angle is 5 x 15 = 75 degrees."
+  },
+  {
+    "id": "math-tri-003",
+    "subject": "Math",
+    "topic": "Triangles",
+    "difficulty": "hard",
+    "prompt": "What is the area of the triangle with vertices at (0, 0), (4, 0), and (4, 3)?",
+    "choices": ["6", "12", "7", "10"],
+    "answer": 0,
+    "explanation": "This is a right triangle with a horizontal base of 4 and a vertical height of 3. Area = (1/2)(4)(3) = 6."
+  },
+  {
+    "id": "math-cir-001",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "easy",
+    "prompt": "What is the area of a circle with radius 3?",
+    "choices": ["9 pi", "6 pi", "3 pi", "12 pi"],
+    "answer": 0,
+    "explanation": "Area = pi * r^2 = pi * 3^2 = 9 pi. (6 pi is the circumference, a common trap.)"
+  },
+  {
+    "id": "math-cir-002",
+    "subject": "Math",
+    "topic": "Circles",
+    "difficulty": "medium",
+    "prompt": "A circle has a circumference of 10 pi. What is its area?",
+    "choices": ["25 pi", "10 pi", "5 pi", "100 pi"],
+    "answer": 0,
+    "explanation": "Circumference = 2 pi r = 10 pi, so r = 5. Area = pi r^2 = 25 pi."
+  },
+  {
+    "id": "math-fn-001",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "medium",
+    "prompt": "If f(x) = 2x^2 - 3, what is f(-2)?",
+    "choices": ["5", "11", "-5", "-11"],
+    "answer": 0,
+    "explanation": "f(-2) = 2(-2)^2 - 3 = 2(4) - 3 = 8 - 3 = 5. The square makes the negative disappear before multiplying."
+  },
+  {
+    "id": "math-fn-002",
+    "subject": "Math",
+    "topic": "Functions",
+    "difficulty": "hard",
+    "prompt": "If f(x) = 3x + 1 and g(x) = x^2, what is f(g(2))?",
+    "choices": ["13", "49", "7", "16"],
+    "answer": 0,
+    "explanation": "Work inside out: g(2) = 4, then f(4) = 3(4) + 1 = 13. Doing it in the wrong order gives 49, the trap answer."
+  },
+  {
+    "id": "math-rat-001",
+    "subject": "Math",
+    "topic": "Ratios and Proportions",
+    "difficulty": "easy",
+    "prompt": "Two numbers are in the ratio 3:5 and add up to 40. What is the larger number?",
+    "choices": ["25", "15", "20", "24"],
+    "answer": 0,
+    "explanation": "There are 3 + 5 = 8 parts, so each part is 40/8 = 5. The larger number is 5 x 5 = 25."
+  },
+  {
+    "id": "math-pct-001",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "medium",
+    "prompt": "A shirt costs $40. It is marked down 25%, and then an additional 10% is taken off the sale price. What is the final price?",
+    "choices": ["$27.00", "$26.00", "$28.00", "$25.50"],
+    "answer": 0,
+    "explanation": "40 x 0.75 = 30, then 30 x 0.90 = 27. Successive discounts multiply; they do not add to 35%."
+  },
+  {
+    "id": "math-pct-002",
+    "subject": "Math",
+    "topic": "Percentages",
+    "difficulty": "hard",
+    "prompt": "After a 20% increase, a number becomes 96. What was the original number?",
+    "choices": ["80", "76", "78", "84"],
+    "answer": 0,
+    "explanation": "If the original is n, then 1.2n = 96, so n = 96/1.2 = 80. Subtracting 20% from 96 gives 76.8, which is the trap."
+  },
+  {
+    "id": "math-stat-001",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "medium",
+    "prompt": "What is the mean of the set {4, 8, 15, 16, 23}?",
+    "choices": ["13.2", "15", "14", "12.4"],
+    "answer": 0,
+    "explanation": "The sum is 66 and there are 5 values, so the mean is 66/5 = 13.2. (15 is the median, a common mix-up.)"
+  },
+  {
+    "id": "math-stat-002",
+    "subject": "Math",
+    "topic": "Statistics",
+    "difficulty": "hard",
+    "prompt": "For the set {2, 4, 4, 5, 10}, what is the mean minus the median?",
+    "choices": ["1", "0", "2", "-1"],
+    "answer": 0,
+    "explanation": "The mean is 25/5 = 5. Sorted, the middle value (median) is 4. So 5 - 4 = 1."
+  }
+]

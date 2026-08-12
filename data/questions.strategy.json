@@ -1,0 +1,177 @@
+[
+  {
+    "id": "strat-poe-001",
+    "subject": "Test Strategy",
+    "topic": "Process of Elimination",
+    "difficulty": "easy",
+    "prompt": "On a four-choice multiple choice question, eliminating two clearly wrong answers changes your odds of a correct guess from what to what?",
+    "choices": ["25% to 50%", "25% to 33%", "50% to 75%", "20% to 40%"],
+    "answer": 0,
+    "explanation": "One correct answer out of four is 25%. Removing two leaves one correct out of two, or 50%. Eliminating even one wrong answer measurably improves your expected score."
+  },
+  {
+    "id": "strat-poe-002",
+    "subject": "Test Strategy",
+    "topic": "Process of Elimination",
+    "difficulty": "medium",
+    "prompt": "Two answer choices say the exact opposite of each other. What does this usually signal?",
+    "choices": [
+      "One of them is likely correct, since the test is testing that distinction",
+      "Both are certainly wrong",
+      "The question has an error",
+      "You should always pick the longer one"
+    ],
+    "answer": 0,
+    "explanation": "Direct opposites usually mean the question hinges on that specific contrast. This is a tiebreaker heuristic, not a guarantee, so verify against the passage or problem."
+  },
+  {
+    "id": "strat-trap-001",
+    "subject": "Test Strategy",
+    "topic": "Trap Answers",
+    "difficulty": "medium",
+    "prompt": "On a math section, an answer choice matches a number you calculated in an intermediate step. What should you suspect?",
+    "choices": [
+      "It may be a trap for stopping one step early",
+      "It is definitely correct",
+      "The question is miscalibrated",
+      "You should always choose it to save time"
+    ],
+    "answer": 0,
+    "explanation": "Test writers deliberately include intermediate values as distractors. Always re-read what the question actually asked for before selecting."
+  },
+  {
+    "id": "strat-trap-002",
+    "subject": "Test Strategy",
+    "topic": "Trap Answers",
+    "difficulty": "hard",
+    "prompt": "On a reading comprehension question, an answer choice contains absolute words like \"always,\" \"never,\" or \"all.\" What is generally true of such choices?",
+    "choices": [
+      "They are more often wrong, because passages rarely support absolute claims",
+      "They are more often right, because they are specific",
+      "They are always wrong without exception",
+      "Word choice has no bearing on correctness"
+    ],
+    "answer": 0,
+    "explanation": "Extreme language is harder to support from a text than measured language like \"often\" or \"suggests.\" This is a tendency, not a rule, so verify against the passage."
+  },
+  {
+    "id": "strat-time-001",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "You are stuck on question 12 of 30 with limited time remaining. What is the best move?",
+    "choices": [
+      "Mark it, guess, move on, and return if time allows",
+      "Keep working until you solve it",
+      "Skip all remaining hard questions",
+      "Start over from question 1"
+    ],
+    "answer": 0,
+    "explanation": "Every question is worth the same. Spending five minutes on one question costs you the chance to answer several easier ones you would get right."
+  },
+  {
+    "id": "strat-time-002",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "easy",
+    "prompt": "On the digital SAT, is there a penalty for a wrong answer compared to leaving it blank?",
+    "choices": [
+      "No, so you should never leave a question blank",
+      "Yes, a quarter point is deducted",
+      "Yes, a half point is deducted",
+      "Only in the math section"
+    ],
+    "answer": 0,
+    "explanation": "There is no wrong-answer penalty, which means a blank and a wrong answer score identically. Always guess. Confirm current rules on the official College Board site before test day."
+  },
+  {
+    "id": "strat-tri-001",
+    "subject": "Test Strategy",
+    "topic": "Question Triage",
+    "difficulty": "easy",
+    "prompt": "What is the most effective way to open a timed section?",
+    "choices": [
+      "Answer the questions you find easy first, then return to harder ones",
+      "Answer strictly in order, no matter the difficulty",
+      "Start from the last question and work backward",
+      "Read every question before answering any"
+    ],
+    "answer": 0,
+    "explanation": "Banking the points you are confident about protects against running out of time before reaching questions you could have answered correctly."
+  },
+  {
+    "id": "strat-back-001",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A math question gives four numeric answer choices and setting up the algebra looks slow. What technique often works faster?",
+    "choices": [
+      "Plug the answer choices back into the problem, starting with the middle value",
+      "Always choose the largest value",
+      "Skip the question entirely",
+      "Estimate and pick the closest option"
+    ],
+    "answer": 0,
+    "explanation": "Backsolving turns an algebra problem into arithmetic. Starting with a middle value tells you which direction to move if it is wrong, often resolving it in two tries."
+  },
+  {
+    "id": "strat-est-001",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "Answer choices are 4.2, 18.7, 105.3, and 2,140. Your rough estimate is \"around 20.\" What should you do?",
+    "choices": [
+      "Select 18.7, since only one choice is near your estimate",
+      "Compute the exact value regardless",
+      "Select 105.3 as a safer middle option",
+      "Skip the question"
+    ],
+    "answer": 0,
+    "explanation": "When choices are spread across different orders of magnitude, a rough estimate is enough to identify the answer. Save the exact computation for when choices are close together."
+  },
+  {
+    "id": "strat-read-001",
+    "subject": "Test Strategy",
+    "topic": "Data Interpretation",
+    "difficulty": "medium",
+    "prompt": "A question asks about a graph. What should you check before reading any answer choices?",
+    "choices": [
+      "The axis labels and units",
+      "The color scheme",
+      "The number of data points",
+      "The title font"
+    ],
+    "answer": 0,
+    "explanation": "Most graph question errors come from misreading units or axes, for example reading thousands as ones, or confusing a rate of change with a total."
+  },
+  {
+    "id": "strat-read-002",
+    "subject": "Test Strategy",
+    "topic": "Data Interpretation",
+    "difficulty": "hard",
+    "prompt": "A passage-based question asks what the author \"implies.\" Where must the answer come from?",
+    "choices": [
+      "Reasoning supported by the text, even if not stated directly",
+      "Your own outside knowledge of the topic",
+      "The most factually accurate statement",
+      "The longest answer choice"
+    ],
+    "answer": 0,
+    "explanation": "Inference questions require support traceable to the passage. An answer can be true in the real world and still be wrong if the text does not support it."
+  },
+  {
+    "id": "strat-qs-001",
+    "subject": "Test Strategy",
+    "topic": "Question Triage",
+    "difficulty": "medium",
+    "prompt": "What is the benefit of reading the question stem before reading a long passage?",
+    "choices": [
+      "You know what to look for, so you read with a purpose",
+      "It lets you skip the passage entirely",
+      "It guarantees a faster reading speed",
+      "It reveals the correct answer"
+    ],
+    "answer": 0,
+    "explanation": "Knowing the target turns passive reading into a search. It does not replace reading the passage, but it makes the reading far more efficient."
+  }
+]

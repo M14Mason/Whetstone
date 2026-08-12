@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0b10">
+<title>Whetstone — Study what you actually keep missing</title>
+<meta name="description" content="Whetstone maps every unit of your actual courses, finds the topics you keep getting wrong, and drills them with flashcards, match games, and practice tests.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Webfonts load independently of the app stylesheet. If this request fails
+     or is blocked, the app still styles correctly using the system stack. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="/styles.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%236d5efc'/></svg>">
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/"><span class="brand-mark"></span><span>Whetstone</span></a>
+  <nav id="nav" class="nav hidden">
+    <button data-view="home" class="nav-btn active">Study</button>
+    <button data-view="courses" class="nav-btn">Courses</button>
+    <button data-view="progress" class="nav-btn">Progress</button>
+    <button data-view="group" class="nav-btn">Group</button>
+    <button data-view="plan" class="nav-btn">Plan</button>
+  </nav>
+  <div class="topbar-right">
+    <span id="streak-chip" class="streak hidden"></span>
+    <button id="avatar" class="avatar hidden" title="Account"></button>
+  </div>
+</header>
+
+<main class="shell" id="main">
+
+  <!-- ========================= LANDING ========================= -->
+  <section id="view-landing" class="view">
+    <div class="hero">
+      <div>
+        <span class="eyebrow">1,000+ questions across 144 courses</span>
+        <h1>Stop re-studying<br>what you <span class="grad">already know.</span></h1>
+        <p class="lede">
+          Pick your actual classes, unit by unit. Whetstone tracks every question
+          you miss, works out which topics are genuinely weak, and keeps sending
+          them back until they stick.
+        </p>
+        <ul class="feature-list">
+          <li class="feature">
+            <span class="feature-icon">◎</span>
+            <span><strong>Built around your real schedule</strong><span>Every AP, honors, core, and college course mapped down to individual units.</span></span>
+          </li>
+          <li class="feature">
+            <span class="feature-icon">⚡</span>
+            <span><strong>Four ways to study one set</strong><span>Adaptive practice, flashcards, a timed match game, and full practice tests.</span></span>
+          </li>
+          <li class="feature">
+            <span class="feature-icon">◆</span>
+            <span><strong>Study groups from 3 people</strong><span>Shared leaderboard ranked on improvement, not on who was already ahead.</span></span>
+          </li>
+        </ul>
+      </div>
+
+      <div class="card card-pad-lg auth-card hero-visual">
+        <h2 style="margin-bottom:1.25rem">Create your free account</h2>
+
+        <form id="signup-form" class="form">
+          <label>Display name<input name="displayName" type="text" autocomplete="nickname" placeholder="Alex" required></label>
+          <label>Email<input name="email" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+          <label>Password<input name="password" type="password" autocomplete="new-password" placeholder="At least 8 characters" required minlength="8"></label>
+          <label>Birth year<input name="birthYear" type="number" placeholder="2009" required min="1900"></label>
+
+          <label class="check-row" for="accept-terms">
+            <input type="checkbox" id="accept-terms" name="acceptTerms" required>
+            <span>I am 13 or older and I agree to the
+              <button type="button" class="linkish" data-legal="terms">Terms of Service</button> and
+              <button type="button" class="linkish" data-legal="privacy">Privacy Policy</button>.</span>
+          </label>
+
+          <button class="btn btn-primary btn-block btn-lg" type="submit">Create free account</button>
+          <p class="hint center">Free forever. No card required.</p>
+        </form>
+
+        <p id="auth-error" class="error hidden"></p>
+        <p class="hint center" style="margin-top:1.25rem">
+          Already have an account?
+          <button class="linkish" id="go-signin">Sign in</button>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= SIGN IN ========================= -->
+  <section id="view-signin" class="view hidden">
+    <div class="narrow" style="padding-top:3rem">
+      <div class="card card-pad-lg">
+        <h1 style="font-size:1.9rem;margin-bottom:.4rem">Welcome back</h1>
+        <p class="muted">Sign in to pick up where you left off.</p>
+
+        <form id="login-form" class="form" style="margin-top:1.25rem">
+          <label>Email<input name="email" type="email" autocomplete="email" required></label>
+          <label>Password<input name="password" type="password" autocomplete="current-password" required></label>
+          <button class="btn btn-primary btn-block btn-lg" type="submit">Sign in</button>
+          <button id="forgot-link" class="linkish center" type="button">Forgot your password?</button>
+        </form>
+
+        <form id="forgot-form" class="form hidden" style="margin-top:1.25rem">
+          <p class="muted" style="font-size:.9rem">Enter your email and we will send a reset link.</p>
+          <label>Email<input name="email" type="email" autocomplete="email" required></label>
+          <button class="btn btn-primary btn-block" type="submit">Send reset link</button>
+          <button id="forgot-cancel" class="linkish center" type="button">Back to sign in</button>
+        </form>
+
+        <p id="signin-error" class="error hidden"></p>
+        <p id="auth-notice" class="notice hidden"></p>
+        <p class="hint center" style="margin-top:1.25rem">
+          New here? <button class="linkish" id="go-signup">Create an account</button>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= ONBOARDING ========================= -->
+  <section id="view-onboarding" class="view hidden">
+    <div class="onboard">
+      <div class="steps"><div class="step-dot done"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+
+      <div id="ob-step-1">
+        <h1 style="font-size:2rem">What year are you in?</h1>
+        <p class="muted">This decides which courses we show you first.</p>
+        <div class="choice-grid" id="grade-choices"></div>
+        <button id="ob-next-1" class="btn btn-primary btn-lg" disabled>Continue</button>
+      </div>
+
+      <div id="ob-step-2" class="hidden">
+        <h1 style="font-size:2rem">Which classes are you taking?</h1>
+        <p class="muted">Pick as many as you want. You can change these any time.</p>
+        <div class="course-search">
+          <input id="ob-search" type="search" placeholder="Search 144 courses...">
+        </div>
+        <div id="ob-courses" class="course-list"></div>
+        <div class="row" style="margin-top:1.25rem">
+          <button id="ob-back-2" class="btn btn-ghost">Back</button>
+          <button id="ob-next-2" class="btn btn-primary" disabled>Continue</button>
+          <span id="ob-count" class="dim"></span>
+        </div>
+      </div>
+
+      <div id="ob-step-3" class="hidden">
+        <h1 style="font-size:2rem">What are you working toward?</h1>
+        <p class="muted">We will point your practice at it.</p>
+        <div class="choice-grid" id="goal-choices"></div>
+        <div class="row" style="margin-top:1.25rem">
+          <button id="ob-back-3" class="btn btn-ghost">Back</button>
+          <button id="ob-finish" class="btn btn-primary btn-lg" disabled>Start studying</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= HOME / MODE PICKER ========================= -->
+  <section id="view-home" class="view hidden">
+    <div class="row-between" style="margin-bottom:1.5rem">
+      <div>
+        <h1 id="home-greeting" style="font-size:1.9rem;margin-bottom:.15rem"></h1>
+        <p class="muted" id="home-sub" style="margin:0"></p>
+      </div>
+    </div>
+
+    <div class="stat-strip" id="home-stats"></div>
+
+    <div id="scope-banner" class="banner hidden" style="margin-bottom:1.25rem"></div>
+
+    <div class="section-head">
+      <span class="section-icon">◎</span>
+      <h2>Study modes</h2>
+    </div>
+    <div class="mode-grid stagger">
+      <button class="mode-card" data-mode="learn" style="--mode-glow:#6d5efc66">
+        <span class="mode-emoji">◎</span>
+        <h3>Learn</h3>
+        <p>Adaptive practice that targets your weakest topics automatically.</p>
+      </button>
+      <button class="mode-card" data-mode="flashcards" style="--mode-glow:#38bdf866">
+        <span class="mode-emoji">▤</span>
+        <h3>Flashcards</h3>
+        <p>Fast recognition passes. Flip, rate yourself, move on.</p>
+      </button>
+      <button class="mode-card" data-mode="match" style="--mode-glow:#fb923c66">
+        <span class="mode-emoji">⚡</span>
+        <h3>Match</h3>
+        <p>Race the clock pairing terms with definitions. Beat your best time.</p>
+      </button>
+      <button class="mode-card" data-mode="test" style="--mode-glow:#34d39966">
+        <span class="mode-emoji">✎</span>
+        <h3>Practice Test</h3>
+        <p>Ten questions, graded at the end, just like the real thing.</p>
+      </button>
+      <button class="mode-card" data-mode="review" style="--mode-glow:#fb718566">
+        <span class="mode-emoji">↻</span>
+        <h3>Review Mistakes</h3>
+        <p>Only the questions you have actually gotten wrong.</p>
+      </button>
+    </div>
+
+    <div class="section-head">
+      <span class="section-icon">▦</span>
+      <h2>Your courses</h2>
+      <span class="count-badge" id="home-course-count"></span>
+      <span class="spacer"></span>
+      <button class="btn btn-sm" data-view="courses">Manage</button>
+    </div>
+    <div id="home-courses" class="course-card-grid stagger"></div>
+
+    <div class="section-head">
+      <span class="section-icon">✎</span>
+      <h2>Your study sets</h2>
+      <span class="count-badge" id="home-set-count"></span>
+      <span class="spacer"></span>
+      <button class="btn btn-sm btn-primary" id="new-set-btn">+ New set</button>
+    </div>
+    <div id="home-sets" class="stack stagger"></div>
+  </section>
+
+  <!-- ========================= LEARN / QUIZ ========================= -->
+  <section id="view-learn" class="view hidden">
+    <div class="quiz-wrap">
+      <div class="row-between" style="margin-bottom:1rem">
+        <button class="btn btn-ghost btn-sm" data-back="home">← Back</button>
+        <span id="quota-note" class="dim"></span>
+      </div>
+
+      <div id="quiz-card" class="card card-pad-lg">
+        <div class="quiz-meta">
+          <div class="breadcrumb" id="q-breadcrumb"></div>
+          <span class="chip" id="q-difficulty"></span>
+        </div>
+        <p id="q-prompt" class="q-prompt"></p>
+        <div id="q-choices" class="choices"></div>
+        <div id="q-feedback" class="feedback hidden"></div>
+        <div class="row" style="justify-content:flex-end;margin-top:1.3rem">
+          <button id="next-btn" class="btn btn-primary hidden">Next question →</button>
+        </div>
+      </div>
+
+      <div id="quiz-empty" class="card empty-state hidden">
+        <span class="empty-emoji">◔</span>
+        <h2 id="quiz-empty-title">Nothing to practice</h2>
+        <p class="muted" id="quiz-empty-msg"></p>
+        <button class="btn btn-primary" data-back="home">Back to study modes</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= FLASHCARDS ========================= -->
+  <section id="view-flashcards" class="view hidden">
+    <div class="quiz-wrap">
+      <div class="row-between" style="margin-bottom:1rem">
+        <button class="btn btn-ghost btn-sm" data-back="home">← Back</button>
+        <span id="flash-counter" class="dim"></span>
+      </div>
+      <div class="progress-track"><div id="flash-progress" class="progress-fill" style="width:0%"></div></div>
+
+      <div class="flash-stage">
+        <div id="flash-card" class="flash-card">
+          <div class="flash-face front">
+            <div>
+              <div class="flash-term" id="flash-front"></div>
+              <div class="flash-hint">Click or press Space to flip</div>
+            </div>
+          </div>
+          <div class="flash-face back">
+            <div>
+              <div class="flash-def" id="flash-back"></div>
+              <div class="flash-hint">Click to flip back</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="justify-content:center;gap:.75rem">
+        <button id="flash-prev" class="btn">← Previous</button>
+        <button id="flash-next" class="btn btn-primary">Next →</button>
+      </div>
+      <p class="hint center">Arrow keys to move, Space to flip</p>
+    </div>
+  </section>
+
+  <!-- ========================= MATCH ========================= -->
+  <section id="view-match" class="view hidden">
+    <div class="row-between" style="margin-bottom:1rem">
+      <button class="btn btn-ghost btn-sm" data-back="home">← Back</button>
+      <div class="row" style="gap:1rem">
+        <span id="match-best" class="dim"></span>
+        <span class="timer" id="match-timer">0.0</span>
+      </div>
+    </div>
+    <div id="match-grid" class="match-grid"></div>
+    <div id="match-done" class="card empty-state hidden" style="margin-top:1.25rem">
+      <span class="empty-emoji">🏁</span>
+      <h2 id="match-result-time"></h2>
+      <p class="muted" id="match-result-note"></p>
+      <div class="row" style="justify-content:center;gap:.6rem">
+        <button id="match-again" class="btn btn-primary">Play again</button>
+        <button class="btn" data-back="home">Done</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= PRACTICE TEST ========================= -->
+  <section id="view-test" class="view hidden">
+    <div class="quiz-wrap">
+      <div class="row-between" style="margin-bottom:1rem">
+        <button class="btn btn-ghost btn-sm" data-back="home">← Back</button>
+        <span id="test-counter" class="dim"></span>
+      </div>
+      <div class="progress-track"><div id="test-progress" class="progress-fill" style="width:0%"></div></div>
+
+      <div id="test-active">
+        <div class="card card-pad-lg">
+          <div class="quiz-meta">
+            <div class="breadcrumb" id="test-breadcrumb"></div>
+            <span class="chip" id="test-difficulty"></span>
+          </div>
+          <p id="test-prompt" class="q-prompt"></p>
+          <div id="test-choices" class="choices"></div>
+          <div class="row" style="justify-content:space-between;margin-top:1.3rem">
+            <button id="test-prev" class="btn btn-ghost">← Previous</button>
+            <button id="test-next" class="btn btn-primary">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="test-results" class="hidden"></div>
+    </div>
+  </section>
+
+  <!-- ========================= COURSES ========================= -->
+  <section id="view-courses" class="view hidden">
+    <div id="course-browse">
+      <div class="row-between" style="margin-bottom:1.25rem">
+        <div>
+          <h1 style="font-size:1.9rem;margin-bottom:.15rem">Courses</h1>
+          <p class="muted" id="catalog-stats" style="margin:0"></p>
+        </div>
+        <button id="edit-courses-btn" class="btn btn-sm">Edit my courses</button>
+      </div>
+      <div class="course-search"><input id="course-search" type="search" placeholder="Search courses..."></div>
+      <div id="course-groups" class="stack"></div>
+    </div>
+
+    <div id="course-detail" class="hidden">
+      <button class="btn btn-ghost btn-sm" id="course-back" style="margin-bottom:1rem">← All courses</button>
+      <div class="card" style="margin-bottom:1.25rem">
+        <div class="row-between">
+          <div>
+            <h1 id="cd-name" style="font-size:1.6rem;margin-bottom:.3rem"></h1>
+            <div class="row" style="gap:.5rem"><span id="cd-level" class="pill"></span><span id="cd-coverage" class="dim"></span></div>
+          </div>
+          <button id="cd-study" class="btn btn-primary">Study this course</button>
+        </div>
+      </div>
+      <h2 style="margin-bottom:.8rem">Units</h2>
+      <div id="cd-units" class="stack"></div>
+    </div>
+  </section>
+
+  <!-- ========================= PROGRESS ========================= -->
+  <section id="view-progress" class="view hidden">
+    <h1 style="font-size:1.9rem;margin-bottom:1.25rem">Your progress</h1>
+    <div class="grid-4" id="stat-row" style="margin-bottom:1.25rem"></div>
+    <div class="card">
+      <h2>Weak spots</h2>
+      <p class="muted" style="font-size:.9rem">The engine sends these back to you most often.</p>
+      <div id="weak-spots"></div>
+    </div>
+    <div id="mastery-subjects"></div>
+  </section>
+
+  <!-- ========================= GROUP ========================= -->
+  <section id="view-group" class="view hidden">
+    <h1 style="font-size:1.9rem;margin-bottom:1.25rem">Study group</h1>
+    <div id="group-none" class="grid-2">
+      <div class="card">
+        <h2>Start a group</h2>
+        <p class="muted" style="font-size:.9rem">Unlocks at 3 people. Everyone in an active group gets full access.</p>
+        <form id="create-group-form" class="form">
+          <label>Group name<input name="name" type="text" placeholder="Third period chem" required></label>
+          <button class="btn btn-primary" type="submit">Create group</button>
+        </form>
+      </div>
+      <div class="card">
+        <h2>Join with a code</h2>
+        <p class="muted" style="font-size:.9rem">Someone already made one? Enter their invite code.</p>
+        <form id="join-group-form" class="form">
+          <label>Invite code<input name="inviteCode" type="text" placeholder="ABC234" required></label>
+          <button class="btn" type="submit">Join group</button>
+        </form>
+      </div>
+    </div>
+
+    <div id="group-detail" class="hidden">
+      <div class="card">
+        <div class="row-between">
+          <div><h2 id="group-name"></h2><p class="dim" style="margin:0">Share this code with friends</p></div>
+          <span id="group-status" class="pill"></span>
+        </div>
+        <div class="code-display" id="group-code" style="margin:1rem 0"></div>
+        <div class="seat-track" id="group-seats"></div>
+        <div class="row">
+          <button id="activate-group-btn" class="btn btn-primary hidden"></button>
+          <button id="leave-group-btn" class="btn btn-ghost">Leave group</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Leaderboard</h2>
+        <p class="muted" style="font-size:.9rem">Ranked on improvement and effort, not who was already ahead.</p>
+        <div id="leaderboard"></div>
+      </div>
+
+      <div class="card">
+        <div class="section-head" style="margin-top:0">
+          <span class="section-icon">💬</span>
+          <h2>Group chat</h2>
+        </div>
+        <p class="muted" style="font-size:.9rem;margin-bottom:1rem">
+          Every class two or more of you share automatically gets its own channel.
+        </p>
+        <div class="chat-layout">
+          <div class="channel-list" id="channel-list"></div>
+          <div class="chat-window">
+            <div class="chat-messages" id="chat-messages"></div>
+            <form class="chat-compose" id="chat-form">
+              <input id="chat-input" type="text" placeholder="Message..." autocomplete="off" maxlength="1000">
+              <button class="btn btn-primary" type="submit">Send</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= PLAN ========================= -->
+  <section id="view-plan" class="view hidden">
+    <h1 style="font-size:1.9rem;margin-bottom:1.25rem">Plan &amp; account</h1>
+    <div id="verify-banner" class="banner hidden" style="margin-bottom:1rem"></div>
+    <div id="billing-banner" class="banner hidden" style="margin-bottom:1rem"></div>
+
+    <div class="grid-3" style="margin-bottom:1.25rem">
+      <div class="card price-card">
+        <h3>Free</h3><div class="price">$0</div>
+        <ul><li>5 questions a day</li><li>1 subject at a time</li><li>Basic progress tracking</li></ul>
+      </div>
+      <div class="card price-card featured">
+        <span class="price-badge">Most popular</span>
+        <h3>Premium</h3><div class="price">$8.99<small>/mo</small></div>
+        <ul><li>Unlimited questions</li><li>Every course and unit</li><li>All four study modes</li><li>Full mastery dashboard</li></ul>
+        <button id="upgrade-btn" class="btn btn-primary btn-block">Upgrade</button>
+      </div>
+      <div class="card price-card">
+        <h3>Study Group</h3><div class="price">$6<small>/seat/mo</small></div>
+        <ul><li>Minimum 3 people</li><li>Everything in Premium</li><li>Shared leaderboard</li></ul>
+        <p class="hint">Set this up on the Group tab.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-head" style="margin-top:0">
+        <span class="section-icon">🐞</span>
+        <h2>Report a bug</h2>
+      </div>
+      <p class="muted" style="font-size:.9rem">
+        Reports are saved in your own database. Nothing is sent anywhere.
+        Run <code>npm run bugs</code> to export them all to a file.
+      </p>
+      <form id="bug-form" class="form">
+        <label>What went wrong?<input name="title" type="text" placeholder="Match game froze after 3 pairs" required maxlength="140"></label>
+        <label>Details<input name="body" type="text" placeholder="What you did, what happened, what you expected" required maxlength="500"></label>
+        <button class="btn btn-primary" type="submit">Send report</button>
+      </form>
+      <div id="my-bugs" style="margin-top:1rem"></div>
+    </div>
+
+    <div class="card">
+      <h3>Account</h3>
+      <p class="muted">Current plan: <strong id="plan-label"></strong></p>
+      <div class="row" style="flex-wrap:wrap">
+        <button id="cancel-btn" class="btn btn-ghost hidden">Cancel subscription</button>
+        <button class="btn btn-ghost" data-legal="terms">Terms of Service</button>
+        <button class="btn btn-ghost" data-legal="privacy">Privacy Policy</button>
+        <button id="logout-btn" class="btn btn-ghost">Sign out</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= RESET / VERIFY ========================= -->
+  <section id="view-reset" class="view hidden">
+    <div class="narrow" style="padding-top:3rem">
+      <div class="card card-pad-lg">
+        <h1 style="font-size:1.7rem">Choose a new password</h1>
+        <form id="reset-form" class="form">
+          <label>New password<input name="password" type="password" autocomplete="new-password" required minlength="8" placeholder="At least 8 characters"></label>
+          <label>Confirm password<input name="confirm" type="password" autocomplete="new-password" required minlength="8"></label>
+          <button class="btn btn-primary btn-block" type="submit">Update password</button>
+        </form>
+        <p id="reset-message" class="hint"></p>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-verify" class="view hidden">
+    <div class="narrow" style="padding-top:3rem">
+      <div class="card card-pad-lg center">
+        <h1 id="verify-title" style="font-size:1.7rem">Confirming your email...</h1>
+        <p class="muted" id="verify-message"></p>
+        <button id="verify-continue" class="btn btn-primary hidden">Continue to Whetstone</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========================= SET EDITOR ========================= -->
+  <section id="view-set" class="view hidden">
+    <button class="btn btn-ghost btn-sm" data-back="home" style="margin-bottom:1rem">← Back</button>
+    <div class="card">
+      <h1 style="font-size:1.6rem">Create a study set</h1>
+      <p class="muted">Add your own terms. They work in Flashcards, Match, and Learn.</p>
+      <label style="margin:1rem 0">Set title<input id="set-title" type="text" placeholder="Bio Unit 4 vocab" maxlength="80"></label>
+      <div id="set-cards"></div>
+      <div class="row" style="margin-top:1rem;flex-wrap:wrap">
+        <button id="add-card-row" class="btn btn-sm">+ Add card</button>
+        <button id="save-set" class="btn btn-primary">Save set</button>
+        <button id="delete-set" class="btn btn-ghost hidden">Delete set</button>
+      </div>
+      <p id="set-msg" class="hint"></p>
+    </div>
+  </section>
+
+</main>
+
+<div id="modal-host"></div>
+
+<nav class="mobile-nav hidden" id="mobile-nav">
+  <div class="mobile-nav-inner">
+    <button data-view="home" class="active"><span class="mn-icon">◎</span>Study</button>
+    <button data-view="courses"><span class="mn-icon">▦</span>Courses</button>
+    <button data-view="progress"><span class="mn-icon">◱</span>Progress</button>
+    <button data-view="group"><span class="mn-icon">◆</span>Group</button>
+    <button data-view="plan"><span class="mn-icon">☰</span>Plan</button>
+  </div>
+</nav>
+
+<div id="toast" class="toast hidden"></div>
+<script src="/app.js"></script>
+</body>
+</html>

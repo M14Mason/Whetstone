@@ -1,0 +1,33 @@
+{
+  "name": "whetstone",
+  "version": "1.0.0",
+  "description": "Adaptive study platform that finds what you keep getting wrong and drills it until it sticks.",
+  "type": "commonjs",
+  "main": "server.js",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "seed": "node scripts/seed.js",
+    "reset": "node scripts/seed.js --reset",
+    "generate": "node --no-warnings scripts/generate-questions.js",
+    "verify": "node --no-warnings scripts/verify-bank.js",
+    "backup": "node --no-warnings scripts/backup.js",
+    "bugs": "node --no-warnings scripts/export-bugs.js",
+    "test": "node --no-warnings test/run-tests.js && node --no-warnings test/e2e.js && node --no-warnings test/dom-smoke.js && node --no-warnings scripts/verify-bank.js",
+    "test:unit": "node --no-warnings test/run-tests.js",
+    "test:e2e": "node --no-warnings test/e2e.js",
+    "test:dom": "node --no-warnings test/dom-smoke.js"
+  },
+  "keywords": [
+    "education",
+    "adaptive-learning",
+    "spaced-repetition",
+    "study",
+    "quiz"
+  ],
+  "license": "MIT",
+  "dependencies": {}
+}

@@ -1,0 +1,272 @@
+[
+  {
+    "id": "eng-sva-001",
+    "subject": "English",
+    "topic": "Subject-Verb Agreement",
+    "difficulty": "easy",
+    "prompt": "Choose the correct verb:  The list of required items ____ on the front desk.",
+    "choices": ["is", "are", "were", "have been"],
+    "answer": 0,
+    "explanation": "The subject is \"list\" (singular), not \"items.\" The phrase \"of required items\" is a prepositional phrase and never contains the subject."
+  },
+  {
+    "id": "eng-sva-002",
+    "subject": "English",
+    "topic": "Subject-Verb Agreement",
+    "difficulty": "medium",
+    "prompt": "Choose the correct verb:  Neither the coach nor the players ____ ready for the game.",
+    "choices": ["are", "is", "was", "has been"],
+    "answer": 0,
+    "explanation": "With \"neither/nor,\" the verb agrees with the closer subject. \"Players\" is plural and sits closest to the verb, so \"are\" is correct."
+  },
+  {
+    "id": "eng-sva-003",
+    "subject": "English",
+    "topic": "Subject-Verb Agreement",
+    "difficulty": "hard",
+    "prompt": "Choose the correct verb:  Each of the students ____ submitted the assignment on time.",
+    "choices": ["has", "have", "are", "were"],
+    "answer": 0,
+    "explanation": "\"Each\" is always singular, no matter what follows it. Singular subject takes \"has.\""
+  },
+  {
+    "id": "eng-pro-001",
+    "subject": "English",
+    "topic": "Pronoun Clarity",
+    "difficulty": "medium",
+    "prompt": "What is the problem with this sentence?  When Maria met Jenna, she was nervous about the interview.",
+    "choices": [
+      "The pronoun \"she\" is ambiguous",
+      "The verb tense is inconsistent",
+      "There is a comma splice",
+      "The sentence is a fragment"
+    ],
+    "answer": 0,
+    "explanation": "\"She\" could refer to Maria or Jenna. When a pronoun has two possible antecedents, the sentence must be rewritten to name the person."
+  },
+  {
+    "id": "eng-pro-002",
+    "subject": "English",
+    "topic": "Pronoun Clarity",
+    "difficulty": "hard",
+    "prompt": "Choose the correct pronoun:  The award was given to Devon and ____.",
+    "choices": ["me", "I", "myself", "mine"],
+    "answer": 0,
+    "explanation": "The pronoun is the object of the preposition \"to,\" so the objective case \"me\" is correct. Remove \"Devon and\" to hear it: \"given to me.\""
+  },
+  {
+    "id": "eng-com-001",
+    "subject": "English",
+    "topic": "Comma Usage",
+    "difficulty": "easy",
+    "prompt": "Which sentence is punctuated correctly?",
+    "choices": [
+      "After the storm passed, we went outside.",
+      "After the storm passed we went outside.",
+      "After, the storm passed we went outside.",
+      "After the storm, passed we went outside."
+    ],
+    "answer": 0,
+    "explanation": "An introductory dependent clause is followed by a comma before the main clause begins."
+  },
+  {
+    "id": "eng-com-002",
+    "subject": "English",
+    "topic": "Comma Usage",
+    "difficulty": "medium",
+    "prompt": "Which sentence correctly punctuates the nonessential description?",
+    "choices": [
+      "My brother, who lives in Ohio, is visiting next week.",
+      "My brother who lives in Ohio, is visiting next week.",
+      "My brother, who lives in Ohio is visiting next week.",
+      "My brother who lives in Ohio is visiting, next week."
+    ],
+    "answer": 0,
+    "explanation": "Nonessential information needs a comma on both sides. One comma alone is always wrong for this structure."
+  },
+  {
+    "id": "eng-com-003",
+    "subject": "English",
+    "topic": "Comma Usage",
+    "difficulty": "hard",
+    "prompt": "Which sentence is punctuated correctly?",
+    "choices": [
+      "The experiment failed; however, the team learned a great deal.",
+      "The experiment failed, however, the team learned a great deal.",
+      "The experiment failed however; the team learned a great deal.",
+      "The experiment failed, however the team learned a great deal."
+    ],
+    "answer": 0,
+    "explanation": "Two independent clauses joined by a transition like \"however\" need a semicolon before it and a comma after. Using only commas creates a comma splice."
+  },
+  {
+    "id": "eng-mod-001",
+    "subject": "English",
+    "topic": "Modifiers",
+    "difficulty": "medium",
+    "prompt": "What is wrong with this sentence?  Running late for school, the bus was missed by Tom.",
+    "choices": [
+      "The modifier \"Running late\" describes the wrong noun",
+      "The sentence has a subject-verb agreement error",
+      "The sentence needs a semicolon",
+      "The verb tense is incorrect"
+    ],
+    "answer": 0,
+    "explanation": "As written, the bus is running late for school. The modifier must attach to Tom: \"Running late for school, Tom missed the bus.\""
+  },
+  {
+    "id": "eng-mod-002",
+    "subject": "English",
+    "topic": "Modifiers",
+    "difficulty": "hard",
+    "prompt": "Which sentence places the modifier correctly?",
+    "choices": [
+      "She almost drove her kids to school every day.",
+      "She drove almost her kids to school every day.",
+      "She drove her kids almost to school every day.",
+      "She drove her kids to school almost every day."
+    ],
+    "answer": 3,
+    "explanation": "\"Almost\" must sit next to what it modifies. The intended meaning is that she did this on most days, so \"almost\" belongs before \"every day.\" Option A means she nearly drove them but did not."
+  },
+  {
+    "id": "eng-par-001",
+    "subject": "English",
+    "topic": "Parallel Structure",
+    "difficulty": "medium",
+    "prompt": "Which sentence uses parallel structure correctly?",
+    "choices": [
+      "She likes swimming, hiking, and biking.",
+      "She likes swimming, hiking, and to bike.",
+      "She likes to swim, hiking, and biking.",
+      "She likes swimming, to hike, and bikes."
+    ],
+    "answer": 0,
+    "explanation": "Items in a list must share the same grammatical form. All three are gerunds (-ing forms) in the correct version."
+  },
+  {
+    "id": "eng-apo-001",
+    "subject": "English",
+    "topic": "Apostrophes",
+    "difficulty": "easy",
+    "prompt": "Choose the correct word:  The dog wagged ____ tail.",
+    "choices": ["its", "it's", "its'", "its's"],
+    "answer": 0,
+    "explanation": "\"Its\" is the possessive form. \"It's\" is a contraction of \"it is.\" Possessive pronouns never take apostrophes."
+  },
+  {
+    "id": "eng-apo-002",
+    "subject": "English",
+    "topic": "Apostrophes",
+    "difficulty": "medium",
+    "prompt": "Choose the correct form:  All of the ____ books were left in the classroom.",
+    "choices": ["students'", "student's", "students", "students's"],
+    "answer": 0,
+    "explanation": "Multiple students possess the books, so the plural possessive is formed by adding an apostrophe after the existing s: students'."
+  },
+  {
+    "id": "eng-wc-001",
+    "subject": "English",
+    "topic": "Word Choice",
+    "difficulty": "medium",
+    "prompt": "Choose the correct word:  The new policy will ____ everyone in the building.",
+    "choices": ["affect", "effect", "afect", "effekt"],
+    "answer": 0,
+    "explanation": "\"Affect\" is almost always the verb (to influence). \"Effect\" is almost always the noun (the result)."
+  },
+  {
+    "id": "eng-wc-002",
+    "subject": "English",
+    "topic": "Word Choice",
+    "difficulty": "medium",
+    "prompt": "Choose the correct word:  There were ____ students in class today than yesterday.",
+    "choices": ["fewer", "less", "lesser", "least"],
+    "answer": 0,
+    "explanation": "Use \"fewer\" for things you can count individually (students) and \"less\" for quantities you cannot count (water, time)."
+  },
+  {
+    "id": "eng-wc-003",
+    "subject": "English",
+    "topic": "Word Choice",
+    "difficulty": "easy",
+    "prompt": "Choose the correct word:  ____ going to be late if we do not leave now.",
+    "choices": ["They're", "Their", "There", "Theyre"],
+    "answer": 0,
+    "explanation": "\"They're\" is the contraction of \"they are.\" \"Their\" shows possession and \"there\" refers to a place."
+  },
+  {
+    "id": "eng-tra-001",
+    "subject": "English",
+    "topic": "Transitions",
+    "difficulty": "medium",
+    "prompt": "Choose the best transition:  The study had a large sample size. ____, its conclusions were widely questioned.",
+    "choices": ["Nevertheless", "Therefore", "Similarly", "For example"],
+    "answer": 0,
+    "explanation": "The two sentences contrast: a strength followed by a criticism. \"Nevertheless\" signals contrast; \"Therefore\" would wrongly signal cause and effect."
+  },
+  {
+    "id": "eng-semi-001",
+    "subject": "English",
+    "topic": "Semicolons and Colons",
+    "difficulty": "medium",
+    "prompt": "Which sentence uses the semicolon correctly?",
+    "choices": [
+      "The rain stopped; the game continued.",
+      "The rain stopped; and the game continued.",
+      "Because the rain stopped; the game continued.",
+      "The rain stopped; continuing the game."
+    ],
+    "answer": 0,
+    "explanation": "A semicolon joins two complete independent clauses with no conjunction. Both sides must be able to stand alone as sentences."
+  },
+  {
+    "id": "eng-semi-002",
+    "subject": "English",
+    "topic": "Semicolons and Colons",
+    "difficulty": "hard",
+    "prompt": "Which sentence uses the colon correctly?",
+    "choices": [
+      "She packed three things: a map, a compass, and water.",
+      "She packed: a map, a compass, and water.",
+      "The three things she packed were: a map, a compass, and water.",
+      "She packed three things, a map: a compass, and water."
+    ],
+    "answer": 0,
+    "explanation": "A colon must follow a complete independent clause. \"She packed three things\" stands alone; \"She packed\" does not."
+  },
+  {
+    "id": "eng-red-001",
+    "subject": "English",
+    "topic": "Redundancy",
+    "difficulty": "medium",
+    "prompt": "Which version is most concise without losing meaning?",
+    "choices": [
+      "The committee meets annually.",
+      "The committee meets annually every year.",
+      "The committee meets each year on an annual basis.",
+      "The committee meets yearly on an annual schedule."
+    ],
+    "answer": 0,
+    "explanation": "\"Annually\" already means \"every year.\" On standardized tests, the shortest option that keeps the full meaning is usually correct."
+  },
+  {
+    "id": "eng-who-001",
+    "subject": "English",
+    "topic": "Pronoun Clarity",
+    "difficulty": "hard",
+    "prompt": "Choose the correct word:  The scientist ____ the committee selected has published widely.",
+    "choices": ["whom", "who", "which", "whose"],
+    "answer": 0,
+    "explanation": "The committee selected the scientist, so the pronoun is the object of the verb. Objects take \"whom\"; subjects take \"who.\""
+  },
+  {
+    "id": "eng-vt-001",
+    "subject": "English",
+    "topic": "Verb Tense",
+    "difficulty": "medium",
+    "prompt": "Choose the correct verb:  By the time the movie ended, we ____ there for three hours.",
+    "choices": ["had been", "have been", "are", "will be"],
+    "answer": 0,
+    "explanation": "The past perfect \"had been\" describes an action completed before another past action (the movie ending)."
+  }
+]

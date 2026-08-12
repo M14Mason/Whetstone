@@ -1,0 +1,11 @@
+node_modules/
+*.log
+.env
+.env.local
+data/whetstone.db
+data/whetstone.db-journal
+data/*.db
+data/*.db-*
+.DS_Store
+coverage/
+tmp/

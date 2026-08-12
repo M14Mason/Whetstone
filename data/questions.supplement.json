@@ -1,0 +1,327 @@
+[
+  {
+    "id": "sup-sci-cell-001",
+    "subject": "Science",
+    "topic": "Cell Biology",
+    "difficulty": "medium",
+    "prompt": "Which structure controls what enters and leaves a cell?",
+    "choices": ["The cell membrane", "The nucleus", "The ribosome", "The cytoplasm"],
+    "answer": 0,
+    "explanation": "The cell membrane is selectively permeable, letting some substances through while blocking others. The nucleus stores DNA but does not regulate transport across the cell boundary."
+  },
+  {
+    "id": "sup-sci-cell-002",
+    "subject": "Science",
+    "topic": "Cell Biology",
+    "difficulty": "easy",
+    "prompt": "Where is DNA stored in a eukaryotic cell?",
+    "choices": ["The nucleus", "The mitochondrion", "The Golgi apparatus", "The cell wall"],
+    "answer": 0,
+    "explanation": "Eukaryotes keep their DNA inside a membrane-bound nucleus. Prokaryotes have no nucleus and their DNA floats in the cytoplasm."
+  },
+  {
+    "id": "sup-sci-cell-003",
+    "subject": "Science",
+    "topic": "Cell Biology",
+    "difficulty": "hard",
+    "prompt": "What is the main structural difference between a prokaryotic and a eukaryotic cell?",
+    "choices": [
+      "Prokaryotes lack a membrane-bound nucleus",
+      "Prokaryotes have no DNA",
+      "Prokaryotes cannot reproduce",
+      "Prokaryotes have no cell membrane"
+    ],
+    "answer": 0,
+    "explanation": "Prokaryotes do have DNA, a cell membrane, and ribosomes. What they lack is a nucleus and other membrane-bound organelles."
+  },
+  {
+    "id": "sup-sci-cell-004",
+    "subject": "Science",
+    "topic": "Cell Biology",
+    "difficulty": "medium",
+    "prompt": "What is the role of chloroplasts in a plant cell?",
+    "choices": [
+      "Converting light energy into chemical energy",
+      "Breaking down cellular waste",
+      "Storing genetic information",
+      "Producing proteins from mRNA"
+    ],
+    "answer": 0,
+    "explanation": "Chloroplasts carry out photosynthesis, capturing light energy and storing it as glucose. Mitochondria then release that stored energy as ATP."
+  },
+  {
+    "id": "sup-sci-bond-001",
+    "subject": "Science",
+    "topic": "Chemical Bonding",
+    "difficulty": "medium",
+    "prompt": "Why do atoms form chemical bonds?",
+    "choices": [
+      "To reach a more stable electron arrangement",
+      "To increase their mass",
+      "To become radioactive",
+      "To lose all of their electrons"
+    ],
+    "answer": 0,
+    "explanation": "Atoms bond to achieve a full outer electron shell, which is a lower-energy and therefore more stable configuration. This is why noble gases, which already have full shells, rarely react."
+  },
+  {
+    "id": "sup-sci-bond-002",
+    "subject": "Science",
+    "topic": "Chemical Bonding",
+    "difficulty": "hard",
+    "prompt": "Why does an ionic compound like NaCl conduct electricity when dissolved in water but not as a dry solid?",
+    "choices": [
+      "Dissolving frees the ions so charge can move",
+      "Water adds electrons to the compound",
+      "The solid has no charged particles",
+      "Dissolving converts the bonds to covalent bonds"
+    ],
+    "answer": 0,
+    "explanation": "In the solid, ions are locked in a rigid lattice and cannot move. Dissolving separates them so the charged particles are free to carry current."
+  },
+  {
+    "id": "sup-sci-bond-003",
+    "subject": "Science",
+    "topic": "Chemical Bonding",
+    "difficulty": "medium",
+    "prompt": "Which type of bond typically forms between two nonmetal atoms?",
+    "choices": ["Covalent", "Ionic", "Metallic", "No bond forms"],
+    "answer": 0,
+    "explanation": "Nonmetals have similar, strong pulls on electrons, so neither gives one up outright. They share electrons instead, which is a covalent bond."
+  },
+  {
+    "id": "sup-sci-bond-004",
+    "subject": "Science",
+    "topic": "Chemical Bonding",
+    "difficulty": "easy",
+    "prompt": "How many electrons are shared in a single covalent bond?",
+    "choices": ["Two", "One", "Four", "Eight"],
+    "answer": 0,
+    "explanation": "A single covalent bond is one shared pair, so two electrons. A double bond shares two pairs (four electrons)."
+  },
+  {
+    "id": "sup-sci-per-001",
+    "subject": "Science",
+    "topic": "Periodic Trends",
+    "difficulty": "medium",
+    "prompt": "What happens to atomic radius as you move DOWN a group in the periodic table?",
+    "choices": ["It increases", "It decreases", "It stays constant", "It decreases then increases"],
+    "answer": 0,
+    "explanation": "Each row down adds a new electron shell, so the outermost electrons sit farther from the nucleus and the atom gets larger. Moving across a period does the opposite."
+  },
+  {
+    "id": "sup-sci-per-002",
+    "subject": "Science",
+    "topic": "Periodic Trends",
+    "difficulty": "hard",
+    "prompt": "Why does electronegativity generally increase from left to right across a period?",
+    "choices": [
+      "Nuclear charge rises while the electron shell stays the same",
+      "Atoms gain additional electron shells",
+      "Atomic mass decreases across a period",
+      "The number of neutrons falls across a period"
+    ],
+    "answer": 0,
+    "explanation": "Protons are added without adding a new shell, so the nucleus pulls harder on bonding electrons. That stronger pull is what electronegativity measures."
+  },
+  {
+    "id": "sup-sci-per-003",
+    "subject": "Science",
+    "topic": "Periodic Trends",
+    "difficulty": "easy",
+    "prompt": "Elements in the same GROUP of the periodic table share what property?",
+    "choices": [
+      "The same number of valence electrons",
+      "The same atomic mass",
+      "The same number of neutrons",
+      "The same number of electron shells"
+    ],
+    "answer": 0,
+    "explanation": "A group is a column, and all its members have the same valence electron count, which is why they behave similarly in reactions. Elements in the same ROW share the number of shells."
+  },
+  {
+    "id": "sup-sci-per-004",
+    "subject": "Science",
+    "topic": "Periodic Trends",
+    "difficulty": "medium",
+    "prompt": "Which group of elements is the most reactive among metals?",
+    "choices": ["Alkali metals (Group 1)", "Noble gases (Group 18)", "Halogens (Group 17)", "Transition metals"],
+    "answer": 0,
+    "explanation": "Alkali metals have a single valence electron that is easily lost, making them extremely reactive. Noble gases are the least reactive of all."
+  },
+  {
+    "id": "sup-sci-matter-001",
+    "subject": "Science",
+    "topic": "States of Matter",
+    "difficulty": "easy",
+    "prompt": "What happens to the average kinetic energy of particles as a substance is heated?",
+    "choices": ["It increases", "It decreases", "It stays the same", "It drops to zero"],
+    "answer": 0,
+    "explanation": "Temperature is a measure of average particle kinetic energy, so heating a substance makes its particles move faster."
+  },
+  {
+    "id": "sup-sci-matter-002",
+    "subject": "Science",
+    "topic": "States of Matter",
+    "difficulty": "medium",
+    "prompt": "During melting, what happens to the temperature of a pure substance?",
+    "choices": [
+      "It stays constant while the phase change occurs",
+      "It rises steadily throughout",
+      "It falls until melting finishes",
+      "It doubles at the melting point"
+    ],
+    "answer": 0,
+    "explanation": "Energy added during a phase change goes into breaking intermolecular forces rather than raising temperature, so the reading holds steady until melting completes."
+  },
+  {
+    "id": "sup-sci-matter-003",
+    "subject": "Science",
+    "topic": "States of Matter",
+    "difficulty": "medium",
+    "prompt": "Which state of matter has a definite volume but no definite shape?",
+    "choices": ["Liquid", "Solid", "Gas", "Plasma"],
+    "answer": 0,
+    "explanation": "Liquids keep a fixed volume but flow to take the shape of their container. Solids hold both shape and volume; gases hold neither."
+  },
+  {
+    "id": "sup-sci-matter-004",
+    "subject": "Science",
+    "topic": "States of Matter",
+    "difficulty": "hard",
+    "prompt": "What is the term for a gas changing directly into a solid?",
+    "choices": ["Deposition", "Sublimation", "Condensation", "Freezing"],
+    "answer": 0,
+    "explanation": "Deposition is gas to solid, skipping the liquid phase. Sublimation is the reverse, solid to gas. Frost forming on a cold window is deposition."
+  },
+  {
+    "id": "sup-sci-matter-005",
+    "subject": "Science",
+    "topic": "States of Matter",
+    "difficulty": "easy",
+    "prompt": "What is it called when a gas becomes a liquid?",
+    "choices": ["Condensation", "Evaporation", "Sublimation", "Melting"],
+    "answer": 0,
+    "explanation": "Condensation is gas to liquid, such as water droplets forming on a cold glass. Evaporation is the opposite direction."
+  },
+  {
+    "id": "sup-code-sort-001",
+    "subject": "Coding",
+    "topic": "Sorting",
+    "difficulty": "medium",
+    "prompt": "Why is merge sort often preferred over quicksort when worst-case performance matters?",
+    "choices": [
+      "Merge sort is O(n log n) in every case, while quicksort can degrade to O(n^2)",
+      "Merge sort uses less memory",
+      "Merge sort is always faster in practice",
+      "Merge sort does not require comparisons"
+    ],
+    "answer": 0,
+    "explanation": "Merge sort's split is always balanced, so it guarantees O(n log n). Quicksort is usually faster in practice but bad pivots can push it to O(n^2). Merge sort's cost is the extra O(n) memory it needs."
+  },
+  {
+    "id": "sup-code-sort-002",
+    "subject": "Coding",
+    "topic": "Sorting",
+    "difficulty": "easy",
+    "prompt": "What does it mean for a sorting algorithm to sort 'in place'?",
+    "choices": [
+      "It uses only O(1) extra memory beyond the input",
+      "It never swaps elements",
+      "It sorts without any comparisons",
+      "It returns a brand new array"
+    ],
+    "answer": 0,
+    "explanation": "An in-place sort rearranges the existing array using constant extra space. Merge sort is not in place because it allocates additional arrays while merging."
+  },
+  {
+    "id": "sup-code-sort-003",
+    "subject": "Coding",
+    "topic": "Sorting",
+    "difficulty": "hard",
+    "prompt": "An array is already sorted. Which algorithm handles this best case most efficiently?",
+    "choices": [
+      "Insertion sort, at O(n)",
+      "Merge sort, at O(n)",
+      "Selection sort, at O(n)",
+      "Quicksort, at O(log n)"
+    ],
+    "answer": 0,
+    "explanation": "Insertion sort makes one comparison per element on already-sorted input and shifts nothing, giving O(n). Merge sort still does all its splitting and merging, and selection sort still scans the remainder every pass."
+  },
+  {
+    "id": "sup-code-sort-004",
+    "subject": "Coding",
+    "topic": "Sorting",
+    "difficulty": "medium",
+    "prompt": "You need to sort records by last name, then keep that order while sorting by department. What property must the second sort have?",
+    "choices": [
+      "It must be stable",
+      "It must be in place",
+      "It must be recursive",
+      "It must be O(n)"
+    ],
+    "answer": 0,
+    "explanation": "A stable sort preserves the existing relative order of records that tie on the new key, so the earlier last-name ordering survives inside each department."
+  },
+  {
+    "id": "sup-strat-read-001",
+    "subject": "Test Strategy",
+    "topic": "Reading Approach",
+    "difficulty": "medium",
+    "prompt": "A reading question asks about the meaning of a word 'as used in line 14'. What should you do?",
+    "choices": [
+      "Read the surrounding sentences and pick the meaning that fits the context",
+      "Choose the most common dictionary definition",
+      "Choose the most advanced-sounding definition",
+      "Skip to the answer choices and pick the longest"
+    ],
+    "answer": 0,
+    "explanation": "These questions almost always test a secondary meaning. The most familiar definition is usually the trap, so the context has to decide it."
+  },
+  {
+    "id": "sup-strat-read-002",
+    "subject": "Test Strategy",
+    "topic": "Reading Approach",
+    "difficulty": "hard",
+    "prompt": "Two answer choices on a reading question both look defensible. What is the most reliable tiebreaker?",
+    "choices": [
+      "Find the specific line that supports one and not the other",
+      "Pick the one that sounds more academic",
+      "Pick the longer of the two",
+      "Pick the first one listed"
+    ],
+    "answer": 0,
+    "explanation": "On a reading section the text is the only authority. If you cannot point to a line supporting a choice, it is not the answer, however reasonable it sounds."
+  },
+  {
+    "id": "sup-strat-read-003",
+    "subject": "Test Strategy",
+    "topic": "Reading Approach",
+    "difficulty": "medium",
+    "prompt": "How should you handle a paired passage question asking where two authors would DISAGREE?",
+    "choices": [
+      "Find each author's position on the specific issue, then compare",
+      "Assume they disagree about everything",
+      "Pick the choice that mentions both passages",
+      "Use only the first passage, since it is usually the main one"
+    ],
+    "answer": 0,
+    "explanation": "Paired passages usually agree on some points and differ on others. The question targets one specific issue, so pin down each author on that issue rather than assuming wholesale disagreement."
+  },
+  {
+    "id": "sup-strat-read-004",
+    "subject": "Test Strategy",
+    "topic": "Reading Approach",
+    "difficulty": "easy",
+    "prompt": "What is the best use of the short blurb printed above a reading passage?",
+    "choices": [
+      "Read it for context on the topic, author, and date",
+      "Skip it, since it is never tested",
+      "Treat it as the main idea of the passage",
+      "Use it in place of reading the passage"
+    ],
+    "answer": 0,
+    "explanation": "The blurb is free orientation and takes five seconds to read. It is not the main idea and does not replace the passage, but knowing the subject and era makes the text easier to follow."
+  }
+]

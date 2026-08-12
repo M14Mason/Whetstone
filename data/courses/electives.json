@@ -1,0 +1,138 @@
+[
+  {
+    "id": "hs-spanish-1", "name": "Spanish 1", "level": "regular", "category": "World Languages", "grades": [9, 10, 11, 12],
+    "units": ["Greetings and Introductions", "Numbers, Dates, and Time", "Classroom and School Vocabulary", "Definite and Indefinite Articles", "Subject Pronouns and Ser", "Estar and Ser Contrast", "Regular -AR Verbs", "Regular -ER and -IR Verbs", "Adjectives and Agreement", "Family and Descriptions", "Food and Restaurants", "Gustar and Similar Verbs"]
+  },
+  {
+    "id": "hs-spanish-2", "name": "Spanish 2", "level": "regular", "category": "World Languages", "grades": [10, 11, 12],
+    "units": ["Review of Present Tense", "Stem-Changing Verbs", "Reflexive Verbs and Daily Routine", "The Preterite Tense: Regular", "The Preterite Tense: Irregular", "The Imperfect Tense", "Preterite Versus Imperfect", "Direct and Indirect Object Pronouns", "Commands: Formal and Informal", "Comparisons and Superlatives", "Travel and Transportation", "Health and the Body"]
+  },
+  {
+    "id": "hs-spanish-3", "name": "Spanish 3", "level": "regular", "category": "World Languages", "grades": [11, 12],
+    "units": ["Review of Past Tenses", "The Future Tense", "The Conditional Tense", "Present Subjunctive: Formation", "Subjunctive with Doubt and Emotion", "Subjunctive with Impersonal Expressions", "Adjective Clauses and Subjunctive", "The Present Perfect", "The Past Perfect", "Por Versus Para", "Hispanic Culture and Traditions", "Reading Authentic Texts"]
+  },
+  {
+    "id": "hs-spanish-4", "name": "Spanish 4", "level": "regular", "category": "World Languages", "grades": [11, 12],
+    "units": ["Advanced Subjunctive: Imperfect", "Si Clauses and Hypotheticals", "The Passive Voice", "Relative Pronouns", "Advanced Idiomatic Expressions", "Literature: Short Stories", "Literature: Poetry", "Film and Media Analysis", "Current Events in the Spanish-Speaking World", "Formal Writing and Essays", "Debate and Presentation", "Regional Dialects and Variation"]
+  },
+  {
+    "id": "hs-french-1", "name": "French 1", "level": "regular", "category": "World Languages", "grades": [9, 10, 11, 12],
+    "units": ["Greetings and Politeness", "Numbers, Dates, and Time", "Classroom and School", "Articles and Gender", "Subject Pronouns and Etre", "Avoir and Expressions", "Regular -ER Verbs", "Regular -IR and -RE Verbs", "Adjective Agreement and Placement", "Family and Descriptions", "Food and Dining", "Aller and the Near Future"]
+  },
+  {
+    "id": "hs-french-2", "name": "French 2", "level": "regular", "category": "World Languages", "grades": [10, 11, 12],
+    "units": ["Present Tense Review", "The Passe Compose with Avoir", "The Passe Compose with Etre", "The Imperfect Tense", "Passe Compose Versus Imperfect", "Reflexive Verbs", "Object Pronouns", "Y and En", "The Imperative", "Comparatives and Superlatives", "Travel and Directions", "Health and Daily Life"]
+  },
+  {
+    "id": "hs-french-3", "name": "French 3", "level": "regular", "category": "World Languages", "grades": [11, 12],
+    "units": ["Review of Past Tenses", "The Future Simple", "The Conditional", "The Subjunctive: Formation", "Subjunctive with Emotion and Doubt", "The Pluperfect", "Relative Pronouns", "Si Clauses", "Francophone Cultures", "Literature and Short Texts", "Film Analysis", "Formal Writing"]
+  },
+  {
+    "id": "hs-german-1", "name": "German 1", "level": "regular", "category": "World Languages", "grades": [9, 10, 11, 12],
+    "units": ["Greetings and Introductions", "Numbers, Dates, and Time", "Nouns, Gender, and Articles", "Subject Pronouns and Sein", "Haben and Common Verbs", "Present Tense Conjugation", "The Nominative Case", "The Accusative Case", "Word Order Basics", "Family and Descriptions", "Food and Shopping", "Modal Verbs Introduction"]
+  },
+  {
+    "id": "hs-german-2", "name": "German 2", "level": "regular", "category": "World Languages", "grades": [10, 11, 12],
+    "units": ["Present Tense Review", "The Dative Case", "Two-Way Prepositions", "Separable Prefix Verbs", "The Perfekt Tense", "The Simple Past", "Modal Verbs in Depth", "Reflexive Verbs", "Comparatives and Superlatives", "Subordinate Clauses", "Travel and Transportation", "German Culture and Geography"]
+  },
+  {
+    "id": "hs-chinese-1", "name": "Chinese 1", "level": "regular", "category": "World Languages", "grades": [9, 10, 11, 12],
+    "units": ["Pinyin and Tones", "Basic Strokes and Radicals", "Greetings and Self-Introduction", "Numbers and Counting", "Dates, Days, and Time", "Family Members", "Measure Words", "Basic Sentence Structure", "Questions and Question Words", "Food and Ordering", "School and Classroom", "Chinese Culture and Festivals"]
+  },
+  {
+    "id": "hs-latin-1", "name": "Latin 1", "level": "regular", "category": "World Languages", "grades": [9, 10, 11, 12],
+    "units": ["Pronunciation and Alphabet", "Nouns and the First Declension", "The Second Declension", "Present Tense Verbs", "Adjectives and Agreement", "The Third Declension", "Imperfect and Future Tenses", "The Perfect Tense", "Prepositions and Cases", "Pronouns", "Roman Daily Life", "Roman Mythology"]
+  },
+  {
+    "id": "hs-asl-1", "name": "American Sign Language 1", "level": "regular", "category": "World Languages", "grades": [9, 10, 11, 12],
+    "units": ["Fingerspelling and the Manual Alphabet", "Numbers and Counting", "Greetings and Introductions", "Facial Grammar and Non-Manual Markers", "Question Forms", "Sentence Structure and Topic-Comment", "Family and People", "Describing Appearance", "Time and Calendar Signs", "Classifiers", "Deaf Culture and History", "Conversational Practice"]
+  },
+  {
+    "id": "hs-intro-business", "name": "Introduction to Business", "level": "regular", "category": "Business and Economics", "grades": [9, 10, 11, 12],
+    "units": ["The Role of Business in Society", "Forms of Business Ownership", "Business Ethics and Social Responsibility", "Management Functions", "Human Resources", "Marketing Fundamentals", "Operations and Production", "Accounting and Finance Basics", "Business Technology", "International Business", "Entrepreneurship Basics", "Career Planning"]
+  },
+  {
+    "id": "hs-accounting", "name": "Accounting", "level": "regular", "category": "Business and Economics", "grades": [10, 11, 12],
+    "units": ["The Accounting Equation", "Analyzing Transactions", "Debits and Credits", "Journalizing and Posting", "The Trial Balance", "Adjusting Entries", "Financial Statements", "Closing Entries", "Cash Control and Bank Reconciliation", "Payroll Accounting", "Merchandising Operations", "Inventory Methods"]
+  },
+  {
+    "id": "hs-marketing", "name": "Marketing", "level": "regular", "category": "Business and Economics", "grades": [10, 11, 12],
+    "units": ["Marketing Fundamentals", "The Marketing Mix", "Market Research", "Consumer Behavior", "Market Segmentation and Targeting", "Product Development and Branding", "Pricing Strategies", "Distribution Channels", "Promotion and Advertising", "Digital and Social Media Marketing", "Selling and Customer Service", "Marketing Plans"]
+  },
+  {
+    "id": "hs-entrepreneurship", "name": "Entrepreneurship", "level": "regular", "category": "Business and Economics", "grades": [10, 11, 12],
+    "units": ["The Entrepreneurial Mindset", "Identifying Opportunities", "Market Research and Validation", "Business Models", "The Business Plan", "Startup Financing", "Legal Structures and Regulations", "Marketing for Startups", "Financial Projections", "Operations and Scaling", "Risk and Failure", "Pitching to Investors"]
+  },
+  {
+    "id": "hs-personal-finance", "name": "Personal Finance", "level": "regular", "category": "Business and Economics", "grades": [10, 11, 12],
+    "units": ["Financial Goal Setting", "Income and Careers", "Taxes", "Budgeting and Money Management", "Banking Services", "Credit and Debt", "Credit Scores and Reports", "Saving and Investing", "Stocks, Bonds, and Mutual Funds", "Insurance and Risk Management", "Housing Decisions", "Retirement and Estate Planning"]
+  },
+  {
+    "id": "hs-business-law", "name": "Business Law", "level": "regular", "category": "Business and Economics", "grades": [11, 12],
+    "units": ["Sources of Law and the Court System", "Criminal Versus Civil Law", "Torts and Negligence", "Contract Formation", "Contract Defenses and Remedies", "Sales and the UCC", "Employment Law", "Consumer Protection", "Property Law", "Intellectual Property", "Business Organizations and Liability", "Ethics in Business Law"]
+  },
+  {
+    "id": "hs-computer-science", "name": "Introduction to Computer Science", "level": "regular", "category": "Computer Science", "grades": [9, 10, 11, 12],
+    "units": ["Computing Systems and Hardware", "Binary and Data Representation", "Algorithms and Pseudocode", "Variables and Data Types", "Conditionals", "Loops", "Functions and Parameters", "Lists and Arrays", "Debugging and Testing", "Introduction to Object-Oriented Programming", "The Internet and Networks", "Cybersecurity and Digital Citizenship"]
+  },
+  {
+    "id": "hs-web-development", "name": "Web Development", "level": "regular", "category": "Computer Science", "grades": [10, 11, 12],
+    "units": ["How the Web Works", "HTML Structure and Semantics", "CSS Fundamentals", "The Box Model and Layout", "Flexbox and Grid", "Responsive Design", "JavaScript Basics", "DOM Manipulation", "Events and Interactivity", "Forms and Validation", "Accessibility", "Deployment and Hosting"]
+  },
+  {
+    "id": "hs-graphic-design", "name": "Graphic Design", "level": "regular", "category": "Arts", "grades": [9, 10, 11, 12],
+    "units": ["Elements of Design", "Principles of Design", "Color Theory", "Typography", "Composition and Layout", "Logo and Identity Design", "Raster Versus Vector Graphics", "Digital Tools and Workflow", "Photo Editing Basics", "Print Versus Digital Design", "Portfolio Development", "Design Ethics and Copyright"]
+  },
+  {
+    "id": "hs-journalism", "name": "Journalism", "level": "regular", "category": "English", "grades": [9, 10, 11, 12],
+    "units": ["History and Role of Journalism", "News Values and Story Selection", "Interviewing Techniques", "Leads and Inverted Pyramid", "News Writing Style and AP Style", "Feature Writing", "Opinion and Editorial Writing", "Sports and Arts Reporting", "Photojournalism", "Media Law and Ethics", "Layout and Design", "Digital and Broadcast Journalism"]
+  },
+  {
+    "id": "hs-speech-debate", "name": "Speech and Debate", "level": "regular", "category": "English", "grades": [9, 10, 11, 12],
+    "units": ["Communication Fundamentals", "Overcoming Speech Anxiety", "Speech Organization and Outlining", "Informative Speaking", "Persuasive Speaking and Rhetoric", "Logical Fallacies", "Research and Evidence", "Argumentation and Case Building", "Cross-Examination", "Lincoln-Douglas Debate", "Policy Debate", "Impromptu and Extemporaneous Speaking"]
+  },
+  {
+    "id": "hs-theater", "name": "Theater Arts", "level": "regular", "category": "Arts", "grades": [9, 10, 11, 12],
+    "units": ["Theater History", "Elements of Drama", "Vocal Technique", "Movement and Physicality", "Improvisation", "Character Analysis", "Script Analysis", "Acting Methods", "Monologues and Scene Work", "Technical Theater and Design", "Directing Basics", "Performance and Critique"]
+  },
+  {
+    "id": "hs-music-theory", "name": "Music Theory", "level": "regular", "category": "Arts", "grades": [9, 10, 11, 12],
+    "units": ["The Staff, Clefs, and Pitch", "Rhythm and Meter", "Major Scales and Key Signatures", "Minor Scales and Key Signatures", "Intervals", "Triads and Chord Qualities", "Seventh Chords", "Roman Numeral Analysis", "Cadences and Phrases", "Voice Leading Basics", "Form and Analysis", "Ear Training and Sight Singing"]
+  },
+  {
+    "id": "hs-studio-art", "name": "Studio Art", "level": "regular", "category": "Arts", "grades": [9, 10, 11, 12],
+    "units": ["Elements of Art", "Principles of Design", "Drawing Fundamentals", "Value and Shading", "Perspective", "Color Theory and Mixing", "Painting Techniques", "Printmaking", "Sculpture and 3-D Design", "Mixed Media", "Art History Survey", "Portfolio and Critique"]
+  },
+  {
+    "id": "hs-photography", "name": "Photography", "level": "regular", "category": "Arts", "grades": [9, 10, 11, 12],
+    "units": ["Camera Types and Parts", "Exposure Triangle: Aperture", "Exposure Triangle: Shutter Speed", "Exposure Triangle: ISO", "Composition Rules", "Lighting Fundamentals", "Portrait Photography", "Landscape Photography", "Digital Editing Workflow", "Black and White Photography", "History of Photography", "Portfolio and Critique"]
+  },
+  {
+    "id": "hs-engineering", "name": "Introduction to Engineering Design", "level": "regular", "category": "Engineering and Technology", "grades": [9, 10, 11, 12],
+    "units": ["The Design Process", "Engineering Disciplines and Careers", "Technical Sketching", "Measurement and Precision", "Computer-Aided Design (CAD)", "Geometric Modeling", "Materials and Properties", "Statics and Structures", "Prototyping and Fabrication", "Testing and Iteration", "Documentation and Technical Writing", "Team Design Project"]
+  },
+  {
+    "id": "hs-robotics", "name": "Robotics", "level": "regular", "category": "Engineering and Technology", "grades": [9, 10, 11, 12],
+    "units": ["Introduction to Robotics", "Mechanical Systems and Gears", "Motors and Actuators", "Sensors and Input", "Microcontrollers", "Programming Fundamentals for Robots", "Control Loops and Feedback", "Autonomous Navigation", "Robot Design and Chassis", "Testing and Troubleshooting", "Competition Strategy", "Ethics and the Future of Robotics"]
+  },
+  {
+    "id": "hs-culinary", "name": "Culinary Arts", "level": "regular", "category": "Career and Technical", "grades": [9, 10, 11, 12],
+    "units": ["Kitchen Safety and Sanitation", "Foodborne Illness and HACCP", "Knife Skills", "Kitchen Equipment", "Measurement and Recipe Conversion", "Cooking Methods: Dry Heat", "Cooking Methods: Moist Heat", "Stocks, Soups, and Sauces", "Baking Fundamentals", "Nutrition and Menu Planning", "Food Costing", "Front of House and Service"]
+  },
+  {
+    "id": "hs-health-science", "name": "Health Science and Medical Careers", "level": "regular", "category": "Career and Technical", "grades": [10, 11, 12],
+    "units": ["Healthcare Systems and Careers", "Medical Terminology: Roots and Prefixes", "Medical Terminology: Body Systems", "Infection Control", "Vital Signs", "Patient Care Basics", "Medical Ethics and HIPAA", "Legal Responsibilities", "Anatomy Review for Health Careers", "Emergency Response and CPR", "Communication in Healthcare", "Professionalism and Employability"]
+  },
+  {
+    "id": "hs-psych-sat-prep", "name": "SAT Preparation", "level": "test-prep", "category": "Test Prep", "grades": [10, 11, 12],
+    "units": ["Test Structure and Scoring", "Reading: Information and Ideas", "Reading: Craft and Structure", "Writing: Expression of Ideas", "Writing: Standard English Conventions", "Math: Algebra", "Math: Advanced Math", "Math: Problem Solving and Data Analysis", "Math: Geometry and Trigonometry", "Calculator Strategy", "Pacing and Time Management", "Test-Day Strategy"]
+  },
+  {
+    "id": "hs-act-prep", "name": "ACT Preparation", "level": "test-prep", "category": "Test Prep", "grades": [10, 11, 12],
+    "units": ["Test Structure and Scoring", "English: Usage and Mechanics", "English: Rhetorical Skills", "Math: Pre-Algebra and Elementary Algebra", "Math: Intermediate Algebra and Coordinate Geometry", "Math: Plane Geometry and Trigonometry", "Reading: Prose and Humanities", "Reading: Social Science and Natural Science", "Science: Data Representation", "Science: Research Summaries", "Science: Conflicting Viewpoints", "Optional Writing Test"]
+  },
+  {
+    "id": "hs-psat-prep", "name": "PSAT/NMSQT Preparation", "level": "test-prep", "category": "Test Prep", "grades": [9, 10, 11],
+    "units": ["Test Format and National Merit", "Reading Comprehension Strategies", "Vocabulary in Context", "Grammar and Usage Review", "Heart of Algebra", "Passport to Advanced Math", "Problem Solving and Data Analysis", "Geometry Essentials", "Pacing Strategy", "Score Interpretation and Next Steps"]
+  }
+]

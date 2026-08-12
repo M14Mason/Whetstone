@@ -1,0 +1,111 @@
+{
+  "courseId": "ap-calculus-ab",
+  "subject": "Math",
+  "units": {
+    "Limits and Continuity": [
+      ["Limit", "The value a function approaches as the input approaches a point"],
+      ["One-sided limit", "The value approached from only the left or only the right"],
+      ["Limit laws", "Rules letting limits distribute over sums, products, and quotients"],
+      ["Indeterminate form", "An expression such as zero over zero requiring further work"],
+      ["Squeeze theorem", "If a function is trapped between two functions sharing a limit, it shares that limit"],
+      ["Continuity at a point", "The limit exists, the function is defined, and the two agree"],
+      ["Removable discontinuity", "A hole that could be repaired by redefining a single point"],
+      ["Jump discontinuity", "A break where the two one-sided limits disagree"],
+      ["Infinite discontinuity", "A break at a vertical asymptote"],
+      ["Intermediate Value Theorem", "A continuous function takes every value between two outputs"],
+      ["Limit at infinity", "The value approached as x grows without bound"],
+      ["Horizontal asymptote", "The line described by a finite limit at infinity"]
+    ],
+    "Differentiation: Definition and Fundamental Properties": [
+      ["Derivative", "The instantaneous rate of change of a function"],
+      ["Difference quotient", "The expression whose limit defines the derivative"],
+      ["Tangent line", "The line touching a curve with slope equal to the derivative"],
+      ["Differentiability", "Existence of the derivative, which requires continuity"],
+      ["Power rule", "The derivative of x to the n is n times x to the n minus one"],
+      ["Constant multiple rule", "A constant factor passes straight through differentiation"],
+      ["Sum and difference rule", "Derivatives distribute across addition and subtraction"],
+      ["Product rule", "The derivative of a product is first times derivative of second plus second times derivative of first"],
+      ["Quotient rule", "A formula for the derivative of a ratio of functions"],
+      ["Derivative of sine", "Cosine"],
+      ["Derivative of e to the x", "Itself, e to the x"],
+      ["Derivative of natural log", "One over x"],
+      ["Corner point", "A point where a function is continuous but not differentiable"]
+    ],
+    "Differentiation: Composite, Implicit, and Inverse Functions": [
+      ["Chain rule", "The derivative of a composite is the outer derivative times the inner derivative"],
+      ["Implicit differentiation", "Differentiating an equation not solved for y, treating y as a function of x"],
+      ["Inverse function derivative", "The reciprocal of the original derivative at the corresponding point"],
+      ["Derivative of arcsine", "One over the square root of one minus x squared"],
+      ["Derivative of arctangent", "One over one plus x squared"],
+      ["Logarithmic differentiation", "Taking logs before differentiating to simplify products and powers"],
+      ["Higher-order derivative", "The derivative of a derivative, such as the second derivative"],
+      ["Second derivative", "The rate of change of the rate of change, describing concavity"],
+      ["Parametric derivative", "dy/dx found as dy/dt divided by dx/dt"],
+      ["Composite function", "A function applied to the output of another function"]
+    ],
+    "Contextual Applications of Differentiation": [
+      ["Velocity", "The derivative of position with respect to time"],
+      ["Acceleration", "The derivative of velocity, the second derivative of position"],
+      ["Speed", "The absolute value of velocity"],
+      ["Related rates", "Using the chain rule to link rates of change of connected quantities"],
+      ["Linearization", "Approximating a function near a point using its tangent line"],
+      ["Differential", "A small change approximated by the derivative times a small input change"],
+      ["L'Hopital's rule", "Evaluating an indeterminate limit by differentiating numerator and denominator"],
+      ["Marginal cost", "The derivative of a cost function, the cost of one more unit"],
+      ["Particle at rest", "The moment when velocity equals zero"],
+      ["Changing direction", "A sign change in velocity, indicating reversal of motion"]
+    ],
+    "Analytical Applications of Differentiation": [
+      ["Critical point", "A point where the derivative is zero or undefined"],
+      ["Extreme Value Theorem", "A continuous function on a closed interval attains a maximum and minimum"],
+      ["Mean Value Theorem", "Some interior point has slope equal to the average slope across the interval"],
+      ["Rolle's Theorem", "A special Mean Value case where the endpoints share the same output"],
+      ["First derivative test", "Using the sign of the derivative to classify a critical point"],
+      ["Second derivative test", "Using concavity at a critical point to classify it"],
+      ["Increasing function", "A function whose derivative is positive"],
+      ["Concave up", "A curve whose second derivative is positive, bending upward"],
+      ["Inflection point", "A point where concavity changes"],
+      ["Absolute extremum", "The highest or lowest value on the entire interval"],
+      ["Optimization", "Finding the input producing the best possible output"],
+      ["Candidates test", "Checking critical points and endpoints to find absolute extrema"]
+    ],
+    "Integration and Accumulation of Change": [
+      ["Antiderivative", "A function whose derivative is the given function"],
+      ["Indefinite integral", "The family of all antiderivatives, written with a constant of integration"],
+      ["Riemann sum", "An approximation of area using rectangles"],
+      ["Left Riemann sum", "Rectangles using the left endpoint of each subinterval"],
+      ["Trapezoidal rule", "Approximating area with trapezoids rather than rectangles"],
+      ["Definite integral", "The exact accumulation between two bounds, the limit of Riemann sums"],
+      ["Fundamental Theorem of Calculus Part 1", "The derivative of an accumulation function returns the integrand"],
+      ["Fundamental Theorem of Calculus Part 2", "A definite integral equals the antiderivative evaluated at the bounds"],
+      ["u-substitution", "Reversing the chain rule to simplify an integral"],
+      ["Properties of definite integrals", "Rules for splitting intervals and reversing bounds"],
+      ["Average value of a function", "The integral over an interval divided by the interval's length"],
+      ["Accumulation function", "An integral with a variable upper bound"]
+    ],
+    "Differential Equations": [
+      ["Differential equation", "An equation relating a function to its derivatives"],
+      ["General solution", "The family of solutions including an arbitrary constant"],
+      ["Particular solution", "The single solution satisfying a given initial condition"],
+      ["Initial condition", "A known point used to pin down the constant of integration"],
+      ["Separation of variables", "Rearranging so each variable sits with its own differential"],
+      ["Slope field", "A grid of short segments showing solution direction at each point"],
+      ["Exponential growth model", "The solution to dy/dt equals ky"],
+      ["Exponential decay model", "Exponential change with a negative growth constant"],
+      ["Newton's law of cooling", "A model where temperature change is proportional to the difference from ambient"],
+      ["Equilibrium solution", "A constant solution where the derivative is zero"]
+    ],
+    "Applications of Integration": [
+      ["Area between curves", "The integral of the upper function minus the lower one"],
+      ["Net change theorem", "The integral of a rate gives the total change in the quantity"],
+      ["Displacement", "The integral of velocity, which may be negative"],
+      ["Total distance travelled", "The integral of the absolute value of velocity"],
+      ["Volume by disks", "Revolving a region and integrating pi times radius squared"],
+      ["Volume by washers", "Revolving a region with a hole, subtracting the inner disk"],
+      ["Volume by known cross sections", "Integrating the area of slices perpendicular to an axis"],
+      ["Axis of revolution", "The line a region is rotated about to generate a solid"],
+      ["Integrating with respect to y", "Setting up an integral in terms of horizontal slices"],
+      ["Accumulated area interpretation", "Reading a definite integral as signed accumulated quantity"]
+    ]
+  }
+}

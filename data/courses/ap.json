@@ -1,0 +1,154 @@
+[
+  {
+    "id": "ap-biology", "name": "AP Biology", "level": "ap", "category": "Science", "grades": [10, 11, 12],
+    "units": ["Chemistry of Life", "Cell Structure and Function", "Cellular Energetics", "Cell Communication and Cell Cycle", "Heredity", "Gene Expression and Regulation", "Natural Selection", "Ecology"]
+  },
+  {
+    "id": "ap-chemistry", "name": "AP Chemistry", "level": "ap", "category": "Science", "grades": [11, 12],
+    "units": ["Atomic Structure and Properties", "Compound Structure and Properties", "Intermolecular Forces and Properties", "Chemical Reactions", "Kinetics", "Thermodynamics", "Equilibrium", "Acids and Bases", "Applications of Thermodynamics"]
+  },
+  {
+    "id": "ap-physics-1", "name": "AP Physics 1", "level": "ap", "category": "Science", "grades": [10, 11, 12],
+    "units": ["Kinematics", "Force and Translational Dynamics", "Work, Energy, and Power", "Linear Momentum", "Torque and Rotational Dynamics", "Energy and Momentum of Rotating Systems", "Oscillations", "Fluids"]
+  },
+  {
+    "id": "ap-physics-2", "name": "AP Physics 2", "level": "ap", "category": "Science", "grades": [11, 12],
+    "units": ["Thermodynamics", "Electric Force, Field, and Potential", "Electric Circuits", "Magnetism and Electromagnetic Induction", "Geometric Optics", "Waves, Sound, and Physical Optics", "Modern Physics"]
+  },
+  {
+    "id": "ap-physics-c-mech", "name": "AP Physics C: Mechanics", "level": "ap", "category": "Science", "grades": [11, 12],
+    "units": ["Kinematics", "Newton's Laws of Motion", "Work, Energy, and Power", "Systems of Particles and Linear Momentum", "Rotation", "Oscillations", "Gravitation"]
+  },
+  {
+    "id": "ap-physics-c-em", "name": "AP Physics C: Electricity and Magnetism", "level": "ap", "category": "Science", "grades": [11, 12],
+    "units": ["Electrostatics", "Conductors, Capacitors, and Dielectrics", "Electric Circuits", "Magnetic Fields", "Electromagnetism"]
+  },
+  {
+    "id": "ap-environmental", "name": "AP Environmental Science", "level": "ap", "category": "Science", "grades": [10, 11, 12],
+    "units": ["The Living World: Ecosystems", "The Living World: Biodiversity", "Populations", "Earth Systems and Resources", "Land and Water Use", "Energy Resources and Consumption", "Atmospheric Pollution", "Aquatic and Terrestrial Pollution", "Global Change"]
+  },
+  {
+    "id": "ap-calculus-ab", "name": "AP Calculus AB", "level": "ap", "category": "Math", "grades": [11, 12],
+    "units": ["Limits and Continuity", "Differentiation: Definition and Fundamental Properties", "Differentiation: Composite, Implicit, and Inverse Functions", "Contextual Applications of Differentiation", "Analytical Applications of Differentiation", "Integration and Accumulation of Change", "Differential Equations", "Applications of Integration"]
+  },
+  {
+    "id": "ap-calculus-bc", "name": "AP Calculus BC", "level": "ap", "category": "Math", "grades": [11, 12],
+    "units": ["Limits and Continuity", "Differentiation: Definition and Fundamental Properties", "Differentiation: Composite, Implicit, and Inverse Functions", "Contextual Applications of Differentiation", "Analytical Applications of Differentiation", "Integration and Accumulation of Change", "Differential Equations", "Applications of Integration", "Parametric, Polar, and Vector-Valued Functions", "Infinite Sequences and Series"]
+  },
+  {
+    "id": "ap-precalculus", "name": "AP Precalculus", "level": "ap", "category": "Math", "grades": [10, 11, 12],
+    "units": ["Polynomial and Rational Functions", "Exponential and Logarithmic Functions", "Trigonometric and Polar Functions", "Functions Involving Parameters, Vectors, and Matrices"]
+  },
+  {
+    "id": "ap-statistics", "name": "AP Statistics", "level": "ap", "category": "Math", "grades": [11, 12],
+    "units": ["Exploring One-Variable Data", "Exploring Two-Variable Data", "Collecting Data", "Probability, Random Variables, and Probability Distributions", "Sampling Distributions", "Inference for Categorical Data: Proportions", "Inference for Quantitative Data: Means", "Inference for Categorical Data: Chi-Square", "Inference for Quantitative Data: Slopes"]
+  },
+  {
+    "id": "ap-csa", "name": "AP Computer Science A", "level": "ap", "category": "Computer Science", "grades": [10, 11, 12],
+    "units": ["Primitive Types", "Using Objects", "Boolean Expressions and if Statements", "Iteration", "Writing Classes", "Array", "ArrayList", "2D Array", "Inheritance", "Recursion"]
+  },
+  {
+    "id": "ap-csp", "name": "AP Computer Science Principles", "level": "ap", "category": "Computer Science", "grades": [9, 10, 11, 12],
+    "units": ["Creative Development", "Data", "Algorithms and Programming", "Computer Systems and Networks", "Impact of Computing"]
+  },
+  {
+    "id": "ap-us-history", "name": "AP United States History", "level": "ap", "category": "Social Studies", "grades": [10, 11, 12],
+    "units": ["Period 1: 1491-1607", "Period 2: 1607-1754", "Period 3: 1754-1800", "Period 4: 1800-1848", "Period 5: 1844-1877", "Period 6: 1865-1898", "Period 7: 1890-1945", "Period 8: 1945-1980", "Period 9: 1980-Present"]
+  },
+  {
+    "id": "ap-world-history", "name": "AP World History: Modern", "level": "ap", "category": "Social Studies", "grades": [9, 10, 11, 12],
+    "units": ["The Global Tapestry", "Networks of Exchange", "Land-Based Empires", "Transoceanic Interconnections", "Revolutions", "Consequences of Industrialization", "Global Conflict", "Cold War and Decolonization", "Globalization"]
+  },
+  {
+    "id": "ap-european-history", "name": "AP European History", "level": "ap", "category": "Social Studies", "grades": [10, 11, 12],
+    "units": ["Renaissance and Exploration", "Age of Reformation", "Absolutism and Constitutionalism", "Scientific, Philosophical, and Political Developments", "Conflict, Crisis, and Reaction in the Late 18th Century", "Industrialization and Its Effects", "19th-Century Perspectives and Political Developments", "20th-Century Global Conflicts", "Cold War and Contemporary Europe"]
+  },
+  {
+    "id": "ap-us-government", "name": "AP United States Government and Politics", "level": "ap", "category": "Social Studies", "grades": [11, 12],
+    "units": ["Foundations of American Democracy", "Interactions Among Branches of Government", "Civil Liberties and Civil Rights", "American Political Ideologies and Beliefs", "Political Participation"]
+  },
+  {
+    "id": "ap-comparative-government", "name": "AP Comparative Government and Politics", "level": "ap", "category": "Social Studies", "grades": [11, 12],
+    "units": ["Political Systems, Regimes, and Governments", "Political Institutions", "Political Culture and Participation", "Party and Electoral Systems and Citizen Organizations", "Political and Economic Changes and Development"]
+  },
+  {
+    "id": "ap-psychology", "name": "AP Psychology", "level": "ap", "category": "Social Studies", "grades": [10, 11, 12],
+    "units": ["Biological Bases of Behavior", "Cognition", "Development and Learning", "Social Psychology and Personality", "Mental and Physical Health"]
+  },
+  {
+    "id": "ap-human-geography", "name": "AP Human Geography", "level": "ap", "category": "Social Studies", "grades": [9, 10, 11, 12],
+    "units": ["Thinking Geographically", "Population and Migration Patterns and Processes", "Cultural Patterns and Processes", "Political Patterns and Processes", "Agriculture and Rural Land-Use Patterns", "Cities and Urban Land-Use Patterns", "Industrial and Economic Development Patterns"]
+  },
+  {
+    "id": "ap-macroeconomics", "name": "AP Macroeconomics", "level": "ap", "category": "Business and Economics", "grades": [11, 12],
+    "units": ["Basic Economic Concepts", "Economic Indicators and the Business Cycle", "National Income and Price Determination", "Financial Sector", "Long-Run Consequences of Stabilization Policies", "Open Economy: International Trade and Finance"]
+  },
+  {
+    "id": "ap-microeconomics", "name": "AP Microeconomics", "level": "ap", "category": "Business and Economics", "grades": [11, 12],
+    "units": ["Basic Economic Concepts", "Supply and Demand", "Production, Cost, and the Perfect Competition Model", "Imperfect Competition", "Factor Markets", "Market Failure and the Role of Government"]
+  },
+  {
+    "id": "ap-english-language", "name": "AP English Language and Composition", "level": "ap", "category": "English", "grades": [11, 12],
+    "units": ["Rhetorical Situation: Reading", "Rhetorical Situation: Writing", "Claims and Evidence: Reading", "Claims and Evidence: Writing", "Reasoning and Organization: Reading", "Reasoning and Organization: Writing", "Style: Reading", "Style: Writing", "Synthesis and Argument"]
+  },
+  {
+    "id": "ap-english-literature", "name": "AP English Literature and Composition", "level": "ap", "category": "English", "grades": [11, 12],
+    "units": ["Short Fiction I", "Poetry I", "Longer Fiction or Drama I", "Short Fiction II", "Poetry II", "Longer Fiction or Drama II", "Short Fiction III", "Poetry III", "Longer Fiction or Drama III"]
+  },
+  {
+    "id": "ap-art-history", "name": "AP Art History", "level": "ap", "category": "Arts", "grades": [10, 11, 12],
+    "units": ["Global Prehistory", "Ancient Mediterranean", "Early Europe and Colonial Americas", "Later Europe and Americas", "Indigenous Americas", "Africa", "West and Central Asia", "South, East, and Southeast Asia", "The Pacific", "Global Contemporary"]
+  },
+  {
+    "id": "ap-music-theory", "name": "AP Music Theory", "level": "ap", "category": "Arts", "grades": [10, 11, 12],
+    "units": ["Music Fundamentals I: Pitch, Major Scales and Key Signatures, Rhythm, Meter, and Expressive Elements", "Music Fundamentals II: Minor Scales and Key Signatures, Melody, Timbre, and Texture", "Music Fundamentals III: Triads and Seventh Chords", "Harmony and Voice Leading I: Chord Function, Cadence, and Phrase", "Harmony and Voice Leading II: Chord Progressions and Predominant Function", "Harmony and Voice Leading III: Embellishments, Motives, and Melodic Devices", "Harmony and Voice Leading IV: Secondary Function", "Modes and Form"]
+  },
+  {
+    "id": "ap-studio-art-2d", "name": "AP 2-D Art and Design", "level": "ap", "category": "Arts", "grades": [10, 11, 12],
+    "units": ["Inquiry and Investigation", "Making Through Practice and Experimentation", "Revision and Refinement", "Sustained Investigation Portfolio", "Selected Works Portfolio"]
+  },
+  {
+    "id": "ap-studio-art-drawing", "name": "AP Drawing", "level": "ap", "category": "Arts", "grades": [10, 11, 12],
+    "units": ["Inquiry and Investigation", "Making Through Practice and Experimentation", "Revision and Refinement", "Sustained Investigation Portfolio", "Selected Works Portfolio"]
+  },
+  {
+    "id": "ap-spanish-language", "name": "AP Spanish Language and Culture", "level": "ap", "category": "World Languages", "grades": [10, 11, 12],
+    "units": ["Families and Communities", "Personal and Public Identities", "Beauty and Aesthetics", "Science and Technology", "Contemporary Life", "Global Challenges"]
+  },
+  {
+    "id": "ap-spanish-literature", "name": "AP Spanish Literature and Culture", "level": "ap", "category": "World Languages", "grades": [11, 12],
+    "units": ["La construccion del genero", "El tiempo y el espacio", "Las relaciones interpersonales", "Las sociedades en contacto", "La dualidad del ser", "La creacion literaria"]
+  },
+  {
+    "id": "ap-french", "name": "AP French Language and Culture", "level": "ap", "category": "World Languages", "grades": [10, 11, 12],
+    "units": ["Families and Communities", "Personal and Public Identities", "Beauty and Aesthetics", "Science and Technology", "Contemporary Life", "Global Challenges"]
+  },
+  {
+    "id": "ap-german", "name": "AP German Language and Culture", "level": "ap", "category": "World Languages", "grades": [10, 11, 12],
+    "units": ["Families and Communities", "Personal and Public Identities", "Beauty and Aesthetics", "Science and Technology", "Contemporary Life", "Global Challenges"]
+  },
+  {
+    "id": "ap-italian", "name": "AP Italian Language and Culture", "level": "ap", "category": "World Languages", "grades": [10, 11, 12],
+    "units": ["Families and Communities", "Personal and Public Identities", "Beauty and Aesthetics", "Science and Technology", "Contemporary Life", "Global Challenges"]
+  },
+  {
+    "id": "ap-chinese", "name": "AP Chinese Language and Culture", "level": "ap", "category": "World Languages", "grades": [10, 11, 12],
+    "units": ["Families and Communities", "Personal and Public Identities", "Beauty and Aesthetics", "Science and Technology", "Contemporary Life", "Global Challenges"]
+  },
+  {
+    "id": "ap-japanese", "name": "AP Japanese Language and Culture", "level": "ap", "category": "World Languages", "grades": [10, 11, 12],
+    "units": ["Families and Communities", "Personal and Public Identities", "Beauty and Aesthetics", "Science and Technology", "Contemporary Life", "Global Challenges"]
+  },
+  {
+    "id": "ap-latin", "name": "AP Latin", "level": "ap", "category": "World Languages", "grades": [11, 12],
+    "units": ["Vergil, Aeneid Books 1-2", "Vergil, Aeneid Books 4 and 6", "Caesar, Gallic War Books 1 and 4", "Caesar, Gallic War Books 5-6", "Literal Translation and Reading Comprehension", "Contextualization and Analysis"]
+  },
+  {
+    "id": "ap-seminar", "name": "AP Seminar", "level": "ap", "category": "Interdisciplinary", "grades": [10, 11],
+    "units": ["Question and Explore", "Understand and Analyze", "Evaluate Multiple Perspectives", "Synthesize Ideas", "Team, Transform, and Transmit"]
+  },
+  {
+    "id": "ap-research", "name": "AP Research", "level": "ap", "category": "Interdisciplinary", "grades": [11, 12],
+    "units": ["Research Question and Methodology", "Literature Review", "Data Collection and Analysis", "Academic Paper", "Presentation and Oral Defense"]
+  }
+]

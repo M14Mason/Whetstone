@@ -1,0 +1,1682 @@
+[
+  {
+    "id": "gen-strat-poe-001",
+    "subject": "Test Strategy",
+    "topic": "Process of Elimination",
+    "difficulty": "easy",
+    "prompt": "On a 5-choice multiple choice question, eliminating 3 clearly wrong answers changes your odds of a correct guess from what to what?",
+    "choices": [
+      "50% to 20%",
+      "20% to 100%",
+      "20% to 50%",
+      "20% to 40%"
+    ],
+    "answer": 2,
+    "explanation": "One correct answer out of 5 is about 20%. Removing 3 leaves 2 options, so the odds become about 50%. Eliminating even one wrong answer measurably improves your expected score."
+  },
+  {
+    "id": "gen-strat-poe-002",
+    "subject": "Test Strategy",
+    "topic": "Process of Elimination",
+    "difficulty": "easy",
+    "prompt": "On a 4-choice multiple choice question, eliminating 1 clearly wrong answer changes your odds of a correct guess from what to what?",
+    "choices": [
+      "25% to 33.3%",
+      "33.3% to 25%",
+      "25% to 100%",
+      "25% to 50%"
+    ],
+    "answer": 0,
+    "explanation": "One correct answer out of 4 is about 25%. Removing 1 leaves 3 options, so the odds become about 33.3%. Eliminating even one wrong answer measurably improves your expected score."
+  },
+  {
+    "id": "gen-strat-poe-003",
+    "subject": "Test Strategy",
+    "topic": "Process of Elimination",
+    "difficulty": "easy",
+    "prompt": "On a 5-choice multiple choice question, eliminating 2 clearly wrong answers changes your odds of a correct guess from what to what?",
+    "choices": [
+      "20% to 33.3%",
+      "20% to 100%",
+      "33.3% to 20%",
+      "20% to 40%"
+    ],
+    "answer": 0,
+    "explanation": "One correct answer out of 5 is about 20%. Removing 2 leaves 3 options, so the odds become about 33.3%. Eliminating even one wrong answer measurably improves your expected score."
+  },
+  {
+    "id": "gen-strat-poe-004",
+    "subject": "Test Strategy",
+    "topic": "Process of Elimination",
+    "difficulty": "easy",
+    "prompt": "On a 4-choice multiple choice question, eliminating 2 clearly wrong answers changes your odds of a correct guess from what to what?",
+    "choices": [
+      "50% to 25%",
+      "25% to 55%",
+      "25% to 100%",
+      "25% to 50%"
+    ],
+    "answer": 3,
+    "explanation": "One correct answer out of 4 is about 25%. Removing 2 leaves 2 options, so the odds become about 50%. Eliminating even one wrong answer measurably improves your expected score."
+  },
+  {
+    "id": "gen-strat-poe-005",
+    "subject": "Test Strategy",
+    "topic": "Process of Elimination",
+    "difficulty": "easy",
+    "prompt": "On a 5-choice multiple choice question, eliminating 1 clearly wrong answer changes your odds of a correct guess from what to what?",
+    "choices": [
+      "20% to 25%",
+      "20% to 100%",
+      "25% to 20%",
+      "20% to 40%"
+    ],
+    "answer": 0,
+    "explanation": "One correct answer out of 5 is about 20%. Removing 1 leaves 4 options, so the odds become about 25%. Eliminating even one wrong answer measurably improves your expected score."
+  },
+  {
+    "id": "gen-strat-pacing-001",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 40 questions and 25 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "38 seconds",
+      "96 seconds",
+      "76 seconds",
+      "1 seconds"
+    ],
+    "answer": 0,
+    "explanation": "25 minutes is 1500 seconds. Divided by 40 questions, that is about 38 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-002",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 22 questions and 25 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "136 seconds",
+      "53 seconds",
+      "68 seconds",
+      "1 seconds"
+    ],
+    "answer": 2,
+    "explanation": "25 minutes is 1500 seconds. Divided by 22 questions, that is about 68 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-003",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 20 questions and 70 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "420 seconds",
+      "17 seconds",
+      "4 seconds",
+      "210 seconds"
+    ],
+    "answer": 3,
+    "explanation": "70 minutes is 4200 seconds. Divided by 20 questions, that is about 210 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-004",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 50 questions and 40 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "1 seconds",
+      "48 seconds",
+      "96 seconds",
+      "75 seconds"
+    ],
+    "answer": 1,
+    "explanation": "40 minutes is 2400 seconds. Divided by 50 questions, that is about 48 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-005",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 50 questions and 30 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "72 seconds",
+      "100 seconds",
+      "1 seconds",
+      "36 seconds"
+    ],
+    "answer": 3,
+    "explanation": "30 minutes is 1800 seconds. Divided by 50 questions, that is about 36 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-006",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 25 questions and 60 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "288 seconds",
+      "25 seconds",
+      "2 seconds",
+      "144 seconds"
+    ],
+    "answer": 3,
+    "explanation": "60 minutes is 3600 seconds. Divided by 25 questions, that is about 144 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-007",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 20 questions and 40 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "2 seconds",
+      "120 seconds",
+      "30 seconds",
+      "240 seconds"
+    ],
+    "answer": 1,
+    "explanation": "40 minutes is 2400 seconds. Divided by 20 questions, that is about 120 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-008",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 30 questions and 30 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "1 seconds",
+      "120 seconds",
+      "60 seconds",
+      "75 seconds"
+    ],
+    "answer": 2,
+    "explanation": "30 minutes is 1800 seconds. Divided by 30 questions, that is about 60 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-009",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 30 questions and 50 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "36 seconds",
+      "200 seconds",
+      "2 seconds",
+      "100 seconds"
+    ],
+    "answer": 3,
+    "explanation": "50 minutes is 3000 seconds. Divided by 30 questions, that is about 100 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-010",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 27 questions and 35 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "156 seconds",
+      "78 seconds",
+      "46 seconds",
+      "1 seconds"
+    ],
+    "answer": 1,
+    "explanation": "35 minutes is 2100 seconds. Divided by 27 questions, that is about 78 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-011",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 22 questions and 70 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "191 seconds",
+      "19 seconds",
+      "3 seconds",
+      "382 seconds"
+    ],
+    "answer": 0,
+    "explanation": "70 minutes is 4200 seconds. Divided by 22 questions, that is about 191 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-012",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 40 questions and 45 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "1 seconds",
+      "68 seconds",
+      "53 seconds",
+      "136 seconds"
+    ],
+    "answer": 1,
+    "explanation": "45 minutes is 2700 seconds. Divided by 40 questions, that is about 68 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-013",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 20 questions and 60 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "3 seconds",
+      "20 seconds",
+      "360 seconds",
+      "180 seconds"
+    ],
+    "answer": 3,
+    "explanation": "60 minutes is 3600 seconds. Divided by 20 questions, that is about 180 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-014",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 50 questions and 70 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "43 seconds",
+      "1 seconds",
+      "168 seconds",
+      "84 seconds"
+    ],
+    "answer": 3,
+    "explanation": "70 minutes is 4200 seconds. Divided by 50 questions, that is about 84 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-015",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 27 questions and 25 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "65 seconds",
+      "56 seconds",
+      "112 seconds",
+      "1 seconds"
+    ],
+    "answer": 1,
+    "explanation": "25 minutes is 1500 seconds. Divided by 27 questions, that is about 56 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-016",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 20 questions and 45 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "2 seconds",
+      "270 seconds",
+      "27 seconds",
+      "135 seconds"
+    ],
+    "answer": 3,
+    "explanation": "45 minutes is 2700 seconds. Divided by 20 questions, that is about 135 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-017",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 30 questions and 70 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "280 seconds",
+      "26 seconds",
+      "140 seconds",
+      "2 seconds"
+    ],
+    "answer": 2,
+    "explanation": "70 minutes is 4200 seconds. Divided by 30 questions, that is about 140 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-018",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 27 questions and 70 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "3 seconds",
+      "312 seconds",
+      "156 seconds",
+      "23 seconds"
+    ],
+    "answer": 2,
+    "explanation": "70 minutes is 4200 seconds. Divided by 27 questions, that is about 156 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-019",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 22 questions and 35 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "2 seconds",
+      "190 seconds",
+      "95 seconds",
+      "38 seconds"
+    ],
+    "answer": 2,
+    "explanation": "35 minutes is 2100 seconds. Divided by 22 questions, that is about 95 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-020",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 30 questions and 60 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "30 seconds",
+      "240 seconds",
+      "120 seconds",
+      "2 seconds"
+    ],
+    "answer": 2,
+    "explanation": "60 minutes is 3600 seconds. Divided by 30 questions, that is about 120 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-021",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 35 questions and 45 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "1 seconds",
+      "47 seconds",
+      "154 seconds",
+      "77 seconds"
+    ],
+    "answer": 3,
+    "explanation": "45 minutes is 2700 seconds. Divided by 35 questions, that is about 77 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-022",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 44 questions and 30 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "41 seconds",
+      "82 seconds",
+      "1 seconds",
+      "88 seconds"
+    ],
+    "answer": 0,
+    "explanation": "30 minutes is 1800 seconds. Divided by 44 questions, that is about 41 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-023",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 27 questions and 50 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "2 seconds",
+      "222 seconds",
+      "111 seconds",
+      "32 seconds"
+    ],
+    "answer": 2,
+    "explanation": "50 minutes is 3000 seconds. Divided by 27 questions, that is about 111 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-024",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 50 questions and 45 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "54 seconds",
+      "67 seconds",
+      "1 seconds",
+      "108 seconds"
+    ],
+    "answer": 0,
+    "explanation": "45 minutes is 2700 seconds. Divided by 50 questions, that is about 54 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-025",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 35 questions and 60 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "103 seconds",
+      "2 seconds",
+      "206 seconds",
+      "35 seconds"
+    ],
+    "answer": 0,
+    "explanation": "60 minutes is 3600 seconds. Divided by 35 questions, that is about 103 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-pacing-026",
+    "subject": "Test Strategy",
+    "topic": "Time Management",
+    "difficulty": "medium",
+    "prompt": "A section has 35 questions and 30 minutes. About how many seconds can you spend per question on average?",
+    "choices": [
+      "1 seconds",
+      "102 seconds",
+      "51 seconds",
+      "70 seconds"
+    ],
+    "answer": 2,
+    "explanation": "30 minutes is 1800 seconds. Divided by 35 questions, that is about 51 seconds each. Knowing this number tells you when to cut a question loose."
+  },
+  {
+    "id": "gen-strat-scenario-001",
+    "subject": "Test Strategy",
+    "topic": "Question Triage",
+    "difficulty": "medium",
+    "prompt": "You have two minutes left and six questions unanswered. What is the best move?",
+    "choices": [
+      "Fill in an answer for every remaining question",
+      "Carefully solve one and leave the rest blank",
+      "Answer only the ones that look easy",
+      "Leave them blank to avoid errors"
+    ],
+    "answer": 0,
+    "explanation": "Fill in an answer for every remaining question. With no wrong-answer penalty, a blank scores the same as a wrong answer, so guessing is strictly better."
+  },
+  {
+    "id": "gen-strat-scenario-002",
+    "subject": "Test Strategy",
+    "topic": "Question Triage",
+    "difficulty": "medium",
+    "prompt": "You finish a section with eight minutes to spare. What is the best move?",
+    "choices": [
+      "Change answers that feel wrong on instinct",
+      "Recheck every question from the start",
+      "Leave early to rest",
+      "Recheck the questions you flagged as uncertain"
+    ],
+    "answer": 3,
+    "explanation": "Recheck the questions you flagged as uncertain. Targeted rechecking finds errors; instinct-driven changes more often turn right answers into wrong ones."
+  },
+  {
+    "id": "gen-strat-scenario-003",
+    "subject": "Test Strategy",
+    "topic": "Question Triage",
+    "difficulty": "medium",
+    "prompt": "You are stuck on question 12 of 30 with limited time left. What is the best move?",
+    "choices": [
+      "Mark it, put down your best guess, move on, and return if time allows",
+      "Skip every remaining hard question",
+      "Keep working until you solve it",
+      "Start over from question 1"
+    ],
+    "answer": 0,
+    "explanation": "Mark it, put down your best guess, move on, and return if time allows. Every question is worth the same, so minutes spent on one cost you easier points elsewhere."
+  },
+  {
+    "id": "gen-strat-scenario-004",
+    "subject": "Test Strategy",
+    "topic": "Question Triage",
+    "difficulty": "medium",
+    "prompt": "A question involves a topic you never studied. What is the best move?",
+    "choices": [
+      "Leave it blank",
+      "Eliminate what you can, guess, and spend your time elsewhere",
+      "Pick the longest answer choice",
+      "Work it out from first principles no matter how long it takes"
+    ],
+    "answer": 1,
+    "explanation": "Eliminate what you can, guess, and spend your time elsewhere. Time is the scarce resource, and a partial elimination still beats a blind guess."
+  },
+  {
+    "id": "gen-strat-traps-001",
+    "subject": "Test Strategy",
+    "topic": "Trap Answers",
+    "difficulty": "medium",
+    "prompt": "On a test question, an answer choice restates the question stem almost word for word. What should you conclude?",
+    "choices": [
+      "It is definitely correct",
+      "The question contains an error",
+      "It is often a distractor that adds no new information",
+      "You should always choose the longest option"
+    ],
+    "answer": 2,
+    "explanation": "It is often a distractor that adds no new information. Correct answers usually advance the reasoning rather than echo the prompt."
+  },
+  {
+    "id": "gen-strat-traps-002",
+    "subject": "Test Strategy",
+    "topic": "Trap Answers",
+    "difficulty": "medium",
+    "prompt": "On a test question, an answer choice contains absolute words like \"always\", \"never\", or \"all\". What should you conclude?",
+    "choices": [
+      "You should always choose the longest option",
+      "It is more often wrong, because passages rarely support absolute claims",
+      "It is definitely correct",
+      "The question contains an error"
+    ],
+    "answer": 1,
+    "explanation": "It is more often wrong, because passages rarely support absolute claims. Measured language like \"often\" or \"suggests\" is far easier to support from a text. This is a tendency, not a rule."
+  },
+  {
+    "id": "gen-strat-traps-003",
+    "subject": "Test Strategy",
+    "topic": "Trap Answers",
+    "difficulty": "medium",
+    "prompt": "On a test question, two answer choices state the exact opposite of each other. What should you conclude?",
+    "choices": [
+      "One of them is likely correct, since the question probably hinges on that distinction",
+      "The question contains an error",
+      "It is definitely correct",
+      "You should always choose the longest option"
+    ],
+    "answer": 0,
+    "explanation": "One of them is likely correct, since the question probably hinges on that distinction. Direct opposites usually mark the point being tested. Still verify against the passage or the problem."
+  },
+  {
+    "id": "gen-strat-traps-004",
+    "subject": "Test Strategy",
+    "topic": "Trap Answers",
+    "difficulty": "medium",
+    "prompt": "On a test question, an answer choice is true in the real world but not mentioned in the passage. What should you conclude?",
+    "choices": [
+      "You should always choose the longest option",
+      "It is definitely correct",
+      "It is wrong, because reading answers must be supported by the text",
+      "The question contains an error"
+    ],
+    "answer": 2,
+    "explanation": "It is wrong, because reading answers must be supported by the text. Outside knowledge is not evidence on a reading section. Only what the passage supports counts."
+  },
+  {
+    "id": "gen-strat-traps-005",
+    "subject": "Test Strategy",
+    "topic": "Trap Answers",
+    "difficulty": "medium",
+    "prompt": "On a test question, an answer choice matches a number you calculated in an intermediate step. What should you conclude?",
+    "choices": [
+      "It may be a trap for stopping one step early",
+      "It is definitely correct",
+      "The question contains an error",
+      "You should always choose the longest option"
+    ],
+    "answer": 0,
+    "explanation": "It may be a trap for stopping one step early. Test writers deliberately include intermediate values. Re-read what the question actually asked for."
+  },
+  {
+    "id": "gen-strat-estimate-001",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 2, 18, 80, and 400. Your rough estimate is \"around 20\". What should you do?",
+    "choices": [
+      "Select 18",
+      "Select 80 as a safer middle option",
+      "Skip the question",
+      "Compute the exact value anyway"
+    ],
+    "answer": 0,
+    "explanation": "Select 18, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-002",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 3, 29, 120, and 600. Your rough estimate is \"around 30\". What should you do?",
+    "choices": [
+      "Compute the exact value anyway",
+      "Select 29",
+      "Skip the question",
+      "Select 120 as a safer middle option"
+    ],
+    "answer": 1,
+    "explanation": "Select 29, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-003",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 2, 19, 80, and 400. Your rough estimate is \"around 20\". What should you do?",
+    "choices": [
+      "Select 80 as a safer middle option",
+      "Skip the question",
+      "Select 19",
+      "Compute the exact value anyway"
+    ],
+    "answer": 2,
+    "explanation": "Select 19, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-004",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 3, 28, 120, and 600. Your rough estimate is \"around 30\". What should you do?",
+    "choices": [
+      "Select 120 as a safer middle option",
+      "Skip the question",
+      "Select 28",
+      "Compute the exact value anyway"
+    ],
+    "answer": 2,
+    "explanation": "Select 28, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-005",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 5, 51, 200, and 1000. Your rough estimate is \"around 50\". What should you do?",
+    "choices": [
+      "Select 51",
+      "Select 200 as a safer middle option",
+      "Compute the exact value anyway",
+      "Skip the question"
+    ],
+    "answer": 0,
+    "explanation": "Select 51, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-006",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 2, 21, 80, and 400. Your rough estimate is \"around 20\". What should you do?",
+    "choices": [
+      "Select 80 as a safer middle option",
+      "Compute the exact value anyway",
+      "Select 21",
+      "Skip the question"
+    ],
+    "answer": 2,
+    "explanation": "Select 21, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-007",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 5, 49, 200, and 1000. Your rough estimate is \"around 50\". What should you do?",
+    "choices": [
+      "Select 200 as a safer middle option",
+      "Skip the question",
+      "Compute the exact value anyway",
+      "Select 49"
+    ],
+    "answer": 3,
+    "explanation": "Select 49, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-008",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 12, 119, 480, and 2400. Your rough estimate is \"around 120\". What should you do?",
+    "choices": [
+      "Select 480 as a safer middle option",
+      "Skip the question",
+      "Compute the exact value anyway",
+      "Select 119"
+    ],
+    "answer": 3,
+    "explanation": "Select 119, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-009",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 3, 32, 120, and 600. Your rough estimate is \"around 30\". What should you do?",
+    "choices": [
+      "Select 120 as a safer middle option",
+      "Compute the exact value anyway",
+      "Select 32",
+      "Skip the question"
+    ],
+    "answer": 2,
+    "explanation": "Select 32, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-010",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 5, 52, 200, and 1000. Your rough estimate is \"around 50\". What should you do?",
+    "choices": [
+      "Compute the exact value anyway",
+      "Select 200 as a safer middle option",
+      "Select 52",
+      "Skip the question"
+    ],
+    "answer": 2,
+    "explanation": "Select 52, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-011",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 12, 122, 480, and 2400. Your rough estimate is \"around 120\". What should you do?",
+    "choices": [
+      "Compute the exact value anyway",
+      "Skip the question",
+      "Select 122",
+      "Select 480 as a safer middle option"
+    ],
+    "answer": 2,
+    "explanation": "Select 122, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-012",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 5, 48, 200, and 1000. Your rough estimate is \"around 50\". What should you do?",
+    "choices": [
+      "Select 200 as a safer middle option",
+      "Select 48",
+      "Skip the question",
+      "Compute the exact value anyway"
+    ],
+    "answer": 1,
+    "explanation": "Select 48, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-013",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 3, 31, 120, and 600. Your rough estimate is \"around 30\". What should you do?",
+    "choices": [
+      "Select 120 as a safer middle option",
+      "Compute the exact value anyway",
+      "Select 31",
+      "Skip the question"
+    ],
+    "answer": 2,
+    "explanation": "Select 31, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-014",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 12, 118, 480, and 2400. Your rough estimate is \"around 120\". What should you do?",
+    "choices": [
+      "Select 480 as a safer middle option",
+      "Select 118",
+      "Compute the exact value anyway",
+      "Skip the question"
+    ],
+    "answer": 1,
+    "explanation": "Select 118, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-015",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 8, 82, 320, and 1600. Your rough estimate is \"around 80\". What should you do?",
+    "choices": [
+      "Compute the exact value anyway",
+      "Select 320 as a safer middle option",
+      "Select 82",
+      "Skip the question"
+    ],
+    "answer": 2,
+    "explanation": "Select 82, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-016",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 8, 79, 320, and 1600. Your rough estimate is \"around 80\". What should you do?",
+    "choices": [
+      "Select 79",
+      "Compute the exact value anyway",
+      "Select 320 as a safer middle option",
+      "Skip the question"
+    ],
+    "answer": 0,
+    "explanation": "Select 79, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-017",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 8, 81, 320, and 1600. Your rough estimate is \"around 80\". What should you do?",
+    "choices": [
+      "Skip the question",
+      "Compute the exact value anyway",
+      "Select 81",
+      "Select 320 as a safer middle option"
+    ],
+    "answer": 2,
+    "explanation": "Select 81, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-018",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 8, 78, 320, and 1600. Your rough estimate is \"around 80\". What should you do?",
+    "choices": [
+      "Select 320 as a safer middle option",
+      "Select 78",
+      "Skip the question",
+      "Compute the exact value anyway"
+    ],
+    "answer": 1,
+    "explanation": "Select 78, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-019",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 12, 121, 480, and 2400. Your rough estimate is \"around 120\". What should you do?",
+    "choices": [
+      "Skip the question",
+      "Select 480 as a safer middle option",
+      "Compute the exact value anyway",
+      "Select 121"
+    ],
+    "answer": 3,
+    "explanation": "Select 121, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-estimate-020",
+    "subject": "Test Strategy",
+    "topic": "Estimation",
+    "difficulty": "medium",
+    "prompt": "The answer choices are 2, 22, 80, and 400. Your rough estimate is \"around 20\". What should you do?",
+    "choices": [
+      "Skip the question",
+      "Select 22",
+      "Compute the exact value anyway",
+      "Select 80 as a safer middle option"
+    ],
+    "answer": 1,
+    "explanation": "Select 22, since it is the only choice near your estimate. When choices span different orders of magnitude, an estimate is enough. Save exact computation for when the choices sit close together."
+  },
+  {
+    "id": "gen-strat-backsolve-001",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 3, 8, 9, 18 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Substitute the answer choices, starting near the middle",
+      "Always choose the largest value",
+      "Skip the question entirely",
+      "Pick the value closest to zero"
+    ],
+    "answer": 0,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 8. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-002",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 3, 5, 13, 15 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Skip the question entirely",
+      "Always choose the largest value",
+      "Pick the value closest to zero",
+      "Substitute the answer choices, starting near the middle"
+    ],
+    "answer": 3,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 5. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-003",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 5, 10, 9, 17 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Substitute the answer choices, starting near the middle",
+      "Always choose the largest value",
+      "Pick the value closest to zero",
+      "Skip the question entirely"
+    ],
+    "answer": 0,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 10. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-004",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 4, 8, 8, 10 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Skip the question entirely",
+      "Always choose the largest value",
+      "Pick the value closest to zero",
+      "Substitute the answer choices, starting near the middle"
+    ],
+    "answer": 3,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 8. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-005",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 8, 11, 14, 17 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Substitute the answer choices, starting near the middle",
+      "Skip the question entirely",
+      "Always choose the largest value",
+      "Pick the value closest to zero"
+    ],
+    "answer": 0,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 11. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-006",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 4, 8, 8, 19 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Substitute the answer choices, starting near the middle",
+      "Always choose the largest value",
+      "Pick the value closest to zero",
+      "Skip the question entirely"
+    ],
+    "answer": 0,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 8. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-007",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 4, 9, 12, 16 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Always choose the largest value",
+      "Pick the value closest to zero",
+      "Substitute the answer choices, starting near the middle",
+      "Skip the question entirely"
+    ],
+    "answer": 2,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 9. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-008",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 4, 9, 14, 13 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Pick the value closest to zero",
+      "Always choose the largest value",
+      "Substitute the answer choices, starting near the middle",
+      "Skip the question entirely"
+    ],
+    "answer": 2,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 9. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-009",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 8, 10, 14, 14 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Substitute the answer choices, starting near the middle",
+      "Skip the question entirely",
+      "Always choose the largest value",
+      "Pick the value closest to zero"
+    ],
+    "answer": 0,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 10. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-010",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 2, 6, 10, 11 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Pick the value closest to zero",
+      "Skip the question entirely",
+      "Always choose the largest value",
+      "Substitute the answer choices, starting near the middle"
+    ],
+    "answer": 3,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 6. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-011",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 6, 11, 16, 21 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Always choose the largest value",
+      "Substitute the answer choices, starting near the middle",
+      "Pick the value closest to zero",
+      "Skip the question entirely"
+    ],
+    "answer": 1,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 11. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-012",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 8, 12, 12, 20 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Pick the value closest to zero",
+      "Skip the question entirely",
+      "Always choose the largest value",
+      "Substitute the answer choices, starting near the middle"
+    ],
+    "answer": 3,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 12. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-013",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 5, 7, 11, 11 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Pick the value closest to zero",
+      "Skip the question entirely",
+      "Substitute the answer choices, starting near the middle",
+      "Always choose the largest value"
+    ],
+    "answer": 2,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 7. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-014",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 3, 8, 9, 12 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Pick the value closest to zero",
+      "Always choose the largest value",
+      "Substitute the answer choices, starting near the middle",
+      "Skip the question entirely"
+    ],
+    "answer": 2,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 8. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-015",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 7, 10, 17, 16 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Skip the question entirely",
+      "Substitute the answer choices, starting near the middle",
+      "Pick the value closest to zero",
+      "Always choose the largest value"
+    ],
+    "answer": 1,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 10. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-016",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 8, 12, 18, 14 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Pick the value closest to zero",
+      "Substitute the answer choices, starting near the middle",
+      "Skip the question entirely",
+      "Always choose the largest value"
+    ],
+    "answer": 1,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 12. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-017",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 9, 11, 17, 18 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Pick the value closest to zero",
+      "Substitute the answer choices, starting near the middle",
+      "Skip the question entirely",
+      "Always choose the largest value"
+    ],
+    "answer": 1,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 11. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-018",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 7, 9, 11, 16 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Skip the question entirely",
+      "Always choose the largest value",
+      "Pick the value closest to zero",
+      "Substitute the answer choices, starting near the middle"
+    ],
+    "answer": 3,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 9. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-019",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 9, 11, 15, 15 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Skip the question entirely",
+      "Substitute the answer choices, starting near the middle",
+      "Always choose the largest value",
+      "Pick the value closest to zero"
+    ],
+    "answer": 1,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 11. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-020",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 6, 10, 10, 21 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Substitute the answer choices, starting near the middle",
+      "Pick the value closest to zero",
+      "Skip the question entirely",
+      "Always choose the largest value"
+    ],
+    "answer": 0,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 10. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-021",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 5, 8, 11, 20 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Always choose the largest value",
+      "Substitute the answer choices, starting near the middle",
+      "Skip the question entirely",
+      "Pick the value closest to zero"
+    ],
+    "answer": 1,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 8. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-022",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 6, 11, 10, 12 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Always choose the largest value",
+      "Pick the value closest to zero",
+      "Substitute the answer choices, starting near the middle",
+      "Skip the question entirely"
+    ],
+    "answer": 2,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 11. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-023",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 9, 14, 15, 18 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Always choose the largest value",
+      "Substitute the answer choices, starting near the middle",
+      "Skip the question entirely",
+      "Pick the value closest to zero"
+    ],
+    "answer": 1,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 14. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-024",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 6, 9, 16, 12 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Pick the value closest to zero",
+      "Always choose the largest value",
+      "Substitute the answer choices, starting near the middle",
+      "Skip the question entirely"
+    ],
+    "answer": 2,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 9. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-025",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 7, 9, 13, 13 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Skip the question entirely",
+      "Pick the value closest to zero",
+      "Always choose the largest value",
+      "Substitute the answer choices, starting near the middle"
+    ],
+    "answer": 3,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 9. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-backsolve-026",
+    "subject": "Test Strategy",
+    "topic": "Backsolving",
+    "difficulty": "medium",
+    "prompt": "A question gives the numeric answer choices 9, 12, 13, 24 and the algebra looks slow to set up. What technique usually works faster?",
+    "choices": [
+      "Substitute the answer choices, starting near the middle",
+      "Skip the question entirely",
+      "Pick the value closest to zero",
+      "Always choose the largest value"
+    ],
+    "answer": 0,
+    "explanation": "Plug the choices back into the problem, starting with a middle value like 12. If it is wrong, whether it came out too big or too small tells you which direction to move, often resolving the question in two tries."
+  },
+  {
+    "id": "gen-strat-graph-001",
+    "subject": "Test Strategy",
+    "topic": "Data Interpretation",
+    "difficulty": "medium",
+    "prompt": "What should you do when a question asks about the RATE of change rather than the total?",
+    "choices": [
+      "Look at the steepness of the line, not its height",
+      "Check the colour scheme",
+      "Count the number of data points",
+      "Focus on the chart title"
+    ],
+    "answer": 0,
+    "explanation": "Look at the steepness of the line, not its height. Height shows the amount; slope shows how fast it is changing. Confusing the two is the most common graph mistake."
+  },
+  {
+    "id": "gen-strat-graph-002",
+    "subject": "Test Strategy",
+    "topic": "Data Interpretation",
+    "difficulty": "medium",
+    "prompt": "What should you do before reading any answer choices on a graph question?",
+    "choices": [
+      "Count the number of data points",
+      "Focus on the chart title",
+      "Check the colour scheme",
+      "Check the axis labels and units"
+    ],
+    "answer": 3,
+    "explanation": "Check the axis labels and units. Most graph errors come from misreading units, for example reading thousands as ones."
+  },
+  {
+    "id": "gen-strat-graph-003",
+    "subject": "Test Strategy",
+    "topic": "Data Interpretation",
+    "difficulty": "medium",
+    "prompt": "What should you do when a question asks for the year with the largest INCREASE?",
+    "choices": [
+      "Focus on the chart title",
+      "Count the number of data points",
+      "Compare year-over-year differences, not the raw values",
+      "Check the colour scheme"
+    ],
+    "answer": 2,
+    "explanation": "Compare year-over-year differences, not the raw values. The tallest bar is often not the biggest jump, and that gap is exactly what the question tests."
+  },
+  {
+    "id": "gen-strat-graph-004",
+    "subject": "Test Strategy",
+    "topic": "Data Interpretation",
+    "difficulty": "medium",
+    "prompt": "What should you do when a chart has two different y-axes?",
+    "choices": [
+      "Count the number of data points",
+      "Check which series belongs to which axis before comparing them",
+      "Focus on the chart title",
+      "Check the colour scheme"
+    ],
+    "answer": 1,
+    "explanation": "Check which series belongs to which axis before comparing them. Dual axes can make a small change look dramatic, or make unrelated series appear to move together."
+  },
+  {
+    "id": "gen-strat-guess-001",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 5 questions blank on a test with 5 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "2.5",
+      "0",
+      "1",
+      "5"
+    ],
+    "answer": 2,
+    "explanation": "Each blind guess has a 1 in 5 chance, so 5 guesses yield about 5/5 = 1 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-002",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 8 questions blank on a test with 4 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "0",
+      "8",
+      "2",
+      "4"
+    ],
+    "answer": 2,
+    "explanation": "Each blind guess has a 1 in 4 chance, so 8 guesses yield about 8/4 = 2 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-003",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 7 questions blank on a test with 4 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "3.5",
+      "0",
+      "7",
+      "1.8"
+    ],
+    "answer": 3,
+    "explanation": "Each blind guess has a 1 in 4 chance, so 7 guesses yield about 7/4 = 1.8 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-004",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 5 questions blank on a test with 4 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "0",
+      "2.5",
+      "1.3",
+      "5"
+    ],
+    "answer": 2,
+    "explanation": "Each blind guess has a 1 in 4 chance, so 5 guesses yield about 5/4 = 1.3 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-005",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 9 questions blank on a test with 5 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "9",
+      "1.8",
+      "0",
+      "4.5"
+    ],
+    "answer": 1,
+    "explanation": "Each blind guess has a 1 in 5 chance, so 9 guesses yield about 9/5 = 1.8 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-006",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 6 questions blank on a test with 4 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "6",
+      "1.5",
+      "3",
+      "0"
+    ],
+    "answer": 1,
+    "explanation": "Each blind guess has a 1 in 4 chance, so 6 guesses yield about 6/4 = 1.5 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-007",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 8 questions blank on a test with 5 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "4",
+      "8",
+      "0",
+      "1.6"
+    ],
+    "answer": 3,
+    "explanation": "Each blind guess has a 1 in 5 chance, so 8 guesses yield about 8/5 = 1.6 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-008",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 11 questions blank on a test with 5 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "0",
+      "5.5",
+      "2.2",
+      "11"
+    ],
+    "answer": 2,
+    "explanation": "Each blind guess has a 1 in 5 chance, so 11 guesses yield about 11/5 = 2.2 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-009",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 10 questions blank on a test with 4 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "2.5",
+      "0",
+      "5",
+      "10"
+    ],
+    "answer": 0,
+    "explanation": "Each blind guess has a 1 in 4 chance, so 10 guesses yield about 10/4 = 2.5 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-010",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 4 questions blank on a test with 5 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "0.8",
+      "4",
+      "0",
+      "2"
+    ],
+    "answer": 0,
+    "explanation": "Each blind guess has a 1 in 5 chance, so 4 guesses yield about 4/5 = 0.8 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-011",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 12 questions blank on a test with 4 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "0",
+      "12",
+      "3",
+      "6"
+    ],
+    "answer": 2,
+    "explanation": "Each blind guess has a 1 in 4 chance, so 12 guesses yield about 12/4 = 3 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-012",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 11 questions blank on a test with 4 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "5.5",
+      "2.8",
+      "0",
+      "11"
+    ],
+    "answer": 1,
+    "explanation": "Each blind guess has a 1 in 4 chance, so 11 guesses yield about 11/4 = 2.8 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-013",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 6 questions blank on a test with 5 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "6",
+      "3",
+      "1.2",
+      "0"
+    ],
+    "answer": 2,
+    "explanation": "Each blind guess has a 1 in 5 chance, so 6 guesses yield about 6/5 = 1.2 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-014",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 10 questions blank on a test with 5 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "5",
+      "2",
+      "10",
+      "0"
+    ],
+    "answer": 1,
+    "explanation": "Each blind guess has a 1 in 5 chance, so 10 guesses yield about 10/5 = 2 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-015",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 4 questions blank on a test with 4 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "1",
+      "2",
+      "0",
+      "4"
+    ],
+    "answer": 0,
+    "explanation": "Each blind guess has a 1 in 4 chance, so 4 guesses yield about 4/4 = 1 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-016",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 7 questions blank on a test with 5 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "0",
+      "7",
+      "3.5",
+      "1.4"
+    ],
+    "answer": 3,
+    "explanation": "Each blind guess has a 1 in 5 chance, so 7 guesses yield about 7/5 = 1.4 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-017",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 12 questions blank on a test with 5 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "2.4",
+      "6",
+      "0",
+      "12"
+    ],
+    "answer": 0,
+    "explanation": "Each blind guess has a 1 in 5 chance, so 12 guesses yield about 12/5 = 2.4 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-guess-018",
+    "subject": "Test Strategy",
+    "topic": "Guessing Strategy",
+    "difficulty": "medium",
+    "prompt": "You leave 9 questions blank on a test with 4 choices per question and no penalty for wrong answers. About how many of those would you expect to get right by guessing instead?",
+    "choices": [
+      "9",
+      "4.5",
+      "0",
+      "2.3"
+    ],
+    "answer": 3,
+    "explanation": "Each blind guess has a 1 in 4 chance, so 9 guesses yield about 9/4 = 2.3 correct answers. Since there is no wrong-answer penalty, guessing is strictly better than leaving blanks."
+  },
+  {
+    "id": "gen-strat-reading-001",
+    "subject": "Test Strategy",
+    "topic": "Reading Approach",
+    "difficulty": "medium",
+    "prompt": "What is true about a question asks for the \"primary purpose\" of a passage?",
+    "choices": [
+      "You need the overall point, not a detail from one paragraph",
+      "It lets you skip the passage entirely",
+      "It guarantees a faster reading speed",
+      "It reveals the correct answer immediately"
+    ],
+    "answer": 0,
+    "explanation": "You need the overall point, not a detail from one paragraph. Detail-level answers are the standard trap on main-idea questions."
+  },
+  {
+    "id": "gen-strat-reading-002",
+    "subject": "Test Strategy",
+    "topic": "Reading Approach",
+    "difficulty": "medium",
+    "prompt": "What is true about reading the question stem before reading a long passage?",
+    "choices": [
+      "It reveals the correct answer immediately",
+      "It lets you skip the passage entirely",
+      "You read with a purpose, searching instead of absorbing",
+      "It guarantees a faster reading speed"
+    ],
+    "answer": 2,
+    "explanation": "You read with a purpose, searching instead of absorbing. It does not replace reading the passage, but it makes the reading far more efficient."
+  },
+  {
+    "id": "gen-strat-reading-003",
+    "subject": "Test Strategy",
+    "topic": "Reading Approach",
+    "difficulty": "medium",
+    "prompt": "What is true about a question asks what the author \"implies\"?",
+    "choices": [
+      "It lets you skip the passage entirely",
+      "It guarantees a faster reading speed",
+      "It reveals the correct answer immediately",
+      "The answer must be supported by the text even though it is not stated directly"
+    ],
+    "answer": 3,
+    "explanation": "The answer must be supported by the text even though it is not stated directly. An answer can be factually true and still wrong if the passage does not support it."
+  },
+  {
+    "id": "gen-strat-reading-004",
+    "subject": "Test Strategy",
+    "topic": "Reading Approach",
+    "difficulty": "medium",
+    "prompt": "What is true about a paragraph begins with a word like \"however\" or \"yet\"?",
+    "choices": [
+      "It guarantees a faster reading speed",
+      "It lets you skip the passage entirely",
+      "It reveals the correct answer immediately",
+      "The author is about to contrast with what came before"
+    ],
+    "answer": 3,
+    "explanation": "The author is about to contrast with what came before. Transition words map the structure of an argument and often mark where questions are aimed."
+  }
+]

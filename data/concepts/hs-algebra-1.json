@@ -1,0 +1,152 @@
+{
+  "courseId": "hs-algebra-1",
+  "subject": "Math",
+  "units": {
+    "Expressions, Variables, and Properties": [
+      ["Variable", "A letter or symbol representing an unknown or changing value"],
+      ["Coefficient", "The number multiplied by a variable in a term"],
+      ["Constant", "A term with a fixed value and no variable"],
+      ["Like terms", "Terms with the same variable raised to the same power"],
+      ["Commutative property", "Order does not change the result when adding or multiplying"],
+      ["Associative property", "Grouping does not change the result when adding or multiplying"],
+      ["Distributive property", "Multiplying a sum means multiplying each term: a(b + c) = ab + ac"],
+      ["Evaluate an expression", "Substitute given values for the variables and simplify"],
+      ["Order of operations", "Parentheses, exponents, multiplication and division, then addition and subtraction"],
+      ["Term", "A single number, variable, or product of numbers and variables in an expression"]
+    ],
+    "Solving Linear Equations": [
+      ["Equation", "A statement that two expressions are equal"],
+      ["Solution of an equation", "A value for the variable that makes the equation true"],
+      ["Inverse operations", "Operations that undo each other, such as addition and subtraction"],
+      ["Isolate the variable", "Get the variable alone on one side of the equation"],
+      ["Identity equation", "An equation true for every value, giving a result like 3 = 3"],
+      ["No-solution equation", "An equation true for no value, giving a false result like 5 = 2"],
+      ["Literal equation", "An equation with several variables, often solved for one of them"],
+      ["Multi-step equation", "An equation requiring more than one inverse operation to solve"],
+      ["Checking a solution", "Substituting your answer back in to confirm both sides match"],
+      ["Cross multiplication", "Solving a proportion by multiplying each numerator by the other denominator"]
+    ],
+    "Inequalities and Compound Inequalities": [
+      ["Inequality", "A statement comparing values with <, >, less than or equal, or greater than or equal"],
+      ["Flipping the inequality sign", "Required when multiplying or dividing both sides by a negative number"],
+      ["Open circle", "Graph marker showing the endpoint is not included, used for < and >"],
+      ["Closed circle", "Graph marker showing the endpoint is included, used for the or-equal-to symbols"],
+      ["Compound inequality", "Two inequalities joined by AND or OR"],
+      ["Conjunction (AND)", "A compound inequality where both conditions must be true, giving an overlap"],
+      ["Disjunction (OR)", "A compound inequality where either condition can be true, giving a union"],
+      ["Interval notation", "Writing a solution set with brackets and parentheses, such as [2, 5)"],
+      ["Absolute value inequality", "An inequality containing an absolute value, which splits into two cases"],
+      ["Solution set", "All values that satisfy an inequality"]
+    ],
+    "Introduction to Functions": [
+      ["Function", "A relation where each input has exactly one output"],
+      ["Domain", "The set of all possible input values"],
+      ["Range", "The set of all possible output values"],
+      ["Vertical line test", "A graph is a function if no vertical line crosses it more than once"],
+      ["Function notation", "Writing f(x) to name the output of function f at input x"],
+      ["Independent variable", "The input, usually x"],
+      ["Dependent variable", "The output, usually y, which depends on the input"],
+      ["Relation", "Any set of ordered pairs, whether or not it is a function"],
+      ["Discrete data", "Data made of separate, countable values"],
+      ["Continuous data", "Data that can take any value within a range"]
+    ],
+    "Linear Functions and Graphing": [
+      ["Slope", "Rate of change, calculated as rise over run"],
+      ["y-intercept", "The point where a line crosses the y-axis, where x equals 0"],
+      ["x-intercept", "The point where a line crosses the x-axis, where y equals 0"],
+      ["Slope-intercept form", "y = mx + b, where m is slope and b is the y-intercept"],
+      ["Point-slope form", "y - y1 = m(x - x1), built from one point and the slope"],
+      ["Standard form", "Ax + By = C, useful for finding both intercepts quickly"],
+      ["Parallel lines", "Lines with equal slopes that never intersect"],
+      ["Perpendicular lines", "Lines whose slopes are negative reciprocals, meeting at 90 degrees"],
+      ["Positive slope", "A line rising from left to right"],
+      ["Zero slope", "A horizontal line, where y stays constant"],
+      ["Undefined slope", "A vertical line, where the run is zero"],
+      ["Rate of change", "How much the output changes per unit change in the input"]
+    ],
+    "Systems of Equations and Inequalities": [
+      ["System of equations", "Two or more equations considered together"],
+      ["Solution of a system", "An ordered pair satisfying every equation in the system"],
+      ["Substitution method", "Solving one equation for a variable and substituting into the other"],
+      ["Elimination method", "Adding or subtracting equations to cancel one variable"],
+      ["Graphing method", "Finding the solution as the intersection point of the graphs"],
+      ["Consistent system", "A system with at least one solution"],
+      ["Inconsistent system", "A system with no solution, shown by parallel lines"],
+      ["Dependent system", "A system with infinitely many solutions, where the lines coincide"],
+      ["System of inequalities", "Two or more inequalities whose solution is the overlapping shaded region"],
+      ["Feasible region", "The area satisfying all inequalities in a system"]
+    ],
+    "Exponents and Exponential Functions": [
+      ["Base", "The number being raised to a power"],
+      ["Exponent", "The number of times the base is used as a factor"],
+      ["Product of powers", "Multiplying like bases adds the exponents"],
+      ["Quotient of powers", "Dividing like bases subtracts the exponents"],
+      ["Power of a power", "Raising a power to a power multiplies the exponents"],
+      ["Zero exponent", "Any nonzero base raised to the zero power equals 1"],
+      ["Negative exponent", "Indicates a reciprocal, so x to the -n equals 1 over x to the n"],
+      ["Scientific notation", "Writing a number as a value between 1 and 10 times a power of ten"],
+      ["Exponential growth", "Repeated multiplication by a factor greater than 1"],
+      ["Exponential decay", "Repeated multiplication by a factor between 0 and 1"]
+    ],
+    "Polynomials and Operations": [
+      ["Polynomial", "An expression of terms with whole-number exponents on the variables"],
+      ["Monomial", "A polynomial with exactly one term"],
+      ["Binomial", "A polynomial with exactly two terms"],
+      ["Trinomial", "A polynomial with exactly three terms"],
+      ["Degree of a polynomial", "The highest exponent appearing in the expression"],
+      ["Leading coefficient", "The coefficient of the term with the highest degree"],
+      ["Standard form of a polynomial", "Terms written in order from highest to lowest degree"],
+      ["FOIL", "First, Outer, Inner, Last, a method for multiplying two binomials"],
+      ["Difference of squares", "The pattern a^2 - b^2, which factors into (a + b)(a - b)"],
+      ["Perfect square trinomial", "A trinomial that factors into an identical pair of binomials"]
+    ],
+    "Factoring": [
+      ["Factoring", "Rewriting an expression as a product of its factors"],
+      ["Greatest common factor", "The largest factor shared by every term"],
+      ["Factoring by grouping", "Splitting four terms into pairs and factoring each pair"],
+      ["Zero product property", "If a product equals zero, at least one factor must be zero"],
+      ["Prime polynomial", "A polynomial that cannot be factored further over the integers"],
+      ["Factoring x^2 + bx + c", "Find two numbers that multiply to c and add to b"],
+      ["Factoring a difference of squares", "Recognise a^2 - b^2 and write (a + b)(a - b)"],
+      ["Root of a polynomial", "A value making the polynomial equal zero"],
+      ["Perfect cube", "A number or expression that is some value raised to the third power"],
+      ["Completely factored", "Factored until no factor can be broken down further"]
+    ],
+    "Quadratic Functions and Equations": [
+      ["Quadratic function", "A function whose highest exponent is 2, graphing as a parabola"],
+      ["Parabola", "The U-shaped graph of a quadratic function"],
+      ["Vertex", "The highest or lowest point of a parabola"],
+      ["Axis of symmetry", "The vertical line through the vertex that mirrors the parabola"],
+      ["Quadratic formula", "x equals negative b plus or minus the square root of b squared minus 4ac, all over 2a"],
+      ["Discriminant", "The expression b^2 - 4ac, which reveals the number of real roots"],
+      ["Completing the square", "Rewriting a quadratic as a perfect square trinomial plus a constant"],
+      ["Zeros of a function", "The x-values where the graph crosses the x-axis"],
+      ["Maximum value", "The vertex y-value when the parabola opens downward"],
+      ["Minimum value", "The vertex y-value when the parabola opens upward"]
+    ],
+    "Radicals and Rational Expressions": [
+      ["Radical", "An expression containing a root symbol"],
+      ["Radicand", "The value underneath the radical sign"],
+      ["Simplifying a radical", "Removing perfect-square factors from under the root"],
+      ["Rationalising the denominator", "Rewriting a fraction so no radical remains in the denominator"],
+      ["Rational expression", "A fraction whose numerator and denominator are polynomials"],
+      ["Excluded value", "A value making the denominator zero, so it is not allowed"],
+      ["Extraneous solution", "A solution that appears algebraically but fails in the original equation"],
+      ["Like radicals", "Radicals with the same index and radicand, which can be combined"],
+      ["Square root", "A value that multiplied by itself gives the radicand"],
+      ["Cube root", "A value that used three times as a factor gives the radicand"]
+    ],
+    "Data Analysis and Statistics": [
+      ["Mean", "The sum of values divided by how many values there are"],
+      ["Median", "The middle value when the data is placed in order"],
+      ["Mode", "The value appearing most often in a data set"],
+      ["Range of a data set", "The largest value minus the smallest value"],
+      ["Outlier", "A value far outside the pattern of the rest of the data"],
+      ["Scatter plot", "A graph of paired data used to look for a relationship"],
+      ["Line of best fit", "A line drawn to model the trend in a scatter plot"],
+      ["Correlation", "A measured relationship between two variables"],
+      ["Interquartile range", "The spread of the middle half of the data, Q3 minus Q1"],
+      ["Box plot", "A display showing minimum, quartiles, median, and maximum"]
+    ]
+  }
+}

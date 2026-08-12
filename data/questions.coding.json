@@ -1,0 +1,242 @@
+[
+  {
+    "id": "code-bigo-001",
+    "subject": "Coding",
+    "topic": "Big-O Complexity",
+    "difficulty": "easy",
+    "prompt": "What is the time complexity of binary search on a sorted array of n elements?",
+    "choices": ["O(log n)", "O(n)", "O(n log n)", "O(1)"],
+    "answer": 0,
+    "explanation": "Each comparison eliminates half of the remaining elements, so the number of steps is log base 2 of n."
+  },
+  {
+    "id": "code-bigo-002",
+    "subject": "Coding",
+    "topic": "Big-O Complexity",
+    "difficulty": "medium",
+    "prompt": "Two nested loops each run from 0 to n-1, with O(1) work inside. What is the time complexity?",
+    "choices": ["O(n^2)", "O(n)", "O(2n)", "O(n log n)"],
+    "answer": 0,
+    "explanation": "The inner loop runs n times for each of the n outer iterations, giving n * n = n^2 total operations."
+  },
+  {
+    "id": "code-bigo-003",
+    "subject": "Coding",
+    "topic": "Big-O Complexity",
+    "difficulty": "hard",
+    "prompt": "You insert n items into a hash set, then perform n lookups. What is the average total time complexity?",
+    "choices": ["O(n)", "O(n^2)", "O(n log n)", "O(log n)"],
+    "answer": 0,
+    "explanation": "Each insert and each lookup averages O(1), so 2n constant-time operations simplify to O(n)."
+  },
+  {
+    "id": "code-bigo-004",
+    "subject": "Coding",
+    "topic": "Big-O Complexity",
+    "difficulty": "hard",
+    "prompt": "What is the WORST-CASE time complexity of a single hash map lookup?",
+    "choices": ["O(n)", "O(1)", "O(log n)", "O(n log n)"],
+    "answer": 0,
+    "explanation": "If every key collides into the same bucket, the lookup degrades to scanning a list of n entries. Average case is O(1), but worst case is O(n)."
+  },
+  {
+    "id": "code-hash-001",
+    "subject": "Coding",
+    "topic": "Arrays and Hashing",
+    "difficulty": "easy",
+    "prompt": "Which data structure gives average O(1) lookup by key?",
+    "choices": ["Hash map", "Sorted array", "Linked list", "Binary search tree"],
+    "answer": 0,
+    "explanation": "A hash map computes an index directly from the key, so it does not need to search. A sorted array is O(log n) and a linked list is O(n)."
+  },
+  {
+    "id": "code-hash-002",
+    "subject": "Coding",
+    "topic": "Arrays and Hashing",
+    "difficulty": "medium",
+    "prompt": "For the Two Sum problem (find two numbers in an unsorted array that add to a target), what is the optimal approach?",
+    "choices": [
+      "One pass with a hash map storing seen values, O(n)",
+      "Nested loops checking every pair, O(n^2)",
+      "Sort the array first, then binary search, O(n log n)",
+      "Recursion over all subsets, O(2^n)"
+    ],
+    "answer": 0,
+    "explanation": "As you scan, check whether (target - current) is already in the hash map. This solves it in a single O(n) pass."
+  },
+  {
+    "id": "code-hash-003",
+    "subject": "Coding",
+    "topic": "Arrays and Hashing",
+    "difficulty": "medium",
+    "prompt": "What is the most efficient way to check whether an array contains any duplicate values?",
+    "choices": [
+      "Add elements to a hash set and stop if one is already present",
+      "Compare every element to every other element",
+      "Sort the array and then reverse it",
+      "Recursively split the array in half"
+    ],
+    "answer": 0,
+    "explanation": "The hash set approach runs in O(n) time with O(n) extra space. Comparing all pairs is O(n^2)."
+  },
+  {
+    "id": "code-2p-001",
+    "subject": "Coding",
+    "topic": "Two Pointers",
+    "difficulty": "medium",
+    "prompt": "On a SORTED array, what is the most efficient way to find a pair that sums to a target?",
+    "choices": [
+      "Two pointers from each end, O(n)",
+      "Nested loops, O(n^2)",
+      "Binary search for each element, O(n log n)",
+      "Build a hash map first, O(n) time and O(n) space"
+    ],
+    "answer": 0,
+    "explanation": "Start pointers at both ends. If the sum is too large, move the right pointer left; if too small, move the left pointer right. O(n) time and O(1) extra space."
+  },
+  {
+    "id": "code-2p-002",
+    "subject": "Coding",
+    "topic": "Two Pointers",
+    "difficulty": "hard",
+    "prompt": "Reversing an array of 7 elements in place with two pointers requires how many swaps?",
+    "choices": ["3", "4", "6", "7"],
+    "answer": 0,
+    "explanation": "The pointers meet in the middle. For n = 7, that is floor(7/2) = 3 swaps; the middle element stays where it is."
+  },
+  {
+    "id": "code-rec-001",
+    "subject": "Coding",
+    "topic": "Recursion",
+    "difficulty": "easy",
+    "prompt": "What is the purpose of a base case in a recursive function?",
+    "choices": [
+      "It stops the recursion from continuing forever",
+      "It makes the function run faster",
+      "It reduces memory usage",
+      "It converts the function to a loop"
+    ],
+    "answer": 0,
+    "explanation": "Without a base case the function calls itself indefinitely until the call stack overflows."
+  },
+  {
+    "id": "code-rec-002",
+    "subject": "Coding",
+    "topic": "Recursion",
+    "difficulty": "medium",
+    "prompt": "Given fib(0) = 0 and fib(1) = 1, what is fib(5)?",
+    "choices": ["5", "8", "3", "13"],
+    "answer": 0,
+    "explanation": "The sequence runs 0, 1, 1, 2, 3, 5. Counting from index 0, fib(5) = 5."
+  },
+  {
+    "id": "code-rec-003",
+    "subject": "Coding",
+    "topic": "Recursion",
+    "difficulty": "hard",
+    "prompt": "What is the space complexity of naive recursive Fibonacci, caused by the call stack?",
+    "choices": ["O(n)", "O(1)", "O(2^n)", "O(log n)"],
+    "answer": 0,
+    "explanation": "Time is O(2^n) because of repeated work, but the stack only ever holds one path down the tree at a time, which is depth n."
+  },
+  {
+    "id": "code-str-001",
+    "subject": "Coding",
+    "topic": "Strings",
+    "difficulty": "medium",
+    "prompt": "What is the most efficient way to check whether a string is a palindrome?",
+    "choices": [
+      "Two pointers moving inward from both ends",
+      "Reverse the string and compare, using extra space",
+      "Check every possible substring",
+      "Sort the characters and compare"
+    ],
+    "answer": 0,
+    "explanation": "Two pointers run in O(n) time using O(1) extra space. Reversing also works but allocates a second string. Sorting is wrong outright."
+  },
+  {
+    "id": "code-str-002",
+    "subject": "Coding",
+    "topic": "Strings",
+    "difficulty": "hard",
+    "prompt": "In a language with immutable strings, what is the complexity of building a string by concatenating inside a loop n times?",
+    "choices": ["O(n^2)", "O(n)", "O(log n)", "O(1)"],
+    "answer": 0,
+    "explanation": "Each concatenation copies the whole string built so far, so total work is 1 + 2 + ... + n, which is O(n^2). Use a list and join at the end instead."
+  },
+  {
+    "id": "code-stk-001",
+    "subject": "Coding",
+    "topic": "Stacks and Queues",
+    "difficulty": "easy",
+    "prompt": "A stack follows which access order?",
+    "choices": ["Last in, first out", "First in, first out", "Random access", "Sorted order"],
+    "answer": 0,
+    "explanation": "Stacks are LIFO: the most recently pushed item is the first one popped. Queues are FIFO."
+  },
+  {
+    "id": "code-stk-002",
+    "subject": "Coding",
+    "topic": "Stacks and Queues",
+    "difficulty": "medium",
+    "prompt": "Which data structure is the natural fit for checking whether brackets in an expression are balanced?",
+    "choices": ["Stack", "Queue", "Hash map", "Binary tree"],
+    "answer": 0,
+    "explanation": "Push each opening bracket and pop when you meet a closing one. The most recent unclosed bracket is always the one that must match next, which is exactly LIFO."
+  },
+  {
+    "id": "code-stk-003",
+    "subject": "Coding",
+    "topic": "Stacks and Queues",
+    "difficulty": "medium",
+    "prompt": "Breadth-first search on a graph uses which data structure?",
+    "choices": ["Queue", "Stack", "Priority queue", "Hash set only"],
+    "answer": 0,
+    "explanation": "BFS explores level by level, so nodes must be visited in the order discovered, which is FIFO. Depth-first search uses a stack."
+  },
+  {
+    "id": "code-bs-001",
+    "subject": "Coding",
+    "topic": "Binary Search",
+    "difficulty": "medium",
+    "prompt": "What must be true about the input for binary search to work correctly?",
+    "choices": [
+      "It must be sorted",
+      "It must contain only unique values",
+      "It must be an array of numbers",
+      "Its length must be a power of two"
+    ],
+    "answer": 0,
+    "explanation": "Binary search relies on being able to discard half the range based on one comparison, which only holds if the data is ordered."
+  },
+  {
+    "id": "code-bs-002",
+    "subject": "Coding",
+    "topic": "Binary Search",
+    "difficulty": "hard",
+    "prompt": "Approximately how many comparisons does binary search need in the worst case on 1,000 sorted elements?",
+    "choices": ["10", "100", "500", "1000"],
+    "answer": 0,
+    "explanation": "log base 2 of 1000 is about 9.97, so roughly 10 comparisons. Doubling the data adds only one more step."
+  },
+  {
+    "id": "code-sort-001",
+    "subject": "Coding",
+    "topic": "Sorting",
+    "difficulty": "medium",
+    "prompt": "What is the time complexity of merge sort in the worst case?",
+    "choices": ["O(n log n)", "O(n^2)", "O(n)", "O(log n)"],
+    "answer": 0,
+    "explanation": "Merge sort always splits the array in half (log n levels) and does O(n) merging work per level, giving O(n log n) in every case."
+  },
+  {
+    "id": "code-sort-002",
+    "subject": "Coding",
+    "topic": "Sorting",
+    "difficulty": "hard",
+    "prompt": "Which sorting algorithm has O(n^2) worst-case time despite strong average performance?",
+    "choices": ["Quicksort", "Merge sort", "Heapsort", "Counting sort"],
+    "answer": 0,
+    "explanation": "Quicksort averages O(n log n), but with consistently bad pivot choices the partitions become maximally unbalanced and it degrades to O(n^2)."
+  }
+]

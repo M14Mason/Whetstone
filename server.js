@@ -322,7 +322,39 @@ const routes = {
 
   'GET /api/me': async (req, res) => {
     const user = currentUser(req);
-    sendJson(res, 200, { user: user ? publicUser(user) : null });
+    sendJson(res, 200, {
+      user: user ? publicUser(user) : null,
+      testingMode: config.testingMode,
+    });
+  },
+
+  'POST /api/account/display-name': async (req, res) => {
+    const user = requireUser(req, res);
+    if (!user) return;
+    const body = await readJson(req);
+    const name = String(body.displayName || '').trim();
+    if (name.length < 2 || name.length > 40) {
+      return sendJson(res, 400, { error: 'Name must be 2 to 40 characters.' });
+    }
+    getDbHandle().prepare('UPDATE users SET display_name = ? WHERE id = ?').run(name, user.id);
+    sendJson(res, 200, { displayName: name });
+  },
+
+  // ------------------------------------------------------- tester plan switch
+  // Lets a tester move between Free, Premium, and Study Group without Stripe,
+  // so they can actually see what each tier unlocks. Returns 404 when testing
+  // mode is off, so the endpoint does not exist at all in a real deployment.
+  'POST /api/dev/plan': async (req, res) => {
+    if (!config.testingMode) return sendJson(res, 404, { error: 'Not found' });
+    const user = requireUser(req, res);
+    if (!user) return;
+    const body = await readJson(req);
+    const plan = String(body.plan || '');
+    if (!['free', 'premium', 'group'].includes(plan)) {
+      return sendJson(res, 400, { error: 'Pick free, premium, or group.' });
+    }
+    billing.setUserPlan(user.id, plan);
+    sendJson(res, 200, { plan, message: `Switched to ${plan}. Testing mode only.` });
   },
 
   'GET /api/subjects': async (req, res) => {

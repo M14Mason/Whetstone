@@ -21,6 +21,16 @@ COPY scripts ./scripts
 
 # The database lives on a mounted volume, not in the image layer, so it
 # survives deploys. DATABASE_PATH points at the mount.
+COPY scripts/docker-start.sh /app/scripts/docker-start.sh
+
+# Seed the question bank at BUILD time. Doing this at boot costs ~52 seconds
+# because the bank is now 26,942 questions, which is long enough to fail a
+# platform health check and long enough that a tester assumes the app is dead.
+RUN mkdir -p /app/seed \
+ && DATABASE_PATH=/app/seed/whetstone.db node scripts/seed.js \
+ && chmod +x /app/scripts/docker-start.sh \
+ && chown -R node:node /app/seed
+
 ENV NODE_ENV=production \
     PORT=8080 \
     DATABASE_PATH=/data/whetstone.db \
@@ -32,4 +42,4 @@ USER node
 EXPOSE 8080
 
 ENTRYPOINT ["/sbin/tini", "--"]
-CMD ["node", "server.js"]
+CMD ["/app/scripts/docker-start.sh"]

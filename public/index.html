@@ -24,6 +24,7 @@
     <button data-view="progress" class="nav-btn">Progress</button>
     <button data-view="group" class="nav-btn">Group</button>
     <button data-view="plan" class="nav-btn">Plan</button>
+    <button data-view="settings" class="nav-btn">Settings</button>
   </nav>
   <div class="topbar-right">
     <span id="streak-chip" class="streak hidden"></span>
@@ -472,12 +473,7 @@
         Reports are saved in your own database. Nothing is sent anywhere.
         Run <code>npm run bugs</code> to export them all to a file.
       </p>
-      <form id="bug-form" class="form">
-        <label>What went wrong?<input name="title" type="text" placeholder="Match game froze after 3 pairs" required maxlength="140"></label>
-        <label>Details<input name="body" type="text" placeholder="What you did, what happened, what you expected" required maxlength="500"></label>
-        <button class="btn btn-primary" type="submit">Send report</button>
-      </form>
-      <div id="my-bugs" style="margin-top:1rem"></div>
+      <p class="muted" style="font-size:.9rem">Report bugs from the <strong>Settings</strong> tab.</p>
     </div>
 
     <div class="card">
@@ -493,6 +489,62 @@
   </section>
 
   <!-- ========================= RESET / VERIFY ========================= -->
+  <!-- ========================= SETTINGS ========================= -->
+  <section id="view-settings" class="view hidden">
+    <h1 style="font-size:1.9rem;margin-bottom:.4rem">Settings</h1>
+    <p class="muted" style="margin-bottom:1.5rem">Your account, your data, and a place to report anything broken.</p>
+
+    <!-- Only rendered when the server reports testing mode. -->
+    <div class="card hidden" id="tester-card" style="border-color:#f5a524">
+      <h2 style="display:flex;align-items:center;gap:.5rem">
+        <span class="pill" style="background:#f5a524;color:#1a1200">TESTING</span>
+        Switch plan
+      </h2>
+      <p class="muted" style="font-size:.9rem">
+        Try what each tier unlocks without paying. This panel disappears the moment
+        testing mode is turned off.
+      </p>
+      <div class="plan-switch" id="plan-switch">
+        <button class="btn-secondary" data-plan="free">Free</button>
+        <button class="btn-secondary" data-plan="premium">Premium</button>
+        <button class="btn-secondary" data-plan="group">Study Group</button>
+      </div>
+      <p class="muted" style="font-size:.85rem;margin-top:.75rem">
+        Current plan: <strong id="tester-current">-</strong>
+      </p>
+    </div>
+
+    <div class="card">
+      <h2>Account</h2>
+      <dl class="kv" id="account-kv"></dl>
+      <div class="form-row" style="margin-top:1rem">
+        <label for="set-display">Display name</label>
+        <input id="set-display" type="text" maxlength="40" autocomplete="nickname">
+      </div>
+      <button class="btn" id="save-display">Save name</button>
+    </div>
+
+    <div class="card">
+      <h2>Report a problem</h2>
+      <p class="muted" style="font-size:.9rem">
+        Saved straight into this app's own database. Nothing is sent to a third
+        party. Say what you expected and what happened instead.
+      </p>
+      <form id="bug-form" class="form">
+        <label>What went wrong?<input name="title" type="text" placeholder="Match game froze after 3 pairs" required maxlength="140"></label>
+        <label>Details<input name="body" type="text" placeholder="What you did, what happened, what you expected" required maxlength="500"></label>
+        <button class="btn btn-primary" type="submit">Send report</button>
+      </form>
+      <div id="my-bugs" style="margin-top:1rem"></div>
+    </div>
+
+    <div class="card">
+      <h2>Session</h2>
+      <p class="muted" style="font-size:.9rem">Signs you out on this device only.</p>
+      <button class="btn-secondary" id="settings-signout">Sign out</button>
+    </div>
+  </section>
+
   <section id="view-reset" class="view hidden">
     <div class="narrow" style="padding-top:3rem">
       <div class="card card-pad-lg">

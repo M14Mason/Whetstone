@@ -68,7 +68,8 @@ function showView(name) {
   if (name === 'progress') loadDashboard();
   if (name === 'group') { loadGroup(); loadChannels(); loadMessages(); startChatPolling(); }
   else stopChatPolling();
-  if (name === 'plan') { loadPlan(); loadMyBugs(); }
+  if (name === 'plan') loadPlan();
+  if (name === 'settings') loadSettings();
 }
 
 function renderChrome() {
@@ -1074,6 +1075,60 @@ function startChatPolling() {
 }
 function stopChatPolling() { if (chat.timer) clearInterval(chat.timer); chat.timer = null; }
 
+// ------------------------------------------------------------------ settings
+async function loadSettings() {
+  if (!state.user) return;
+  const u = state.user;
+
+  $('#account-kv').innerHTML = `
+    <dt>Display name</dt><dd>${esc(u.displayName || '-')}</dd>
+    <dt>Email</dt><dd>${esc(u.email || '-')}</dd>
+    <dt>Plan</dt><dd>${esc(u.plan || 'free')}</dd>`;
+  $('#set-display').value = u.displayName || '';
+
+  // The switcher only exists when the server says testing mode is on.
+  $('#tester-card').classList.toggle('hidden', !state.testingMode);
+  if (state.testingMode) {
+    $('#tester-current').textContent = u.plan || 'free';
+    $$('#plan-switch button').forEach((b) => {
+      b.classList.toggle('active', b.dataset.plan === (u.plan || 'free'));
+    });
+  }
+
+  loadMyBugs();
+}
+
+$('#plan-switch').addEventListener('click', async (e) => {
+  const btn = e.target.closest('button[data-plan]');
+  if (!btn) return;
+  try {
+    const d = await api('POST', '/api/dev/plan', { plan: btn.dataset.plan });
+    state.user.plan = d.plan;
+    toast(d.message, 'good');
+    loadSettings();
+    renderChrome();
+  } catch (err) { toast(err.message, 'bad'); }
+});
+
+$('#save-display').addEventListener('click', async () => {
+  const name = $('#set-display').value.trim();
+  if (!name) return toast('Give yourself a name.', 'bad');
+  try {
+    await api('POST', '/api/account/display-name', { displayName: name });
+    state.user.displayName = name;
+    toast('Name updated.', 'good');
+    loadSettings();
+    renderChrome();
+  } catch (err) { toast(err.message, 'bad'); }
+});
+
+$('#settings-signout').addEventListener('click', async () => {
+  await api('POST', '/api/auth/logout');
+  state.user = null;
+  renderChrome();
+  showView('landing');
+});
+
 // ------------------------------------------------------------------ bug reports
 $('#bug-form').addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -1154,8 +1209,9 @@ document.addEventListener('keydown', (e) => {
 // ------------------------------------------------------------------ boot
 (async function boot() {
   try {
-    const { user } = await api('GET', '/api/me');
+    const { user, testingMode } = await api('GET', '/api/me');
     state.user = user;
+    state.testingMode = Boolean(testingMode);
   } catch { state.user = null; }
 
   if (await handleTokenRoutes()) { renderChrome(); return; }

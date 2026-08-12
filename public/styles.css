@@ -878,3 +878,16 @@ input:focus, select:focus {
   }
   .flash-card { transition: none; }
 }
+
+/* ---------------------------------------------------------------- settings */
+.kv { display: grid; grid-template-columns: max-content 1fr; gap: .55rem 1.25rem; margin: 0; }
+.kv dt { color: var(--dim); font-size: .9rem; }
+.kv dd { margin: 0; font-weight: 600; }
+
+.plan-switch { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: .9rem; }
+.plan-switch button { flex: 1 1 8rem; transition: transform .12s ease, border-color .12s ease; }
+.plan-switch button:hover { transform: translateY(-2px); }
+.plan-switch button.active { border-color: var(--accent); color: var(--accent); }
+
+.form-row { display: flex; flex-direction: column; gap: .35rem; margin-bottom: .85rem; }
+.form-row label { font-size: .85rem; color: var(--dim); }

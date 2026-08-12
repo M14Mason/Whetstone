@@ -22,6 +22,12 @@ services:
       - key: NODE_ENV
         value: production
 
+      # Tester tools: in-app plan switcher and a raised free-tier limit so
+      # friends are not cut off after five questions. TURN THIS OFF before
+      # taking real payments - it lets any account grant itself Premium.
+      - key: TESTING_MODE
+        value: "1"
+
       # Overrides the Dockerfile default of /data, which does not exist on the
       # free plan. The container runs as the non-root "node" user and /tmp is
       # the one location it can reliably write to.

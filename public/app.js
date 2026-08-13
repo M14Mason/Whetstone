@@ -49,13 +49,82 @@ function toast(msg, kind = '') {
   toast._t = setTimeout(() => el.classList.add('hidden'), 3200);
 }
 
+/* ---- runtime styles under a strict CSP -------------------------------------
+ *
+ * A few values genuinely have to be computed at runtime (a progress bar's
+ * width, a mastery colour). They cannot be written as style="..." in a template
+ * string: the Content-Security-Policy in server.js sets style-src without
+ * 'unsafe-inline', so the browser DISCARDS style attributes outright. Bars
+ * rendered at zero width and every percentage looked broken, with nothing in
+ * the console to explain why.
+ *
+ * Assigning through the CSSOM (el.style.x = v) is NOT covered by style-src, so
+ * the value travels in a data-* attribute and is applied here after insertion.
+ */
+/* Restart a CSS animation on an element already in the DOM.
+ *
+ * Removing and re-adding the class in the same frame does nothing: the browser
+ * batches style changes, sees no net difference, and never restarts the
+ * animation. Reading offsetWidth forces a synchronous reflow, which commits the
+ * removal first. The read is deliberately not optimised away. */
+function replayAnimation(el, className) {
+  if (!el) return;
+  el.classList.remove(className);
+  void el.offsetWidth; // force reflow -- do not remove
+  el.classList.add(className);
+}
+
+const DYNAMIC_SELECTOR = '[data-width], [data-bg], [data-color]';
+
+function applyOne(el) {
+  const { width, bg, color } = el.dataset;
+  if (width !== undefined) el.style.width = `${width}%`;
+  if (bg !== undefined) el.style.background = bg;
+  if (color !== undefined) el.style.color = color;
+}
+
+function applyDynamicStyles(root = document) {
+  // The root itself may be the styled element, so check it before descendants.
+  if (root.nodeType === 1 && root.matches(DYNAMIC_SELECTOR)) applyOne(root);
+  root.querySelectorAll(DYNAMIC_SELECTOR).forEach(applyOne);
+}
+
+/* Watch for injected markup instead of calling applyDynamicStyles at each
+ * render site. Those sites are spread across several functions, and a missed
+ * call produces a silently zero-width bar -- the exact failure this prevents.
+ * Only childList is observed, so writing el.style cannot retrigger this.
+ * Scoped to #main because the chat view polls and appends continuously. */
+function watchForDynamicStyles() {
+  const target = $('#main') || document.body;
+  new MutationObserver((records) => {
+    for (const record of records) {
+      for (const node of record.addedNodes) {
+        if (node.nodeType === 1) applyDynamicStyles(node);
+      }
+    }
+  }).observe(target, { childList: true, subtree: true });
+}
+
 function levelPill(levelLabel) {
   const key = String(levelLabel || 'Regular').toLowerCase().replace(/\s+/g, '-');
   return `<span class="pill pill-${key}">${esc(levelLabel)}</span>`;
 }
 
 // ------------------------------------------------------------------ routing
+/* Onboarding is a gate, not a page.
+ *
+ * A signed-in user who has not finished onboarding has no grade level and no
+ * courses, so every other view would query an empty scope and render blank
+ * shells. Rather than defend each of those views individually, we refuse to
+ * leave onboarding until it is done. */
+function onboardingPending() {
+  return Boolean(state.user) && !state.user.onboarded;
+}
+
 function showView(name) {
+  // The only escape hatch is signing out, which clears state.user first.
+  if (onboardingPending() && name !== 'onboarding') return;
+
   state.view = name;
   $$('.view').forEach((v) => v.classList.add('hidden'));
   const el = $(`#view-${name}`);
@@ -74,9 +143,16 @@ function showView(name) {
 
 function renderChrome() {
   const signedIn = Boolean(state.user);
-  $('#nav').classList.toggle('hidden', !signedIn);
-  $('#mobile-nav').classList.toggle('hidden', !signedIn);
-  $('#avatar').classList.toggle('hidden', !signedIn);
+  // Chrome appears only once onboarding is done. Previously it appeared the
+  // moment you signed in, which let a half-onboarded user tap into empty views.
+  const showChrome = signedIn && !onboardingPending();
+
+  $('#nav').classList.toggle('hidden', !showChrome);
+  $('#mobile-nav').classList.toggle('hidden', !showChrome);
+  $('#avatar').classList.toggle('hidden', !showChrome);
+
+  // Full-screen, distraction-free onboarding: no top bar, no way out.
+  document.body.classList.toggle('onboarding-lock', onboardingPending());
   if (signedIn) {
     $('#avatar').textContent = (state.user.displayName || '?').charAt(0).toUpperCase();
   }
@@ -173,6 +249,7 @@ const GOALS = [
 ];
 
 function startOnboarding() {
+  renderChrome();          // applies the full-screen lock before the step paints
   showView('onboarding');
   $('#ob-step-1').classList.remove('hidden');
   $('#ob-step-2').classList.add('hidden');
@@ -290,7 +367,7 @@ async function renderHome() {
   const label = scopeLabel();
   if (label) {
     banner.innerHTML = `<span>Studying <strong>${esc(label)}</strong></span>
-      <button class="linkish" id="clear-scope" style="margin-left:auto">Study everything instead</button>`;
+      <button class="linkish u-ml-auto" id="clear-scope">Study everything instead</button>`;
     banner.classList.remove('hidden');
     $('#clear-scope').addEventListener('click', () => {
       state.scope = { courseId: null, courseName: null, unit: null };
@@ -307,22 +384,22 @@ async function renderHome() {
     const t = report.totals;
     $('#home-stats').innerHTML = `
       <div class="mini-stat">
-        <span class="mini-stat-icon" style="background:var(--good-soft);color:var(--good)">✓</span>
+        <span class="mini-stat-icon u-bg-good-soft u-c-good">✓</span>
         <span><span class="mini-stat-value">${t.overallAccuracy === null ? '—' : t.overallAccuracy + '%'}</span>
         <span class="mini-stat-label">Accuracy</span></span>
       </div>
       <div class="mini-stat">
-        <span class="mini-stat-icon" style="background:var(--accent-soft);color:#b9aeff">◎</span>
+        <span class="mini-stat-icon u-bg-accent-soft u-c-hb9aeff">◎</span>
         <span><span class="mini-stat-value">${t.totalAttempts}</span>
         <span class="mini-stat-label">Answered</span></span>
       </div>
       <div class="mini-stat">
-        <span class="mini-stat-icon" style="background:#fb923c22;color:#fbbf24">★</span>
+        <span class="mini-stat-icon u-bg-hfb923c22 u-c-hfbbf24">★</span>
         <span><span class="mini-stat-value">${t.topicsMastered}</span>
         <span class="mini-stat-label">Mastered</span></span>
       </div>
       <div class="mini-stat">
-        <span class="mini-stat-icon" style="background:var(--bad-soft);color:var(--bad)">↻</span>
+        <span class="mini-stat-icon u-bg-bad-soft u-c-bad">↻</span>
         <span><span class="mini-stat-value">${report.weakSpots.length}</span>
         <span class="mini-stat-label">Weak spots</span></span>
       </div>`;
@@ -336,14 +413,14 @@ async function renderHome() {
          <h3>No courses yet</h3><p class="muted">Add your classes to practice by unit.</p></div>`
       : courses.map((c) => `
         <button class="course-card course-open" data-id="${esc(c.course.id)}">
-          <div class="row-between" style="align-items:flex-start">
-            <div style="min-width:0">
+          <div class="row-between u-ai-flex-start">
+            <div class="u-minw-0">
               <h3>${esc(c.course.name)}</h3>
               <div class="course-meta">${c.totals.unitsWithContent} of ${c.totals.units} units ready · ${c.totals.questions} questions</div>
             </div>
             ${levelPill(c.course.levelLabel)}
           </div>
-          <div class="progress-mini"><span style="width:${c.totals.coveragePercent}%"></span></div>
+          <div class="progress-mini"><span data-width="${c.totals.coveragePercent}"></span></div>
         </button>`).join('');
     $$('.course-open').forEach((b) => b.addEventListener('click', () => openCourse(b.dataset.id)));
   } catch { /* signed out */ }
@@ -361,7 +438,7 @@ async function loadSets() {
       : sets.map((s) => `
         <div class="set-card">
           <span class="set-icon">✎</span>
-          <div style="flex:1;min-width:0">
+          <div class="u-flex-1 u-minw-0">
             <strong>${esc(s.title)}</strong>
             <div class="dim">${s.cardCount} cards${s.courseName ? ` · ${esc(s.courseName)}` : ''}</div>
           </div>
@@ -428,6 +505,8 @@ async function loadQuestion() {
       </button>`).join('');
     $$('#q-choices .choice-btn').forEach((b) =>
       b.addEventListener('click', () => submitAnswer(Number(b.dataset.i))));
+
+    replayAnimation($('#quiz-card'), 'q-enter');
   } catch (err) {
     $('#quiz-card').classList.add('hidden');
     $('#quiz-empty').classList.remove('hidden');
@@ -640,19 +719,19 @@ $('#test-next').addEventListener('click', async () => {
     $('#test-results').classList.remove('hidden');
     $('#test-results').innerHTML = `
       <div class="card center card-pad-lg">
-        <div class="stat-value" style="font-size:3.2rem">${graded.percent}%</div>
+        <div class="stat-value u-fs-3p2rem">${graded.percent}%</div>
         <p class="muted">${graded.correct} of ${graded.total} correct</p>
         <button class="btn btn-primary" data-back="home">Back to study</button>
       </div>
       ${graded.results.map((r) => `
         <div class="card">
-          <div class="row" style="gap:.5rem;margin-bottom:.5rem">
+          <div class="row u-g-p5rem u-mb-p5rem">
             <span class="chip ${r.correct ? 'chip-easy' : 'chip-hard'}">${r.correct ? 'Correct' : 'Missed'}</span>
             <span class="dim">${esc(r.topic)}</span>
           </div>
-          <p style="white-space:pre-wrap;font-weight:500">${esc(r.prompt)}</p>
-          <p class="dim">Correct answer: <strong style="color:var(--good)">${esc(r.choices[r.correctChoice])}</strong></p>
-          <p class="muted" style="font-size:.9rem;margin:0">${esc(r.explanation)}</p>
+          <p class="u-ws-pre-wrap u-fwt-500">${esc(r.prompt)}</p>
+          <p class="dim">Correct answer: <strong class="u-c-good">${esc(r.choices[r.correctChoice])}</strong></p>
+          <p class="muted u-fs-p9rem u-m-0">${esc(r.explanation)}</p>
         </div>`).join('')}`;
     $$('#test-results [data-back]').forEach((b) => b.addEventListener('click', () => showView('home')));
   } catch (err) { toast(err.message, 'bad'); }
@@ -687,7 +766,7 @@ function renderCourseGroups(groups) {
   $('#course-groups').innerHTML = groups.map((g) => `
     <div class="card">
       <h2>${esc(g.category)}</h2>
-      <div class="stack" style="gap:.4rem;margin-top:.75rem">
+      <div class="stack u-g-p4rem u-mt-p75rem">
         ${g.courses.map((c) => `
           <button class="course-row course-open" data-id="${esc(c.id)}">
             <span class="course-row-name">${esc(c.name)}</span>
@@ -758,8 +837,8 @@ function topicRow(t) {
   const p = t.masteryPercent;
   return `<div class="topic-row">
     <div><div class="topic-name">${esc(t.topic)}</div><div class="dim">${t.attempts} answered</div></div>
-    <div class="bar"><span style="width:${p === null ? 0 : p}%;background:${barColor(p)}"></span></div>
-    <div class="pct" style="color:${barColor(p)}">${p === null ? '—' : `${p}%`}</div>
+    <div class="bar"><span data-width="${p === null ? 0 : p}" data-bg="${barColor(p)}"></span></div>
+    <div class="pct" data-color="${barColor(p)}">${p === null ? '—' : `${p}%`}</div>
   </div>`;
 }
 
@@ -771,7 +850,7 @@ async function loadDashboard() {
     <div class="card stat-card"><div class="stat-value">${t.overallAccuracy === null ? '—' : `${t.overallAccuracy}%`}</div><div class="stat-label">Accuracy</div></div>
     <div class="card stat-card"><div class="stat-value">${t.totalAttempts}</div><div class="stat-label">Answered</div></div>
     <div class="card stat-card"><div class="stat-value">${t.topicsTouched}</div><div class="stat-label">Topics started</div></div>
-    <div class="card stat-card"><div class="stat-value" style="color:var(--good)">${t.topicsMastered}</div><div class="stat-label">Mastered</div></div>`;
+    <div class="card stat-card"><div class="stat-value u-c-good">${t.topicsMastered}</div><div class="stat-label">Mastered</div></div>`;
 
   $('#weak-spots').innerHTML = report.weakSpots.length === 0
     ? '<p class="muted">Answer more questions and your weak spots will appear here.</p>'
@@ -1105,22 +1184,22 @@ function renderProfile(p) {
 
   host.innerHTML = `
     <h2>What Whetstone knows about you</h2>
-    <p class="muted" style="font-size:.92rem;margin-bottom:1rem">
+    <p class="muted u-fs-p92rem u-mb-1rem">
       Built from ${p.answered} answer${p.answered === 1 ? '' : 's'} across
       ${p.daysStudied} day${p.daysStudied === 1 ? '' : 's'}.
     </p>
 
     <div class="profile-grid">
       <div><span class="profile-num">${p.topicsTracked}</span><span class="profile-lbl">topics tracked</span></div>
-      <div><span class="profile-num" style="color:var(--good)">${p.topicsMastered}</span><span class="profile-lbl">mastered</span></div>
+      <div><span class="profile-num u-c-good">${p.topicsMastered}</span><span class="profile-lbl">mastered</span></div>
       <div><span class="profile-num">${acc}%</span><span class="profile-lbl">accuracy</span></div>
       <div><span class="profile-num">${p.dueNow}</span><span class="profile-lbl">queued for review</span></div>
     </div>
 
-    <div class="label" style="margin:1.1rem 0 .45rem">Your specific weak spots</div>
+    <div class="label u-m-1p1rem-0-p45rem">Your specific weak spots</div>
     <div class="chip-row">${weak}</div>
 
-    <p class="muted" style="font-size:.85rem;margin-top:1.1rem">
+    <p class="muted u-fs-p85rem u-mt-1p1rem">
       This profile is yours. It is not a list of popular topics, it is what
       <em>you</em> keep missing, and it gets sharper every session.
     </p>`;
@@ -1198,31 +1277,105 @@ async function loadMyBugs() {
   try {
     const { bugs } = await api('GET', '/api/bugs/mine');
     $('#my-bugs').innerHTML = bugs.length === 0 ? '' :
-      `<div class="label" style="margin-bottom:.4rem">Your reports</div>` +
+      `<div class="label u-mb-p4rem">Your reports</div>` +
       bugs.map((b) => `<div class="bug-item">
         <span class="status-dot status-${esc(b.status)}"></span>
-        <span style="flex:1">${esc(b.title)}</span>
+        <span class="u-flex-1">${esc(b.title)}</span>
         <span class="dim">${esc(b.status)}</span>
       </div>`).join('');
   } catch { /* signed out */ }
 }
 
 // ------------------------------------------------------------------ legal modal
+/* Minimal Markdown renderer for the legal documents.
+ *
+ * These docs are ours, served from /legal, so the input is trusted -- but it is
+ * still escaped FIRST and only then given structure. That ordering matters: a
+ * stray "<script>" in a terms file renders as visible text instead of running.
+ * Only the subset the legal files actually use is supported.
+ *
+ * Previously the modal did esc(markdown) inside a white-space:pre-wrap block,
+ * so readers saw the raw "#", "**" and ">" characters. */
+function renderMarkdown(src) {
+  const inline = (s) => esc(s)
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/(^|[^*])\*([^*]+)\*/g, '$1<em>$2</em>')
+    // Only http(s) links become anchors, so "javascript:" URLs stay inert text.
+    .replace(/\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g,
+      '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+  const out = [];
+  let list = null, quote = false, para = [];
+  const closeList = () => { if (list) { out.push(`</${list}>`); list = null; } };
+  const closeQuote = () => { if (quote) { out.push('</blockquote>'); quote = false; } };
+  const flushPara = () => { if (para.length) { out.push(`<p>${inline(para.join(' '))}</p>`); para = []; } };
+  const flushAll = () => { flushPara(); closeList(); closeQuote(); };
+
+  for (const raw of String(src).replace(/\r\n?/g, '\n').split('\n')) {
+    const line = raw.trimEnd();
+    if (!line.trim()) { flushPara(); closeList(); closeQuote(); continue; }
+    if (/^\s*(?:---+|\*\*\*+|___+)\s*$/.test(line)) { flushAll(); out.push('<hr>'); continue; }
+
+    const heading = line.match(/^(#{1,6})\s+(.*)$/);
+    if (heading) {
+      flushAll();
+      const level = Math.min(heading[1].length + 1, 6); // h1 in a doc becomes h2
+      out.push(`<h${level}>${inline(heading[2])}</h${level}>`);
+      continue;
+    }
+
+    const bq = line.match(/^>\s?(.*)$/);
+    if (bq) {
+      // Only flush on ENTRY to the quote. Flushing per line would emit one
+      // paragraph per source line, breaking **bold** that wraps across lines.
+      if (!quote) { flushPara(); closeList(); out.push('<blockquote>'); quote = true; }
+      if (bq[1].trim()) para.push(bq[1]); else flushPara();
+      continue;
+    }
+    if (quote) { flushPara(); closeQuote(); }
+
+    const bullet = line.match(/^\s*[-*+]\s+(.*)$/);
+    const numbered = line.match(/^\s*\d+[.)]\s+(.*)$/);
+    if (bullet || numbered) {
+      flushPara();
+      const want = bullet ? 'ul' : 'ol';
+      if (list !== want) { closeList(); out.push(`<${want}>`); list = want; }
+      out.push(`<li>${inline((bullet || numbered)[1])}</li>`);
+      continue;
+    }
+    closeList();
+    para.push(line.trim());
+  }
+  flushAll();
+  return out.join('\n');
+}
+
 async function showLegal(doc) {
   try {
     const data = await api('GET', `/api/legal?doc=${doc}`);
+    const title = doc === 'privacy' ? 'Privacy Policy' : 'Terms of Service';
     $('#modal-host').innerHTML = `
       <div class="modal-backdrop" id="modal-backdrop">
-        <div class="modal">
-          <div class="row-between" style="margin-bottom:1rem">
-            <h2 style="margin:0">${doc === 'privacy' ? 'Privacy Policy' : 'Terms of Service'}</h2>
+        <div class="modal" role="dialog" aria-modal="true" aria-label="${esc(title)}">
+          <div class="modal-head">
+            <h2 class="u-m-0">${esc(title)}</h2>
             <button class="btn btn-sm btn-ghost" id="modal-close">Close</button>
           </div>
-          <div class="modal-doc">${esc(data.markdown)}</div>
+          <div class="modal-doc">${renderMarkdown(data.markdown)}</div>
         </div>
       </div>`;
-    const close = () => { $('#modal-host').innerHTML = ''; };
+    const host = $('#modal-host');
+    const onKey = (e) => { if (e.key === 'Escape') close(); };
+    const close = () => {
+      host.innerHTML = '';
+      document.removeEventListener('keydown', onKey);
+      document.body.classList.remove('modal-open');
+    };
+    document.body.classList.add('modal-open');
+    document.addEventListener('keydown', onKey);
     $('#modal-close').addEventListener('click', close);
+    $('#modal-close').focus();
     $('#modal-backdrop').addEventListener('click', (e) => {
       if (e.target.id === 'modal-backdrop') close();
     });
@@ -1259,6 +1412,8 @@ document.addEventListener('keydown', (e) => {
 
 // ------------------------------------------------------------------ boot
 (async function boot() {
+  watchForDynamicStyles();
+
   try {
     const { user, testingMode } = await api('GET', '/api/me');
     state.user = user;

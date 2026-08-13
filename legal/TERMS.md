@@ -11,9 +11,9 @@
 > and the liability cap) are limited or unenforceable in certain states and
 > countries, which is exactly the sort of thing a lawyer checks.
 
-**Operator:** [LEGAL NAME OR LLC]
-**Contact:** [SUPPORT EMAIL]
-**Governing state:** [STATE]
+**Operator:** PARENT_OR_GUARDIAN_LEGAL_NAME
+**Contact:** masonngo70@gmail.com
+**Governing state:** California
 
 By creating an account you agree to these Terms and to the Privacy Policy.
 
@@ -34,7 +34,7 @@ account belongs to a child under 13, we will delete it and its data.
 - You are responsible for your password and for everything done through your
   account.
 - One account per person. Do not share logins or seats.
-- Tell us at [SUPPORT EMAIL] immediately if you suspect unauthorised access.
+- Tell us at masonngo70@gmail.com immediately if you suspect unauthorised access.
 
 We may suspend or terminate accounts that violate these Terms.
 
@@ -56,7 +56,7 @@ used here only to describe the subject matter of practice content.
 
 We verify content programmatically and by review, but **we do not warrant that
 every question, answer, or explanation is free of error.** Report mistakes to
-[SUPPORT EMAIL] and we will correct them.
+masonngo70@gmail.com and we will correct them.
 
 ## 4. User content
 
@@ -113,7 +113,7 @@ subscribers.
 
 ## 8. Refunds
 
-If the service does not work as described, contact [SUPPORT EMAIL] within **14
+If the service does not work as described, contact masonngo70@gmail.com within **14
 days** of a charge and we will refund that billing period. We do not generally
 refund for non-use. Nothing here limits refund rights you have under applicable
 consumer law.
@@ -121,7 +121,7 @@ consumer law.
 ## 9. Our intellectual property
 
 The software, questions, explanations, course structure, and branding are owned
-by [LEGAL NAME OR LLC] and protected by copyright and other laws. Your
+by PARENT_OR_GUARDIAN_LEGAL_NAME and protected by copyright and other laws. Your
 subscription grants a personal, non-transferable, revocable licence to use them
 for your own studying. It transfers no ownership.
 
@@ -165,7 +165,7 @@ limitations, so they may not fully apply to you.
 
 ## 13. Indemnity
 
-You agree to indemnify and hold harmless [LEGAL NAME OR LLC] and its owners from
+You agree to indemnify and hold harmless PARENT_OR_GUARDIAN_LEGAL_NAME and its owners from
 any claim, demand, loss, or expense (including reasonable legal fees) arising
 out of your User Content, your use of the service, or your violation of these
 Terms or of any law or third-party right.
@@ -174,7 +174,7 @@ Terms or of any law or third-party right.
 
 **Please read this section carefully. It affects your legal rights.**
 
-First, contact us at [SUPPORT EMAIL]. Most issues are resolved informally, and
+First, contact us at masonngo70@gmail.com. Most issues are resolved informally, and
 both sides agree to try for **30 days** before starting formal proceedings.
 
 If that fails, any dispute arising out of these Terms or the service will be
@@ -190,16 +190,16 @@ Exceptions: either party may bring a claim in **small claims court**, and either
 party may seek injunctive relief for intellectual property misuse.
 
 **Your right to opt out:** you may reject this arbitration agreement by emailing
-[SUPPORT EMAIL] within **30 days** of first accepting these Terms, stating your
+masonngo70@gmail.com within **30 days** of first accepting these Terms, stating your
 name and that you opt out of arbitration. Opting out does not affect the rest of
 these Terms.
 
 If the class action waiver is found unenforceable, the entire arbitration
-section is void and disputes proceed in the courts of [STATE].
+section is void and disputes proceed in the courts of California.
 
 ## 15. Governing law
 
-These Terms are governed by the laws of the State of **[STATE]**, without regard
+These Terms are governed by the laws of the State of **California**, without regard
 to conflict-of-law rules. Subject to Section 14, the state and federal courts
 located in **[COUNTY, STATE]** have exclusive jurisdiction.
 
@@ -212,7 +212,7 @@ effective date means you accept the updated Terms.
 
 ## 17. Termination
 
-You may delete your account at any time by contacting [SUPPORT EMAIL]. We may
+You may delete your account at any time by contacting masonngo70@gmail.com. We may
 suspend or terminate your access for violations of these Terms. Sections 4, 9,
 11, 12, 13, 14, and 15 survive termination.
 
@@ -227,4 +227,4 @@ suspend or terminate your access for violations of these Terms. Sections 4, 9,
 
 ## 19. Contact
 
-**[SUPPORT EMAIL]**
+**masonngo70@gmail.com**

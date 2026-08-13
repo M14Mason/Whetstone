@@ -898,6 +898,26 @@ function warnAboutProductionConfig() {
   if (isBillingLive() && !config.publicUrl.startsWith('https://')) {
     warnings.push('Billing is live but PUBLIC_URL is not https. Session cookies will not be marked Secure.');
   }
+
+  // The legal documents are shown to users at signup, so an unfilled template
+  // field is a launch blocker rather than a cosmetic problem. Checked at boot
+  // because it is otherwise invisible until someone opens the modal.
+  for (const file of ['TERMS.md', 'PRIVACY.md']) {
+    const legalPath = path.join(__dirname, 'legal', file);
+    if (!fs.existsSync(legalPath)) continue;
+    const text = fs.readFileSync(legalPath, 'utf8');
+    if (text.includes('PARENT_OR_GUARDIAN_LEGAL_NAME')) {
+      warnings.push(`legal/${file} still names PARENT_OR_GUARDIAN_LEGAL_NAME as the operator. Replace it with a real adult's legal name before taking any payment.`);
+    }
+    // Any remaining ALL-CAPS bracket token, except the [BRACKETED] example used
+    // inside the documents' own review warning.
+    const leftovers = (text.match(/\[[A-Z][A-Z ./-]{2,}\]/g) || [])
+      .filter((token) => token !== '[BRACKETED]');
+    if (leftovers.length) {
+      warnings.push(`legal/${file} has unfilled placeholders: ${[...new Set(leftovers)].join(', ')}`);
+    }
+  }
+
   return warnings;
 }
 

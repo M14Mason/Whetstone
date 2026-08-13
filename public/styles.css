@@ -333,6 +333,25 @@ input:focus, select:focus {
 
 /* ============================ onboarding ============================ */
 .onboard { max-width: 720px; margin: 0 auto; }
+
+/* ---- locked, full-screen onboarding ----
+   While onboarding is pending the top bar is hidden entirely (JS also hides the
+   nav buttons, and showView refuses to leave). Hiding chrome in CSS alone would
+   not be enough: keyboard users could still tab to an invisible nav button. */
+body.onboarding-lock .topbar { display: none; }
+body.onboarding-lock #main {
+  min-height: 100dvh; display: grid; align-items: center;
+  padding-top: 2rem; padding-bottom: 2rem;
+}
+body.onboarding-lock .onboard { width: 100%; animation: rise .4s var(--ease); }
+/* A soft spotlight so the step feels like its own screen. */
+body.onboarding-lock::before {
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(60rem 40rem at 50% -10%, var(--accent-soft), transparent 70%);
+}
+@media (max-width: 640px) {
+  body.onboarding-lock #main { align-items: start; padding-top: 1.5rem; }
+}
 .steps { display: flex; gap: .4rem; margin-bottom: 2rem; }
 .step-dot { flex: 1; height: 4px; border-radius: 2px; background: var(--border); transition: background .3s var(--ease); }
 .step-dot.done { background: var(--gradient); }
@@ -464,6 +483,48 @@ input:focus, select:focus {
 .choice-btn.wrong { border-color: var(--bad); background: var(--bad-soft); }
 .choice-btn.wrong .choice-key { background: var(--bad); border-color: var(--bad); color: #4c0519; }
 
+/* ---- answer feedback motion ----
+   The colour change alone reads as static. A confirming pop on the right answer
+   and a shake on the wrong one make the result register before the explanation
+   is read. Both land under 400ms so rapid drilling is never gated on animation. */
+.choice-btn.correct { animation: answer-pop .42s var(--spring); position: relative; z-index: 1; }
+.choice-btn.wrong { animation: answer-shake .4s var(--ease); }
+@keyframes answer-pop {
+  0% { transform: scale(1); } 38% { transform: scale(1.035); } 100% { transform: scale(1); }
+}
+@keyframes answer-shake {
+  0%, 100% { transform: translateX(0); }
+  18% { transform: translateX(-6px); } 38% { transform: translateX(5px); }
+  58% { transform: translateX(-3px); } 78% { transform: translateX(2px); }
+}
+.choice-btn.correct .choice-key { animation: key-ring .55s var(--ease); }
+@keyframes key-ring {
+  0% { box-shadow: 0 0 0 0 var(--good); } 100% { box-shadow: 0 0 0 10px transparent; }
+}
+
+/* ---- question transitions ----
+   Applied per question load, so consecutive questions feel like cards being
+   dealt rather than text swapped in place. */
+.q-enter { animation: q-in .34s var(--ease) both; }
+@keyframes q-in {
+  from { opacity: 0; transform: translateY(12px) scale(.995); }
+  to { opacity: 1; transform: none; }
+}
+/* The :not() guards are load-bearing. q-enter stays on the card after the
+   entrance finishes, and this rule has the same specificity as
+   ".choice-btn.correct" while sitting later in the file -- without the guards it
+   would win the cascade and the answer feedback above would never play. */
+.q-enter .choice-btn:not(.correct):not(.wrong) { animation: q-choice-in .32s var(--ease) backwards; }
+.q-enter .choice-btn:not(.correct):not(.wrong):nth-child(1) { animation-delay: .05s; }
+.q-enter .choice-btn:not(.correct):not(.wrong):nth-child(2) { animation-delay: .10s; }
+.q-enter .choice-btn:not(.correct):not(.wrong):nth-child(3) { animation-delay: .15s; }
+.q-enter .choice-btn:not(.correct):not(.wrong):nth-child(4) { animation-delay: .20s; }
+.q-enter .choice-btn:not(.correct):not(.wrong):nth-child(5) { animation-delay: .25s; }
+.q-enter .choice-btn:not(.correct):not(.wrong):nth-child(6) { animation-delay: .30s; }
+@keyframes q-choice-in {
+  from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: none; }
+}
+
 .feedback {
   margin-top: 1.3rem; padding: 1.15rem 1.25rem;
   border-radius: var(--r); background: var(--bg-elevated);
@@ -524,7 +585,14 @@ input:focus, select:focus {
 }
 .match-tile:hover:not(:disabled) { border-color: var(--border-bright); transform: translateY(-2px); }
 .match-tile.picked { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 3px var(--accent-soft); }
-.match-tile.matched { opacity: 0; pointer-events: none; transform: scale(.85); }
+/* A correct pair flashes green, then collapses. Confirming the match before it
+   disappears stops it reading as "the tile vanished for no reason". */
+.match-tile.matched { pointer-events: none; animation: tile-match .44s var(--ease) forwards; }
+@keyframes tile-match {
+  0% { opacity: 1; transform: scale(1); border-color: var(--good); background: var(--good-soft); }
+  35% { opacity: 1; transform: scale(1.06); border-color: var(--good); background: var(--good-soft); }
+  100% { opacity: 0; transform: scale(.85); border-color: var(--good); background: var(--good-soft); }
+}
 .match-tile.miss { border-color: var(--bad); background: var(--bad-soft); animation: shake .35s; }
 @keyframes shake { 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
 .match-tile.is-term { font-family: Outfit, sans-serif; font-weight: 700; font-size: .96rem; }
@@ -822,12 +890,53 @@ input:focus, select:focus {
 }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 .modal {
-  width: min(620px, 100%); max-height: 86dvh; overflow-y: auto;
+  width: min(680px, 100%); max-height: 86dvh;
+  display: flex; flex-direction: column; /* header pinned, body scrolls */
   background: var(--surface-solid); border: 1px solid var(--border-bright);
   border-radius: var(--r-xl); padding: 1.75rem;
   box-shadow: var(--shadow-lg); animation: pop .3s var(--spring);
 }
-.modal-doc { font-size: .88rem; color: var(--text-secondary); white-space: pre-wrap; line-height: 1.7; }
+
+/* The header stays put so "Close" is reachable in a long document. */
+.modal-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  padding-bottom: 1rem; border-bottom: 1px solid var(--border); flex: 0 0 auto;
+}
+
+/* Legal copy is rendered Markdown, not preformatted text. An earlier version
+   used white-space: pre-wrap on escaped source, which showed readers the raw
+   "#", "**" and ">" characters. */
+.modal-doc {
+  flex: 1 1 auto; overflow-y: auto;
+  padding-right: .5rem; margin-top: 1rem;
+  font-size: .9rem; color: var(--text-secondary); line-height: 1.75;
+  overscroll-behavior: contain;
+}
+.modal-doc > :first-child { margin-top: 0; }
+.modal-doc h2 { font-size: 1.15rem; color: var(--text); margin: 1.6rem 0 .5rem; }
+.modal-doc h3 { font-size: 1rem; color: var(--text); margin: 1.35rem 0 .4rem; }
+.modal-doc h4, .modal-doc h5, .modal-doc h6 { font-size: .92rem; color: var(--text); margin: 1.15rem 0 .35rem; }
+.modal-doc p { margin: 0 0 .85rem; }
+.modal-doc strong { color: var(--text); font-weight: 600; }
+.modal-doc ul, .modal-doc ol { margin: 0 0 .9rem; padding-left: 1.35rem; }
+.modal-doc li { margin-bottom: .35rem; }
+.modal-doc a { color: var(--accent); text-decoration: underline; }
+.modal-doc code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: .84em; padding: .1rem .32rem;
+  background: var(--bg-elevated); border: 1px solid var(--border);
+  border-radius: 5px; color: var(--text);
+}
+.modal-doc blockquote {
+  margin: 0 0 1rem; padding: .85rem 1rem;
+  background: var(--bg-elevated); border-left: 3px solid var(--accent);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+}
+.modal-doc blockquote p:last-child { margin-bottom: 0; }
+.modal-doc hr { border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+
+/* Stop the page behind the dialog from scrolling. */
+body.modal-open { overflow: hidden; }
 
 /* ---- motion ----
    Staggered entrance so a grid assembles rather than snapping into place.
@@ -958,3 +1067,142 @@ body { overscroll-behavior-y: none; }
 .chip-row { display: flex; flex-wrap: wrap; gap: .4rem; }
 .chip-weak { background: color-mix(in srgb, var(--bad) 18%, transparent); border: 1px solid color-mix(in srgb, var(--bad) 40%, transparent); }
 @media (max-width: 720px) { .profile-grid { grid-template-columns: repeat(2, 1fr); gap: 1.1rem .5rem; } }
+
+/* ============================ utilities ============================
+   These exist because the Content-Security-Policy sets style-src WITHOUT
+   'unsafe-inline' (server.js), which makes the browser silently DISCARD every
+   style="..." attribute. The markup relied on 60+ of them, so headings
+   rendered at the wrong size and flex rows refused to wrap -- with no console
+   error to explain it. Generated 1:1 from the old inline declarations so the
+   rendered result is unchanged, while the CSP stays strict. */
+.u-ai-center { align-items:center; }
+.u-ai-flex-start { align-items:flex-start; }
+.u-bg-accent-soft { background:var(--accent-soft); }
+.u-bg-bad-soft { background:var(--bad-soft); }
+.u-bg-good-soft { background:var(--good-soft); }
+.u-bg-hf5a524 { background:#f5a524; }
+.u-bg-hfb923c22 { background:#fb923c22; }
+.u-border-color-hf5a524 { border-color:#f5a524; }
+.u-c-bad { color:var(--bad); }
+.u-c-good { color:var(--good); }
+.u-c-h1a1200 { color:#1a1200; }
+.u-c-hb9aeff { color:#b9aeff; }
+.u-c-hfbbf24 { color:#fbbf24; }
+.u-d-flex { display:flex; }
+.u-flex-1 { flex:1; }
+.u-fs-1p6rem { font-size:1.6rem; }
+.u-fs-1p7rem { font-size:1.7rem; }
+.u-fs-1p9rem { font-size:1.9rem; }
+.u-fs-2rem { font-size:2rem; }
+.u-fs-3p2rem { font-size:3.2rem; }
+.u-fs-p85rem { font-size:.85rem; }
+.u-fs-p92rem { font-size:.92rem; }
+.u-fs-p9rem { font-size:.9rem; }
+.u-fw-wrap { flex-wrap:wrap; }
+.u-fwt-500 { font-weight:500; }
+.u-g-1rem { gap:1rem; }
+.u-g-p4rem { gap:.4rem; }
+.u-g-p5rem { gap:.5rem; }
+.u-g-p6rem { gap:.6rem; }
+.u-g-p75rem { gap:.75rem; }
+.u-glow-h34d39966 { --mode-glow:#34d39966; }
+.u-glow-h38bdf866 { --mode-glow:#38bdf866; }
+.u-glow-h6d5efc66 { --mode-glow:#6d5efc66; }
+.u-glow-hfb718566 { --mode-glow:#fb718566; }
+.u-glow-hfb923c66 { --mode-glow:#fb923c66; }
+.u-jc-center { justify-content:center; }
+.u-jc-flex-end { justify-content:flex-end; }
+.u-jc-space-between { justify-content:space-between; }
+.u-m-0 { margin:0; }
+.u-m-1p1rem-0-p45rem { margin:1.1rem 0 .45rem; }
+.u-m-1rem-0 { margin:1rem 0; }
+.u-mb-1p25rem { margin-bottom:1.25rem; }
+.u-mb-1p5rem { margin-bottom:1.5rem; }
+.u-mb-1rem { margin-bottom:1rem; }
+.u-mb-p15rem { margin-bottom:.15rem; }
+.u-mb-p3rem { margin-bottom:.3rem; }
+.u-mb-p4rem { margin-bottom:.4rem; }
+.u-mb-p5rem { margin-bottom:.5rem; }
+.u-mb-p8rem { margin-bottom:.8rem; }
+.u-minw-0 { min-width:0; }
+.u-ml-auto { margin-left:auto; }
+.u-mt-0 { margin-top:0; }
+.u-mt-1p1rem { margin-top:1.1rem; }
+.u-mt-1p25rem { margin-top:1.25rem; }
+.u-mt-1p3rem { margin-top:1.3rem; }
+.u-mt-1rem { margin-top:1rem; }
+.u-mt-p75rem { margin-top:.75rem; }
+.u-pt-3rem { padding-top:3rem; }
+.u-w-0pct { width:0%; }
+.u-ws-pre-wrap { white-space:pre-wrap; }
+
+/* ==========================================================================
+   Mobile pass
+
+   Corrections for real device behaviour rather than a scaled-down desktop.
+   ========================================================================== */
+
+/* iOS Safari zooms the page when a focused input's font-size is under 16px.
+   Body text is 15.5px, so every form field inherited a zoom trigger: tapping
+   Email on the sign-in screen jerked the layout sideways. 16px is the
+   threshold, forced only on touch devices so desktop keeps its intended scale. */
+@media (hover: none) and (pointer: coarse) {
+  input, select, textarea { font-size: 16px; }
+}
+
+/* Kill the grey tap flash, keep :focus-visible for keyboard users. */
+@media (hover: none) {
+  button, .btn, a { -webkit-tap-highlight-color: transparent; }
+}
+
+/* Nothing should ever scroll sideways. One overflowing flex child used to push
+   the whole page, which on a phone reads as the layout being broken. */
+html, body { max-width: 100%; overflow-x: hidden; }
+
+@media (max-width: 720px) {
+  /* Flex rows stack instead of overflowing. Several carry four buttons
+     (Cancel / Terms / Privacy / Sign out) that cannot fit at 390px. */
+  .row { flex-wrap: wrap; }
+  .row-between { flex-wrap: wrap; gap: .6rem; }
+  /* Allow flex children to shrink below content width so long course names wrap
+     rather than widening the page. */
+  .row > *, .row-between > * { min-width: 0; }
+
+  /* Respect the notch and home indicator. */
+  .topbar { padding-left: max(1rem, env(safe-area-inset-left));
+            padding-right: max(1rem, env(safe-area-inset-right)); }
+  .shell  { padding-left: max(1rem, env(safe-area-inset-left));
+            padding-right: max(1rem, env(safe-area-inset-right)); }
+
+  /* Headings set at a fixed rem size overflow once the utility classes replace
+     the inline styles. Cap them fluidly. */
+  .u-fs-2rem   { font-size: clamp(1.45rem, 6.5vw, 2rem); }
+  .u-fs-1p9rem { font-size: clamp(1.4rem, 6vw, 1.9rem); }
+  .u-fs-1p7rem { font-size: clamp(1.3rem, 5.5vw, 1.7rem); }
+  .u-fs-1p6rem { font-size: clamp(1.25rem, 5.2vw, 1.6rem); }
+  .u-fs-3p2rem { font-size: clamp(2.2rem, 12vw, 3.2rem); }
+
+  h1, h2, h3, .q-prompt, .flash-term { overflow-wrap: break-word; }
+
+  /* The dialog used desktop padding, leaving little room for the document. */
+  .modal { padding: 1.15rem; width: 100%; max-height: 92dvh; border-radius: var(--r-lg); }
+  .modal-backdrop { padding: .6rem; }
+  .modal-doc { font-size: .88rem; }
+
+  /* Account actions become full-width rows: easier to hit, and it separates
+     "Sign out" from the legal links. */
+  #view-plan .card .row .btn { flex: 1 1 100%; }
+}
+
+@media (max-width: 380px) {
+  .btn { padding: .68rem .9rem; font-size: .88rem; }
+  .match-tile { min-height: 78px; font-size: .74rem; }
+  .mobile-nav button { font-size: .6rem; }
+  .price-card .price { font-size: 2.2rem; }
+}
+
+/* Phones in landscape are short, not narrow: a 100dvh onboarding step would
+   scroll awkwardly, so let it size to content. */
+@media (max-height: 480px) and (orientation: landscape) {
+  body.onboarding-lock #main { min-height: 0; align-items: start; }
+}

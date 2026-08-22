@@ -280,6 +280,39 @@ input[type=text], input[type=email], input[type=password], input[type=number], i
   width: 100%;
 }
 input::placeholder { color: var(--text-muted); }
+
+/* ---- autofill ----
+   When Chrome autofills a field it paints its own near-white background and
+   near-black text via the -webkit-autofill pseudo-class, which overrides the
+   dark styling above. On this dark theme that produced a glaring white email
+   box next to correctly-styled dark fields.
+
+   background-color cannot be overridden directly on autofilled inputs, so the
+   standard workaround is an inset box-shadow large enough to cover the field,
+   plus -webkit-text-fill-color for the text. The long transition delay stops
+   the white flashing in for a frame before the shadow paints. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+select:-webkit-autofill,
+textarea:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px #0d0f1a inset !important;
+  box-shadow: 0 0 0 1000px #0d0f1a inset !important;
+  -webkit-text-fill-color: var(--text) !important;
+  caret-color: var(--text);
+  border: 1px solid var(--border) !important;
+  -webkit-background-clip: text;
+  background-clip: text;
+  transition: background-color 6000s ease-in-out 0s, color 6000s ease-in-out 0s;
+}
+input:-webkit-autofill:focus {
+  border-color: var(--accent) !important;
+  -webkit-box-shadow: 0 0 0 1000px #0d0f1a inset, 0 0 0 3px var(--accent-soft) !important;
+  box-shadow: 0 0 0 1000px #0d0f1a inset, 0 0 0 3px var(--accent-soft) !important;
+}
+/* Firefox uses its own autofill flag. */
+input:autofill { background: #0d0f1a; color: var(--text); }
 input:focus, select:focus {
   outline: none; border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
@@ -396,7 +429,6 @@ body.onboarding-lock::before {
   padding: .18rem .5rem; border-radius: 6px; flex-shrink: 0;
 }
 .pill-ap { background: #f43f5e22; color: #fda4af; }
-.pill-college { background: #38bdf822; color: #7dd3fc; }
 .pill-honors { background: #a78bfa22; color: #c4b5fd; }
 .pill-regular { background: #64748b22; color: #cbd5e1; }
 .pill-test-prep { background: #34d39922; color: #6ee7b7; }
@@ -1205,4 +1237,74 @@ html, body { max-width: 100%; overflow-x: hidden; }
    scroll awkwardly, so let it size to content. */
 @media (max-height: 480px) and (orientation: landscape) {
   body.onboarding-lock #main { min-height: 0; align-items: start; }
+}
+
+/* ==================== onboarding plan comparison ==================== */
+/* Shown as the last onboarding step. Two columns rather than three: the
+   student has just picked classes and needs one decision, not a pricing page. */
+.plan-compare {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.5rem 0 .5rem;
+}
+.plan-col {
+  position: relative;
+  background: var(--surface-solid); border: 1.5px solid var(--border);
+  border-radius: var(--r-lg); padding: 1.35rem;
+}
+.plan-col-featured {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent-soft), 0 12px 40px -18px var(--accent-glow);
+}
+.plan-col-head { margin-bottom: .9rem; }
+.plan-col .price { font-family: Outfit, sans-serif; font-weight: 800; font-size: 2rem; letter-spacing: -.03em; }
+.plan-col .price small { font-size: .9rem; font-weight: 600; color: var(--text-muted); }
+.plan-points { list-style: none; margin: 0; padding: 0; display: grid; gap: .55rem; }
+.plan-points li { display: flex; gap: .6rem; align-items: flex-start; font-size: .9rem; line-height: 1.5; }
+.tick { color: var(--good); font-weight: 700; flex-shrink: 0; }
+.tick-muted { color: var(--text-muted); }
+.tick-no { color: var(--bad); }
+
+@media (max-width: 640px) {
+  /* Stacking keeps each column readable; Premium leads so the comparison is
+     framed by what they gain rather than what they lack. */
+  .plan-compare { grid-template-columns: 1fr; }
+  .plan-col-featured { order: -1; }
+}
+
+/* ==================== locked (premium) features ====================
+   Free users SEE everything and are told what unlocks it, rather than having
+   features hidden. Hiding them makes the app look thin and gives no reason to
+   upgrade; showing them locked makes the value obvious. */
+.locked {
+  position: relative;
+  opacity: .55;
+  filter: saturate(.5);
+}
+.locked::after {
+  content: '🔒';
+  position: absolute; top: .55rem; right: .65rem;
+  font-size: .95rem; line-height: 1;
+  opacity: .9; pointer-events: none;
+}
+.lock-badge {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .66rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  padding: .2rem .45rem; border-radius: 999px;
+  background: var(--accent-soft); color: #b9aeff; border: 1px solid #6d5efc33;
+  vertical-align: middle;
+}
+/* The whole tile stays clickable so the tap explains the lock instead of
+   doing nothing, which is the most common complaint about gated UI. */
+.locked { cursor: pointer; }
+.locked:hover { opacity: .72; }
+
+.upsell-inline {
+  display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
+  padding: .9rem 1.1rem; margin-bottom: 1.25rem;
+  border-radius: var(--r);
+  background: var(--accent-soft); border: 1px solid #6d5efc33;
+  font-size: .9rem;
+}
+.upsell-inline .btn { margin-left: auto; }
+@media (max-width: 720px) {
+  .upsell-inline .btn { margin-left: 0; width: 100%; }
 }

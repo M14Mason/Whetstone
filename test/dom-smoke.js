@@ -136,8 +136,12 @@ async function loadPage(base, cookie) {
   const freshDoc = fresh.dom.window.document;
   check('a new user is sent into onboarding',
     !freshDoc.querySelector('#view-onboarding').classList.contains('hidden'));
+  // High school only: 9th through 12th. College grades were removed on purpose.
   check('onboarding renders grade choices',
-    freshDoc.querySelectorAll('#grade-choices .choice').length >= 8);
+    freshDoc.querySelectorAll('#grade-choices .choice').length === 4);
+  check('onboarding offers no college grades',
+    ![...freshDoc.querySelectorAll('#grade-choices .choice')]
+      .some((b) => /college/i.test(b.textContent)));
   fresh.dom.window.close();
 
   // ---- signed-in and onboarded

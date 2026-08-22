@@ -16,6 +16,7 @@ const state = {
   test: { questions: [], index: 0, answers: {}, start: 0 },
   onboarding: { grade: null, courses: new Set(), goal: null },
   catalog: null,
+  premiumModes: [],
 };
 
 // ------------------------------------------------------------------ helpers
@@ -235,11 +236,13 @@ $('#forgot-form').addEventListener('submit', async (e) => {
 });
 
 // ------------------------------------------------------------------ onboarding
+/* High school only. College courses were removed: the product is aimed at
+ * students picking their actual 9-12 schedule, and a catalogue spanning
+ * freshman year through a college major made the course picker harder to use
+ * for everyone without serving either audience well. */
 const GRADES = [
   { v: 9, t: '9th', s: 'Freshman' }, { v: 10, t: '10th', s: 'Sophomore' },
   { v: 11, t: '11th', s: 'Junior' }, { v: 12, t: '12th', s: 'Senior' },
-  { v: 13, t: 'College', s: '1st year' }, { v: 14, t: 'College', s: '2nd year' },
-  { v: 15, t: 'College', s: '3rd year' }, { v: 16, t: 'College', s: '4th year' },
 ];
 const GOALS = [
   { v: 'grades', t: 'Class grades', s: 'Tests and quizzes' },
@@ -254,6 +257,7 @@ function startOnboarding() {
   $('#ob-step-1').classList.remove('hidden');
   $('#ob-step-2').classList.add('hidden');
   $('#ob-step-3').classList.add('hidden');
+  $('#ob-step-4').classList.add('hidden');
 
   $('#grade-choices').innerHTML = GRADES.map((g) => `
     <button class="choice" data-grade="${g.v}">
@@ -274,7 +278,7 @@ function startOnboarding() {
     $$('#goal-choices .choice').forEach((x) => x.classList.remove('selected'));
     b.classList.add('selected');
     state.onboarding.goal = b.dataset.goal;
-    $('#ob-finish').disabled = false;
+    $('#ob-next-3').disabled = false;
   }));
 }
 
@@ -332,18 +336,72 @@ $('#ob-back-3').addEventListener('click', () => {
   $('#ob-step-3').classList.add('hidden'); $('#ob-step-2').classList.remove('hidden');
 });
 
+/* Step 3 -> step 4. The upsell is shown AFTER the student has picked their
+ * classes, because by then the pitch can be concrete about what they chose
+ * rather than abstract. */
+$('#ob-next-3').addEventListener('click', () => {
+  setSteps(4);
+  $('#ob-step-3').classList.add('hidden');
+  $('#ob-step-4').classList.remove('hidden');
+
+  // Make the limit personal: name the subjects they will lose access to.
+  const picked = [...state.onboarding.courses]
+    .map((id) => (state.catalog || []).flatMap((g) => g.courses || g.items || [g]).find((c) => c && c.id === id))
+    .filter(Boolean);
+  const subjects = [...new Set(picked.map((c) => c.category).filter(Boolean))];
+  const note = $('#ob-premium-note');
+  if (subjects.length > 1) {
+    note.textContent = `You picked ${picked.length} classes across ${subjects.length} subjects. `
+      + `On the free plan you can study one subject at a time and 5 questions a day.`;
+  } else {
+    note.textContent = 'On the free plan you will hit the daily limit after 5 questions.';
+  }
+});
+
+$('#ob-back-4').addEventListener('click', () => {
+  setSteps(3);
+  $('#ob-step-4').classList.add('hidden');
+  $('#ob-step-3').classList.remove('hidden');
+});
+
+/* Completing onboarding and upgrading are deliberately separate calls.
+ * If the upgrade fails the account is still fully set up, so the student lands
+ * in the app on the free plan instead of being stranded mid-onboarding. */
+async function completeOnboarding() {
+  const { user } = await api('POST', '/api/onboarding', {
+    gradeLevel: state.onboarding.grade,
+    courseIds: [...state.onboarding.courses],
+    goal: state.onboarding.goal,
+  });
+  state.user = user;
+  renderChrome();
+  return user;
+}
+
 $('#ob-finish').addEventListener('click', async () => {
   try {
-    const { user } = await api('POST', '/api/onboarding', {
-      gradeLevel: state.onboarding.grade,
-      courseIds: [...state.onboarding.courses],
-      goal: state.onboarding.goal,
-    });
-    state.user = user;
-    renderChrome();
+    await completeOnboarding();
     showView('home');
     toast('You are all set. Pick a study mode.', 'good');
   } catch (err) { toast(err.message, 'bad'); }
+});
+
+$('#ob-upgrade').addEventListener('click', async () => {
+  const btn = $('#ob-upgrade');
+  btn.disabled = true;
+  try {
+    await completeOnboarding();
+    const d = await api('POST', '/api/billing/premium', {});
+    if (d.url) { window.location.href = d.url; return; }   // hosted checkout
+    state.user = d.user;
+    renderChrome();
+    showView('home');
+    toast('You are on Premium. Everything is unlocked.', 'good');
+  } catch (err) {
+    // Onboarding already succeeded, so land them in the app regardless.
+    toast(err.message, 'bad');
+    showView('home');
+  } finally { btn.disabled = false; }
 });
 
 // ------------------------------------------------------------------ home
@@ -353,7 +411,32 @@ function scopeLabel() {
   return null;
 }
 
+function renderUpsellBanner() {
+  const el = $('#upsell-banner');
+  if (!el) return;
+  const free = Boolean(state.user) && state.user.plan === 'free';
+  el.classList.toggle('hidden', !free);
+  if (!free) return;
+
+  const q = state.user.quota || {};
+  const left = Number.isFinite(q.remaining) ? q.remaining : null;
+  const lead = left === 0
+    ? 'You are out of questions for today.'
+    : left !== null
+      ? `${left} of ${q.limit} free questions left today.`
+      : 'You are on the free plan.';
+  el.innerHTML = `<span>${esc(lead)} Premium removes the daily limit and unlocks every mode.</span>
+    <button class="btn btn-sm btn-primary" data-upsell>See Premium</button>`;
+  // Bound off the element rather than by id. The button is created here, so a
+  // document-wide id lookup would look like a missing element to the DOM smoke
+  // test that checks every queried id exists in index.html.
+  // (Writing that selector literally in a comment is enough to trip it.)
+  el.querySelector('[data-upsell]').addEventListener('click', () => showView('plan'));
+}
+
 async function renderHome() {
+  renderModeLocks();
+  renderUpsellBanner();
   const hour = new Date().getHours();
   const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
   $('#home-greeting').textContent = `${greet}, ${state.user.displayName}`;
@@ -453,7 +536,41 @@ async function loadSets() {
 
 $$('.mode-card').forEach((b) => b.addEventListener('click', () => startMode(b.dataset.mode)));
 
+/* Premium modes stay VISIBLE to free users, greyed out with a lock, rather than
+ * being hidden. Hiding them makes the app look thin and gives no reason to
+ * upgrade; showing them makes the value concrete. The server enforces the
+ * actual gate -- this is presentation only. */
+function isLockedMode(mode) {
+  return (state.premiumModes || []).includes(mode)
+    && Boolean(state.user)
+    && state.user.plan === 'free';
+}
+
+function renderModeLocks() {
+  $$('.mode-card').forEach((card) => {
+    const locked = isLockedMode(card.dataset.mode);
+    card.classList.toggle('locked', locked);
+    let badge = card.querySelector('.lock-badge');
+    if (locked && !badge) {
+      badge = document.createElement('span');
+      badge.className = 'lock-badge';
+      badge.textContent = 'Premium';
+      card.querySelector('h3')?.append(' ');
+      card.querySelector('h3')?.append(badge);
+    } else if (!locked && badge) {
+      badge.remove();
+    }
+  });
+}
+
 function startMode(mode) {
+  // A locked card is still clickable: tapping it explains why, instead of
+  // doing nothing, which is the usual complaint about gated interfaces.
+  if (isLockedMode(mode)) {
+    toast('That mode is part of Premium. Opening your plan options.');
+    showView('plan');
+    return;
+  }
   if (mode === 'learn') { showView('learn'); loadQuestion(); }
   else if (mode === 'flashcards') startFlashcards();
   else if (mode === 'match') startMatch();
@@ -1415,9 +1532,10 @@ document.addEventListener('keydown', (e) => {
   watchForDynamicStyles();
 
   try {
-    const { user, testingMode } = await api('GET', '/api/me');
+    const { user, testingMode, premiumModes } = await api('GET', '/api/me');
     state.user = user;
     state.testingMode = Boolean(testingMode);
+    state.premiumModes = premiumModes || [];
   } catch { state.user = null; }
 
   if (await handleTokenRoutes()) { renderChrome(); return; }

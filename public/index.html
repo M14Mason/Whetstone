@@ -48,7 +48,7 @@
         <ul class="feature-list">
           <li class="feature">
             <span class="feature-icon">◎</span>
-            <span><strong>Built around your real schedule</strong><span>Every AP, honors, core, and college course mapped down to individual units.</span></span>
+            <span><strong>Built around your real schedule</strong><span>Every AP, honors, and core high school course mapped down to individual units.</span></span>
           </li>
           <li class="feature">
             <span class="feature-icon">⚡</span>
@@ -123,7 +123,7 @@
   <!-- ========================= ONBOARDING ========================= -->
   <section id="view-onboarding" class="view hidden">
     <div class="onboard">
-      <div class="steps"><div class="step-dot done"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+      <div class="steps"><div class="step-dot done"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
 
       <div id="ob-step-1">
         <h1 class="u-fs-2rem">What year are you in?</h1>
@@ -136,7 +136,7 @@
         <h1 class="u-fs-2rem">Which classes are you taking?</h1>
         <p class="muted">Pick as many as you want. You can change these any time.</p>
         <div class="course-search">
-          <input id="ob-search" type="search" placeholder="Search 144 courses...">
+          <input id="ob-search" type="search" placeholder="Search 120 courses...">
         </div>
         <div id="ob-courses" class="course-list"></div>
         <div class="row u-mt-1p25rem">
@@ -152,7 +152,53 @@
         <div class="choice-grid" id="goal-choices"></div>
         <div class="row u-mt-1p25rem">
           <button id="ob-back-3" class="btn btn-ghost">Back</button>
-          <button id="ob-finish" class="btn btn-primary btn-lg" disabled>Start studying</button>
+          <button id="ob-next-3" class="btn btn-primary btn-lg" disabled>Continue</button>
+        </div>
+      </div>
+
+      <div id="ob-step-4" class="hidden">
+        <h1 class="u-fs-2rem">Want to go unlimited?</h1>
+        <p class="muted">Whetstone is free forever. Premium removes the limits.</p>
+
+        <div class="plan-compare">
+          <div class="plan-col">
+            <div class="plan-col-head">
+              <h3 class="u-m-0">Free</h3>
+              <div class="price">$0</div>
+            </div>
+            <ul class="plan-points">
+              <li><span class="tick tick-muted">✓</span> 5 questions a day</li>
+              <li><span class="tick tick-muted">✓</span> 1 subject at a time</li>
+              <li><span class="tick tick-muted">✓</span> Flashcards and Learn</li>
+              <li><span class="tick tick-no">✕</span> Match, Test and Review</li>
+              <li><span class="tick tick-no">✕</span> Full mastery dashboard</li>
+            </ul>
+          </div>
+
+          <div class="plan-col plan-col-featured">
+            <span class="price-badge">Recommended</span>
+            <div class="plan-col-head">
+              <h3 class="u-m-0">Premium</h3>
+              <div class="price">$8.99<small>/mo</small></div>
+            </div>
+            <ul class="plan-points">
+              <li><span class="tick">✓</span> <strong>Unlimited</strong> questions</li>
+              <li><span class="tick">✓</span> <strong>Every class</strong> you picked, not just one</li>
+              <li><span class="tick">✓</span> All five study modes</li>
+              <li><span class="tick">✓</span> Full mastery dashboard</li>
+              <li><span class="tick">✓</span> Weak-topic review queue</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="dim u-mt-1rem" id="ob-premium-note">
+          On the free plan you will hit the daily limit after 5 questions.
+        </p>
+
+        <div class="row u-mt-1p25rem">
+          <button id="ob-back-4" class="btn btn-ghost">Back</button>
+          <button id="ob-finish" class="btn btn-ghost btn-lg">Start free</button>
+          <button id="ob-upgrade" class="btn btn-primary btn-lg">Get Premium</button>
         </div>
       </div>
     </div>
@@ -169,6 +215,7 @@
 
     <div class="stat-strip" id="home-stats"></div>
 
+    <div id="upsell-banner" class="upsell-inline hidden"></div>
     <div id="scope-banner" class="banner hidden u-mb-1p25rem"></div>
 
     <div class="section-head">

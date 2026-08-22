@@ -175,6 +175,26 @@ function requireUser(req) {
   return user;
 }
 
+/**
+ * Gate a study mode behind a paid plan.
+ *
+ * The UI also greys these out, but the UI is not a security boundary: without
+ * this check anyone could call the endpoint directly and the "Premium" label
+ * on the onboarding screen would simply be untrue.
+ */
+function requirePaidMode(req, mode) {
+  if (!config.premiumModes.includes(mode)) return;
+  const user = requireUser(req);
+  const plan = plans.effectivePlan(user.id);
+  if (plan.id === 'free') {
+    throw Object.assign(new Error('That study mode is part of Premium.'), {
+      statusCode: 402,
+      payload: { upgrade: true, mode },
+    });
+  }
+}
+
+
 function publicUser(user) {
   const quota = plans.checkQuota(user.id);
   const group = groups.getGroupForUser(user.id);
@@ -325,6 +345,9 @@ const routes = {
     sendJson(res, 200, {
       user: user ? publicUser(user) : null,
       testingMode: config.testingMode,
+      // The client greys these out. The server still enforces them; this is
+      // only so the UI can explain the lock rather than fail on click.
+      premiumModes: config.premiumModes,
     });
   },
 
@@ -526,6 +549,7 @@ const routes = {
 
   'GET /api/modes/match': async (req, res) => {
     const user = requireUser(req);
+    requirePaidMode(req, 'match');
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     const courseId = url.searchParams.get('courseId') || undefined;
     const unit = url.searchParams.get('unit') || undefined;
@@ -559,6 +583,7 @@ const routes = {
 
   'GET /api/modes/test': async (req, res) => {
     const user = requireUser(req);
+    requirePaidMode(req, 'test');
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     const scope = plans.learningScope(user.id, {
       courseId: url.searchParams.get('courseId') || undefined,
@@ -595,6 +620,7 @@ const routes = {
 
   'GET /api/modes/review': async (req, res) => {
     const user = requireUser(req);
+    requirePaidMode(req, 'review');
     const queue = modes.getReviewQueue(user.id, 20);
     sendJson(res, 200, { questions: queue, count: queue.length });
   },

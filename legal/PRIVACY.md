@@ -5,9 +5,9 @@ Written to describe what this app actually collects, based on its real database
 schema. Have an adult review it before launch. Fill in every `[BRACKETED]`
 placeholder.
 
-**Last updated: [DATE]**
-**Operated by: [LEGAL NAME OR BUSINESS NAME]**
-**Contact: [SUPPORT EMAIL]**
+**Last updated: 2026-08-12**
+**Operated by: PARENT_OR_GUARDIAN_LEGAL_NAME**
+**Contact: masonngo70@gmail.com**
 
 ---
 
@@ -64,8 +64,8 @@ Whetstone:
 | Service | What it receives | Purpose |
 |---|---|---|
 | Stripe | Email, subscription details | Processing payments |
-| [Resend or your email provider] | Email address | Sending password resets |
-| [Fly.io or your host] | All app data, stored on their servers | Hosting |
+| Resend | Email address | Sending password resets |
+| Fly.io | All app data, stored on their servers | Hosting |
 | [Sentry, if enabled] | Error details, which may include a user id | Diagnosing crashes |
 
 We may disclose data if legally required to do so.
@@ -74,7 +74,7 @@ We may disclose data if legally required to do so.
 
 Whetstone is for ages **13 and up**. We do not knowingly collect personal
 information from children under 13. If you believe a child under 13 has created
-an account, contact [SUPPORT EMAIL] and we will delete it promptly.
+an account, contact masonngo70@gmail.com and we will delete it promptly.
 
 If you are between 13 and 18, please get a parent or guardian's permission
 before signing up, and have them handle any payment.
@@ -90,7 +90,7 @@ additional obligations (such as FERPA) may apply. Contact us before doing so.
 - **Sessions:** expire after 30 days and are then purged automatically.
 - **Password reset tokens:** expire within 1 hour, verification tokens within
   24 hours, then purged.
-- **Backups:** may retain data for up to [14] days after deletion before being
+- **Backups:** may retain data for up to 14 days after deletion before being
   rotated out.
 
 ## 6. Your rights
@@ -100,9 +100,9 @@ You can:
 - **See your data.** Ask and we will send you a copy.
 - **Correct it.** Change your display name in the app; email us for anything
   else.
-- **Delete it.** Email [SUPPORT EMAIL] and we will delete your account and its
+- **Delete it.** Email masonngo70@gmail.com and we will delete your account and its
   data, except anything we must keep for tax or legal reasons (payment records
-  are typically kept [7] years).
+  are typically kept 7 years).
 - **Withdraw consent.** Stop using the service and ask us to delete your data.
 
 Depending on where you live (for example the EU under GDPR, or California under
@@ -132,4 +132,4 @@ email. The "Last updated" date above always reflects the current version.
 
 ## 10. Contact
 
-Questions, requests, or complaints: **[SUPPORT EMAIL]**
+Questions, requests, or complaints: **masonngo70@gmail.com**

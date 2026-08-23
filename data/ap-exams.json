@@ -296,6 +296,263 @@
      "note": "Poetry Analysis, Prose Fiction Analysis, Literary Argument."
     }
    ]
+  },
+  "ap-human-geography": {
+   "name": "AP Human Geography",
+   "durationMin": 135,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-human-geography/assessment",
+   "examDate": "Mon, May 3, 2027",
+   "calculator": "Not permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 60,
+     "minutes": 60,
+     "weight": 50
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 3,
+     "minutes": 75,
+     "weight": 50,
+     "note": "Q1 text only; Q2 has one stimulus; Q3 has two stimuli."
+    }
+   ]
+  },
+  "ap-macroeconomics": {
+   "name": "AP Macroeconomics",
+   "durationMin": 130,
+   "delivery": "hybrid",
+   "source": "https://apstudents.collegeboard.org/courses/ap-macroeconomics/assessment",
+   "examDate": "Fri, May 7, 2027",
+   "calculator": "Four-function calculator permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 60,
+     "minutes": 70,
+     "weight": 66
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 3,
+     "minutes": 60,
+     "weight": 33,
+     "note": "Includes a 10-minute reading period. 1 long (50% of section) and 2 short (25% each)."
+    }
+   ]
+  },
+  "ap-microeconomics": {
+   "name": "AP Microeconomics",
+   "durationMin": 130,
+   "delivery": "hybrid",
+   "source": "https://apstudents.collegeboard.org/courses/ap-microeconomics/assessment",
+   "examDate": "Tue, May 4, 2027",
+   "calculator": "Four-function calculator permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 60,
+     "minutes": 70,
+     "weight": 66
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 3,
+     "minutes": 60,
+     "weight": 33,
+     "note": "Includes a 10-minute reading period. 1 long (50% of section) and 2 short (25% each)."
+    }
+   ]
+  },
+  "ap-csa": {
+   "name": "AP Computer Science A",
+   "durationMin": 180,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-computer-science-a/assessment",
+   "examDate": "Wed, May 12, 2027",
+   "calculator": "Not permitted. Reference sheet provided.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 42,
+     "minutes": 90,
+     "weight": 55
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 4,
+     "minutes": 90,
+     "weight": 45,
+     "note": "Q1 Methods and Control Structures; Q2 Class Design; Q3 ArrayList; Q4 2D Array."
+    }
+   ]
+  },
+  "ap-physics-1": {
+   "name": "AP Physics 1: Algebra-Based",
+   "durationMin": 180,
+   "delivery": "hybrid",
+   "source": "https://apstudents.collegeboard.org/courses/ap-physics-1-algebra-based/assessment",
+   "examDate": "Wed, May 5, 2027",
+   "calculator": "Permitted. Equations sheet provided.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 42,
+     "minutes": 85,
+     "weight": 50
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 4,
+     "minutes": 95,
+     "weight": 50,
+     "note": "Mathematical routines, translation between representations, experimental design, qualitative/quantitative translation."
+    }
+   ]
+  },
+  "ap-environmental": {
+   "name": "AP Environmental Science",
+   "durationMin": 160,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-environmental-science/assessment",
+   "examDate": "Thu, May 13, 2027",
+   "calculator": "Permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 80,
+     "minutes": 90,
+     "weight": 60
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 3,
+     "minutes": 70,
+     "weight": 40,
+     "note": "Q1 design an investigation; Q2 analyse quantitative data; Q3 environmental problem with calculations."
+    }
+   ]
+  },
+  "ap-precalculus": {
+   "name": "AP Precalculus",
+   "durationMin": 175,
+   "delivery": "hybrid",
+   "source": "https://apstudents.collegeboard.org/courses/ap-precalculus/assessment",
+   "examDate": "Tue, May 11, 2027",
+   "calculator": "Graphing calculator required for parts of both sections (radian mode).",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 42,
+     "minutes": 105,
+     "weight": 63,
+     "note": "Part A: 29 questions, 65 min, no calculator (~44%). Part B: 13 questions, 40 min, calculator (~19%)."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 4,
+     "minutes": 70,
+     "weight": 37,
+     "note": "Part A: 2 questions with calculator. Part B: 2 without. Each worth 6 points."
+    }
+   ]
+  },
+  "ap-european-history": {
+   "name": "AP European History",
+   "durationMin": 195,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-european-history/assessment",
+   "examDate": "Tue, May 4, 2027",
+   "calculator": "Not permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section IA: Multiple Choice",
+     "count": 55,
+     "minutes": 55,
+     "weight": 40
+    },
+    {
+     "id": "saq",
+     "label": "Section IB: Short Answer",
+     "count": 3,
+     "minutes": 40,
+     "weight": 20
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 2,
+     "minutes": 100,
+     "weight": 40,
+     "note": "DBQ (60 min incl. 15-min reading, 25%) and Long Essay (40 min, 15%)."
+    }
+   ]
+  },
+  "ap-csp": {
+   "name": "AP Computer Science Principles",
+   "durationMin": 180,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-computer-science-principles/assessment",
+   "examDate": "Fri, May 14, 2027",
+   "calculator": "Not permitted. Exam Reference Sheet provided.",
+   "note": "Part of your score comes from the Create performance task, built in class over ~9 hours and submitted to the AP Digital Portfolio (due Fri, Apr 30, 2027). Only the end-of-course exam can be practised here.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: End-of-Course Multiple Choice",
+     "count": 70,
+     "minutes": 120,
+     "weight": 70,
+     "note": "57 single-select, 5 single-select with a reading passage, 8 multiple-select (choose 2). Four answer options."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Create Performance Task",
+     "count": 2,
+     "minutes": 60,
+     "weight": 30,
+     "note": "Two written-response questions (four prompts) about your own Personalized Project Reference, plus the through-course program and video."
+    }
+   ]
+  }
+ },
+ "portfolioCourses": {
+  "ap-studio-art-2d": {
+   "name": "AP 2-D Art and Design",
+   "reason": "Portfolio only. You submit a body of work (Selected Works and Sustained Investigation) through the AP Digital Portfolio. There is no written exam to practise.",
+   "source": "https://apstudents.collegeboard.org/courses/ap-2-d-art-and-design/assessment"
+  },
+  "ap-studio-art-drawing": {
+   "name": "AP Drawing",
+   "reason": "Portfolio only. You submit a body of work (Selected Works and Sustained Investigation) through the AP Digital Portfolio. There is no written exam to practise.",
+   "source": "https://apstudents.collegeboard.org/courses/ap-drawing/assessment"
+  },
+  "ap-seminar": {
+   "name": "AP Seminar",
+   "reason": "Mostly performance tasks: a Team Project and an Individual Research-Based Essay and Presentation, plus a written end-of-course exam. The performance tasks cannot be simulated here.",
+   "source": "https://apstudents.collegeboard.org/courses/ap-seminar/assessment"
+  },
+  "ap-research": {
+   "name": "AP Research",
+   "reason": "Performance task only: an academic paper, presentation and oral defence. There is no written end-of-course exam.",
+   "source": "https://apstudents.collegeboard.org/courses/ap-research/assessment"
   }
  }
 }

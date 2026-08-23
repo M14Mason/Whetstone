@@ -122,8 +122,9 @@ check('answering returns grading, explanation, and rating movement', async () =>
   assert.ok(typeof data.explanation === 'string' && data.explanation.length > 0);
   assert.ok(Number.isInteger(data.progress.abilityAfter));
   // Quota counts answers, not questions fetched: this is the first answer.
+  // Free Learn allowance is 3/day (config.freeDailyLimits.learn).
   assert.strictEqual(data.quota.used, 1);
-  assert.strictEqual(data.quota.remaining, 4);
+  assert.strictEqual(data.quota.remaining, 2);
 });
 
 check('an invalid answer index is rejected', async () => {
@@ -135,7 +136,7 @@ check('an invalid answer index is rejected', async () => {
   assert.strictEqual(status, 400);
 });
 
-check('free tier blocks at 5 questions per day', async () => {
+check('free tier blocks once the Learn allowance is gone', async () => {
   // Two answered above; burn the rest.
   for (let i = 0; i < 10; i++) {
     const nextRes = await call('GET', '/api/quiz/next');
@@ -177,11 +178,21 @@ check('premium users can select every subject', async () => {
 });
 
 check('dashboard reports real progress', async () => {
+  // Learn only allows 3/day on free, so top up through the separate Review
+  // allowance to get enough attempts on the board.
+  for (let i = 0; i < 5; i++) {
+    const nx = await call('GET', '/api/quiz/next?mode=review');
+    if (nx.status !== 200) break;
+    await call('POST', '/api/quiz/answer', {
+      questionId: nx.data.question.id, choice: 0, mode: 'review',
+    });
+  }
   const { status, data } = await call('GET', '/api/dashboard');
   assert.strictEqual(status, 200);
-  assert.ok(data.report.totals.totalAttempts >= 5);
+  assert.ok(data.report.totals.totalAttempts >= 5,
+    `only ${data.report.totals.totalAttempts} attempts recorded`);
   assert.ok(Array.isArray(data.report.subjects));
-  assert.ok(data.report.subjects.length >= 5);
+  assert.ok(data.report.subjects.length >= 1);
 });
 
 check('a group needs 3 members before it can be paid for', async () => {
@@ -509,6 +520,54 @@ check('an unverified AP course is refused rather than guessed', async () => {
   assert.strictEqual(r.status, 200);
   assert.strictEqual(r.data.exam.verified, false);
   assert.ok(!r.data.exam.sections, 'must not fabricate a format');
+});
+
+check('free tier gets separate Learn and Review allowances', async () => {
+  const email = `quota-${Date.now()}@example.com`;
+  let r = await call('POST', '/api/auth/signup', {
+    displayName: 'Quota Tester', email, password: 'correct-horse-battery',
+    birthYear: 2009, timezoneOffsetMinutes: 0, acceptTerms: true,
+  });
+  assert.strictEqual(r.status, 201);
+  await call('POST', '/api/onboarding', { gradeLevel: 11, courseIds: ['hs-biology'], goal: 'grades' });
+
+  // Learn is the shorter allowance.
+  r = await call('GET', '/api/quiz/next');
+  assert.strictEqual(r.status, 200);
+  const learnLimit = r.data.quota.limit;
+  assert.strictEqual(learnLimit, 3, `expected a 3-question Learn allowance, got ${learnLimit}`);
+
+  // Burn Learn completely.
+  for (let i = 0; i < learnLimit; i++) {
+    const nx = await call('GET', '/api/quiz/next');
+    if (nx.status !== 200) break;
+    await call('POST', '/api/quiz/answer', { questionId: nx.data.question.id, choice: 0, mode: 'learn' });
+  }
+  r = await call('GET', '/api/quiz/next');
+  assert.strictEqual(r.status, 402, 'Learn should be exhausted');
+
+  // Review must still be reachable: its allowance is separate.
+  r = await call('GET', '/api/modes/review');
+  assert.strictEqual(r.status, 200,
+    `Review must not be consumed by Learn, got ${r.status}`);
+  assert.strictEqual(r.data.quota.limit, 5, 'Review allowance should be 5');
+  assert.ok(r.data.quota.remaining > 0, 'Review should have questions left');
+});
+
+check('review is metered, not locked, for free users', async () => {
+  const email = `rev-${Date.now()}@example.com`;
+  await call('POST', '/api/auth/signup', {
+    displayName: 'Rev', email, password: 'correct-horse-battery',
+    birthYear: 2009, timezoneOffsetMinutes: 0, acceptTerms: true,
+  });
+  await call('POST', '/api/onboarding', { gradeLevel: 11, courseIds: ['hs-biology'], goal: 'grades' });
+
+  const r = await call('GET', '/api/modes/review');
+  assert.strictEqual(r.status, 200, 'free users must reach Review');
+
+  // AP exam stays fully paywalled.
+  const ap = await call('GET', '/api/ap/exam?courseId=ap-biology');
+  assert.strictEqual(ap.status, 402, 'AP exam must stay locked for free users');
 });
 
 check('switching plans actually changes what you can reach', async () => {

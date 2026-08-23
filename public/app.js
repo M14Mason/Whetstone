@@ -21,11 +21,23 @@ const state = {
 
 // ------------------------------------------------------------------ helpers
 async function api(method, path, body) {
-  const res = await fetch(path, {
-    method,
-    headers: body ? { 'Content-Type': 'application/json' } : {},
-    body: body ? JSON.stringify(body) : undefined,
-  });
+  let res;
+  try {
+    res = await fetch(path, {
+      method,
+      headers: body ? { 'Content-Type': 'application/json' } : {},
+      body: body ? JSON.stringify(body) : undefined,
+    });
+  } catch {
+    // fetch only rejects on a network-level failure, so this really is the
+    // connection rather than a server error. Say so plainly.
+    setOffline(true);
+    const err = new Error('You appear to be offline. Check your connection and try again.');
+    err.status = 0;
+    err.offline = true;
+    throw err;
+  }
+  if (res.ok) setOffline(false);
   let data = {};
   try { data = await res.json(); } catch { /* no body */ }
   if (!res.ok) {
@@ -132,6 +144,8 @@ function showView(name) {
   if (el) el.classList.remove('hidden');
   $$('.nav-btn, .mobile-nav button').forEach((b) => b.classList.toggle('active', b.dataset.view === name));
   window.scrollTo({ top: 0, behavior: 'instant' });
+
+  rememberView(name);
 
   if (name === 'home') renderHome();
   if (name === 'courses') loadCourses();
@@ -647,7 +661,9 @@ async function startApExam() {
     // Say plainly which exams we have verified rather than implying all are equal.
     const tag = cov.verifiedFormat
       ? `<span class="pill pill-ap">Official format</span>`
-      : `<span class="pill pill-regular">Format not verified</span>`;
+      : cov.portfolio
+        ? `<span class="pill pill-honors">Portfolio course</span>`
+        : `<span class="pill pill-regular">Format not verified</span>`;
     const frq = cov.frqCount ? `<span class="dim">${cov.frqCount} free-response</span>` : '';
     return `<button class="course-card" data-ap="${esc(c.id)}">
         <span class="course-card-title">${esc(c.name)}</span>
@@ -901,6 +917,86 @@ $('#ap-frq-check').addEventListener('click', apCheckFrq);
 $('#ap-frq-back').addEventListener('click', apChooseFrq);
 
 
+
+// ------------------------------------------------------------------ upgrades
+/* Quality-of-life work that is invisible when it succeeds. */
+
+/* 1. Offline / connection loss.
+ *
+ * A student on school wifi drops connection constantly. Without this, every
+ * fetch failure surfaced as the generic "Request failed" toast, which reads as
+ * "the app is broken" rather than "your wifi died". */
+let offlineBannerEl = null;
+function setOffline(isOffline) {
+  if (!offlineBannerEl) {
+    offlineBannerEl = document.createElement('div');
+    offlineBannerEl.className = 'offline-banner hidden';
+    offlineBannerEl.textContent = 'You are offline. Your progress is saved and will sync when you reconnect.';
+    document.body.appendChild(offlineBannerEl);
+  }
+  offlineBannerEl.classList.toggle('hidden', !isOffline);
+  document.body.classList.toggle('is-offline', isOffline);
+}
+window.addEventListener('offline', () => setOffline(true));
+window.addEventListener('online', () => { setOffline(false); toast('Back online.', 'good'); });
+
+/* 2. Double-submit guard.
+ *
+ * Tapping a button twice on a slow connection fired two requests. On the
+ * upgrade button that meant two upgrade attempts. */
+function guard(btn, fn) {
+  return async (...args) => {
+    if (!btn || btn.dataset.busy === '1') return;
+    if (btn) { btn.dataset.busy = '1'; btn.classList.add('is-busy'); }
+    try { return await fn(...args); }
+    finally { if (btn) { btn.dataset.busy = '0'; btn.classList.remove('is-busy'); } }
+  };
+}
+
+/* 3. Keyboard shortcuts beyond the quiz. Power users navigate far faster, and
+ *    it costs nothing to support. */
+document.addEventListener('keydown', (e) => {
+  if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
+  if (e.metaKey || e.ctrlKey || e.altKey) return;
+
+  // Escape backs out of anything modal-ish.
+  if (e.key === 'Escape') {
+    if (!$('#paywall').classList.contains('hidden')) { hidePaywall(); return; }
+  }
+  // g-then-key: a familiar pattern from Gmail and GitHub.
+  if (e.key === 'g') { keyboard.pendingGoto = true; setTimeout(() => { keyboard.pendingGoto = false; }, 900); return; }
+  if (keyboard.pendingGoto) {
+    const map = { h: 'home', c: 'courses', p: 'progress', s: 'settings', l: 'plan' };
+    const dest = map[e.key];
+    keyboard.pendingGoto = false;
+    if (dest && state.user) { showView(dest); }
+  }
+});
+const keyboard = { pendingGoto: false };
+
+/* 4. Remember where the student was.
+ *
+ * Reloading mid-session used to dump you back on the home screen. */
+function rememberView(name) {
+  try { sessionStorage.setItem('whetstone:view', name); } catch { /* private mode */ }
+}
+function lastView() {
+  try { return sessionStorage.getItem('whetstone:view'); } catch { return null; }
+}
+
+/* 5. Relative time, used by the group chat and bug list. */
+function timeAgo(iso) {
+  const then = new Date(iso).getTime();
+  if (!Number.isFinite(then)) return '';
+  const secs = Math.max(0, Math.round((Date.now() - then) / 1000));
+  if (secs < 60) return 'just now';
+  const mins = Math.round(secs / 60);
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.round(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  return `${Math.round(hrs / 24)}d ago`;
+}
+
 // ------------------------------------------------------------------ paywall
 /* Conversion prompts.
  *
@@ -926,6 +1022,13 @@ function paywallCopy(trigger, ctx = {}) {
       kicker: 'Daily limit reached',
       title: 'You are out of questions for today.',
       sub: `You answered all ${ctx.limit || 5}. Premium removes the cap entirely, so a study session ends when you decide it does.`,
+    };
+  }
+  if (trigger === 'reviewLimit') {
+    return {
+      kicker: 'Review limit reached',
+      title: `That is your ${ctx.limit || 5} free review questions for today.`,
+      sub: 'Reviewing what you got wrong is the fastest way to fix it. Premium gives you the whole weak-topic queue, every day.',
     };
   }
   if (trigger === 'mode') {
@@ -965,14 +1068,15 @@ function showPaywall(trigger, ctx = {}) {
   el.classList.remove('hidden');
   document.body.classList.add('modal-open');
   // Hard wall cannot be dismissed back into questions there are none of.
-  $('#paywall-dismiss').textContent = trigger === 'limit' ? 'Back to study modes' : 'Not now';
+  const hardWall = trigger === 'limit' || trigger === 'reviewLimit';
+  $('#paywall-dismiss').textContent = hardWall ? 'Back to study modes' : 'Not now';
   paywall.lastTrigger = trigger;
 }
 
 function hidePaywall() {
   $('#paywall').classList.add('hidden');
   document.body.classList.remove('modal-open');
-  if (paywall.lastTrigger === 'limit') showView('home');
+  if (paywall.lastTrigger === 'limit' || paywall.lastTrigger === 'reviewLimit') showView('home');
 }
 
 /* Show the mid-session prompt once per day per account, at the point where the
@@ -1301,7 +1405,8 @@ $('#test-next').addEventListener('click', async () => {
 // ------------------------------------------------------------------ review
 async function startReview() {
   try {
-    const { questions } = await api('GET', '/api/modes/review');
+    const { questions, quota } = await api('GET', '/api/modes/review');
+    if (quota) renderQuotaMeter(quota);
     if (questions.length === 0) {
       toast('Nothing to review yet. Miss a few questions first.', '');
       return;
@@ -1311,7 +1416,10 @@ async function startReview() {
     $('#test-results').classList.add('hidden');
     $('#test-active').classList.remove('hidden');
     renderTest();
-  } catch (err) { toast(err.message, 'bad'); }
+  } catch (err) {
+    if (err.status === 402) { showPaywall('reviewLimit', { limit: err.data?.quota?.limit || 5 }); return; }
+    toast(err.message, 'bad');
+  }
 }
 
 // ------------------------------------------------------------------ courses
@@ -1993,7 +2101,15 @@ document.addEventListener('keydown', (e) => {
   if (await handleTokenRoutes()) { renderChrome(); return; }
 
   renderChrome();
+  setOffline(!navigator.onLine);
+
   if (!state.user) showView('landing');
   else if (!state.user.onboarded) startOnboarding();
-  else showView('home');
+  else {
+    // Land back where you were, but only on a safe view: dropping straight
+    // into a half-finished quiz or exam would be worse than going home.
+    const SAFE = ['home', 'courses', 'progress', 'plan', 'settings', 'group'];
+    const back = lastView();
+    showView(SAFE.includes(back) ? back : 'home');
+  }
 })();

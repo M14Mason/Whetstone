@@ -408,15 +408,20 @@ const routes = {
 
   'GET /api/quiz/next': async (req, res) => {
     const user = requireUser(req);
-    const quota = plans.checkQuota(user.id);
+    const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+    // Review Mistakes draws on its own allowance, so it does not eat Learn's.
+    const mode = url.searchParams.get('mode') === 'review' ? 'review' : 'learn';
+    const quota = plans.checkModeQuota(user.id, mode);
     if (quota.exhausted) {
       return sendJson(res, 402, {
-        error: `You have used all ${quota.limit} free questions for today.`,
+        error: mode === 'review'
+          ? `You have used all ${quota.limit} free review questions for today.`
+          : `You have used all ${quota.limit} free questions for today.`,
         quota,
+        mode,
         upgrade: true,
       });
     }
-    const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     const scope = plans.learningScope(user.id, {
       courseId: url.searchParams.get('courseId') || undefined,
       unit: url.searchParams.get('unit') || undefined,
@@ -448,12 +453,15 @@ const routes = {
 
   'POST /api/quiz/answer': async (req, res) => {
     const user = requireUser(req);
-    const quota = plans.checkQuota(user.id);
+    const body = await readJsonBody(req);
+    // Must match the mode the question was issued for, or a student could
+    // answer Learn questions against the larger Review allowance.
+    const mode = body.mode === 'review' ? 'review' : 'learn';
+    const quota = plans.checkModeQuota(user.id, mode);
     if (quota.exhausted) {
-      return sendJson(res, 402, { error: 'Daily free limit reached.', quota, upgrade: true });
+      return sendJson(res, 402, { error: 'Daily free limit reached.', quota, mode, upgrade: true });
     }
 
-    const body = await readJsonBody(req);
     const question = questions.getQuestion(body.questionId);
     if (!question) throw Object.assign(new Error('Question not found.'), { statusCode: 404 });
 
@@ -472,14 +480,15 @@ const routes = {
     }
 
     const isCorrect = chosen === question.answer;
-    const result = adaptive.recordResult(user.id, question, isCorrect, { chosen });
+    const result = adaptive.recordResult(user.id, question, isCorrect, { chosen, mode });
 
     sendJson(res, 200, {
       correct: isCorrect,
       correctChoice: question.answer,
       explanation: question.explanation,
       progress: result,
-      quota: plans.checkQuota(user.id),
+      mode,
+      quota: plans.checkModeQuota(user.id, mode),
     });
   },
 
@@ -672,9 +681,21 @@ const routes = {
 
   'GET /api/modes/review': async (req, res) => {
     const user = requireUser(req);
-    requirePaidMode(req, 'review');
-    const queue = modes.getReviewQueue(user.id, 20);
-    sendJson(res, 200, { questions: queue, count: queue.length });
+    // Review is metered rather than locked: seeing your own wrong answers come
+    // back is the clearest demonstration of what the product does, so a hard
+    // lock sells it worse than a small free allowance.
+    const quota = plans.checkModeQuota(user.id, 'review');
+    if (quota.exhausted) {
+      return sendJson(res, 402, {
+        error: `You have used all ${quota.limit} free review questions for today.`,
+        quota,
+        mode: 'review',
+        upgrade: true,
+      });
+    }
+    const cap = quota.limit === null ? 20 : Math.min(20, quota.remaining);
+    const queue = modes.getReviewQueue(user.id, cap);
+    sendJson(res, 200, { questions: queue, count: queue.length, quota });
   },
 
   // ------------------------------------------------------------ group chat

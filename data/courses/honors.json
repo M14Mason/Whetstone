@@ -1145,5 +1145,289 @@
    "Professionalism and Employability"
   ],
   "sharesBankWith": "hs-health-science"
+ },
+ {
+  "id": "hs-honors-spanish-1",
+  "name": "Honors Spanish 1",
+  "level": "honors",
+  "category": "World Languages",
+  "grades": [
+   9,
+   10
+  ],
+  "units": [
+   "Greetings and Introductions",
+   "Numbers, Dates, and Time",
+   "Classroom and School Vocabulary",
+   "Definite and Indefinite Articles",
+   "Subject Pronouns and Ser",
+   "Estar and Ser Contrast",
+   "Regular -AR Verbs",
+   "Regular -ER and -IR Verbs",
+   "Adjectives and Agreement",
+   "Family and Descriptions",
+   "Food and Restaurants",
+   "Gustar and Similar Verbs"
+  ],
+  "sharesBankWith": "hs-spanish-1"
+ },
+ {
+  "id": "hs-honors-spanish-2",
+  "name": "Honors Spanish 2",
+  "level": "honors",
+  "category": "World Languages",
+  "grades": [
+   9,
+   10,
+   11
+  ],
+  "units": [
+   "Review of Present Tense",
+   "Stem-Changing Verbs",
+   "Reflexive Verbs and Daily Routine",
+   "The Preterite Tense: Regular",
+   "The Preterite Tense: Irregular",
+   "The Imperfect Tense",
+   "Preterite Versus Imperfect",
+   "Direct and Indirect Object Pronouns",
+   "Commands: Formal and Informal",
+   "Comparisons and Superlatives",
+   "Travel and Transportation",
+   "Health and the Body"
+  ],
+  "sharesBankWith": "hs-spanish-2"
+ },
+ {
+  "id": "hs-honors-french-1",
+  "name": "Honors French 1",
+  "level": "honors",
+  "category": "World Languages",
+  "grades": [
+   9,
+   10
+  ],
+  "units": [
+   "Greetings and Politeness",
+   "Numbers, Dates, and Time",
+   "Classroom and School",
+   "Articles and Gender",
+   "Subject Pronouns and Etre",
+   "Avoir and Expressions",
+   "Regular -ER Verbs",
+   "Regular -IR and -RE Verbs",
+   "Adjective Agreement and Placement",
+   "Family and Descriptions",
+   "Food and Dining",
+   "Aller and the Near Future"
+  ],
+  "sharesBankWith": "hs-french-1"
+ },
+ {
+  "id": "hs-honors-french-2",
+  "name": "Honors French 2",
+  "level": "honors",
+  "category": "World Languages",
+  "grades": [
+   9,
+   10,
+   11
+  ],
+  "units": [
+   "Present Tense Review",
+   "The Passe Compose with Avoir",
+   "The Passe Compose with Etre",
+   "The Imperfect Tense",
+   "Passe Compose Versus Imperfect",
+   "Reflexive Verbs",
+   "Object Pronouns",
+   "Y and En",
+   "The Imperative",
+   "Comparatives and Superlatives",
+   "Travel and Directions",
+   "Health and Daily Life"
+  ],
+  "sharesBankWith": "hs-french-2"
+ },
+ {
+  "id": "hs-honors-german-1",
+  "name": "Honors German 1",
+  "level": "honors",
+  "category": "World Languages",
+  "grades": [
+   9,
+   10
+  ],
+  "units": [
+   "Greetings and Introductions",
+   "Numbers, Dates, and Time",
+   "Nouns, Gender, and Articles",
+   "Subject Pronouns and Sein",
+   "Haben and Common Verbs",
+   "Present Tense Conjugation",
+   "The Nominative Case",
+   "The Accusative Case",
+   "Word Order Basics",
+   "Family and Descriptions",
+   "Food and Shopping",
+   "Modal Verbs Introduction"
+  ],
+  "sharesBankWith": "hs-german-1"
+ },
+ {
+  "id": "hs-honors-asl-1",
+  "name": "Honors American Sign Language",
+  "level": "honors",
+  "category": "World Languages",
+  "grades": [
+   9,
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Fingerspelling and the Manual Alphabet",
+   "Numbers and Counting",
+   "Greetings and Introductions",
+   "Facial Grammar and Non-Manual Markers",
+   "Question Forms",
+   "Sentence Structure and Topic-Comment",
+   "Family and People",
+   "Describing Appearance",
+   "Time and Calendar Signs",
+   "Classifiers",
+   "Deaf Culture and History",
+   "Conversational Practice"
+  ],
+  "sharesBankWith": "hs-asl-1"
+ },
+ {
+  "id": "hs-honors-intro-business",
+  "name": "Honors Introduction to Business",
+  "level": "honors",
+  "category": "Business and Economics",
+  "grades": [
+   9,
+   10,
+   11
+  ],
+  "units": [
+   "The Role of Business in Society",
+   "Forms of Business Ownership",
+   "Business Ethics and Social Responsibility",
+   "Management Functions",
+   "Human Resources",
+   "Marketing Fundamentals",
+   "Operations and Production",
+   "Accounting and Finance Basics",
+   "Business Technology",
+   "International Business",
+   "Entrepreneurship Basics",
+   "Career Planning"
+  ],
+  "sharesBankWith": "hs-intro-business"
+ },
+ {
+  "id": "hs-honors-marketing",
+  "name": "Honors Marketing",
+  "level": "honors",
+  "category": "Business and Economics",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Marketing Fundamentals",
+   "The Marketing Mix",
+   "Market Research",
+   "Consumer Behavior",
+   "Market Segmentation and Targeting",
+   "Product Development and Branding",
+   "Pricing Strategies",
+   "Distribution Channels",
+   "Promotion and Advertising",
+   "Digital and Social Media Marketing",
+   "Selling and Customer Service",
+   "Marketing Plans"
+  ],
+  "sharesBankWith": "hs-marketing"
+ },
+ {
+  "id": "hs-honors-entrepreneurship",
+  "name": "Honors Entrepreneurship",
+  "level": "honors",
+  "category": "Business and Economics",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "The Entrepreneurial Mindset",
+   "Identifying Opportunities",
+   "Market Research and Validation",
+   "Business Models",
+   "The Business Plan",
+   "Startup Financing",
+   "Legal Structures and Regulations",
+   "Marketing for Startups",
+   "Financial Projections",
+   "Operations and Scaling",
+   "Risk and Failure",
+   "Pitching to Investors"
+  ],
+  "sharesBankWith": "hs-entrepreneurship"
+ },
+ {
+  "id": "hs-honors-graphic-design",
+  "name": "Honors Graphic Design",
+  "level": "honors",
+  "category": "Arts",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Elements of Design",
+   "Principles of Design",
+   "Color Theory",
+   "Typography",
+   "Composition and Layout",
+   "Logo and Identity Design",
+   "Raster Versus Vector Graphics",
+   "Digital Tools and Workflow",
+   "Photo Editing Basics",
+   "Print Versus Digital Design",
+   "Portfolio Development",
+   "Design Ethics and Copyright"
+  ],
+  "sharesBankWith": "hs-graphic-design"
+ },
+ {
+  "id": "hs-honors-photography",
+  "name": "Honors Photography",
+  "level": "honors",
+  "category": "Arts",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Camera Types and Parts",
+   "Exposure Triangle: Aperture",
+   "Exposure Triangle: Shutter Speed",
+   "Exposure Triangle: ISO",
+   "Composition Rules",
+   "Lighting Fundamentals",
+   "Portrait Photography",
+   "Landscape Photography",
+   "Digital Editing Workflow",
+   "Black and White Photography",
+   "History of Photography",
+   "Portfolio and Critique"
+  ],
+  "sharesBankWith": "hs-photography"
  }
 ]

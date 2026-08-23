@@ -1430,3 +1430,36 @@ html, body { max-width: 100%; overflow-x: hidden; }
   /* Full-width buttons: the two most likely thumbs positions on a phone. */
   .btn-block-center { min-height: 50px; }
 }
+
+/* ==================== upgrades ==================== */
+/* Offline notice. Fixed to the top so it is visible whatever you are doing,
+   and worded to say your work is safe rather than that something broke. */
+.offline-banner {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  padding: .6rem 1rem;
+  text-align: center; font-size: .85rem; font-weight: 600;
+  background: var(--warn); color: #1a1200;
+  animation: slide-down .25s var(--ease);
+}
+@keyframes slide-down { from { transform: translateY(-100%); } to { transform: none; } }
+body.is-offline .topbar { top: 38px; }
+
+/* Busy state for guarded buttons: communicates that the tap registered, which
+   is what stops people tapping again. */
+.is-busy { opacity: .65; pointer-events: none; position: relative; }
+.is-busy::after {
+  content: ''; position: absolute; right: .8rem; top: 50%;
+  width: 13px; height: 13px; margin-top: -7px;
+  border: 2px solid currentColor; border-right-color: transparent;
+  border-radius: 50%; animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Respect reduced motion for the new animations too. */
+@media (prefers-reduced-motion: reduce) {
+  .offline-banner { animation: none; }
+  .is-busy::after { animation-duration: 2s; }
+}
+
+/* Focus ring on the paywall and dialogs, for keyboard users. */
+.paywall-card :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }

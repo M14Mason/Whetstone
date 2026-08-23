@@ -1,0 +1,301 @@
+{
+ "_note": "Exam structure read from the official College Board 'About the Exam' page for each course, 2026-27 cycle. Courses absent from this file have no verified format recorded and must not have one invented; the app links students to College Board instead.",
+ "_verifiedOn": "2026-08-23",
+ "exams": {
+  "ap-biology": {
+   "name": "AP Biology",
+   "durationMin": 180,
+   "delivery": "hybrid",
+   "source": "https://apstudents.collegeboard.org/courses/ap-biology/assessment",
+   "examDate": "Mon, May 3, 2027",
+   "calculator": "Permitted. Equations sheet provided.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 60,
+     "minutes": 90,
+     "weight": 50,
+     "note": "Discrete questions plus sets referring to the same data or diagram."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 6,
+     "minutes": 90,
+     "weight": 50,
+     "note": "Two long questions and four short questions."
+    }
+   ]
+  },
+  "ap-chemistry": {
+   "name": "AP Chemistry",
+   "durationMin": 195,
+   "delivery": "hybrid",
+   "source": "https://apstudents.collegeboard.org/courses/ap-chemistry/assessment",
+   "examDate": "Thu, May 6, 2027",
+   "calculator": "Scientific/graphing recommended. Equations sheet provided.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 60,
+     "minutes": 90,
+     "weight": 50
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 7,
+     "minutes": 105,
+     "weight": 50,
+     "note": "Three long multipart questions (10 pts each) and four short (4 pts each)."
+    }
+   ]
+  },
+  "ap-calculus-ab": {
+   "name": "AP Calculus AB",
+   "durationMin": 190,
+   "delivery": "hybrid",
+   "source": "https://apstudents.collegeboard.org/courses/ap-calculus-ab/assessment",
+   "examDate": "Mon, May 10, 2027",
+   "calculator": "Graphing calculator required for parts of both sections.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 42,
+     "minutes": 100,
+     "weight": 50,
+     "note": "Part A: 29 questions, no calculator (35%). Part B: 13 questions, calculator (15%)."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 6,
+     "minutes": 90,
+     "weight": 50,
+     "note": "Part A: 2 problems with calculator (16.7%). Part B: 4 problems, no calculator (33.3%)."
+    }
+   ]
+  },
+  "ap-calculus-bc": {
+   "name": "AP Calculus BC",
+   "durationMin": 190,
+   "delivery": "hybrid",
+   "source": "https://apstudents.collegeboard.org/courses/ap-calculus-bc/assessment",
+   "examDate": "Mon, May 10, 2027",
+   "calculator": "Graphing calculator required for parts of both sections.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 42,
+     "minutes": 100,
+     "weight": 50,
+     "note": "Part A: 29 questions, no calculator (35%). Part B: 13 questions, calculator (15%)."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 6,
+     "minutes": 90,
+     "weight": 50,
+     "note": "Part A: 2 problems with calculator (16.7%). Part B: 4 problems, no calculator (33.3%)."
+    }
+   ]
+  },
+  "ap-statistics": {
+   "name": "AP Statistics",
+   "durationMin": 180,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-statistics/assessment",
+   "examDate": "Tue, May 11, 2027",
+   "calculator": "Graphing calculator with statistical capability expected.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 42,
+     "minutes": 90,
+     "weight": 50
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 4,
+     "minutes": 90,
+     "weight": 50,
+     "note": "Four 10-point questions; Q3 focuses on inference, Q4 is the investigative task."
+    }
+   ]
+  },
+  "ap-psychology": {
+   "name": "AP Psychology",
+   "durationMin": 160,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-psychology/assessment",
+   "examDate": "Fri, May 14, 2027",
+   "calculator": "Not permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 75,
+     "minutes": 90,
+     "weight": 67
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 2,
+     "minutes": 70,
+     "weight": 33,
+     "note": "Article Analysis Question (AAQ) and Evidence-Based Question (EBQ)."
+    }
+   ]
+  },
+  "ap-us-history": {
+   "name": "AP United States History",
+   "durationMin": 195,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-united-states-history/assessment",
+   "examDate": "Fri, May 7, 2027",
+   "calculator": "Not permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section IA: Multiple Choice",
+     "count": 55,
+     "minutes": 55,
+     "weight": 40,
+     "note": "Sets of 3-4 questions on a shared stimulus."
+    },
+    {
+     "id": "saq",
+     "label": "Section IB: Short Answer",
+     "count": 3,
+     "minutes": 40,
+     "weight": 20
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 2,
+     "minutes": 100,
+     "weight": 40,
+     "note": "DBQ (60 min incl. 15-min reading, 25%) and Long Essay (40 min, 15%)."
+    }
+   ]
+  },
+  "ap-world-history": {
+   "name": "AP World History: Modern",
+   "durationMin": 195,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-world-history-modern/assessment",
+   "examDate": "Thu, May 6, 2027",
+   "calculator": "Not permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section IA: Multiple Choice",
+     "count": 55,
+     "minutes": 55,
+     "weight": 40
+    },
+    {
+     "id": "saq",
+     "label": "Section IB: Short Answer",
+     "count": 3,
+     "minutes": 40,
+     "weight": 20
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 2,
+     "minutes": 100,
+     "weight": 40,
+     "note": "DBQ (60 min incl. 15-min reading, 25%) and Long Essay (40 min, 15%)."
+    }
+   ]
+  },
+  "ap-us-government": {
+   "name": "AP United States Government and Politics",
+   "durationMin": 180,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-united-states-government-and-politics/assessment",
+   "examDate": "Tue, May 4, 2027",
+   "calculator": "Not permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 55,
+     "minutes": 80,
+     "weight": 50
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 4,
+     "minutes": 100,
+     "weight": 50,
+     "note": "Concept Application, Quantitative Analysis, SCOTUS Comparison, Argument Essay."
+    }
+   ]
+  },
+  "ap-english-language": {
+   "name": "AP English Language and Composition",
+   "durationMin": 195,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-english-language-and-composition/assessment",
+   "examDate": "Wed, May 12, 2027",
+   "calculator": "Not permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 45,
+     "minutes": 60,
+     "weight": 45,
+     "note": "23-25 reading questions and 20-22 writing questions."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 3,
+     "minutes": 135,
+     "weight": 55,
+     "note": "Includes a 15-minute reading period. Synthesis, Rhetorical Analysis, Argument."
+    }
+   ]
+  },
+  "ap-english-literature": {
+   "name": "AP English Literature and Composition",
+   "durationMin": 180,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-english-literature-and-composition/assessment",
+   "examDate": "Wed, May 5, 2027",
+   "calculator": "Not permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 55,
+     "minutes": 60,
+     "weight": 45,
+     "note": "5 sets of 8-13 questions: at least 2 prose passages and 2 poetry passages."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 3,
+     "minutes": 120,
+     "weight": 55,
+     "note": "Poetry Analysis, Prose Fiction Analysis, Literary Argument."
+    }
+   ]
+  }
+ }
+}

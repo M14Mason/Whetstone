@@ -26,6 +26,7 @@ const tokens = require('../lib/tokens');
 const mailer = require('../lib/mailer');
 const monitor = require('../lib/monitor');
 const coursesLib = require('../lib/courses');
+const apexam = require('../lib/apexam');
 const modes = require('../lib/modes');
 const social = require('../lib/social');
 const crypto = require('node:crypto');
@@ -838,15 +839,153 @@ test('the catalog loads with no validation errors', () => {
 
 test('the catalog covers a wide range of courses and units', () => {
   const s = coursesLib.stats();
-  assert.ok(s.courses >= 140, `expected 140+ courses, got ${s.courses}`);
-  assert.ok(s.units >= 1500, `expected 1500+ units, got ${s.units}`);
+  // High-school-only catalogue: college courses were removed deliberately.
+  assert.ok(s.courses >= 115, `expected 115+ courses, got ${s.courses}`);
+  assert.ok(s.units >= 1200, `expected 1200+ units, got ${s.units}`);
 });
 
 test('every level of course is represented', () => {
   const levels = new Set(coursesLib.allCourses().map((c) => c.level));
-  for (const level of ['regular', 'ap', 'college', 'test-prep']) {
+  for (const level of ['regular', 'honors', 'ap', 'test-prep']) {
     assert.ok(levels.has(level), `missing course level: ${level}`);
   }
+});
+
+test('the Dockerfile copies every directory the server reads at runtime', () => {
+  // The live Terms/Privacy outage was caused by legal/ being absent from the
+  // image: the app read it happily in development and 404'd in production.
+  // This catches the whole class of bug rather than that one instance.
+  const fsx = require('node:fs');
+  const pathx = require('node:path');
+  const root = pathx.join(__dirname, '..');
+  const dockerfile = fsx.readFileSync(pathx.join(root, 'Dockerfile'), 'utf8');
+
+  const RUNTIME_DIRS = ['lib', 'public', 'data', 'scripts', 'legal'];
+  for (const dir of RUNTIME_DIRS) {
+    assert.ok(fsx.existsSync(pathx.join(root, dir)), `${dir}/ missing from the repo`);
+    assert.ok(new RegExp(`^COPY\\s+${dir}\\s`, 'm').test(dockerfile),
+      `Dockerfile never copies ${dir}/ -- it will 404 or crash in the container`);
+  }
+});
+
+section('AP exam practice');
+
+test('every AP course has an exam practice unit', () => {
+  const ap = coursesLib.allCourses().filter((c) => c.level === 'ap');
+  assert.strictEqual(ap.length, 38);
+  for (const c of ap) {
+    assert.ok(c.units.some((u) => u.name === apexam.examUnitName()),
+      `${c.id} has no ${apexam.examUnitName()} unit`);
+  }
+});
+
+test('verified exam formats have section weights summing to 100', () => {
+  const covered = apexam.coverage().filter((c) => c.verifiedFormat);
+  assert.ok(covered.length >= 11, `expected 11+ verified formats, got ${covered.length}`);
+  for (const c of covered) {
+    const f = apexam.examFormat(c.id);
+    const total = f.sections.reduce((sum, x) => sum + x.weight, 0);
+    assert.strictEqual(total, 100, `${c.id} weights sum to ${total}`);
+    assert.ok(f.source.startsWith('https://apstudents.collegeboard.org/'),
+      `${c.id} must cite an official source`);
+  }
+});
+
+test('an unverified AP course refuses to invent a format', () => {
+  // Guessing timings is worse than admitting we do not know: a student who
+  // practises the wrong structure is misled.
+  const unverified = apexam.coverage().find((c) => !c.verifiedFormat);
+  if (!unverified) return;                 // all verified, nothing to check
+  const exam = apexam.buildExam(unverified.id);
+  assert.strictEqual(exam.verified, false);
+  assert.ok(!exam.sections, 'must not fabricate sections');
+  assert.ok(exam.officialUrl, 'must link out to College Board');
+});
+
+test('every FRQ rubric adds up to its stated maximum', () => {
+  for (const c of apexam.coverage()) {
+    for (const frq of apexam.frqsFor(c.id)) {
+      const total = frq.rubric.reduce((sum, r) => sum + Number(r.max), 0);
+      assert.strictEqual(total, frq.maxPoints,
+        `${frq.id}: rubric totals ${total} but maxPoints is ${frq.maxPoints}`);
+    }
+  }
+});
+
+test('FRQ auto-checks report facts, never a score', () => {
+  const res = apexam.autoCheck(
+    'Although the reforms were limited, they reshaped federal power.\n\n'
+    + 'Document 1 shows this. Document 2 and Doc 3 agree.\n\nTherefore the change was real.',
+    ['thesis', 'length:10', 'documents:3', 'paragraphs:3']);
+
+  assert.strictEqual(res.paragraphs, 3);
+  const docs = res.checks.find((c) => c.kind === 'Document citations');
+  assert.ok(docs.pass, 'should count 3 distinct documents');
+
+  // Nothing in the payload may look like a grade.
+  for (const c of res.checks) {
+    assert.ok(!('score' in c) && !('points' in c),
+      'auto-checks must not emit anything score-shaped');
+  }
+  // The thesis check must declare itself a hint.
+  assert.strictEqual(res.checks.find((c) => c.kind.startsWith('Thesis')).hint, true);
+});
+
+test('the AP score estimate is a band, not a precise score', () => {
+  for (const p of [95, 70, 50, 10]) {
+    const e = apexam.estimateBand(p);
+    assert.ok(/^\d-\d$/.test(e.band), `expected a band like "4-5", got ${e.band}`);
+    assert.ok(e.note.length > 10, 'band must carry a caveat');
+  }
+});
+
+test('honors courses exist and are offered to high schoolers', () => {
+  const honors = coursesLib.allCourses().filter((c) => c.level === 'honors');
+  assert.ok(honors.length >= 15, `expected 15+ honors courses, got ${honors.length}`);
+  for (const id of ['hs-honors-biology', 'hs-honors-english-9', 'hs-honors-algebra-2']) {
+    assert.ok(honors.some((c) => c.id === id), `missing ${id}`);
+  }
+  assert.ok(coursesLib.suggestedForGrade(10).some((c) => c.level === 'honors'),
+    'a 10th grader should be offered honors courses');
+});
+
+test('every honors course points at a real question bank', () => {
+  // A dangling sharesBankWith would leave the course silently empty, which is
+  // much harder to notice than a hard failure here.
+  const all = coursesLib.allCourses();
+  const ids = new Set(all.map((c) => c.id));
+  for (const c of all.filter((x) => x.level === 'honors')) {
+    assert.ok(c.sharesBankWith, `${c.id} has no sharesBankWith`);
+    assert.ok(ids.has(c.sharesBankWith), `${c.id} points at missing ${c.sharesBankWith}`);
+  }
+});
+
+test('an honors course actually serves questions, and skips the easy tier', () => {
+  const user = makeUser();
+  plans.setUserCourses(user.id, ['hs-honors-biology']);
+  const scope = plans.learningScope(user.id, {});
+
+  const picked = adaptive.selectNextQuestion(user.id, scope);
+  assert.ok(picked, 'honors biology served nothing -- the shared bank is not resolving');
+  // Questions physically live on the regular course; the honors id is an alias.
+  assert.strictEqual(picked.course_id, 'hs-biology');
+
+  // Dropping the easy tier is what distinguishes honors from regular here.
+  let easy = 0;
+  for (let i = 0; i < 40; i++) {
+    const q = adaptive.selectNextQuestion(user.id, scope);
+    assert.ok(q, 'expected a question');
+    if (q.difficulty === 'easy') easy++;
+  }
+  assert.strictEqual(easy, 0, `honors served ${easy} easy questions`);
+});
+
+test('the college catalog is gone', () => {
+  const all = coursesLib.allCourses();
+  assert.ok(!all.some((c) => c.level === 'college'), 'college courses should be removed');
+  assert.ok(!all.some((c) => c.id.startsWith('col-')), 'college ids should be removed');
+  assert.ok(all.every((c) => (c.grades || []).every((g) => g <= 12)),
+    'every course should be grade 12 or below');
 });
 
 test('the full AP catalog is present', () => {
@@ -871,7 +1010,7 @@ test('grade filtering suggests age-appropriate courses', () => {
   const ninth = coursesLib.suggestedForGrade(9);
   assert.ok(ninth.length > 0);
   assert.ok(ninth.every((c) => c.grades.includes(9)));
-  assert.ok(!ninth.some((c) => c.id === 'col-organic-chem-1'), 'college orgo should not be suggested to a 9th grader');
+  assert.ok(!ninth.some((c) => c.id === 'ap-organic-chemistry'), 'advanced chemistry should not be suggested to a 9th grader');
 });
 
 test('search finds courses by name', () => {

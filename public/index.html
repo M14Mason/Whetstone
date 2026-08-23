@@ -48,7 +48,7 @@
         <ul class="feature-list">
           <li class="feature">
             <span class="feature-icon">◎</span>
-            <span><strong>Built around your real schedule</strong><span>Every AP, honors, core, and college course mapped down to individual units.</span></span>
+            <span><strong>Built around your real schedule</strong><span>Every AP, honors, and core high school course mapped down to individual units.</span></span>
           </li>
           <li class="feature">
             <span class="feature-icon">⚡</span>
@@ -123,7 +123,7 @@
   <!-- ========================= ONBOARDING ========================= -->
   <section id="view-onboarding" class="view hidden">
     <div class="onboard">
-      <div class="steps"><div class="step-dot done"></div><div class="step-dot"></div><div class="step-dot"></div></div>
+      <div class="steps"><div class="step-dot done"></div><div class="step-dot"></div><div class="step-dot"></div><div class="step-dot"></div></div>
 
       <div id="ob-step-1">
         <h1 class="u-fs-2rem">What year are you in?</h1>
@@ -136,7 +136,7 @@
         <h1 class="u-fs-2rem">Which classes are you taking?</h1>
         <p class="muted">Pick as many as you want. You can change these any time.</p>
         <div class="course-search">
-          <input id="ob-search" type="search" placeholder="Search 144 courses...">
+          <input id="ob-search" type="search" placeholder="Search 120 courses...">
         </div>
         <div id="ob-courses" class="course-list"></div>
         <div class="row u-mt-1p25rem">
@@ -152,7 +152,53 @@
         <div class="choice-grid" id="goal-choices"></div>
         <div class="row u-mt-1p25rem">
           <button id="ob-back-3" class="btn btn-ghost">Back</button>
-          <button id="ob-finish" class="btn btn-primary btn-lg" disabled>Start studying</button>
+          <button id="ob-next-3" class="btn btn-primary btn-lg" disabled>Continue</button>
+        </div>
+      </div>
+
+      <div id="ob-step-4" class="hidden">
+        <h1 class="u-fs-2rem">Want to go unlimited?</h1>
+        <p class="muted">Whetstone is free forever. Premium removes the limits.</p>
+
+        <div class="plan-compare">
+          <div class="plan-col">
+            <div class="plan-col-head">
+              <h3 class="u-m-0">Free</h3>
+              <div class="price">$0</div>
+            </div>
+            <ul class="plan-points">
+              <li><span class="tick tick-muted">✓</span> 5 questions a day</li>
+              <li><span class="tick tick-muted">✓</span> 1 subject at a time</li>
+              <li><span class="tick tick-muted">✓</span> Flashcards and Learn</li>
+              <li><span class="tick tick-no">✕</span> Match, Test and Review</li>
+              <li><span class="tick tick-no">✕</span> Full mastery dashboard</li>
+            </ul>
+          </div>
+
+          <div class="plan-col plan-col-featured">
+            <span class="price-badge">Recommended</span>
+            <div class="plan-col-head">
+              <h3 class="u-m-0">Premium</h3>
+              <div class="price">$8.99<small>/mo</small></div>
+            </div>
+            <ul class="plan-points">
+              <li><span class="tick">✓</span> <strong>Unlimited</strong> questions</li>
+              <li><span class="tick">✓</span> <strong>Every class</strong> you picked, not just one</li>
+              <li><span class="tick">✓</span> All five study modes</li>
+              <li><span class="tick">✓</span> Full mastery dashboard</li>
+              <li><span class="tick">✓</span> Weak-topic review queue</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="dim u-mt-1rem" id="ob-premium-note">
+          On the free plan you will hit the daily limit after 5 questions.
+        </p>
+
+        <div class="row u-mt-1p25rem">
+          <button id="ob-back-4" class="btn btn-ghost">Back</button>
+          <button id="ob-finish" class="btn btn-ghost btn-lg">Start free</button>
+          <button id="ob-upgrade" class="btn btn-primary btn-lg">Get Premium</button>
         </div>
       </div>
     </div>
@@ -169,6 +215,7 @@
 
     <div class="stat-strip" id="home-stats"></div>
 
+    <div id="upsell-banner" class="upsell-inline hidden"></div>
     <div id="scope-banner" class="banner hidden u-mb-1p25rem"></div>
 
     <div class="section-head">
@@ -195,6 +242,11 @@
         <span class="mode-emoji">✎</span>
         <h3>Practice Test</h3>
         <p>Ten questions, graded at the end, just like the real thing.</p>
+      </button>
+      <button class="mode-card u-glow-hf43f5e66" data-mode="apexam">
+        <span class="mode-emoji">🎓</span>
+        <h3>AP Exam</h3>
+        <p>Full-length practice in the real AP format, with official rubrics.</p>
       </button>
       <button class="mode-card u-glow-hfb718566" data-mode="review">
         <span class="mode-emoji">↻</span>
@@ -227,7 +279,10 @@
     <div class="quiz-wrap">
       <div class="row-between u-mb-1rem">
         <button class="btn btn-ghost btn-sm" data-back="home">← Back</button>
-        <span id="quota-note" class="dim"></span>
+        <div class="quota-meter hidden" id="quota-meter">
+          <div class="quota-pips" id="quota-pips"></div>
+          <span id="quota-note" class="dim"></span>
+        </div>
       </div>
 
       <div id="quiz-card" class="card card-pad-lg">
@@ -493,6 +548,68 @@
     </div>
   </section>
 
+
+  <!-- ========================= AP EXAM PRACTICE ========================= -->
+  <section id="view-apexam" class="view hidden">
+    <button class="btn btn-ghost btn-sm u-mb-1rem" data-back="home">← Back</button>
+
+    <div id="ap-picker">
+      <h1 class="u-fs-1p9rem u-mb-p15rem">AP Exam Practice</h1>
+      <p class="muted" id="ap-picker-sub">Pick one of your AP classes.</p>
+      <div id="ap-course-list" class="course-list"></div>
+    </div>
+
+    <div id="ap-brief" class="hidden">
+      <div class="row-between u-mb-1rem">
+        <h1 class="u-fs-1p9rem u-m-0" id="ap-brief-title"></h1>
+        <span class="pill" id="ap-brief-delivery"></span>
+      </div>
+      <div id="ap-brief-body"></div>
+      <div class="row u-mt-1p25rem">
+        <button id="ap-start-mcq" class="btn btn-primary btn-lg">Start Section I</button>
+        <button id="ap-start-frq" class="btn btn-ghost btn-lg">Practise free response</button>
+      </div>
+    </div>
+
+    <div id="ap-mcq" class="hidden">
+      <div class="row-between u-mb-1rem">
+        <span class="label" id="ap-mcq-progress"></span>
+        <span class="timer" id="ap-timer">--:--</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="ap-mcq-bar"></div></div>
+      <div class="card" id="ap-mcq-card">
+        <p class="q-prompt" id="ap-q-prompt"></p>
+        <div class="choices" id="ap-q-choices"></div>
+      </div>
+      <div class="row u-mt-1p25rem">
+        <button id="ap-prev" class="btn btn-ghost">Previous</button>
+        <button id="ap-next" class="btn btn-ghost">Next</button>
+        <button id="ap-submit" class="btn btn-primary u-ml-auto">Submit section</button>
+      </div>
+    </div>
+
+    <div id="ap-results" class="hidden"></div>
+
+    <div id="ap-frq" class="hidden">
+      <div class="row-between u-mb-1rem">
+        <span class="label" id="ap-frq-meta"></span>
+        <span class="timer" id="ap-frq-timer">--:--</span>
+      </div>
+      <div class="card">
+        <h3 id="ap-frq-type" class="u-mt-0"></h3>
+        <p class="q-prompt u-ws-pre-wrap" id="ap-frq-prompt"></p>
+        <p class="dim u-ws-pre-wrap" id="ap-frq-guidance"></p>
+      </div>
+      <label class="u-mt-1rem" id="ap-frq-label" for="ap-frq-text"><span class="label">Your response</span></label>
+      <textarea id="ap-frq-text" class="frq-input" rows="14" placeholder="Write your response here. There is no word limit."></textarea>
+      <div class="row u-mt-1rem">
+        <button id="ap-frq-check" class="btn btn-primary">Check and score</button>
+        <button id="ap-frq-back" class="btn btn-ghost">Choose another</button>
+      </div>
+      <div id="ap-frq-out" class="hidden u-mt-1p25rem"></div>
+    </div>
+  </section>
+
   <!-- ========================= RESET / VERIFY ========================= -->
   <!-- ========================= SETTINGS ========================= -->
   <section id="view-settings" class="view hidden">
@@ -593,7 +710,35 @@
 
 </main>
 
-<div id="modal-host"></div>
+
+  <!-- Paywall overlay. One component, three triggers: mid-session, quota
+       exhausted, and locked mode. -->
+  <div id="paywall" class="paywall hidden" role="dialog" aria-modal="true" aria-labelledby="paywall-title">
+    <div class="paywall-card">
+      <span class="paywall-kicker" id="paywall-kicker"></span>
+      <h2 id="paywall-title"></h2>
+      <p class="paywall-sub" id="paywall-sub"></p>
+
+      <div class="paywall-stats" id="paywall-stats"></div>
+
+      <ul class="paywall-points">
+        <li><span class="tick">✓</span> <strong>Unlimited</strong> questions, every day</li>
+        <li><span class="tick">✓</span> <strong>Every class</strong> you are taking, not one subject</li>
+        <li><span class="tick">✓</span> Match, Practice Test, Review and <strong>AP Exam practice</strong></li>
+        <li><span class="tick">✓</span> Full mastery dashboard and weak-topic queue</li>
+      </ul>
+
+      <div class="paywall-price">
+        <strong>$8.99</strong><span class="dim">/month</span>
+      </div>
+
+      <button class="btn btn-primary btn-lg btn-block-center" id="paywall-upgrade">Unlock everything</button>
+      <button class="btn btn-ghost btn-block-center" id="paywall-dismiss">Not now</button>
+      <p class="dim paywall-fineprint">Cancel any time. The free plan stays free.</p>
+    </div>
+  </div>
+
+  <div id="modal-host"></div>
 
 <nav class="mobile-nav hidden" id="mobile-nav">
   <div class="mobile-nav-inner">

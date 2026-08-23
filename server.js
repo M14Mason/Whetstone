@@ -9,6 +9,7 @@ const { init: initDb, getDb: getDbHandle } = require('./lib/db');
 const auth = require('./lib/auth');
 const adaptive = require('./lib/adaptive');
 const plans = require('./lib/plans');
+const apexam = require('./lib/apexam');
 const groups = require('./lib/groups');
 const billing = require('./lib/billing');
 const questions = require('./lib/questions');
@@ -175,6 +176,26 @@ function requireUser(req) {
   return user;
 }
 
+/**
+ * Gate a study mode behind a paid plan.
+ *
+ * The UI also greys these out, but the UI is not a security boundary: without
+ * this check anyone could call the endpoint directly and the "Premium" label
+ * on the onboarding screen would simply be untrue.
+ */
+function requirePaidMode(req, mode) {
+  if (!config.premiumModes.includes(mode)) return;
+  const user = requireUser(req);
+  const plan = plans.effectivePlan(user.id);
+  if (plan.id === 'free') {
+    throw Object.assign(new Error('That study mode is part of Premium.'), {
+      statusCode: 402,
+      payload: { upgrade: true, mode },
+    });
+  }
+}
+
+
 function publicUser(user) {
   const quota = plans.checkQuota(user.id);
   const group = groups.getGroupForUser(user.id);
@@ -325,13 +346,16 @@ const routes = {
     sendJson(res, 200, {
       user: user ? publicUser(user) : null,
       testingMode: config.testingMode,
+      // The client greys these out. The server still enforces them; this is
+      // only so the UI can explain the lock rather than fail on click.
+      premiumModes: config.premiumModes,
     });
   },
 
   'POST /api/account/display-name': async (req, res) => {
     const user = requireUser(req, res);
     if (!user) return;
-    const body = await readJson(req);
+    const body = await readJsonBody(req);
     const name = String(body.displayName || '').trim();
     if (name.length < 2 || name.length > 40) {
       return sendJson(res, 400, { error: 'Name must be 2 to 40 characters.' });
@@ -348,13 +372,22 @@ const routes = {
     if (!config.testingMode) return sendJson(res, 404, { error: 'Not found' });
     const user = requireUser(req, res);
     if (!user) return;
-    const body = await readJson(req);
+    const body = await readJsonBody(req);
     const plan = String(body.plan || '');
     if (!['free', 'premium', 'group'].includes(plan)) {
       return sendJson(res, 400, { error: 'Pick free, premium, or group.' });
     }
     billing.setUserPlan(user.id, plan);
-    sendJson(res, 200, { plan, message: `Switched to ${plan}. Testing mode only.` });
+    // Return the full refreshed user, not just the plan string. The client used
+    // to patch state.user.plan by hand and leave state.user.quota holding the
+    // OLD tier's limits, so switching to Premium still showed "5 of 5 free
+    // questions left" and kept the locks on.
+    const updated = currentUser(req);
+    sendJson(res, 200, {
+      plan,
+      user: publicUser(updated),
+      message: `Switched to ${plan}. Testing mode only.`,
+    });
   },
 
   'GET /api/subjects': async (req, res) => {
@@ -512,6 +545,48 @@ const routes = {
   },
 
   // ---------------------------------------------------------- study modes
+  // ---- AP exam practice -------------------------------------------------
+  // Gated with the other paid modes: a full timed mock exam is the single most
+  // valuable thing here, so it sits behind Premium alongside Practice Test.
+  'GET /api/ap/coverage': async (req, res) => {
+    requireUser(req);
+    sendJson(res, 200, { courses: apexam.coverage() });
+  },
+
+  'GET /api/ap/exam': async (req, res) => {
+    const user = requireUser(req);
+    requirePaidMode(req, 'test');
+    const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+    const courseId = url.searchParams.get('courseId');
+    if (!courseId) throw Object.assign(new Error('courseId is required.'), { statusCode: 400 });
+
+    // Full sections run to 60 questions; allow a shorter drill without
+    // misrepresenting the official length (buildExam reports both).
+    const limitParam = Number(url.searchParams.get('mcqLimit'));
+    const mcqLimit = Number.isFinite(limitParam) && limitParam > 0 ? limitParam : null;
+
+    const exam = apexam.buildExam(courseId, { mcqLimit });
+    if (exam.error) throw Object.assign(new Error(exam.error), { statusCode: 404 });
+    sendJson(res, 200, { exam, plan: plans.effectivePlan(user.id).id });
+  },
+
+  'POST /api/ap/grade-mcq': async (req, res) => {
+    const user = requireUser(req);
+    requirePaidMode(req, 'test');
+    const body = await readJsonBody(req);
+    const graded = apexam.gradeMcq(body.courseId, body.answers || {});
+    sendJson(res, 200, { ...graded, estimate: apexam.estimateBand(graded.percent), userId: user.id });
+  },
+
+  'POST /api/ap/check-frq': async (req, res) => {
+    requireUser(req);
+    requirePaidMode(req, 'test');
+    const body = await readJsonBody(req);
+    // Objective checks only. Rubric scoring is done by the student in the UI:
+    // nothing here claims to judge the quality of the writing.
+    sendJson(res, 200, apexam.autoCheck(body.text || '', body.checks || []));
+  },
+
   'GET /api/modes/flashcards': async (req, res) => {
     const user = requireUser(req);
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
@@ -526,6 +601,7 @@ const routes = {
 
   'GET /api/modes/match': async (req, res) => {
     const user = requireUser(req);
+    requirePaidMode(req, 'match');
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     const courseId = url.searchParams.get('courseId') || undefined;
     const unit = url.searchParams.get('unit') || undefined;
@@ -559,6 +635,7 @@ const routes = {
 
   'GET /api/modes/test': async (req, res) => {
     const user = requireUser(req);
+    requirePaidMode(req, 'test');
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     const scope = plans.learningScope(user.id, {
       courseId: url.searchParams.get('courseId') || undefined,
@@ -595,6 +672,7 @@ const routes = {
 
   'GET /api/modes/review': async (req, res) => {
     const user = requireUser(req);
+    requirePaidMode(req, 'review');
     const queue = modes.getReviewQueue(user.id, 20);
     sendJson(res, 200, { questions: queue, count: queue.length });
   },
@@ -904,7 +982,14 @@ function warnAboutProductionConfig() {
   // because it is otherwise invisible until someone opens the modal.
   for (const file of ['TERMS.md', 'PRIVACY.md']) {
     const legalPath = path.join(__dirname, 'legal', file);
-    if (!fs.existsSync(legalPath)) continue;
+    if (!fs.existsSync(legalPath)) {
+      // This is how the live site shipped for weeks: the Dockerfile did not
+      // COPY legal/, so /api/legal answered 404 for every request while local
+      // development worked perfectly. Silence made it look like a front-end
+      // bug. Now it is impossible to boot without being told.
+      warnings.push(`legal/${file} is MISSING. /api/legal will return 404 and the Terms and Privacy links will not open. If this is a container, check that the Dockerfile copies legal/.`);
+      continue;
+    }
     const text = fs.readFileSync(legalPath, 'utf8');
     if (text.includes('PARENT_OR_GUARDIAN_LEGAL_NAME')) {
       warnings.push(`legal/${file} still names PARENT_OR_GUARDIAN_LEGAL_NAME as the operator. Replace it with a real adult's legal name before taking any payment.`);

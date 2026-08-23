@@ -16,6 +16,7 @@ const state = {
   test: { questions: [], index: 0, answers: {}, start: 0 },
   onboarding: { grade: null, courses: new Set(), goal: null },
   catalog: null,
+  premiumModes: [],
 };
 
 // ------------------------------------------------------------------ helpers
@@ -137,6 +138,8 @@ function showView(name) {
   if (name === 'progress') loadDashboard();
   if (name === 'group') { loadGroup(); loadChannels(); loadMessages(); startChatPolling(); }
   else stopChatPolling();
+  // A running exam timer must not keep ticking after you navigate away.
+  if (name !== 'apexam') apClearTimer();
   if (name === 'plan') loadPlan();
   if (name === 'settings') loadSettings();
 }
@@ -235,11 +238,13 @@ $('#forgot-form').addEventListener('submit', async (e) => {
 });
 
 // ------------------------------------------------------------------ onboarding
+/* High school only. College courses were removed: the product is aimed at
+ * students picking their actual 9-12 schedule, and a catalogue spanning
+ * freshman year through a college major made the course picker harder to use
+ * for everyone without serving either audience well. */
 const GRADES = [
   { v: 9, t: '9th', s: 'Freshman' }, { v: 10, t: '10th', s: 'Sophomore' },
   { v: 11, t: '11th', s: 'Junior' }, { v: 12, t: '12th', s: 'Senior' },
-  { v: 13, t: 'College', s: '1st year' }, { v: 14, t: 'College', s: '2nd year' },
-  { v: 15, t: 'College', s: '3rd year' }, { v: 16, t: 'College', s: '4th year' },
 ];
 const GOALS = [
   { v: 'grades', t: 'Class grades', s: 'Tests and quizzes' },
@@ -254,6 +259,7 @@ function startOnboarding() {
   $('#ob-step-1').classList.remove('hidden');
   $('#ob-step-2').classList.add('hidden');
   $('#ob-step-3').classList.add('hidden');
+  $('#ob-step-4').classList.add('hidden');
 
   $('#grade-choices').innerHTML = GRADES.map((g) => `
     <button class="choice" data-grade="${g.v}">
@@ -274,7 +280,7 @@ function startOnboarding() {
     $$('#goal-choices .choice').forEach((x) => x.classList.remove('selected'));
     b.classList.add('selected');
     state.onboarding.goal = b.dataset.goal;
-    $('#ob-finish').disabled = false;
+    $('#ob-next-3').disabled = false;
   }));
 }
 
@@ -332,18 +338,72 @@ $('#ob-back-3').addEventListener('click', () => {
   $('#ob-step-3').classList.add('hidden'); $('#ob-step-2').classList.remove('hidden');
 });
 
+/* Step 3 -> step 4. The upsell is shown AFTER the student has picked their
+ * classes, because by then the pitch can be concrete about what they chose
+ * rather than abstract. */
+$('#ob-next-3').addEventListener('click', () => {
+  setSteps(4);
+  $('#ob-step-3').classList.add('hidden');
+  $('#ob-step-4').classList.remove('hidden');
+
+  // Make the limit personal: name the subjects they will lose access to.
+  const picked = [...state.onboarding.courses]
+    .map((id) => (state.catalog || []).flatMap((g) => g.courses || g.items || [g]).find((c) => c && c.id === id))
+    .filter(Boolean);
+  const subjects = [...new Set(picked.map((c) => c.category).filter(Boolean))];
+  const note = $('#ob-premium-note');
+  if (subjects.length > 1) {
+    note.textContent = `You picked ${picked.length} classes across ${subjects.length} subjects. `
+      + `On the free plan you can study one subject at a time and 5 questions a day.`;
+  } else {
+    note.textContent = 'On the free plan you will hit the daily limit after 5 questions.';
+  }
+});
+
+$('#ob-back-4').addEventListener('click', () => {
+  setSteps(3);
+  $('#ob-step-4').classList.add('hidden');
+  $('#ob-step-3').classList.remove('hidden');
+});
+
+/* Completing onboarding and upgrading are deliberately separate calls.
+ * If the upgrade fails the account is still fully set up, so the student lands
+ * in the app on the free plan instead of being stranded mid-onboarding. */
+async function completeOnboarding() {
+  const { user } = await api('POST', '/api/onboarding', {
+    gradeLevel: state.onboarding.grade,
+    courseIds: [...state.onboarding.courses],
+    goal: state.onboarding.goal,
+  });
+  state.user = user;
+  renderChrome();
+  return user;
+}
+
 $('#ob-finish').addEventListener('click', async () => {
   try {
-    const { user } = await api('POST', '/api/onboarding', {
-      gradeLevel: state.onboarding.grade,
-      courseIds: [...state.onboarding.courses],
-      goal: state.onboarding.goal,
-    });
-    state.user = user;
-    renderChrome();
+    await completeOnboarding();
     showView('home');
     toast('You are all set. Pick a study mode.', 'good');
   } catch (err) { toast(err.message, 'bad'); }
+});
+
+$('#ob-upgrade').addEventListener('click', async () => {
+  const btn = $('#ob-upgrade');
+  btn.disabled = true;
+  try {
+    await completeOnboarding();
+    const d = await api('POST', '/api/billing/premium', {});
+    if (d.url) { window.location.href = d.url; return; }   // hosted checkout
+    state.user = d.user;
+    renderChrome();
+    showView('home');
+    toast('You are on Premium. Everything is unlocked.', 'good');
+  } catch (err) {
+    // Onboarding already succeeded, so land them in the app regardless.
+    toast(err.message, 'bad');
+    showView('home');
+  } finally { btn.disabled = false; }
 });
 
 // ------------------------------------------------------------------ home
@@ -353,7 +413,32 @@ function scopeLabel() {
   return null;
 }
 
+function renderUpsellBanner() {
+  const el = $('#upsell-banner');
+  if (!el) return;
+  const free = Boolean(state.user) && state.user.plan === 'free';
+  el.classList.toggle('hidden', !free);
+  if (!free) return;
+
+  const q = state.user.quota || {};
+  const left = Number.isFinite(q.remaining) ? q.remaining : null;
+  const lead = left === 0
+    ? 'You are out of questions for today.'
+    : left !== null
+      ? `${left} of ${q.limit} free questions left today.`
+      : 'You are on the free plan.';
+  el.innerHTML = `<span>${esc(lead)} Premium removes the daily limit and unlocks every mode.</span>
+    <button class="btn btn-sm btn-primary" data-upsell>See Premium</button>`;
+  // Bound off the element rather than by id. The button is created here, so a
+  // document-wide id lookup would look like a missing element to the DOM smoke
+  // test that checks every queried id exists in index.html.
+  // (Writing that selector literally in a comment is enough to trip it.)
+  el.querySelector('[data-upsell]').addEventListener('click', () => showView('plan'));
+}
+
 async function renderHome() {
+  renderModeLocks();
+  renderUpsellBanner();
   const hour = new Date().getHours();
   const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
   $('#home-greeting').textContent = `${greet}, ${state.user.displayName}`;
@@ -453,13 +538,486 @@ async function loadSets() {
 
 $$('.mode-card').forEach((b) => b.addEventListener('click', () => startMode(b.dataset.mode)));
 
+/* Premium modes stay VISIBLE to free users, greyed out with a lock, rather than
+ * being hidden. Hiding them makes the app look thin and gives no reason to
+ * upgrade; showing them makes the value concrete. The server enforces the
+ * actual gate -- this is presentation only. */
+function isLockedMode(mode) {
+  return (state.premiumModes || []).includes(mode)
+    && Boolean(state.user)
+    && state.user.plan === 'free';
+}
+
+function renderModeLocks() {
+  $$('.mode-card').forEach((card) => {
+    const locked = isLockedMode(card.dataset.mode);
+    card.classList.toggle('locked', locked);
+    let badge = card.querySelector('.lock-badge');
+    if (locked && !badge) {
+      badge = document.createElement('span');
+      badge.className = 'lock-badge';
+      badge.textContent = 'Premium';
+      card.querySelector('h3')?.append(' ');
+      card.querySelector('h3')?.append(badge);
+    } else if (!locked && badge) {
+      badge.remove();
+    }
+  });
+}
+
 function startMode(mode) {
+  // A locked card is still clickable: tapping it explains why, instead of
+  // doing nothing, which is the usual complaint about gated interfaces.
+  if (isLockedMode(mode)) {
+    const names = { match: 'Match', test: 'Practice Test', review: 'Review Mistakes', apexam: 'AP Exam practice' };
+    showPaywall('mode', { modeName: names[mode], courses: (state.user?.courses || []).length });
+    return;
+  }
+  if (mode === 'apexam') { startApExam(); return; }
   if (mode === 'learn') { showView('learn'); loadQuestion(); }
   else if (mode === 'flashcards') startFlashcards();
   else if (mode === 'match') startMatch();
   else if (mode === 'test') startTest();
   else if (mode === 'review') startReview();
 }
+
+
+// ------------------------------------------------------------------ AP exam
+/* The AP flow is deliberately split in two.
+ *
+ * Section I (multiple choice) is graded exactly -- we know the right answers.
+ * The free-response side never claims to grade writing. It reports objective
+ * auto-checks (word count, documents cited, parts answered) and then hands the
+ * student the real College Board rubric to score themselves against. Anything
+ * else would be inventing a number for something a student takes seriously. */
+const apState = {
+  exam: null, index: 0, answers: {}, timer: null, endsAt: 0, frq: null,
+};
+
+function apClearTimer() {
+  if (apState.timer) clearInterval(apState.timer);
+  apState.timer = null;
+}
+
+function apStartTimer(minutes, el, onDone) {
+  apClearTimer();
+  apState.endsAt = Date.now() + minutes * 60_000;
+  const tick = () => {
+    const left = Math.max(0, apState.endsAt - Date.now());
+    const m = Math.floor(left / 60000);
+    const sec = Math.floor((left % 60000) / 1000);
+    el.textContent = `${m}:${String(sec).padStart(2, '0')}`;
+    el.classList.toggle('timer-low', left < 60_000 && left > 0);
+    if (left <= 0) { apClearTimer(); if (onDone) onDone(); }
+  };
+  tick();
+  apState.timer = setInterval(tick, 1000);
+}
+
+function apShow(pane) {
+  ['ap-picker', 'ap-brief', 'ap-mcq', 'ap-results', 'ap-frq']
+    .forEach((id) => $(`#${id}`).classList.toggle('hidden', id !== pane));
+}
+
+async function startApExam() {
+  showView('apexam');
+  apClearTimer();
+  apShow('ap-picker');
+
+  const list = $('#ap-course-list');
+
+  /* /api/ap/coverage returns exactly the AP courses, so intersecting against it
+   * decides membership. Filtering on the user payload directly does not work:
+   * publicUser() exposes levelLabel ("AP") but not level ("ap"), so a naive
+   * c.level check silently matched nothing and the picker came up empty. */
+  let coverage = [];
+  try { coverage = (await api('GET', '/api/ap/coverage')).courses || []; } catch { /* signed out */ }
+  const byId = new Map(coverage.map((c) => [c.id, c]));
+  const mine = (state.user?.courses || []).filter((c) => byId.has(c.id));
+
+  if (mine.length === 0) {
+    $('#ap-picker-sub').textContent = 'You are not enrolled in any AP classes yet.';
+    list.innerHTML = `<p class="muted">Add an AP course from the Courses tab and it will show up here.</p>`;
+    return;
+  }
+  $('#ap-picker-sub').textContent = 'Pick one of your AP classes.';
+
+  list.innerHTML = mine.map((c) => {
+    const cov = byId.get(c.id) || {};
+    // Say plainly which exams we have verified rather than implying all are equal.
+    const tag = cov.verifiedFormat
+      ? `<span class="pill pill-ap">Official format</span>`
+      : `<span class="pill pill-regular">Format not verified</span>`;
+    const frq = cov.frqCount ? `<span class="dim">${cov.frqCount} free-response</span>` : '';
+    return `<button class="course-card" data-ap="${esc(c.id)}">
+        <span class="course-card-title">${esc(c.name)}</span>
+        <span class="row u-g-p5rem">${tag} ${frq}</span>
+      </button>`;
+  }).join('');
+
+  $$('#ap-course-list [data-ap]').forEach((b) =>
+    b.addEventListener('click', () => loadApExam(b.dataset.ap)));
+}
+
+async function loadApExam(courseId) {
+  try {
+    // 20 is a realistic sitting for practice; the brief still states the
+    // official section length so the student knows what the real thing is.
+    const { exam } = await api('GET', `/api/ap/exam?courseId=${encodeURIComponent(courseId)}&mcqLimit=20`);
+    apState.exam = exam;
+    apState.answers = {};
+    apState.index = 0;
+
+    $('#ap-brief-title').textContent = exam.name;
+
+    if (!exam.verified) {
+      $('#ap-brief-delivery').textContent = 'Unverified';
+      $('#ap-brief-body').innerHTML = `<div class="banner">${esc(exam.message)}</div>
+        <p class="muted"><a href="${esc(exam.officialUrl)}" target="_blank" rel="noopener noreferrer">Check the official format on College Board</a></p>`;
+      $('#ap-start-mcq').classList.add('hidden');
+      $('#ap-start-frq').classList.add('hidden');
+      apShow('ap-brief');
+      return;
+    }
+
+    $('#ap-brief-delivery').textContent = exam.delivery === 'hybrid' ? 'Hybrid digital' : 'Fully digital';
+    const rows = exam.sections.map((s) => `
+      <tr><td><strong>${esc(s.label)}</strong><div class="dim">${esc(s.note || '')}</div></td>
+          <td>${s.count} q</td><td>${s.minutes} min</td><td>${s.weight}%</td></tr>`).join('');
+
+    $('#ap-brief-body').innerHTML = `
+      <div class="banner u-mb-1rem">
+        <strong>${exam.durationMin} minutes</strong> total &middot; ${esc(exam.examDate)} &middot; ${esc(exam.calculator)}
+      </div>
+      <table class="ap-table"><thead><tr><th>Section</th><th>Questions</th><th>Time</th><th>Weight</th></tr></thead>
+        <tbody>${rows}</tbody></table>
+      <p class="dim u-mt-1rem">Format verified against
+        <a href="${esc(exam.source)}" target="_blank" rel="noopener noreferrer">College Board</a>.
+        ${exam.delivery === 'hybrid'
+          ? 'On the real exam you type multiple choice in Bluebook and handwrite free response on paper.'
+          : 'On the real exam everything is typed in Bluebook.'}</p>`;
+
+    const mcq = exam.sections.find((s) => s.kind === 'mcq');
+    $('#ap-start-mcq').classList.toggle('hidden', !mcq || !mcq.servedCount);
+    if (mcq && mcq.servedCount) {
+      $('#ap-start-mcq').textContent = mcq.servedCount < mcq.officialCount
+        ? `Start ${mcq.servedCount} practice questions`
+        : 'Start Section I';
+    }
+    $('#ap-start-frq').classList.toggle('hidden', !(exam.frqs || []).length);
+    apShow('ap-brief');
+  } catch (err) {
+    toast(err.message, 'bad');
+    if (err.status === 402) showView('plan');
+  }
+}
+
+function apRenderQuestion() {
+  const mcq = apState.exam.sections.find((s) => s.kind === 'mcq');
+  const q = mcq.questions[apState.index];
+  const keys = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+  $('#ap-mcq-progress').textContent = `Question ${apState.index + 1} of ${mcq.questions.length}`;
+  $('#ap-mcq-bar').style.width = `${((apState.index + 1) / mcq.questions.length) * 100}%`;
+  $('#ap-q-prompt').textContent = q.prompt;
+  $('#ap-q-choices').innerHTML = q.choices.map((c, i) => `
+    <button class="choice-btn${apState.answers[q.id] === i ? ' picked' : ''}" data-i="${i}">
+      <span class="choice-key">${keys[i]}</span><span>${esc(c)}</span>
+    </button>`).join('');
+
+  $$('#ap-q-choices .choice-btn').forEach((b) => b.addEventListener('click', () => {
+    apState.answers[q.id] = Number(b.dataset.i);
+    apRenderQuestion();
+  }));
+  $('#ap-prev').disabled = apState.index === 0;
+  $('#ap-next').disabled = apState.index >= mcq.questions.length - 1;
+  replayAnimation($('#ap-mcq-card'), 'q-enter');
+}
+
+function apStartMcq() {
+  const mcq = apState.exam.sections.find((s) => s.kind === 'mcq');
+  // Scale the official time to the number actually served, so the pacing
+  // pressure matches the real exam even on a shorter practice section.
+  const perQuestion = mcq.minutes / mcq.officialCount;
+  apState.index = 0;
+  apShow('ap-mcq');
+  apRenderQuestion();
+  apStartTimer(Math.max(1, Math.round(perQuestion * mcq.servedCount)), $('#ap-timer'), () => {
+    toast('Time is up. Submitting your section.', 'bad');
+    apSubmitMcq();
+  });
+}
+
+async function apSubmitMcq() {
+  apClearTimer();
+  try {
+    const graded = await api('POST', '/api/ap/grade-mcq', {
+      courseId: apState.exam.courseId, answers: apState.answers,
+    });
+    const mcq = apState.exam.sections.find((s) => s.kind === 'mcq');
+    const wrong = graded.results.filter((r) => !r.correct);
+
+    $('#ap-results').innerHTML = `
+      <h1 class="u-fs-1p9rem u-mb-p15rem">${graded.correct} / ${graded.total}</h1>
+      <p class="muted">${graded.percent}% on this practice section.</p>
+      <div class="banner u-mb-1p25rem">
+        <strong>Estimated band: ${esc(graded.estimate.band)}</strong>
+        <div class="dim">${esc(graded.estimate.note)} This is a rough guide from multiple choice alone.
+        Real AP cut scores are set per administration and are not published as fixed percentages.</div>
+      </div>
+      ${mcq.servedCount < mcq.officialCount
+        ? `<p class="dim">You answered ${mcq.servedCount}; the real Section I has ${mcq.officialCount} in ${mcq.minutes} minutes.</p>` : ''}
+      <div class="section-head"><h2>What you missed</h2></div>
+      ${wrong.length === 0 ? '<p class="muted">Nothing. Every answer was correct.</p>'
+        : wrong.map((r) => `<div class="card u-mb-1rem">
+            <div class="label">${esc(r.topic)}</div>
+            <p class="u-m-0">${esc(r.explanation)}</p></div>`).join('')}
+      <div class="row u-mt-1p25rem">
+        <button class="btn btn-primary" data-ap-again>Try another section</button>
+        ${(apState.exam.frqs || []).length ? '<button class="btn btn-ghost" data-ap-to-frq>Practise free response</button>' : ''}
+      </div>`;
+    apShow('ap-results');
+    // These two buttons are created just above, so they are bound off the
+    // container rather than by global id (a global lookup reads as a missing
+    // element to the DOM smoke test).
+    const out = $('#ap-results');
+    out.querySelector('[data-ap-again]').addEventListener('click', () => loadApExam(apState.exam.courseId));
+    const toFrq = out.querySelector('[data-ap-to-frq]');
+    if (toFrq) toFrq.addEventListener('click', apChooseFrq);
+  } catch (err) { toast(err.message, 'bad'); }
+}
+
+function apChooseFrq() {
+  const list = apState.exam.frqs || [];
+  if (!list.length) return;
+  apShow('ap-frq');
+  $('#ap-frq-out').classList.add('hidden');
+  $('#ap-frq-text').value = '';
+
+  if (list.length === 1) { apLoadFrq(list[0]); return; }
+
+  // While choosing, the answer box and timer are hidden: showing an empty
+  // textarea and a dead "--:--" clock next to a list of options reads as if
+  // the page is half-broken.
+  apSetFrqComposer(false);
+  $('#ap-frq-type').textContent = 'Choose a question';
+  $('#ap-frq-prompt').innerHTML = list.map((f, i) =>
+    `<button class="btn btn-ghost btn-block u-mb-p5rem" data-frq="${i}">${esc(f.type)} &middot; ${f.maxPoints} points &middot; ${f.minutes} min</button>`).join('');
+  $('#ap-frq-guidance').textContent = '';
+  $('#ap-frq-meta').textContent = `${apState.exam.name} · choose a question`;
+  $$('#ap-frq-prompt [data-frq]').forEach((b) =>
+    b.addEventListener('click', () => apLoadFrq(list[Number(b.dataset.frq)])));
+}
+
+/* Toggle the write-and-submit half of the pane. */
+function apSetFrqComposer(on) {
+  ['ap-frq-text', 'ap-frq-check', 'ap-frq-timer'].forEach((id) =>
+    $(`#${id}`).classList.toggle('hidden', !on));
+  $('#ap-frq-label').classList.toggle('hidden', !on);
+  $('#ap-frq-back').classList.toggle('hidden', !on);
+}
+
+function apLoadFrq(frq) {
+  apState.frq = frq;
+  apSetFrqComposer(true);
+  $('#ap-frq-type').textContent = `${frq.type} · ${frq.maxPoints} points`;
+  $('#ap-frq-prompt').textContent = frq.prompt;
+  $('#ap-frq-guidance').textContent = frq.guidance || '';
+  $('#ap-frq-meta').textContent = `${apState.exam.name} · ${frq.minutes} minutes`;
+  $('#ap-frq-out').classList.add('hidden');
+  $('#ap-frq-text').value = '';
+  apStartTimer(frq.minutes, $('#ap-frq-timer'), () => toast('Time is up. Finish your thought, then score yourself.'));
+}
+
+async function apCheckFrq() {
+  const frq = apState.frq;
+  if (!frq) return;
+  const text = $('#ap-frq-text').value;
+  if (!text.trim()) { toast('Write a response first.'); return; }
+  apClearTimer();
+
+  try {
+    const res = await api('POST', '/api/ap/check-frq', { text, checks: frq.autoChecks || [] });
+    const checks = res.checks.map((c) => `
+      <li class="ap-check ${c.pass ? 'ok' : 'no'}">
+        <span class="ap-check-mark">${c.pass ? '✓' : '✕'}</span>
+        <span><strong>${esc(c.kind)}</strong> — ${esc(c.detail)}</span>
+      </li>`).join('');
+
+    const rubric = frq.rubric.map((row, i) => `
+      <div class="rubric-row">
+        <div class="rubric-head">
+          <strong>${esc(row.label)}</strong>
+          <span class="dim">0–${row.max}</span>
+        </div>
+        <p class="dim u-m-0">${esc(row.criteria)}</p>
+        <div class="rubric-points" data-row="${i}">
+          ${Array.from({ length: row.max + 1 }, (_, n) =>
+            `<button class="rubric-pt" data-row="${i}" data-pt="${n}">${n}</button>`).join('')}
+        </div>
+      </div>`).join('');
+
+    $('#ap-frq-out').innerHTML = `
+      <div class="card">
+        <h3 class="u-mt-0">Auto-checks</h3>
+        <p class="dim">These are countable facts about what you wrote — ${res.words} words,
+          ${res.paragraphs} paragraphs. They are not a score, and the ones marked
+          "hint" are rough heuristics, not judgements of quality.</p>
+        <ul class="ap-checks">${checks}</ul>
+      </div>
+      <div class="card u-mt-1rem">
+        <h3 class="u-mt-0">Score yourself against the real rubric</h3>
+        <p class="dim">This is the College Board rubric for this question type. No offline tool can
+          honestly judge a thesis or the sophistication of an argument, so you score it —
+          reading your own writing against the rubric is most of the learning anyway.</p>
+        ${rubric}
+        <div class="row-between u-mt-1p25rem">
+          <strong>Your score</strong>
+          <span class="ap-total" data-ap-total>— / ${frq.maxPoints}</span>
+        </div>
+      </div>`;
+    $('#ap-frq-out').classList.remove('hidden');
+
+    const picked = {};
+    $$('#ap-frq-out .rubric-pt').forEach((b) => b.addEventListener('click', () => {
+      const row = b.dataset.row;
+      picked[row] = Number(b.dataset.pt);
+      $$(`#ap-frq-out .rubric-pt[data-row="${row}"]`).forEach((x) => x.classList.remove('sel'));
+      b.classList.add('sel');
+      const total = Object.values(picked).reduce((a, n) => a + n, 0);
+      const done = Object.keys(picked).length === frq.rubric.length;
+      $('#ap-frq-out').querySelector('[data-ap-total]').textContent = `${total} / ${frq.maxPoints}${done ? '' : ' (in progress)'}`;
+    }));
+    $('#ap-frq-out').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (err) { toast(err.message, 'bad'); }
+}
+
+$('#ap-start-mcq').addEventListener('click', apStartMcq);
+$('#ap-start-frq').addEventListener('click', apChooseFrq);
+$('#ap-prev').addEventListener('click', () => { apState.index--; apRenderQuestion(); });
+$('#ap-next').addEventListener('click', () => { apState.index++; apRenderQuestion(); });
+$('#ap-submit').addEventListener('click', apSubmitMcq);
+$('#ap-frq-check').addEventListener('click', apCheckFrq);
+$('#ap-frq-back').addEventListener('click', apChooseFrq);
+
+
+// ------------------------------------------------------------------ paywall
+/* Conversion prompts.
+ *
+ * Three triggers, one component:
+ *   'midway'   a soft, dismissible prompt part-way through a free session,
+ *              shown while the student is engaged rather than after they have
+ *              already been cut off.
+ *   'limit'    the hard wall when the daily quota is gone.
+ *   'mode'     tapping a locked study mode.
+ *
+ * Deliberately NOT used here: fake countdowns, invented scarcity, or a hidden
+ * dismiss button. The audience is teenagers, and a prompt that has to trick
+ * someone to convert is one that produces refunds and complaints from parents.
+ * Everything below is true: the limits are real and the free tier really does
+ * stay free. */
+const paywall = {
+  shownThisSession: new Set(),
+};
+
+function paywallCopy(trigger, ctx = {}) {
+  if (trigger === 'limit') {
+    return {
+      kicker: 'Daily limit reached',
+      title: 'You are out of questions for today.',
+      sub: `You answered all ${ctx.limit || 5}. Premium removes the cap entirely, so a study session ends when you decide it does.`,
+    };
+  }
+  if (trigger === 'mode') {
+    return {
+      kicker: 'Premium feature',
+      title: `${ctx.modeName || 'That mode'} is part of Premium.`,
+      sub: 'Match, Practice Test, Review and full AP exam practice all come with it.',
+    };
+  }
+  return {
+    kicker: 'You are on a roll',
+    title: ctx.remaining === 1
+      ? 'One question left today.'
+      : `${ctx.remaining} questions left today.`,
+    sub: 'Free accounts get 5 a day. You are mid-session and about to run out. Premium keeps it going.',
+  };
+}
+
+function showPaywall(trigger, ctx = {}) {
+  const el = $('#paywall');
+  const copy = paywallCopy(trigger, ctx);
+
+  $('#paywall-kicker').textContent = copy.kicker;
+  $('#paywall-title').textContent = copy.title;
+  $('#paywall-sub').textContent = copy.sub;
+
+  // Personalised, factual stats. Nothing invented: these come from the
+  // student's own record.
+  const q = state.user?.quota || {};
+  const stats = [];
+  if (Number.isFinite(q.used)) stats.push([q.used, q.used === 1 ? 'question today' : 'questions today']);
+  if (ctx.streak > 1) stats.push([ctx.streak, 'in a row']);
+  if (ctx.courses) stats.push([ctx.courses, ctx.courses === 1 ? 'class added' : 'classes added']);
+  $('#paywall-stats').innerHTML = stats.map(([n, label]) =>
+    `<div class="paywall-stat"><strong>${esc(String(n))}</strong><span>${esc(label)}</span></div>`).join('');
+
+  el.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  // Hard wall cannot be dismissed back into questions there are none of.
+  $('#paywall-dismiss').textContent = trigger === 'limit' ? 'Back to study modes' : 'Not now';
+  paywall.lastTrigger = trigger;
+}
+
+function hidePaywall() {
+  $('#paywall').classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  if (paywall.lastTrigger === 'limit') showView('home');
+}
+
+/* Show the mid-session prompt once per day per account, at the point where the
+ * student is engaged but close to the cap. Repeating it every session would be
+ * nagging, and nagging is what makes people uninstall. */
+function maybeMidSessionPaywall(quota, streak) {
+  if (!state.user || state.user.plan !== 'free') return;
+  if (!quota || quota.limit === null) return;
+  const key = `mid-${new Date().toDateString()}`;
+  if (paywall.shownThisSession.has(key)) return;
+  // Trigger with 2 left: enough runway that "keep going" is a real offer.
+  if (quota.remaining > 2 || quota.remaining <= 0) return;
+  paywall.shownThisSession.add(key);
+  showPaywall('midway', { remaining: quota.remaining, streak, courses: (state.user.courses || []).length });
+}
+
+function renderQuotaMeter(quota) {
+  const meter = $('#quota-meter');
+  if (!meter) return;
+  const free = state.user && state.user.plan === 'free' && quota && quota.limit !== null;
+  meter.classList.toggle('hidden', !free);
+  if (!free) { $('#quota-note').textContent = quota && quota.limit === null ? 'Unlimited' : ''; return; }
+
+  // Pips make the cap concrete in a way "3 left" does not.
+  $('#quota-pips').innerHTML = Array.from({ length: quota.limit }, (_, i) =>
+    `<span class="pip${i < quota.used ? ' spent' : ''}"></span>`).join('');
+  $('#quota-note').textContent = `${quota.remaining} of ${quota.limit} left today`;
+  $('#quota-note').classList.toggle('quota-low', quota.remaining <= 2);
+}
+
+$('#paywall-dismiss').addEventListener('click', hidePaywall);
+$('#paywall-upgrade').addEventListener('click', async () => {
+  const btn = $('#paywall-upgrade');
+  btn.disabled = true;
+  try {
+    const d = await api('POST', '/api/billing/premium', {});
+    if (d.url) { window.location.href = d.url; return; }
+    state.user = d.user;
+    hidePaywall();
+    renderChrome(); renderModeLocks(); renderUpsellBanner();
+    toast('You are on Premium. Everything is unlocked.', 'good');
+    if (state.view === 'learn') loadQuestion();
+  } catch (err) { toast(err.message, 'bad'); }
+  finally { btn.disabled = false; }
+});
 
 // ------------------------------------------------------------------ learn
 function scopeQuery() {
@@ -495,8 +1053,7 @@ async function loadQuestion() {
     d.className = `chip chip-${data.question.difficulty}`;
 
     $('#q-prompt').textContent = data.question.prompt;
-    $('#quota-note').textContent = data.quota.limit === null
-      ? '' : `${data.quota.remaining} left today`;
+    renderQuotaMeter(data.quota);
 
     const keys = ['A', 'B', 'C', 'D', 'E', 'F'];
     $('#q-choices').innerHTML = data.question.choices.map((c, i) => `
@@ -511,6 +1068,9 @@ async function loadQuestion() {
     $('#quiz-card').classList.add('hidden');
     $('#quiz-empty').classList.remove('hidden');
     if (err.status === 402) {
+      // Hard wall rather than a sad empty state: this is the highest-intent
+      // moment a free user ever reaches.
+      showPaywall('limit', { limit: state.user?.quota?.limit || 5 });
       $('#quiz-empty-title').textContent = 'Daily limit reached';
       $('#quiz-empty-msg').textContent = 'You have used your free questions for today. Upgrade for unlimited practice, or come back tomorrow.';
     } else {
@@ -552,8 +1112,9 @@ async function submitAnswer(choice) {
     fb.classList.remove('hidden');
     $('#next-btn').classList.remove('hidden');
     $('#next-btn').focus();
-    $('#quota-note').textContent = data.quota.limit === null ? '' : `${data.quota.remaining} left today`;
     if (state.user) state.user.quota = data.quota;
+    renderQuotaMeter(data.quota);
+    maybeMidSessionPaywall(data.quota, p.streak);
   } catch (err) {
     state.answered = false;
     if (err.status === 409) { toast('That question expired. Here is a fresh one.'); loadQuestion(); return; }
@@ -945,13 +1506,18 @@ $('#upgrade-btn').addEventListener('click', async () => {
   try {
     const d = await api('POST', '/api/billing/premium', {});
     if (d.url) { window.location.href = d.url; return; }
-    state.user = d.user; toast('Upgraded.', 'good'); loadPlan(); renderChrome();
+    state.user = d.user; toast('Upgraded. Everything is unlocked.', 'good');
+    loadPlan(); renderChrome(); renderModeLocks(); renderUpsellBanner();
   } catch (err) { toast(err.message, 'bad'); }
 });
 $('#cancel-btn').addEventListener('click', async () => {
   if (!confirm('Cancel and return to the Free plan?')) return;
   const d = await api('POST', '/api/billing/cancel', {});
-  state.user = d.user; toast('Back on the Free plan.'); loadPlan();
+  // Locks and the upsell banner must come BACK on downgrade, not just on
+  // upgrade -- otherwise a cancelled account keeps premium modes unlocked
+  // in the UI until a full page reload.
+  state.user = d.user; toast('Back on the Free plan.');
+  loadPlan(); renderChrome(); renderModeLocks(); renderUpsellBanner();
 });
 
 // ------------------------------------------------------------------ reset/verify
@@ -1233,10 +1799,13 @@ $('#plan-switch').addEventListener('click', async (e) => {
   if (!btn) return;
   try {
     const d = await api('POST', '/api/dev/plan', { plan: btn.dataset.plan });
-    state.user.plan = d.plan;
+    // Take the whole user back: quota, limits and locks all move together.
+    state.user = d.user || { ...state.user, plan: d.plan };
     toast(d.message, 'good');
     loadSettings();
     renderChrome();
+    renderModeLocks();
+    renderUpsellBanner();
   } catch (err) { toast(err.message, 'bad'); }
 });
 
@@ -1415,9 +1984,10 @@ document.addEventListener('keydown', (e) => {
   watchForDynamicStyles();
 
   try {
-    const { user, testingMode } = await api('GET', '/api/me');
+    const { user, testingMode, premiumModes } = await api('GET', '/api/me');
     state.user = user;
     state.testingMode = Boolean(testingMode);
+    state.premiumModes = premiumModes || [];
   } catch { state.user = null; }
 
   if (await handleTokenRoutes()) { renderChrome(); return; }

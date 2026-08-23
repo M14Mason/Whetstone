@@ -1308,3 +1308,60 @@ html, body { max-width: 100%; overflow-x: hidden; }
 @media (max-width: 720px) {
   .upsell-inline .btn { margin-left: 0; width: 100%; }
 }
+
+/* ==================== AP exam practice ==================== */
+.u-glow-hf43f5e66 { --mode-glow: #f43f5e66; }
+
+.ap-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.ap-table th {
+  text-align: left; font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-muted); padding: .5rem .6rem; border-bottom: 1px solid var(--border);
+}
+.ap-table td { padding: .7rem .6rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+.ap-table tr:last-child td { border-bottom: 0; }
+
+/* Timer turns red only in the final minute: colouring it earlier trains
+   students to panic rather than to pace. */
+.timer-low { color: var(--bad); animation: bump .9s var(--ease) infinite; }
+
+.frq-input {
+  width: 100%; font-family: inherit; font-size: .95rem; line-height: 1.7;
+  background: #0d0f1a; border: 1px solid var(--border); border-radius: var(--r);
+  color: var(--text); padding: .9rem 1rem; resize: vertical; min-height: 240px;
+}
+.frq-input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px var(--accent-soft); }
+
+.ap-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: .5rem; }
+.ap-check { display: flex; gap: .6rem; align-items: flex-start; font-size: .9rem; }
+.ap-check-mark { font-weight: 700; flex-shrink: 0; }
+.ap-check.ok .ap-check-mark { color: var(--good); }
+.ap-check.no .ap-check-mark { color: var(--warn); }
+
+/* Rubric rows are the honest half of the feature: the student scores their own
+   writing against the published criteria. */
+.rubric-row { padding: .9rem 0; border-top: 1px solid var(--border); }
+.rubric-row:first-of-type { border-top: 0; }
+.rubric-head { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin-bottom: .25rem; }
+.rubric-points { display: flex; gap: .4rem; margin-top: .6rem; flex-wrap: wrap; }
+.rubric-pt {
+  min-width: 40px; min-height: 40px; padding: .4rem .7rem;
+  background: var(--surface-solid); border: 1.5px solid var(--border);
+  border-radius: var(--r-sm); color: var(--text-secondary);
+  font-family: inherit; font-weight: 700; cursor: pointer;
+  transition: all .16s var(--ease);
+}
+.rubric-pt:hover { border-color: var(--border-bright); color: var(--text); }
+.rubric-pt.sel { background: var(--accent-soft); border-color: var(--accent); color: var(--text); }
+.ap-total { font-family: Outfit, sans-serif; font-weight: 800; font-size: 1.3rem; }
+
+.choice-btn.picked { border-color: var(--accent); background: var(--accent-soft); }
+.btn-block { width: 100%; justify-content: flex-start; }
+
+@media (max-width: 720px) {
+  /* The table would otherwise force a horizontal scroll on a phone. */
+  .ap-table { font-size: .8rem; }
+  .ap-table th:nth-child(2), .ap-table td:nth-child(2) { display: none; }
+  .frq-input { min-height: 300px; font-size: 16px; } /* 16px: stops iOS zooming */
+  .rubric-pt { min-width: 44px; min-height: 44px; }
+  #ap-submit { width: 100%; margin-left: 0; margin-top: .5rem; }
+}

@@ -439,6 +439,78 @@ check('health endpoint exposes monitoring counters', async () => {
   assert.ok(typeof data.uptimeSeconds === 'number');
 });
 
+/* AP exam routes.
+ *
+ * These exist because the unit tests exercise lib/apexam.js directly and so
+ * never touch the HTTP layer. A typo in the route handler (calling readJson
+ * instead of readJsonBody) shipped a 500 on every grade request while the unit
+ * suite stayed green. */
+check('AP exam routes are gated, then work end to end', async () => {
+  const email = `ap-${Date.now()}@example.com`;
+  let r = await call('POST', '/api/auth/signup', {
+    displayName: 'AP Tester', email, password: 'correct-horse-battery',
+    birthYear: 2009, timezoneOffsetMinutes: 0, acceptTerms: true,
+  });
+  assert.strictEqual(r.status, 201, 'signup failed');
+
+  r = await call('POST', '/api/onboarding', {
+    gradeLevel: 11, courseIds: ['ap-biology'], goal: 'exams',
+  });
+  assert.strictEqual(r.status, 200, 'onboarding failed');
+
+  // Free plan must not reach the exam.
+  r = await call('GET', '/api/ap/exam?courseId=ap-biology');
+  assert.strictEqual(r.status, 402, `expected 402 for a free user, got ${r.status}`);
+
+  r = await call('POST', '/api/billing/premium', {});
+  assert.strictEqual(r.status, 200, 'upgrade failed');
+
+  r = await call('GET', '/api/ap/exam?courseId=ap-biology&mcqLimit=5');
+  assert.strictEqual(r.status, 200, `exam fetch returned ${r.status}`);
+  const exam = r.data.exam;
+  assert.strictEqual(exam.verified, true);
+  assert.ok(exam.source.includes('collegeboard.org'), 'must cite the official source');
+
+  const mcq = exam.sections.find((x) => x.kind === 'mcq');
+  assert.ok(mcq.servedCount > 0, 'no questions served');
+  assert.strictEqual(mcq.officialCount, 60, 'must report the real Section I length');
+
+  const answers = {};
+  for (const q of mcq.questions) answers[q.id] = 0;
+  r = await call('POST', '/api/ap/grade-mcq', { courseId: 'ap-biology', answers });
+  assert.strictEqual(r.status, 200, `grade-mcq returned ${r.status}`);
+  assert.strictEqual(r.data.total, mcq.servedCount);
+  assert.ok(/^\d-\d$/.test(r.data.estimate.band), 'estimate must be a band');
+});
+
+check('FRQ checking reports facts and never a score', async () => {
+  const r = await call('POST', '/api/ap/check-frq', {
+    text: 'Although limited, the reforms mattered.\n\nDocument 1 and Doc 2 show this.\n\nTherefore it changed.',
+    checks: ['thesis', 'length:400', 'documents:2', 'paragraphs:3'],
+  });
+  assert.strictEqual(r.status, 200, `check-frq returned ${r.status}`);
+  assert.strictEqual(r.data.paragraphs, 3);
+
+  const docs = r.data.checks.find((c) => c.kind === 'Document citations');
+  assert.ok(docs.pass, 'should have counted 2 documents');
+  const len = r.data.checks.find((c) => c.kind === 'Length');
+  assert.strictEqual(len.pass, false, 'a short answer must fail the length check');
+
+  for (const c of r.data.checks) {
+    assert.ok(!('score' in c) && !('points' in c),
+      'auto-checks must never emit anything score-shaped');
+  }
+  assert.strictEqual(r.data.checks.find((c) => c.kind.startsWith('Thesis')).hint, true,
+    'the thesis check must declare itself a hint');
+});
+
+check('an unverified AP course is refused rather than guessed', async () => {
+  const r = await call('GET', '/api/ap/exam?courseId=ap-art-history');
+  assert.strictEqual(r.status, 200);
+  assert.strictEqual(r.data.exam.verified, false);
+  assert.ok(!r.data.exam.sections, 'must not fabricate a format');
+});
+
 check('the reset and verify pages are served', async () => {
   for (const route of ['/reset?token=abc', '/verify?token=abc']) {
     const res = await fetch(`${BASE}${route}`);

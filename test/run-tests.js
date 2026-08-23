@@ -26,6 +26,7 @@ const tokens = require('../lib/tokens');
 const mailer = require('../lib/mailer');
 const monitor = require('../lib/monitor');
 const coursesLib = require('../lib/courses');
+const apexam = require('../lib/apexam');
 const modes = require('../lib/modes');
 const social = require('../lib/social');
 const crypto = require('node:crypto');
@@ -847,6 +848,77 @@ test('every level of course is represented', () => {
   const levels = new Set(coursesLib.allCourses().map((c) => c.level));
   for (const level of ['regular', 'honors', 'ap', 'test-prep']) {
     assert.ok(levels.has(level), `missing course level: ${level}`);
+  }
+});
+
+section('AP exam practice');
+
+test('every AP course has an exam practice unit', () => {
+  const ap = coursesLib.allCourses().filter((c) => c.level === 'ap');
+  assert.strictEqual(ap.length, 38);
+  for (const c of ap) {
+    assert.ok(c.units.some((u) => u.name === apexam.examUnitName()),
+      `${c.id} has no ${apexam.examUnitName()} unit`);
+  }
+});
+
+test('verified exam formats have section weights summing to 100', () => {
+  const covered = apexam.coverage().filter((c) => c.verifiedFormat);
+  assert.ok(covered.length >= 11, `expected 11+ verified formats, got ${covered.length}`);
+  for (const c of covered) {
+    const f = apexam.examFormat(c.id);
+    const total = f.sections.reduce((sum, x) => sum + x.weight, 0);
+    assert.strictEqual(total, 100, `${c.id} weights sum to ${total}`);
+    assert.ok(f.source.startsWith('https://apstudents.collegeboard.org/'),
+      `${c.id} must cite an official source`);
+  }
+});
+
+test('an unverified AP course refuses to invent a format', () => {
+  // Guessing timings is worse than admitting we do not know: a student who
+  // practises the wrong structure is misled.
+  const unverified = apexam.coverage().find((c) => !c.verifiedFormat);
+  if (!unverified) return;                 // all verified, nothing to check
+  const exam = apexam.buildExam(unverified.id);
+  assert.strictEqual(exam.verified, false);
+  assert.ok(!exam.sections, 'must not fabricate sections');
+  assert.ok(exam.officialUrl, 'must link out to College Board');
+});
+
+test('every FRQ rubric adds up to its stated maximum', () => {
+  for (const c of apexam.coverage()) {
+    for (const frq of apexam.frqsFor(c.id)) {
+      const total = frq.rubric.reduce((sum, r) => sum + Number(r.max), 0);
+      assert.strictEqual(total, frq.maxPoints,
+        `${frq.id}: rubric totals ${total} but maxPoints is ${frq.maxPoints}`);
+    }
+  }
+});
+
+test('FRQ auto-checks report facts, never a score', () => {
+  const res = apexam.autoCheck(
+    'Although the reforms were limited, they reshaped federal power.\n\n'
+    + 'Document 1 shows this. Document 2 and Doc 3 agree.\n\nTherefore the change was real.',
+    ['thesis', 'length:10', 'documents:3', 'paragraphs:3']);
+
+  assert.strictEqual(res.paragraphs, 3);
+  const docs = res.checks.find((c) => c.kind === 'Document citations');
+  assert.ok(docs.pass, 'should count 3 distinct documents');
+
+  // Nothing in the payload may look like a grade.
+  for (const c of res.checks) {
+    assert.ok(!('score' in c) && !('points' in c),
+      'auto-checks must not emit anything score-shaped');
+  }
+  // The thesis check must declare itself a hint.
+  assert.strictEqual(res.checks.find((c) => c.kind.startsWith('Thesis')).hint, true);
+});
+
+test('the AP score estimate is a band, not a precise score', () => {
+  for (const p of [95, 70, 50, 10]) {
+    const e = apexam.estimateBand(p);
+    assert.ok(/^\d-\d$/.test(e.band), `expected a band like "4-5", got ${e.band}`);
+    assert.ok(e.note.length > 10, 'band must carry a caveat');
   }
 });
 

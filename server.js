@@ -9,6 +9,7 @@ const { init: initDb, getDb: getDbHandle } = require('./lib/db');
 const auth = require('./lib/auth');
 const adaptive = require('./lib/adaptive');
 const plans = require('./lib/plans');
+const apexam = require('./lib/apexam');
 const groups = require('./lib/groups');
 const billing = require('./lib/billing');
 const questions = require('./lib/questions');
@@ -354,7 +355,7 @@ const routes = {
   'POST /api/account/display-name': async (req, res) => {
     const user = requireUser(req, res);
     if (!user) return;
-    const body = await readJson(req);
+    const body = await readJsonBody(req);
     const name = String(body.displayName || '').trim();
     if (name.length < 2 || name.length > 40) {
       return sendJson(res, 400, { error: 'Name must be 2 to 40 characters.' });
@@ -371,7 +372,7 @@ const routes = {
     if (!config.testingMode) return sendJson(res, 404, { error: 'Not found' });
     const user = requireUser(req, res);
     if (!user) return;
-    const body = await readJson(req);
+    const body = await readJsonBody(req);
     const plan = String(body.plan || '');
     if (!['free', 'premium', 'group'].includes(plan)) {
       return sendJson(res, 400, { error: 'Pick free, premium, or group.' });
@@ -535,6 +536,48 @@ const routes = {
   },
 
   // ---------------------------------------------------------- study modes
+  // ---- AP exam practice -------------------------------------------------
+  // Gated with the other paid modes: a full timed mock exam is the single most
+  // valuable thing here, so it sits behind Premium alongside Practice Test.
+  'GET /api/ap/coverage': async (req, res) => {
+    requireUser(req);
+    sendJson(res, 200, { courses: apexam.coverage() });
+  },
+
+  'GET /api/ap/exam': async (req, res) => {
+    const user = requireUser(req);
+    requirePaidMode(req, 'test');
+    const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+    const courseId = url.searchParams.get('courseId');
+    if (!courseId) throw Object.assign(new Error('courseId is required.'), { statusCode: 400 });
+
+    // Full sections run to 60 questions; allow a shorter drill without
+    // misrepresenting the official length (buildExam reports both).
+    const limitParam = Number(url.searchParams.get('mcqLimit'));
+    const mcqLimit = Number.isFinite(limitParam) && limitParam > 0 ? limitParam : null;
+
+    const exam = apexam.buildExam(courseId, { mcqLimit });
+    if (exam.error) throw Object.assign(new Error(exam.error), { statusCode: 404 });
+    sendJson(res, 200, { exam, plan: plans.effectivePlan(user.id).id });
+  },
+
+  'POST /api/ap/grade-mcq': async (req, res) => {
+    const user = requireUser(req);
+    requirePaidMode(req, 'test');
+    const body = await readJsonBody(req);
+    const graded = apexam.gradeMcq(body.courseId, body.answers || {});
+    sendJson(res, 200, { ...graded, estimate: apexam.estimateBand(graded.percent), userId: user.id });
+  },
+
+  'POST /api/ap/check-frq': async (req, res) => {
+    requireUser(req);
+    requirePaidMode(req, 'test');
+    const body = await readJsonBody(req);
+    // Objective checks only. Rubric scoring is done by the student in the UI:
+    // nothing here claims to judge the quality of the writing.
+    sendJson(res, 200, apexam.autoCheck(body.text || '', body.checks || []));
+  },
+
   'GET /api/modes/flashcards': async (req, res) => {
     const user = requireUser(req);
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);

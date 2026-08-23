@@ -138,6 +138,8 @@ function showView(name) {
   if (name === 'progress') loadDashboard();
   if (name === 'group') { loadGroup(); loadChannels(); loadMessages(); startChatPolling(); }
   else stopChatPolling();
+  // A running exam timer must not keep ticking after you navigate away.
+  if (name !== 'apexam') apClearTimer();
   if (name === 'plan') loadPlan();
   if (name === 'settings') loadSettings();
 }
@@ -571,12 +573,332 @@ function startMode(mode) {
     showView('plan');
     return;
   }
+  if (mode === 'apexam') { startApExam(); return; }
   if (mode === 'learn') { showView('learn'); loadQuestion(); }
   else if (mode === 'flashcards') startFlashcards();
   else if (mode === 'match') startMatch();
   else if (mode === 'test') startTest();
   else if (mode === 'review') startReview();
 }
+
+
+// ------------------------------------------------------------------ AP exam
+/* The AP flow is deliberately split in two.
+ *
+ * Section I (multiple choice) is graded exactly -- we know the right answers.
+ * The free-response side never claims to grade writing. It reports objective
+ * auto-checks (word count, documents cited, parts answered) and then hands the
+ * student the real College Board rubric to score themselves against. Anything
+ * else would be inventing a number for something a student takes seriously. */
+const apState = {
+  exam: null, index: 0, answers: {}, timer: null, endsAt: 0, frq: null,
+};
+
+function apClearTimer() {
+  if (apState.timer) clearInterval(apState.timer);
+  apState.timer = null;
+}
+
+function apStartTimer(minutes, el, onDone) {
+  apClearTimer();
+  apState.endsAt = Date.now() + minutes * 60_000;
+  const tick = () => {
+    const left = Math.max(0, apState.endsAt - Date.now());
+    const m = Math.floor(left / 60000);
+    const sec = Math.floor((left % 60000) / 1000);
+    el.textContent = `${m}:${String(sec).padStart(2, '0')}`;
+    el.classList.toggle('timer-low', left < 60_000 && left > 0);
+    if (left <= 0) { apClearTimer(); if (onDone) onDone(); }
+  };
+  tick();
+  apState.timer = setInterval(tick, 1000);
+}
+
+function apShow(pane) {
+  ['ap-picker', 'ap-brief', 'ap-mcq', 'ap-results', 'ap-frq']
+    .forEach((id) => $(`#${id}`).classList.toggle('hidden', id !== pane));
+}
+
+async function startApExam() {
+  showView('apexam');
+  apClearTimer();
+  apShow('ap-picker');
+
+  const list = $('#ap-course-list');
+
+  /* /api/ap/coverage returns exactly the AP courses, so intersecting against it
+   * decides membership. Filtering on the user payload directly does not work:
+   * publicUser() exposes levelLabel ("AP") but not level ("ap"), so a naive
+   * c.level check silently matched nothing and the picker came up empty. */
+  let coverage = [];
+  try { coverage = (await api('GET', '/api/ap/coverage')).courses || []; } catch { /* signed out */ }
+  const byId = new Map(coverage.map((c) => [c.id, c]));
+  const mine = (state.user?.courses || []).filter((c) => byId.has(c.id));
+
+  if (mine.length === 0) {
+    $('#ap-picker-sub').textContent = 'You are not enrolled in any AP classes yet.';
+    list.innerHTML = `<p class="muted">Add an AP course from the Courses tab and it will show up here.</p>`;
+    return;
+  }
+  $('#ap-picker-sub').textContent = 'Pick one of your AP classes.';
+
+  list.innerHTML = mine.map((c) => {
+    const cov = byId.get(c.id) || {};
+    // Say plainly which exams we have verified rather than implying all are equal.
+    const tag = cov.verifiedFormat
+      ? `<span class="pill pill-ap">Official format</span>`
+      : `<span class="pill pill-regular">Format not verified</span>`;
+    const frq = cov.frqCount ? `<span class="dim">${cov.frqCount} free-response</span>` : '';
+    return `<button class="course-card" data-ap="${esc(c.id)}">
+        <span class="course-card-title">${esc(c.name)}</span>
+        <span class="row u-g-p5rem">${tag} ${frq}</span>
+      </button>`;
+  }).join('');
+
+  $$('#ap-course-list [data-ap]').forEach((b) =>
+    b.addEventListener('click', () => loadApExam(b.dataset.ap)));
+}
+
+async function loadApExam(courseId) {
+  try {
+    // 20 is a realistic sitting for practice; the brief still states the
+    // official section length so the student knows what the real thing is.
+    const { exam } = await api('GET', `/api/ap/exam?courseId=${encodeURIComponent(courseId)}&mcqLimit=20`);
+    apState.exam = exam;
+    apState.answers = {};
+    apState.index = 0;
+
+    $('#ap-brief-title').textContent = exam.name;
+
+    if (!exam.verified) {
+      $('#ap-brief-delivery').textContent = 'Unverified';
+      $('#ap-brief-body').innerHTML = `<div class="banner">${esc(exam.message)}</div>
+        <p class="muted"><a href="${esc(exam.officialUrl)}" target="_blank" rel="noopener noreferrer">Check the official format on College Board</a></p>`;
+      $('#ap-start-mcq').classList.add('hidden');
+      $('#ap-start-frq').classList.add('hidden');
+      apShow('ap-brief');
+      return;
+    }
+
+    $('#ap-brief-delivery').textContent = exam.delivery === 'hybrid' ? 'Hybrid digital' : 'Fully digital';
+    const rows = exam.sections.map((s) => `
+      <tr><td><strong>${esc(s.label)}</strong><div class="dim">${esc(s.note || '')}</div></td>
+          <td>${s.count} q</td><td>${s.minutes} min</td><td>${s.weight}%</td></tr>`).join('');
+
+    $('#ap-brief-body').innerHTML = `
+      <div class="banner u-mb-1rem">
+        <strong>${exam.durationMin} minutes</strong> total &middot; ${esc(exam.examDate)} &middot; ${esc(exam.calculator)}
+      </div>
+      <table class="ap-table"><thead><tr><th>Section</th><th>Questions</th><th>Time</th><th>Weight</th></tr></thead>
+        <tbody>${rows}</tbody></table>
+      <p class="dim u-mt-1rem">Format verified against
+        <a href="${esc(exam.source)}" target="_blank" rel="noopener noreferrer">College Board</a>.
+        ${exam.delivery === 'hybrid'
+          ? 'On the real exam you type multiple choice in Bluebook and handwrite free response on paper.'
+          : 'On the real exam everything is typed in Bluebook.'}</p>`;
+
+    const mcq = exam.sections.find((s) => s.kind === 'mcq');
+    $('#ap-start-mcq').classList.toggle('hidden', !mcq || !mcq.servedCount);
+    if (mcq && mcq.servedCount) {
+      $('#ap-start-mcq').textContent = mcq.servedCount < mcq.officialCount
+        ? `Start ${mcq.servedCount} practice questions`
+        : 'Start Section I';
+    }
+    $('#ap-start-frq').classList.toggle('hidden', !(exam.frqs || []).length);
+    apShow('ap-brief');
+  } catch (err) {
+    toast(err.message, 'bad');
+    if (err.status === 402) showView('plan');
+  }
+}
+
+function apRenderQuestion() {
+  const mcq = apState.exam.sections.find((s) => s.kind === 'mcq');
+  const q = mcq.questions[apState.index];
+  const keys = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+  $('#ap-mcq-progress').textContent = `Question ${apState.index + 1} of ${mcq.questions.length}`;
+  $('#ap-mcq-bar').style.width = `${((apState.index + 1) / mcq.questions.length) * 100}%`;
+  $('#ap-q-prompt').textContent = q.prompt;
+  $('#ap-q-choices').innerHTML = q.choices.map((c, i) => `
+    <button class="choice-btn${apState.answers[q.id] === i ? ' picked' : ''}" data-i="${i}">
+      <span class="choice-key">${keys[i]}</span><span>${esc(c)}</span>
+    </button>`).join('');
+
+  $$('#ap-q-choices .choice-btn').forEach((b) => b.addEventListener('click', () => {
+    apState.answers[q.id] = Number(b.dataset.i);
+    apRenderQuestion();
+  }));
+  $('#ap-prev').disabled = apState.index === 0;
+  $('#ap-next').disabled = apState.index >= mcq.questions.length - 1;
+  replayAnimation($('#ap-mcq-card'), 'q-enter');
+}
+
+function apStartMcq() {
+  const mcq = apState.exam.sections.find((s) => s.kind === 'mcq');
+  // Scale the official time to the number actually served, so the pacing
+  // pressure matches the real exam even on a shorter practice section.
+  const perQuestion = mcq.minutes / mcq.officialCount;
+  apState.index = 0;
+  apShow('ap-mcq');
+  apRenderQuestion();
+  apStartTimer(Math.max(1, Math.round(perQuestion * mcq.servedCount)), $('#ap-timer'), () => {
+    toast('Time is up. Submitting your section.', 'bad');
+    apSubmitMcq();
+  });
+}
+
+async function apSubmitMcq() {
+  apClearTimer();
+  try {
+    const graded = await api('POST', '/api/ap/grade-mcq', {
+      courseId: apState.exam.courseId, answers: apState.answers,
+    });
+    const mcq = apState.exam.sections.find((s) => s.kind === 'mcq');
+    const wrong = graded.results.filter((r) => !r.correct);
+
+    $('#ap-results').innerHTML = `
+      <h1 class="u-fs-1p9rem u-mb-p15rem">${graded.correct} / ${graded.total}</h1>
+      <p class="muted">${graded.percent}% on this practice section.</p>
+      <div class="banner u-mb-1p25rem">
+        <strong>Estimated band: ${esc(graded.estimate.band)}</strong>
+        <div class="dim">${esc(graded.estimate.note)} This is a rough guide from multiple choice alone.
+        Real AP cut scores are set per administration and are not published as fixed percentages.</div>
+      </div>
+      ${mcq.servedCount < mcq.officialCount
+        ? `<p class="dim">You answered ${mcq.servedCount}; the real Section I has ${mcq.officialCount} in ${mcq.minutes} minutes.</p>` : ''}
+      <div class="section-head"><h2>What you missed</h2></div>
+      ${wrong.length === 0 ? '<p class="muted">Nothing. Every answer was correct.</p>'
+        : wrong.map((r) => `<div class="card u-mb-1rem">
+            <div class="label">${esc(r.topic)}</div>
+            <p class="u-m-0">${esc(r.explanation)}</p></div>`).join('')}
+      <div class="row u-mt-1p25rem">
+        <button class="btn btn-primary" data-ap-again>Try another section</button>
+        ${(apState.exam.frqs || []).length ? '<button class="btn btn-ghost" data-ap-to-frq>Practise free response</button>' : ''}
+      </div>`;
+    apShow('ap-results');
+    // These two buttons are created just above, so they are bound off the
+    // container rather than by global id (a global lookup reads as a missing
+    // element to the DOM smoke test).
+    const out = $('#ap-results');
+    out.querySelector('[data-ap-again]').addEventListener('click', () => loadApExam(apState.exam.courseId));
+    const toFrq = out.querySelector('[data-ap-to-frq]');
+    if (toFrq) toFrq.addEventListener('click', apChooseFrq);
+  } catch (err) { toast(err.message, 'bad'); }
+}
+
+function apChooseFrq() {
+  const list = apState.exam.frqs || [];
+  if (!list.length) return;
+  apShow('ap-frq');
+  $('#ap-frq-out').classList.add('hidden');
+  $('#ap-frq-text').value = '';
+
+  if (list.length === 1) { apLoadFrq(list[0]); return; }
+
+  // While choosing, the answer box and timer are hidden: showing an empty
+  // textarea and a dead "--:--" clock next to a list of options reads as if
+  // the page is half-broken.
+  apSetFrqComposer(false);
+  $('#ap-frq-type').textContent = 'Choose a question';
+  $('#ap-frq-prompt').innerHTML = list.map((f, i) =>
+    `<button class="btn btn-ghost btn-block u-mb-p5rem" data-frq="${i}">${esc(f.type)} &middot; ${f.maxPoints} points &middot; ${f.minutes} min</button>`).join('');
+  $('#ap-frq-guidance').textContent = '';
+  $('#ap-frq-meta').textContent = `${apState.exam.name} · choose a question`;
+  $$('#ap-frq-prompt [data-frq]').forEach((b) =>
+    b.addEventListener('click', () => apLoadFrq(list[Number(b.dataset.frq)])));
+}
+
+/* Toggle the write-and-submit half of the pane. */
+function apSetFrqComposer(on) {
+  ['ap-frq-text', 'ap-frq-check', 'ap-frq-timer'].forEach((id) =>
+    $(`#${id}`).classList.toggle('hidden', !on));
+  $('#ap-frq-label').classList.toggle('hidden', !on);
+  $('#ap-frq-back').classList.toggle('hidden', !on);
+}
+
+function apLoadFrq(frq) {
+  apState.frq = frq;
+  apSetFrqComposer(true);
+  $('#ap-frq-type').textContent = `${frq.type} · ${frq.maxPoints} points`;
+  $('#ap-frq-prompt').textContent = frq.prompt;
+  $('#ap-frq-guidance').textContent = frq.guidance || '';
+  $('#ap-frq-meta').textContent = `${apState.exam.name} · ${frq.minutes} minutes`;
+  $('#ap-frq-out').classList.add('hidden');
+  $('#ap-frq-text').value = '';
+  apStartTimer(frq.minutes, $('#ap-frq-timer'), () => toast('Time is up. Finish your thought, then score yourself.'));
+}
+
+async function apCheckFrq() {
+  const frq = apState.frq;
+  if (!frq) return;
+  const text = $('#ap-frq-text').value;
+  if (!text.trim()) { toast('Write a response first.'); return; }
+  apClearTimer();
+
+  try {
+    const res = await api('POST', '/api/ap/check-frq', { text, checks: frq.autoChecks || [] });
+    const checks = res.checks.map((c) => `
+      <li class="ap-check ${c.pass ? 'ok' : 'no'}">
+        <span class="ap-check-mark">${c.pass ? '✓' : '✕'}</span>
+        <span><strong>${esc(c.kind)}</strong> — ${esc(c.detail)}</span>
+      </li>`).join('');
+
+    const rubric = frq.rubric.map((row, i) => `
+      <div class="rubric-row">
+        <div class="rubric-head">
+          <strong>${esc(row.label)}</strong>
+          <span class="dim">0–${row.max}</span>
+        </div>
+        <p class="dim u-m-0">${esc(row.criteria)}</p>
+        <div class="rubric-points" data-row="${i}">
+          ${Array.from({ length: row.max + 1 }, (_, n) =>
+            `<button class="rubric-pt" data-row="${i}" data-pt="${n}">${n}</button>`).join('')}
+        </div>
+      </div>`).join('');
+
+    $('#ap-frq-out').innerHTML = `
+      <div class="card">
+        <h3 class="u-mt-0">Auto-checks</h3>
+        <p class="dim">These are countable facts about what you wrote — ${res.words} words,
+          ${res.paragraphs} paragraphs. They are not a score, and the ones marked
+          "hint" are rough heuristics, not judgements of quality.</p>
+        <ul class="ap-checks">${checks}</ul>
+      </div>
+      <div class="card u-mt-1rem">
+        <h3 class="u-mt-0">Score yourself against the real rubric</h3>
+        <p class="dim">This is the College Board rubric for this question type. No offline tool can
+          honestly judge a thesis or the sophistication of an argument, so you score it —
+          reading your own writing against the rubric is most of the learning anyway.</p>
+        ${rubric}
+        <div class="row-between u-mt-1p25rem">
+          <strong>Your score</strong>
+          <span class="ap-total" data-ap-total>— / ${frq.maxPoints}</span>
+        </div>
+      </div>`;
+    $('#ap-frq-out').classList.remove('hidden');
+
+    const picked = {};
+    $$('#ap-frq-out .rubric-pt').forEach((b) => b.addEventListener('click', () => {
+      const row = b.dataset.row;
+      picked[row] = Number(b.dataset.pt);
+      $$(`#ap-frq-out .rubric-pt[data-row="${row}"]`).forEach((x) => x.classList.remove('sel'));
+      b.classList.add('sel');
+      const total = Object.values(picked).reduce((a, n) => a + n, 0);
+      const done = Object.keys(picked).length === frq.rubric.length;
+      $('#ap-frq-out').querySelector('[data-ap-total]').textContent = `${total} / ${frq.maxPoints}${done ? '' : ' (in progress)'}`;
+    }));
+    $('#ap-frq-out').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } catch (err) { toast(err.message, 'bad'); }
+}
+
+$('#ap-start-mcq').addEventListener('click', apStartMcq);
+$('#ap-start-frq').addEventListener('click', apChooseFrq);
+$('#ap-prev').addEventListener('click', () => { apState.index--; apRenderQuestion(); });
+$('#ap-next').addEventListener('click', () => { apState.index++; apRenderQuestion(); });
+$('#ap-submit').addEventListener('click', apSubmitMcq);
+$('#ap-frq-check').addEventListener('click', apCheckFrq);
+$('#ap-frq-back').addEventListener('click', apChooseFrq);
 
 // ------------------------------------------------------------------ learn
 function scopeQuery() {

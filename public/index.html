@@ -243,6 +243,11 @@
         <h3>Practice Test</h3>
         <p>Ten questions, graded at the end, just like the real thing.</p>
       </button>
+      <button class="mode-card u-glow-hf43f5e66" data-mode="apexam">
+        <span class="mode-emoji">🎓</span>
+        <h3>AP Exam</h3>
+        <p>Full-length practice in the real AP format, with official rubrics.</p>
+      </button>
       <button class="mode-card u-glow-hfb718566" data-mode="review">
         <span class="mode-emoji">↻</span>
         <h3>Review Mistakes</h3>
@@ -537,6 +542,68 @@
         <button class="btn btn-ghost" data-legal="privacy">Privacy Policy</button>
         <button id="logout-btn" class="btn btn-ghost">Sign out</button>
       </div>
+    </div>
+  </section>
+
+
+  <!-- ========================= AP EXAM PRACTICE ========================= -->
+  <section id="view-apexam" class="view hidden">
+    <button class="btn btn-ghost btn-sm u-mb-1rem" data-back="home">← Back</button>
+
+    <div id="ap-picker">
+      <h1 class="u-fs-1p9rem u-mb-p15rem">AP Exam Practice</h1>
+      <p class="muted" id="ap-picker-sub">Pick one of your AP classes.</p>
+      <div id="ap-course-list" class="course-list"></div>
+    </div>
+
+    <div id="ap-brief" class="hidden">
+      <div class="row-between u-mb-1rem">
+        <h1 class="u-fs-1p9rem u-m-0" id="ap-brief-title"></h1>
+        <span class="pill" id="ap-brief-delivery"></span>
+      </div>
+      <div id="ap-brief-body"></div>
+      <div class="row u-mt-1p25rem">
+        <button id="ap-start-mcq" class="btn btn-primary btn-lg">Start Section I</button>
+        <button id="ap-start-frq" class="btn btn-ghost btn-lg">Practise free response</button>
+      </div>
+    </div>
+
+    <div id="ap-mcq" class="hidden">
+      <div class="row-between u-mb-1rem">
+        <span class="label" id="ap-mcq-progress"></span>
+        <span class="timer" id="ap-timer">--:--</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="ap-mcq-bar"></div></div>
+      <div class="card" id="ap-mcq-card">
+        <p class="q-prompt" id="ap-q-prompt"></p>
+        <div class="choices" id="ap-q-choices"></div>
+      </div>
+      <div class="row u-mt-1p25rem">
+        <button id="ap-prev" class="btn btn-ghost">Previous</button>
+        <button id="ap-next" class="btn btn-ghost">Next</button>
+        <button id="ap-submit" class="btn btn-primary u-ml-auto">Submit section</button>
+      </div>
+    </div>
+
+    <div id="ap-results" class="hidden"></div>
+
+    <div id="ap-frq" class="hidden">
+      <div class="row-between u-mb-1rem">
+        <span class="label" id="ap-frq-meta"></span>
+        <span class="timer" id="ap-frq-timer">--:--</span>
+      </div>
+      <div class="card">
+        <h3 id="ap-frq-type" class="u-mt-0"></h3>
+        <p class="q-prompt u-ws-pre-wrap" id="ap-frq-prompt"></p>
+        <p class="dim u-ws-pre-wrap" id="ap-frq-guidance"></p>
+      </div>
+      <label class="u-mt-1rem" id="ap-frq-label" for="ap-frq-text"><span class="label">Your response</span></label>
+      <textarea id="ap-frq-text" class="frq-input" rows="14" placeholder="Write your response here. There is no word limit."></textarea>
+      <div class="row u-mt-1rem">
+        <button id="ap-frq-check" class="btn btn-primary">Check and score</button>
+        <button id="ap-frq-back" class="btn btn-ghost">Choose another</button>
+      </div>
+      <div id="ap-frq-out" class="hidden u-mt-1p25rem"></div>
     </div>
   </section>
 

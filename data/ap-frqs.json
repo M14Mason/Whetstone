@@ -1,0 +1,633 @@
+{
+ "_note": "FRQ prompts authored to match the official section structure and point values for each exam. Rubrics mirror the published College Board scoring rubrics. Prompts are original practice items, NOT reproduced College Board questions.",
+ "frqs": {
+  "ap-us-history": [
+   {
+    "id": "apush-dbq-1",
+    "type": "DBQ",
+    "minutes": 60,
+    "maxPoints": 7,
+    "rubric": [
+     {
+      "label": "Thesis / Claim",
+      "max": 1,
+      "criteria": "Responds to the prompt with a historically defensible thesis that establishes a line of reasoning. A restatement of the prompt earns nothing."
+     },
+     {
+      "label": "Contextualization",
+      "max": 1,
+      "criteria": "Describes a broader historical context relevant to the prompt. Needs several sentences, not a passing phrase."
+     },
+     {
+      "label": "Evidence from the Documents",
+      "max": 2,
+      "criteria": "1 pt: accurately describes content of 3 documents. 2 pts: uses 4+ documents to support the argument."
+     },
+     {
+      "label": "Evidence Beyond the Documents",
+      "max": 1,
+      "criteria": "One specific piece of historical evidence not found in the documents, relevant to the argument."
+     },
+     {
+      "label": "Sourcing",
+      "max": 1,
+      "criteria": "For 2+ documents, explains how point of view, purpose, situation, or audience is relevant to the argument."
+     },
+     {
+      "label": "Complexity",
+      "max": 1,
+      "criteria": "Demonstrates a complex understanding: corroboration, qualification, modification, or nuanced multi-causal analysis."
+     }
+    ],
+    "prompt": "Evaluate the extent to which the Progressive Era (1890-1920) reform movements fostered change in United States society.",
+    "guidance": "You have 7 documents in the real exam. Practise the structure: thesis, context, document use, outside evidence, sourcing, complexity.",
+    "autoChecks": [
+     "thesis",
+     "length:400",
+     "documents:3",
+     "paragraphs:4"
+    ]
+   },
+   {
+    "id": "apush-leq-1",
+    "type": "Long Essay",
+    "minutes": 40,
+    "maxPoints": 6,
+    "rubric": [
+     {
+      "label": "Thesis / Claim",
+      "max": 1,
+      "criteria": "Historically defensible thesis establishing a line of reasoning."
+     },
+     {
+      "label": "Contextualization",
+      "max": 1,
+      "criteria": "Describes a broader historical context relevant to the prompt."
+     },
+     {
+      "label": "Evidence",
+      "max": 2,
+      "criteria": "1 pt: two specific relevant examples. 2 pts: uses that evidence to support the argument."
+     },
+     {
+      "label": "Analysis and Reasoning",
+      "max": 2,
+      "criteria": "1 pt: uses reasoning (causation, comparison, CCOT) to frame the argument. 2 pts: demonstrates complex understanding."
+     }
+    ],
+    "prompt": "Evaluate the extent to which the Civil War marked a turning point in the role of the federal government in United States society from 1840 to 1877.",
+    "autoChecks": [
+     "thesis",
+     "length:300",
+     "paragraphs:3"
+    ]
+   },
+   {
+    "id": "apush-saq-1",
+    "type": "Short Answer",
+    "minutes": 13,
+    "maxPoints": 3,
+    "rubric": [
+     {
+      "label": "Part A",
+      "max": 1,
+      "criteria": "Accurate response to the first task."
+     },
+     {
+      "label": "Part B",
+      "max": 1,
+      "criteria": "Accurate response to the second task."
+     },
+     {
+      "label": "Part C",
+      "max": 1,
+      "criteria": "Accurate response to the third task."
+     }
+    ],
+    "prompt": "a) Briefly describe ONE specific historical difference between the New England and Chesapeake colonies before 1700.\nb) Briefly explain ONE specific cause of that difference.\nc) Briefly explain ONE specific effect of that difference on colonial development.",
+    "autoChecks": [
+     "length:120",
+     "parts:3"
+    ]
+   }
+  ],
+  "ap-world-history": [
+   {
+    "id": "apwh-dbq-1",
+    "type": "DBQ",
+    "minutes": 60,
+    "maxPoints": 7,
+    "rubric": [
+     {
+      "label": "Thesis / Claim",
+      "max": 1,
+      "criteria": "Responds to the prompt with a historically defensible thesis that establishes a line of reasoning. A restatement of the prompt earns nothing."
+     },
+     {
+      "label": "Contextualization",
+      "max": 1,
+      "criteria": "Describes a broader historical context relevant to the prompt. Needs several sentences, not a passing phrase."
+     },
+     {
+      "label": "Evidence from the Documents",
+      "max": 2,
+      "criteria": "1 pt: accurately describes content of 3 documents. 2 pts: uses 4+ documents to support the argument."
+     },
+     {
+      "label": "Evidence Beyond the Documents",
+      "max": 1,
+      "criteria": "One specific piece of historical evidence not found in the documents, relevant to the argument."
+     },
+     {
+      "label": "Sourcing",
+      "max": 1,
+      "criteria": "For 2+ documents, explains how point of view, purpose, situation, or audience is relevant to the argument."
+     },
+     {
+      "label": "Complexity",
+      "max": 1,
+      "criteria": "Demonstrates a complex understanding: corroboration, qualification, modification, or nuanced multi-causal analysis."
+     }
+    ],
+    "prompt": "Evaluate the extent to which industrialization changed the role of the state in the global economy in the period 1750 to 1900.",
+    "autoChecks": [
+     "thesis",
+     "length:400",
+     "documents:3",
+     "paragraphs:4"
+    ]
+   },
+   {
+    "id": "apwh-leq-1",
+    "type": "Long Essay",
+    "minutes": 40,
+    "maxPoints": 6,
+    "rubric": [
+     {
+      "label": "Thesis / Claim",
+      "max": 1,
+      "criteria": "Historically defensible thesis establishing a line of reasoning."
+     },
+     {
+      "label": "Contextualization",
+      "max": 1,
+      "criteria": "Describes a broader historical context relevant to the prompt."
+     },
+     {
+      "label": "Evidence",
+      "max": 2,
+      "criteria": "1 pt: two specific relevant examples. 2 pts: uses that evidence to support the argument."
+     },
+     {
+      "label": "Analysis and Reasoning",
+      "max": 2,
+      "criteria": "1 pt: uses reasoning (causation, comparison, CCOT) to frame the argument. 2 pts: demonstrates complex understanding."
+     }
+    ],
+    "prompt": "Evaluate the extent to which maritime empires established between 1450 and 1750 transformed economies in the regions they controlled.",
+    "autoChecks": [
+     "thesis",
+     "length:300",
+     "paragraphs:3"
+    ]
+   }
+  ],
+  "ap-us-government": [
+   {
+    "id": "gov-arg-1",
+    "type": "Argument Essay",
+    "minutes": 40,
+    "maxPoints": 6,
+    "rubric": [
+     {
+      "label": "Claim / Thesis",
+      "max": 1,
+      "criteria": "Defensible claim responding to the prompt with a line of reasoning."
+     },
+     {
+      "label": "Evidence",
+      "max": 3,
+      "criteria": "1 pt: names an accurate piece of specific evidence. 2 pts: uses one required foundational document. 3 pts: explains how the evidence supports the claim."
+     },
+     {
+      "label": "Reasoning",
+      "max": 1,
+      "criteria": "Explains how or why the evidence supports the claim."
+     },
+     {
+      "label": "Alternate Perspective",
+      "max": 1,
+      "criteria": "Responds to an opposing or alternate perspective with refutation, concession, or rebuttal."
+     }
+    ],
+    "prompt": "Develop an argument about whether the Electoral College should be retained as the method for electing the president.\n\nUse at least ONE of these foundational documents: Federalist No. 68, Federalist No. 10, or the Constitution of the United States.",
+    "autoChecks": [
+     "thesis",
+     "length:350",
+     "foundational",
+     "paragraphs:3"
+    ]
+   },
+   {
+    "id": "gov-scotus-1",
+    "type": "SCOTUS Comparison",
+    "minutes": 20,
+    "maxPoints": 4,
+    "rubric": [
+     {
+      "label": "Identify",
+      "max": "1",
+      "criteria": "Identifies the constitutional clause or principle common to both cases"
+     },
+     {
+      "label": "Explain the required case",
+      "max": "2",
+      "criteria": "Explains how the facts of the required case led to the holding"
+     },
+     {
+      "label": "Compare",
+      "max": "1",
+      "criteria": "Explains how the reasoning of the required case applies to the new case"
+     }
+    ],
+    "prompt": "In Tinker v. Des Moines (1969) the Supreme Court ruled that students do not shed their constitutional rights at the schoolhouse gate.\n\nA school district bans students from posting political messages on personal social media accounts during school hours.\n\na) Identify the constitutional clause common to both.\nb) Explain how the facts of Tinker led to its holding.\nc) Explain how the reasoning in Tinker could apply to the new scenario.",
+    "autoChecks": [
+     "length:200",
+     "parts:3"
+    ]
+   }
+  ],
+  "ap-english-language": [
+   {
+    "id": "lang-rhet-1",
+    "type": "Rhetorical Analysis",
+    "minutes": 40,
+    "maxPoints": 6,
+    "rubric": [
+     {
+      "label": "Thesis",
+      "max": 1,
+      "criteria": "A defensible thesis that responds to the prompt with a line of reasoning."
+     },
+     {
+      "label": "Evidence and Commentary",
+      "max": 4,
+      "criteria": "Specific evidence plus commentary explaining how it supports the line of reasoning. 4 pts requires consistent explanation across the response."
+     },
+     {
+      "label": "Sophistication",
+      "max": 1,
+      "criteria": "Demonstrates sophistication of thought: a nuanced argument, tensions/contradictions, or vivid and persuasive style."
+     }
+    ],
+    "prompt": "Read the passage carefully. Then write an essay analysing the rhetorical choices the writer makes to achieve their purpose.\n\n(In the real exam a full passage is supplied. Practise the moves: identify purpose, select specific choices, explain effect on the audience.)",
+    "autoChecks": [
+     "thesis",
+     "length:450",
+     "paragraphs:4",
+     "noSummary"
+    ]
+   },
+   {
+    "id": "lang-arg-1",
+    "type": "Argument",
+    "minutes": 40,
+    "maxPoints": 6,
+    "rubric": [
+     {
+      "label": "Thesis",
+      "max": 1,
+      "criteria": "A defensible thesis that responds to the prompt with a line of reasoning."
+     },
+     {
+      "label": "Evidence and Commentary",
+      "max": 4,
+      "criteria": "Specific evidence plus commentary explaining how it supports the line of reasoning. 4 pts requires consistent explanation across the response."
+     },
+     {
+      "label": "Sophistication",
+      "max": 1,
+      "criteria": "Demonstrates sophistication of thought: a nuanced argument, tensions/contradictions, or vivid and persuasive style."
+     }
+    ],
+    "prompt": "Some argue that widespread access to artificial intelligence tools will deepen inequality; others argue it will reduce it.\n\nWrite an essay that argues your position on the effect of widespread AI access on inequality.",
+    "autoChecks": [
+     "thesis",
+     "length:450",
+     "paragraphs:4"
+    ]
+   }
+  ],
+  "ap-english-literature": [
+   {
+    "id": "lit-poetry-1",
+    "type": "Poetry Analysis",
+    "minutes": 40,
+    "maxPoints": 6,
+    "rubric": [
+     {
+      "label": "Thesis",
+      "max": 1,
+      "criteria": "A defensible thesis that responds to the prompt with a line of reasoning."
+     },
+     {
+      "label": "Evidence and Commentary",
+      "max": 4,
+      "criteria": "Specific evidence plus commentary explaining how it supports the line of reasoning. 4 pts requires consistent explanation across the response."
+     },
+     {
+      "label": "Sophistication",
+      "max": 1,
+      "criteria": "Demonstrates sophistication of thought: a nuanced argument, tensions/contradictions, or vivid and persuasive style."
+     }
+    ],
+    "prompt": "Read the poem carefully. Then write an essay analysing how the poet uses literary elements and techniques to convey the speaker's complex attitude toward the passage of time.",
+    "autoChecks": [
+     "thesis",
+     "length:400",
+     "paragraphs:3",
+     "noSummary"
+    ]
+   },
+   {
+    "id": "lit-arg-1",
+    "type": "Literary Argument",
+    "minutes": 40,
+    "maxPoints": 6,
+    "rubric": [
+     {
+      "label": "Thesis",
+      "max": 1,
+      "criteria": "A defensible thesis that responds to the prompt with a line of reasoning."
+     },
+     {
+      "label": "Evidence and Commentary",
+      "max": 4,
+      "criteria": "Specific evidence plus commentary explaining how it supports the line of reasoning. 4 pts requires consistent explanation across the response."
+     },
+     {
+      "label": "Sophistication",
+      "max": 1,
+      "criteria": "Demonstrates sophistication of thought: a nuanced argument, tensions/contradictions, or vivid and persuasive style."
+     }
+    ],
+    "prompt": "Many works of literature feature a character who is deliberately deceived. Choose a novel or play in which a character is deceived, and write an essay analysing how that deception contributes to an interpretation of the work as a whole.\n\nDo not merely summarise the plot.",
+    "autoChecks": [
+     "thesis",
+     "length:400",
+     "paragraphs:3",
+     "noSummary"
+    ]
+   }
+  ],
+  "ap-psychology": [
+   {
+    "id": "psych-aaq-1",
+    "type": "Article Analysis (AAQ)",
+    "minutes": 25,
+    "maxPoints": 7,
+    "rubric": [
+     {
+      "label": "Research method",
+      "max": "1",
+      "criteria": "Identifies the research method used in the study"
+     },
+     {
+      "label": "Operational definition",
+      "max": "1",
+      "criteria": "Identifies the operational definition of a variable"
+     },
+     {
+      "label": "Describe findings",
+      "max": "1",
+      "criteria": "Describes the study's findings"
+     },
+     {
+      "label": "Generalisability",
+      "max": "1",
+      "criteria": "Explains whether the findings generalise, using a specific detail"
+     },
+     {
+      "label": "Ethics",
+      "max": "1",
+      "criteria": "Explains whether the study was conducted ethically"
+     },
+     {
+      "label": "Apply a concept",
+      "max": "2",
+      "criteria": "Explains how a course concept relates to the study's findings"
+     }
+    ],
+    "prompt": "A researcher randomly assigns 200 students to either an 8-hour or a 5-hour sleep condition for two weeks, then measures recall on a word list. The 8-hour group recalls significantly more words.\n\nRespond to each: identify the research method; state the operational definition of memory; describe the findings; explain generalisability; evaluate the ethics; and explain how consolidation relates to the findings.",
+    "autoChecks": [
+     "length:250",
+     "parts:6"
+    ]
+   },
+   {
+    "id": "psych-ebq-1",
+    "type": "Evidence-Based (EBQ)",
+    "minutes": 45,
+    "maxPoints": 7,
+    "rubric": [
+     {
+      "label": "Claim",
+      "max": "1",
+      "criteria": "States a defensible claim answering the question"
+     },
+     {
+      "label": "Evidence from sources",
+      "max": "2",
+      "criteria": "Uses specific evidence from at least two sources"
+     },
+     {
+      "label": "Explain evidence",
+      "max": "2",
+      "criteria": "Explains how each piece of evidence supports the claim"
+     },
+     {
+      "label": "Additional concept",
+      "max": "2",
+      "criteria": "Applies a relevant psychological concept beyond the sources"
+     }
+    ],
+    "prompt": "Using the provided sources, develop and justify an argument about whether social media use causes decreased wellbeing in adolescents.",
+    "autoChecks": [
+     "thesis",
+     "length:350",
+     "paragraphs:3"
+    ]
+   }
+  ],
+  "ap-biology": [
+   {
+    "id": "bio-long-1",
+    "type": "Long Free Response",
+    "minutes": 25,
+    "maxPoints": 8,
+    "rubric": [
+     {
+      "label": "Describe / Identify",
+      "max": 2,
+      "criteria": "Accurately describes the biological process or identifies the variables"
+     },
+     {
+      "label": "Explain",
+      "max": 2,
+      "criteria": "Explains the mechanism using correct biological reasoning"
+     },
+     {
+      "label": "Predict",
+      "max": 2,
+      "criteria": "Makes a prediction consistent with the described mechanism"
+     },
+     {
+      "label": "Justify with data",
+      "max": 2,
+      "criteria": "Justifies the prediction using the data or experimental design"
+     }
+    ],
+    "prompt": "Researchers grow bacteria with and without an antibiotic over 40 generations. The antibiotic-exposed population shows increasing resistance.\n\na) Describe the mechanism producing resistance.\nb) Explain why resistance increased in the exposed population but not the control.\nc) Predict what happens to resistance frequency if the antibiotic is removed for 40 generations.\nd) Justify your prediction in terms of fitness costs.",
+    "autoChecks": [
+     "length:300",
+     "parts:4",
+     "terms:selection,mutation,fitness"
+    ]
+   }
+  ],
+  "ap-chemistry": [
+   {
+    "id": "chem-long-1",
+    "type": "Long Free Response",
+    "minutes": 25,
+    "maxPoints": 10,
+    "rubric": [
+     {
+      "label": "Calculation setup",
+      "max": 3,
+      "criteria": "Correct setup with units and balanced relationships"
+     },
+     {
+      "label": "Correct answer",
+      "max": 2,
+      "criteria": "Numerically correct with appropriate significant figures"
+     },
+     {
+      "label": "Explanation",
+      "max": 3,
+      "criteria": "Explains the chemical principle using particulate-level reasoning"
+     },
+     {
+      "label": "Representation",
+      "max": 2,
+      "criteria": "Correct diagram, graph, or particulate representation"
+     }
+    ],
+    "prompt": "A 0.250 M solution of a weak acid HA has a pH of 2.85 at 25 degrees C.\n\na) Calculate the Ka of HA, showing your setup.\nb) Explain, at the particulate level, why the pH would change if the solution were diluted to 0.125 M.\nc) Sketch a titration curve for HA titrated with NaOH, labelling the equivalence point and the buffer region.",
+    "autoChecks": [
+     "length:200",
+     "parts:3",
+     "terms:equilibrium,conjugate"
+    ]
+   }
+  ],
+  "ap-calculus-ab": [
+   {
+    "id": "calc-ab-frq-1",
+    "type": "Free Response (no calculator)",
+    "minutes": 15,
+    "maxPoints": 9,
+    "rubric": [
+     {
+      "label": "Part a",
+      "max": 3,
+      "criteria": "Correct derivative and evaluation with supporting work"
+     },
+     {
+      "label": "Part b",
+      "max": 3,
+      "criteria": "Correct application of the chosen theorem with hypotheses stated"
+     },
+     {
+      "label": "Part c",
+      "max": 3,
+      "criteria": "Correct integral setup and evaluation with units"
+     }
+    ],
+    "prompt": "Let f be a twice-differentiable function with f(2) = 5 and f'(2) = -3.\n\na) Write the equation of the tangent line to f at x = 2 and use it to approximate f(2.1).\nb) Given f''(x) < 0 on [2, 3], determine whether your approximation over- or under-estimates f(2.1). Justify.\nc) If g(x) is the integral of f from 2 to x, find g'(2) and g''(2).",
+    "autoChecks": [
+     "length:150",
+     "parts:3",
+     "terms:tangent,concave"
+    ]
+   }
+  ],
+  "ap-calculus-bc": [
+   {
+    "id": "calc-bc-frq-1",
+    "type": "Free Response (no calculator)",
+    "minutes": 15,
+    "maxPoints": 9,
+    "rubric": [
+     {
+      "label": "Part a",
+      "max": 3,
+      "criteria": "Correct series terms and interval work"
+     },
+     {
+      "label": "Part b",
+      "max": 3,
+      "criteria": "Correct radius/interval of convergence with a valid test"
+     },
+     {
+      "label": "Part c",
+      "max": 3,
+      "criteria": "Correct error bound or term-by-term operation"
+     }
+    ],
+    "prompt": "Consider the Taylor series for f centred at x = 0 with terms a_n = ((-1)^n x^(2n)) / (2n)!.\n\na) Write the first four nonzero terms and identify the function.\nb) Determine the interval of convergence, naming the test you use.\nc) Use the alternating series error bound to bound the error when approximating f(1) with the first three terms.",
+    "autoChecks": [
+     "length:150",
+     "parts:3",
+     "terms:convergence"
+    ]
+   }
+  ],
+  "ap-statistics": [
+   {
+    "id": "stats-frq-1",
+    "type": "Free Response",
+    "minutes": 22,
+    "maxPoints": 10,
+    "rubric": [
+     {
+      "label": "State",
+      "max": 3,
+      "criteria": "States correct hypotheses and identifies the procedure by name"
+     },
+     {
+      "label": "Plan",
+      "max": 2,
+      "criteria": "Checks conditions with reference to the specific context"
+     },
+     {
+      "label": "Do",
+      "max": 3,
+      "criteria": "Correct test statistic and p-value"
+     },
+     {
+      "label": "Conclude",
+      "max": 2,
+      "criteria": "Conclusion in context, linked to alpha, without claiming proof"
+     }
+    ],
+    "prompt": "A school claims 60% of its students walk to school. In a random sample of 120 students, 62 walk.\n\na) State appropriate hypotheses.\nb) Check the conditions for inference.\nc) Carry out the test and report the test statistic and p-value.\nd) Interpret your result in context at alpha = 0.05.",
+    "autoChecks": [
+     "length:220",
+     "parts:4",
+     "terms:hypothesis,condition,p-value,context"
+    ]
+   }
+  ]
+ }
+}

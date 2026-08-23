@@ -434,5 +434,716 @@
    "Personal Finance and Economics"
   ],
   "sharesBankWith": "hs-economics"
+ },
+ {
+  "id": "hs-honors-trigonometry",
+  "name": "Honors Trigonometry",
+  "level": "honors",
+  "category": "Math",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Angles and Angle Measure",
+   "Right Triangle Trigonometry",
+   "The Unit Circle",
+   "Graphs of Trigonometric Functions",
+   "Inverse Trigonometric Functions",
+   "Trigonometric Identities",
+   "Solving Trigonometric Equations",
+   "Law of Sines and Law of Cosines",
+   "Vectors and Applications",
+   "Polar Coordinates and Complex Numbers"
+  ],
+  "sharesBankWith": "hs-trigonometry"
+ },
+ {
+  "id": "hs-honors-calculus",
+  "name": "Honors Calculus",
+  "level": "honors",
+  "category": "Math",
+  "grades": [
+   11,
+   12
+  ],
+  "units": [
+   "Limits and Continuity",
+   "The Derivative",
+   "Rules of Differentiation",
+   "Applications of Derivatives",
+   "Related Rates and Optimization",
+   "The Definite Integral",
+   "The Fundamental Theorem of Calculus",
+   "Techniques of Integration",
+   "Applications of Integration",
+   "Differential Equations"
+  ],
+  "sharesBankWith": "hs-calculus"
+ },
+ {
+  "id": "hs-honors-physical-science",
+  "name": "Honors Physical Science",
+  "level": "honors",
+  "category": "Science",
+  "grades": [
+   9
+  ],
+  "units": [
+   "Scientific Method and Measurement",
+   "Properties of Matter",
+   "Atomic Structure",
+   "The Periodic Table",
+   "Chemical Bonding and Reactions",
+   "Motion and Forces",
+   "Work, Energy, and Machines",
+   "Heat and Thermal Energy",
+   "Waves and Sound",
+   "Light and Optics",
+   "Electricity and Magnetism"
+  ],
+  "sharesBankWith": "hs-physical-science"
+ },
+ {
+  "id": "hs-honors-earth-science",
+  "name": "Honors Earth Science",
+  "level": "honors",
+  "category": "Science",
+  "grades": [
+   9,
+   10
+  ],
+  "units": [
+   "Introduction to Earth Science",
+   "Minerals and Rocks",
+   "Plate Tectonics",
+   "Earthquakes and Volcanoes",
+   "Weathering, Erosion, and Soil",
+   "Earth's History and Geologic Time",
+   "Oceanography",
+   "The Atmosphere and Weather",
+   "Climate and Climate Change",
+   "Astronomy and the Solar System",
+   "Stars and the Universe"
+  ],
+  "sharesBankWith": "hs-earth-science"
+ },
+ {
+  "id": "hs-honors-environmental-science",
+  "name": "Honors Environmental Science",
+  "level": "honors",
+  "category": "Science",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Introduction to Environmental Science",
+   "Ecosystems and Energy Flow",
+   "Biodiversity and Conservation",
+   "Human Population Dynamics",
+   "Soil and Agriculture",
+   "Water Resources and Pollution",
+   "Air Pollution and the Atmosphere",
+   "Energy Resources",
+   "Renewable Energy",
+   "Waste Management",
+   "Climate Change",
+   "Environmental Policy and Sustainability"
+  ],
+  "sharesBankWith": "hs-environmental-science"
+ },
+ {
+  "id": "hs-honors-forensic-science",
+  "name": "Honors Forensic Science",
+  "level": "honors",
+  "category": "Science",
+  "grades": [
+   11,
+   12
+  ],
+  "units": [
+   "Introduction to Forensic Science",
+   "Crime Scene Investigation",
+   "Fingerprint Analysis",
+   "Trace Evidence: Hair and Fiber",
+   "Blood and Bloodstain Patterns",
+   "DNA Analysis",
+   "Toxicology and Drugs",
+   "Firearms and Toolmarks",
+   "Document and Handwriting Analysis",
+   "Forensic Anthropology",
+   "Entomology and Time of Death",
+   "Courtroom Testimony and Ethics"
+  ],
+  "sharesBankWith": "hs-forensic-science"
+ },
+ {
+  "id": "hs-honors-astronomy",
+  "name": "Honors Astronomy",
+  "level": "honors",
+  "category": "Science",
+  "grades": [
+   11,
+   12
+  ],
+  "units": [
+   "History of Astronomy",
+   "Telescopes and Observation",
+   "The Earth-Moon System",
+   "The Solar System",
+   "Terrestrial and Gas Planets",
+   "Comets, Asteroids, and Meteors",
+   "The Sun",
+   "Stellar Classification and Evolution",
+   "Black Holes and Neutron Stars",
+   "Galaxies",
+   "Cosmology and the Big Bang",
+   "The Search for Life"
+  ],
+  "sharesBankWith": "hs-astronomy"
+ },
+ {
+  "id": "hs-honors-geography",
+  "name": "Honors Geography",
+  "level": "honors",
+  "category": "Social Studies",
+  "grades": [
+   9,
+   10
+  ],
+  "units": [
+   "Map Skills and Geographic Tools",
+   "Physical Geography and Landforms",
+   "Climate and Vegetation Regions",
+   "Population and Migration",
+   "Culture and Cultural Diffusion",
+   "Political Geography",
+   "Economic Geography",
+   "Urban Geography",
+   "North America",
+   "Latin America",
+   "Europe and Russia",
+   "Africa",
+   "Asia and Oceania"
+  ],
+  "sharesBankWith": "hs-geography"
+ },
+ {
+  "id": "hs-honors-psychology",
+  "name": "Honors Psychology",
+  "level": "honors",
+  "category": "Social Studies",
+  "grades": [
+   11,
+   12
+  ],
+  "units": [
+   "History and Approaches",
+   "Research Methods",
+   "Biological Bases of Behavior",
+   "Sensation and Perception",
+   "States of Consciousness",
+   "Learning",
+   "Memory",
+   "Cognition and Language",
+   "Motivation and Emotion",
+   "Developmental Psychology",
+   "Personality",
+   "Psychological Disorders and Treatment",
+   "Social Psychology"
+  ],
+  "sharesBankWith": "hs-psychology"
+ },
+ {
+  "id": "hs-honors-sociology",
+  "name": "Honors Sociology",
+  "level": "honors",
+  "category": "Social Studies",
+  "grades": [
+   11,
+   12
+  ],
+  "units": [
+   "The Sociological Perspective",
+   "Research Methods in Sociology",
+   "Culture and Society",
+   "Socialization",
+   "Social Structure and Interaction",
+   "Groups and Organizations",
+   "Deviance and Social Control",
+   "Social Stratification",
+   "Race and Ethnicity",
+   "Gender and Age",
+   "Family and Education",
+   "Social Change and Movements"
+  ],
+  "sharesBankWith": "hs-sociology"
+ },
+ {
+  "id": "hs-honors-spanish-3",
+  "name": "Honors Spanish 3",
+  "level": "honors",
+  "category": "World Languages",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Review of Past Tenses",
+   "The Future Tense",
+   "The Conditional Tense",
+   "Present Subjunctive: Formation",
+   "Subjunctive with Doubt and Emotion",
+   "Subjunctive with Impersonal Expressions",
+   "Adjective Clauses and Subjunctive",
+   "The Present Perfect",
+   "The Past Perfect",
+   "Por Versus Para",
+   "Hispanic Culture and Traditions",
+   "Reading Authentic Texts"
+  ],
+  "sharesBankWith": "hs-spanish-3"
+ },
+ {
+  "id": "hs-honors-spanish-4",
+  "name": "Honors Spanish 4",
+  "level": "honors",
+  "category": "World Languages",
+  "grades": [
+   11,
+   12
+  ],
+  "units": [
+   "Advanced Subjunctive: Imperfect",
+   "Si Clauses and Hypotheticals",
+   "The Passive Voice",
+   "Relative Pronouns",
+   "Advanced Idiomatic Expressions",
+   "Literature: Short Stories",
+   "Literature: Poetry",
+   "Film and Media Analysis",
+   "Current Events in the Spanish-Speaking World",
+   "Formal Writing and Essays",
+   "Debate and Presentation",
+   "Regional Dialects and Variation"
+  ],
+  "sharesBankWith": "hs-spanish-4"
+ },
+ {
+  "id": "hs-honors-french-3",
+  "name": "Honors French 3",
+  "level": "honors",
+  "category": "World Languages",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Review of Past Tenses",
+   "The Future Simple",
+   "The Conditional",
+   "The Subjunctive: Formation",
+   "Subjunctive with Emotion and Doubt",
+   "The Pluperfect",
+   "Relative Pronouns",
+   "Si Clauses",
+   "Francophone Cultures",
+   "Literature and Short Texts",
+   "Film Analysis",
+   "Formal Writing"
+  ],
+  "sharesBankWith": "hs-french-3"
+ },
+ {
+  "id": "hs-honors-german-2",
+  "name": "Honors German 2",
+  "level": "honors",
+  "category": "World Languages",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Present Tense Review",
+   "The Dative Case",
+   "Two-Way Prepositions",
+   "Separable Prefix Verbs",
+   "The Perfekt Tense",
+   "The Simple Past",
+   "Modal Verbs in Depth",
+   "Reflexive Verbs",
+   "Comparatives and Superlatives",
+   "Subordinate Clauses",
+   "Travel and Transportation",
+   "German Culture and Geography"
+  ],
+  "sharesBankWith": "hs-german-2"
+ },
+ {
+  "id": "hs-honors-chinese-1",
+  "name": "Honors Chinese",
+  "level": "honors",
+  "category": "World Languages",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Pinyin and Tones",
+   "Basic Strokes and Radicals",
+   "Greetings and Self-Introduction",
+   "Numbers and Counting",
+   "Dates, Days, and Time",
+   "Family Members",
+   "Measure Words",
+   "Basic Sentence Structure",
+   "Questions and Question Words",
+   "Food and Ordering",
+   "School and Classroom",
+   "Chinese Culture and Festivals"
+  ],
+  "sharesBankWith": "hs-chinese-1"
+ },
+ {
+  "id": "hs-honors-latin-1",
+  "name": "Honors Latin",
+  "level": "honors",
+  "category": "World Languages",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Pronunciation and Alphabet",
+   "Nouns and the First Declension",
+   "The Second Declension",
+   "Present Tense Verbs",
+   "Adjectives and Agreement",
+   "The Third Declension",
+   "Imperfect and Future Tenses",
+   "The Perfect Tense",
+   "Prepositions and Cases",
+   "Pronouns",
+   "Roman Daily Life",
+   "Roman Mythology"
+  ],
+  "sharesBankWith": "hs-latin-1"
+ },
+ {
+  "id": "hs-honors-accounting",
+  "name": "Honors Accounting",
+  "level": "honors",
+  "category": "Business and Economics",
+  "grades": [
+   11,
+   12
+  ],
+  "units": [
+   "The Accounting Equation",
+   "Analyzing Transactions",
+   "Debits and Credits",
+   "Journalizing and Posting",
+   "The Trial Balance",
+   "Adjusting Entries",
+   "Financial Statements",
+   "Closing Entries",
+   "Cash Control and Bank Reconciliation",
+   "Payroll Accounting",
+   "Merchandising Operations",
+   "Inventory Methods"
+  ],
+  "sharesBankWith": "hs-accounting"
+ },
+ {
+  "id": "hs-honors-business-law",
+  "name": "Honors Business Law",
+  "level": "honors",
+  "category": "Business and Economics",
+  "grades": [
+   11,
+   12
+  ],
+  "units": [
+   "Sources of Law and the Court System",
+   "Criminal Versus Civil Law",
+   "Torts and Negligence",
+   "Contract Formation",
+   "Contract Defenses and Remedies",
+   "Sales and the UCC",
+   "Employment Law",
+   "Consumer Protection",
+   "Property Law",
+   "Intellectual Property",
+   "Business Organizations and Liability",
+   "Ethics in Business Law"
+  ],
+  "sharesBankWith": "hs-business-law"
+ },
+ {
+  "id": "hs-honors-computer-science",
+  "name": "Honors Computer Science",
+  "level": "honors",
+  "category": "Computer Science",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Computing Systems and Hardware",
+   "Binary and Data Representation",
+   "Algorithms and Pseudocode",
+   "Variables and Data Types",
+   "Conditionals",
+   "Loops",
+   "Functions and Parameters",
+   "Lists and Arrays",
+   "Debugging and Testing",
+   "Introduction to Object-Oriented Programming",
+   "The Internet and Networks",
+   "Cybersecurity and Digital Citizenship"
+  ],
+  "sharesBankWith": "hs-computer-science"
+ },
+ {
+  "id": "hs-honors-web-development",
+  "name": "Honors Web Development",
+  "level": "honors",
+  "category": "Computer Science",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "How the Web Works",
+   "HTML Structure and Semantics",
+   "CSS Fundamentals",
+   "The Box Model and Layout",
+   "Flexbox and Grid",
+   "Responsive Design",
+   "JavaScript Basics",
+   "DOM Manipulation",
+   "Events and Interactivity",
+   "Forms and Validation",
+   "Accessibility",
+   "Deployment and Hosting"
+  ],
+  "sharesBankWith": "hs-web-development"
+ },
+ {
+  "id": "hs-honors-engineering",
+  "name": "Honors Engineering",
+  "level": "honors",
+  "category": "Engineering and Technology",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "The Design Process",
+   "Engineering Disciplines and Careers",
+   "Technical Sketching",
+   "Measurement and Precision",
+   "Computer-Aided Design (CAD)",
+   "Geometric Modeling",
+   "Materials and Properties",
+   "Statics and Structures",
+   "Prototyping and Fabrication",
+   "Testing and Iteration",
+   "Documentation and Technical Writing",
+   "Team Design Project"
+  ],
+  "sharesBankWith": "hs-engineering"
+ },
+ {
+  "id": "hs-honors-robotics",
+  "name": "Honors Robotics",
+  "level": "honors",
+  "category": "Engineering and Technology",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Introduction to Robotics",
+   "Mechanical Systems and Gears",
+   "Motors and Actuators",
+   "Sensors and Input",
+   "Microcontrollers",
+   "Programming Fundamentals for Robots",
+   "Control Loops and Feedback",
+   "Autonomous Navigation",
+   "Robot Design and Chassis",
+   "Testing and Troubleshooting",
+   "Competition Strategy",
+   "Ethics and the Future of Robotics"
+  ],
+  "sharesBankWith": "hs-robotics"
+ },
+ {
+  "id": "hs-honors-journalism",
+  "name": "Honors Journalism",
+  "level": "honors",
+  "category": "English",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "History and Role of Journalism",
+   "News Values and Story Selection",
+   "Interviewing Techniques",
+   "Leads and Inverted Pyramid",
+   "News Writing Style and AP Style",
+   "Feature Writing",
+   "Opinion and Editorial Writing",
+   "Sports and Arts Reporting",
+   "Photojournalism",
+   "Media Law and Ethics",
+   "Layout and Design",
+   "Digital and Broadcast Journalism"
+  ],
+  "sharesBankWith": "hs-journalism"
+ },
+ {
+  "id": "hs-honors-speech-debate",
+  "name": "Honors Speech and Debate",
+  "level": "honors",
+  "category": "English",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Communication Fundamentals",
+   "Overcoming Speech Anxiety",
+   "Speech Organization and Outlining",
+   "Informative Speaking",
+   "Persuasive Speaking and Rhetoric",
+   "Logical Fallacies",
+   "Research and Evidence",
+   "Argumentation and Case Building",
+   "Cross-Examination",
+   "Lincoln-Douglas Debate",
+   "Policy Debate",
+   "Impromptu and Extemporaneous Speaking"
+  ],
+  "sharesBankWith": "hs-speech-debate"
+ },
+ {
+  "id": "hs-honors-music-theory",
+  "name": "Honors Music Theory",
+  "level": "honors",
+  "category": "Arts",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "The Staff, Clefs, and Pitch",
+   "Rhythm and Meter",
+   "Major Scales and Key Signatures",
+   "Minor Scales and Key Signatures",
+   "Intervals",
+   "Triads and Chord Qualities",
+   "Seventh Chords",
+   "Roman Numeral Analysis",
+   "Cadences and Phrases",
+   "Voice Leading Basics",
+   "Form and Analysis",
+   "Ear Training and Sight Singing"
+  ],
+  "sharesBankWith": "hs-music-theory"
+ },
+ {
+  "id": "hs-honors-studio-art",
+  "name": "Honors Studio Art",
+  "level": "honors",
+  "category": "Arts",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Elements of Art",
+   "Principles of Design",
+   "Drawing Fundamentals",
+   "Value and Shading",
+   "Perspective",
+   "Color Theory and Mixing",
+   "Painting Techniques",
+   "Printmaking",
+   "Sculpture and 3-D Design",
+   "Mixed Media",
+   "Art History Survey",
+   "Portfolio and Critique"
+  ],
+  "sharesBankWith": "hs-studio-art"
+ },
+ {
+  "id": "hs-honors-theater",
+  "name": "Honors Theater",
+  "level": "honors",
+  "category": "Arts",
+  "grades": [
+   10,
+   11,
+   12
+  ],
+  "units": [
+   "Theater History",
+   "Elements of Drama",
+   "Vocal Technique",
+   "Movement and Physicality",
+   "Improvisation",
+   "Character Analysis",
+   "Script Analysis",
+   "Acting Methods",
+   "Monologues and Scene Work",
+   "Technical Theater and Design",
+   "Directing Basics",
+   "Performance and Critique"
+  ],
+  "sharesBankWith": "hs-theater"
+ },
+ {
+  "id": "hs-honors-health-science",
+  "name": "Honors Health Science",
+  "level": "honors",
+  "category": "Career and Technical",
+  "grades": [
+   11,
+   12
+  ],
+  "units": [
+   "Healthcare Systems and Careers",
+   "Medical Terminology: Roots and Prefixes",
+   "Medical Terminology: Body Systems",
+   "Infection Control",
+   "Vital Signs",
+   "Patient Care Basics",
+   "Medical Ethics and HIPAA",
+   "Legal Responsibilities",
+   "Anatomy Review for Health Careers",
+   "Emergency Response and CPR",
+   "Communication in Healthcare",
+   "Professionalism and Employability"
+  ],
+  "sharesBankWith": "hs-health-science"
  }
 ]

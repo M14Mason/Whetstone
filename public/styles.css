@@ -1365,3 +1365,68 @@ html, body { max-width: 100%; overflow-x: hidden; }
   .rubric-pt { min-width: 44px; min-height: 44px; }
   #ap-submit { width: 100%; margin-left: 0; margin-top: .5rem; }
 }
+
+/* ==================== quota meter ==================== */
+/* Pips make the daily cap concrete. "3 left" is a number; three dots going
+   dark as you spend them is a feeling, and it is what makes the limit land
+   before the student hits it. */
+.quota-meter { display: flex; align-items: center; gap: .6rem; }
+.quota-pips { display: flex; gap: .25rem; }
+.pip {
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 8px var(--accent-glow);
+  transition: background .3s var(--ease), box-shadow .3s var(--ease);
+}
+.pip.spent { background: var(--border); box-shadow: none; }
+.quota-low { color: var(--warn) !important; font-weight: 600; }
+
+/* ==================== paywall ==================== */
+.paywall {
+  position: fixed; inset: 0; z-index: 120;
+  display: grid; place-items: center; padding: 1.25rem;
+  background: #05060ae6; backdrop-filter: blur(10px);
+  animation: fade-in .22s var(--ease);
+  overflow-y: auto;
+}
+.paywall-card {
+  width: min(460px, 100%);
+  background: var(--surface-solid);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-xl); padding: 2rem 1.75rem;
+  box-shadow: var(--shadow-lg), 0 0 60px -20px var(--accent-glow);
+  animation: pop .32s var(--spring);
+  text-align: center;
+}
+.paywall-kicker {
+  display: inline-block; margin-bottom: .75rem;
+  font-size: .66rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  padding: .28rem .7rem; border-radius: 999px;
+  background: var(--accent-soft); color: #b9aeff; border: 1px solid #6d5efc33;
+}
+.paywall-card h2 { font-size: 1.5rem; margin: 0 0 .5rem; }
+.paywall-sub { color: var(--text-secondary); font-size: .95rem; margin: 0 0 1.25rem; }
+
+/* The student's own numbers, not invented social proof. */
+.paywall-stats { display: flex; justify-content: center; gap: 1.5rem; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.paywall-stat { display: flex; flex-direction: column; }
+.paywall-stat strong { font-family: Outfit, sans-serif; font-size: 1.6rem; font-weight: 800; line-height: 1; }
+.paywall-stat span { font-size: .7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; margin-top: .2rem; }
+
+.paywall-points { list-style: none; margin: 0 0 1.25rem; padding: 0; display: grid; gap: .5rem; text-align: left; }
+.paywall-points li { display: flex; gap: .6rem; align-items: flex-start; font-size: .9rem; line-height: 1.5; }
+
+.paywall-price { margin-bottom: 1rem; font-family: Outfit, sans-serif; }
+.paywall-price strong { font-size: 2.1rem; font-weight: 800; letter-spacing: -.03em; }
+
+.btn-block-center { width: 100%; justify-content: center; }
+#paywall-dismiss { margin-top: .5rem; }
+.paywall-fineprint { font-size: .75rem; margin: .75rem 0 0; }
+
+@media (max-width: 720px) {
+  .paywall { padding: .75rem; align-items: start; padding-top: 2rem; }
+  .paywall-card { padding: 1.5rem 1.25rem; }
+  .paywall-card h2 { font-size: 1.3rem; }
+  .paywall-stats { gap: 1.1rem; }
+  /* Full-width buttons: the two most likely thumbs positions on a phone. */
+  .btn-block-center { min-height: 50px; }
+}

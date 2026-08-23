@@ -569,8 +569,8 @@ function startMode(mode) {
   // A locked card is still clickable: tapping it explains why, instead of
   // doing nothing, which is the usual complaint about gated interfaces.
   if (isLockedMode(mode)) {
-    toast('That mode is part of Premium. Opening your plan options.');
-    showView('plan');
+    const names = { match: 'Match', test: 'Practice Test', review: 'Review Mistakes', apexam: 'AP Exam practice' };
+    showPaywall('mode', { modeName: names[mode], courses: (state.user?.courses || []).length });
     return;
   }
   if (mode === 'apexam') { startApExam(); return; }
@@ -900,6 +900,125 @@ $('#ap-submit').addEventListener('click', apSubmitMcq);
 $('#ap-frq-check').addEventListener('click', apCheckFrq);
 $('#ap-frq-back').addEventListener('click', apChooseFrq);
 
+
+// ------------------------------------------------------------------ paywall
+/* Conversion prompts.
+ *
+ * Three triggers, one component:
+ *   'midway'   a soft, dismissible prompt part-way through a free session,
+ *              shown while the student is engaged rather than after they have
+ *              already been cut off.
+ *   'limit'    the hard wall when the daily quota is gone.
+ *   'mode'     tapping a locked study mode.
+ *
+ * Deliberately NOT used here: fake countdowns, invented scarcity, or a hidden
+ * dismiss button. The audience is teenagers, and a prompt that has to trick
+ * someone to convert is one that produces refunds and complaints from parents.
+ * Everything below is true: the limits are real and the free tier really does
+ * stay free. */
+const paywall = {
+  shownThisSession: new Set(),
+};
+
+function paywallCopy(trigger, ctx = {}) {
+  if (trigger === 'limit') {
+    return {
+      kicker: 'Daily limit reached',
+      title: 'You are out of questions for today.',
+      sub: `You answered all ${ctx.limit || 5}. Premium removes the cap entirely, so a study session ends when you decide it does.`,
+    };
+  }
+  if (trigger === 'mode') {
+    return {
+      kicker: 'Premium feature',
+      title: `${ctx.modeName || 'That mode'} is part of Premium.`,
+      sub: 'Match, Practice Test, Review and full AP exam practice all come with it.',
+    };
+  }
+  return {
+    kicker: 'You are on a roll',
+    title: ctx.remaining === 1
+      ? 'One question left today.'
+      : `${ctx.remaining} questions left today.`,
+    sub: 'Free accounts get 5 a day. You are mid-session and about to run out. Premium keeps it going.',
+  };
+}
+
+function showPaywall(trigger, ctx = {}) {
+  const el = $('#paywall');
+  const copy = paywallCopy(trigger, ctx);
+
+  $('#paywall-kicker').textContent = copy.kicker;
+  $('#paywall-title').textContent = copy.title;
+  $('#paywall-sub').textContent = copy.sub;
+
+  // Personalised, factual stats. Nothing invented: these come from the
+  // student's own record.
+  const q = state.user?.quota || {};
+  const stats = [];
+  if (Number.isFinite(q.used)) stats.push([q.used, q.used === 1 ? 'question today' : 'questions today']);
+  if (ctx.streak > 1) stats.push([ctx.streak, 'in a row']);
+  if (ctx.courses) stats.push([ctx.courses, ctx.courses === 1 ? 'class added' : 'classes added']);
+  $('#paywall-stats').innerHTML = stats.map(([n, label]) =>
+    `<div class="paywall-stat"><strong>${esc(String(n))}</strong><span>${esc(label)}</span></div>`).join('');
+
+  el.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  // Hard wall cannot be dismissed back into questions there are none of.
+  $('#paywall-dismiss').textContent = trigger === 'limit' ? 'Back to study modes' : 'Not now';
+  paywall.lastTrigger = trigger;
+}
+
+function hidePaywall() {
+  $('#paywall').classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  if (paywall.lastTrigger === 'limit') showView('home');
+}
+
+/* Show the mid-session prompt once per day per account, at the point where the
+ * student is engaged but close to the cap. Repeating it every session would be
+ * nagging, and nagging is what makes people uninstall. */
+function maybeMidSessionPaywall(quota, streak) {
+  if (!state.user || state.user.plan !== 'free') return;
+  if (!quota || quota.limit === null) return;
+  const key = `mid-${new Date().toDateString()}`;
+  if (paywall.shownThisSession.has(key)) return;
+  // Trigger with 2 left: enough runway that "keep going" is a real offer.
+  if (quota.remaining > 2 || quota.remaining <= 0) return;
+  paywall.shownThisSession.add(key);
+  showPaywall('midway', { remaining: quota.remaining, streak, courses: (state.user.courses || []).length });
+}
+
+function renderQuotaMeter(quota) {
+  const meter = $('#quota-meter');
+  if (!meter) return;
+  const free = state.user && state.user.plan === 'free' && quota && quota.limit !== null;
+  meter.classList.toggle('hidden', !free);
+  if (!free) { $('#quota-note').textContent = quota && quota.limit === null ? 'Unlimited' : ''; return; }
+
+  // Pips make the cap concrete in a way "3 left" does not.
+  $('#quota-pips').innerHTML = Array.from({ length: quota.limit }, (_, i) =>
+    `<span class="pip${i < quota.used ? ' spent' : ''}"></span>`).join('');
+  $('#quota-note').textContent = `${quota.remaining} of ${quota.limit} left today`;
+  $('#quota-note').classList.toggle('quota-low', quota.remaining <= 2);
+}
+
+$('#paywall-dismiss').addEventListener('click', hidePaywall);
+$('#paywall-upgrade').addEventListener('click', async () => {
+  const btn = $('#paywall-upgrade');
+  btn.disabled = true;
+  try {
+    const d = await api('POST', '/api/billing/premium', {});
+    if (d.url) { window.location.href = d.url; return; }
+    state.user = d.user;
+    hidePaywall();
+    renderChrome(); renderModeLocks(); renderUpsellBanner();
+    toast('You are on Premium. Everything is unlocked.', 'good');
+    if (state.view === 'learn') loadQuestion();
+  } catch (err) { toast(err.message, 'bad'); }
+  finally { btn.disabled = false; }
+});
+
 // ------------------------------------------------------------------ learn
 function scopeQuery() {
   const p = new URLSearchParams();
@@ -934,8 +1053,7 @@ async function loadQuestion() {
     d.className = `chip chip-${data.question.difficulty}`;
 
     $('#q-prompt').textContent = data.question.prompt;
-    $('#quota-note').textContent = data.quota.limit === null
-      ? '' : `${data.quota.remaining} left today`;
+    renderQuotaMeter(data.quota);
 
     const keys = ['A', 'B', 'C', 'D', 'E', 'F'];
     $('#q-choices').innerHTML = data.question.choices.map((c, i) => `
@@ -950,6 +1068,9 @@ async function loadQuestion() {
     $('#quiz-card').classList.add('hidden');
     $('#quiz-empty').classList.remove('hidden');
     if (err.status === 402) {
+      // Hard wall rather than a sad empty state: this is the highest-intent
+      // moment a free user ever reaches.
+      showPaywall('limit', { limit: state.user?.quota?.limit || 5 });
       $('#quiz-empty-title').textContent = 'Daily limit reached';
       $('#quiz-empty-msg').textContent = 'You have used your free questions for today. Upgrade for unlimited practice, or come back tomorrow.';
     } else {
@@ -991,8 +1112,9 @@ async function submitAnswer(choice) {
     fb.classList.remove('hidden');
     $('#next-btn').classList.remove('hidden');
     $('#next-btn').focus();
-    $('#quota-note').textContent = data.quota.limit === null ? '' : `${data.quota.remaining} left today`;
     if (state.user) state.user.quota = data.quota;
+    renderQuotaMeter(data.quota);
+    maybeMidSessionPaywall(data.quota, p.streak);
   } catch (err) {
     state.answered = false;
     if (err.status === 409) { toast('That question expired. Here is a fresh one.'); loadQuestion(); return; }
@@ -1384,13 +1506,18 @@ $('#upgrade-btn').addEventListener('click', async () => {
   try {
     const d = await api('POST', '/api/billing/premium', {});
     if (d.url) { window.location.href = d.url; return; }
-    state.user = d.user; toast('Upgraded.', 'good'); loadPlan(); renderChrome();
+    state.user = d.user; toast('Upgraded. Everything is unlocked.', 'good');
+    loadPlan(); renderChrome(); renderModeLocks(); renderUpsellBanner();
   } catch (err) { toast(err.message, 'bad'); }
 });
 $('#cancel-btn').addEventListener('click', async () => {
   if (!confirm('Cancel and return to the Free plan?')) return;
   const d = await api('POST', '/api/billing/cancel', {});
-  state.user = d.user; toast('Back on the Free plan.'); loadPlan();
+  // Locks and the upsell banner must come BACK on downgrade, not just on
+  // upgrade -- otherwise a cancelled account keeps premium modes unlocked
+  // in the UI until a full page reload.
+  state.user = d.user; toast('Back on the Free plan.');
+  loadPlan(); renderChrome(); renderModeLocks(); renderUpsellBanner();
 });
 
 // ------------------------------------------------------------------ reset/verify
@@ -1672,10 +1799,13 @@ $('#plan-switch').addEventListener('click', async (e) => {
   if (!btn) return;
   try {
     const d = await api('POST', '/api/dev/plan', { plan: btn.dataset.plan });
-    state.user.plan = d.plan;
+    // Take the whole user back: quota, limits and locks all move together.
+    state.user = d.user || { ...state.user, plan: d.plan };
     toast(d.message, 'good');
     loadSettings();
     renderChrome();
+    renderModeLocks();
+    renderUpsellBanner();
   } catch (err) { toast(err.message, 'bad'); }
 });
 

@@ -18,6 +18,10 @@ COPY lib ./lib
 COPY public ./public
 COPY data ./data
 COPY scripts ./scripts
+# The Terms and Privacy Policy are served by /api/legal at runtime. Leaving this
+# out is why that endpoint returned 404 on every deployment while working
+# perfectly in local development, where the files are simply present on disk.
+COPY legal ./legal
 
 # The database lives on a mounted volume, not in the image layer, so it
 # survives deploys. DATABASE_PATH points at the mount.

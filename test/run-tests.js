@@ -851,6 +851,23 @@ test('every level of course is represented', () => {
   }
 });
 
+test('the Dockerfile copies every directory the server reads at runtime', () => {
+  // The live Terms/Privacy outage was caused by legal/ being absent from the
+  // image: the app read it happily in development and 404'd in production.
+  // This catches the whole class of bug rather than that one instance.
+  const fsx = require('node:fs');
+  const pathx = require('node:path');
+  const root = pathx.join(__dirname, '..');
+  const dockerfile = fsx.readFileSync(pathx.join(root, 'Dockerfile'), 'utf8');
+
+  const RUNTIME_DIRS = ['lib', 'public', 'data', 'scripts', 'legal'];
+  for (const dir of RUNTIME_DIRS) {
+    assert.ok(fsx.existsSync(pathx.join(root, dir)), `${dir}/ missing from the repo`);
+    assert.ok(new RegExp(`^COPY\\s+${dir}\\s`, 'm').test(dockerfile),
+      `Dockerfile never copies ${dir}/ -- it will 404 or crash in the container`);
+  }
+});
+
 section('AP exam practice');
 
 test('every AP course has an exam practice unit', () => {

@@ -511,6 +511,59 @@ check('an unverified AP course is refused rather than guessed', async () => {
   assert.ok(!r.data.exam.sections, 'must not fabricate a format');
 });
 
+check('switching plans actually changes what you can reach', async () => {
+  const email = `plan-${Date.now()}@example.com`;
+  let r = await call('POST', '/api/auth/signup', {
+    displayName: 'Plan Tester', email, password: 'correct-horse-battery',
+    birthYear: 2009, timezoneOffsetMinutes: 0, acceptTerms: true,
+  });
+  assert.strictEqual(r.status, 201);
+  await call('POST', '/api/onboarding', { gradeLevel: 11, courseIds: ['hs-biology'], goal: 'grades' });
+
+  // Free: a premium mode is refused.
+  r = await call('GET', '/api/modes/match');
+  assert.strictEqual(r.status, 402, 'free plan should be refused');
+
+  // Premium unlocks it, and the response carries a refreshed user so the UI
+  // does not keep showing stale free-tier limits.
+  r = await call('POST', '/api/billing/premium', {});
+  assert.strictEqual(r.status, 200);
+  assert.strictEqual(r.data.user.plan, 'premium');
+  assert.strictEqual(r.data.user.quota.limit, null, 'premium quota must be unlimited');
+
+  r = await call('GET', '/api/modes/match');
+  assert.strictEqual(r.status, 200, 'premium should reach match');
+
+  // Cancelling must put the gate back.
+  r = await call('POST', '/api/billing/cancel', {});
+  assert.strictEqual(r.status, 200);
+  assert.strictEqual(r.data.user.plan, 'free');
+  r = await call('GET', '/api/modes/match');
+  assert.strictEqual(r.status, 402, 'cancelling must re-lock premium modes');
+});
+
+check('the legal documents are actually served', async () => {
+  // Regression guard for a real outage: the Dockerfile did not copy legal/, so
+  // /api/legal returned 404 in production for every request while passing
+  // locally. This asserts real content comes back, not just a 200.
+  for (const doc of ['terms', 'privacy']) {
+    const { status, data } = await call('GET', `/api/legal?doc=${doc}`);
+    assert.strictEqual(status, 200, `/api/legal?doc=${doc} returned ${status}`);
+    assert.ok(data.markdown && data.markdown.length > 500,
+      `${doc} came back empty or truncated`);
+    assert.ok(/whetstone/i.test(data.markdown), `${doc} does not look like our document`);
+  }
+});
+
+check('the legal directory ships with the app', async () => {
+  const fsx = require('node:fs');
+  const pathx = require('node:path');
+  for (const f of ['TERMS.md', 'PRIVACY.md']) {
+    assert.ok(fsx.existsSync(pathx.join(__dirname, '..', 'legal', f)),
+      `legal/${f} is missing from the build`);
+  }
+});
+
 check('the reset and verify pages are served', async () => {
   for (const route of ['/reset?token=abc', '/verify?token=abc']) {
     const res = await fetch(`${BASE}${route}`);

@@ -279,7 +279,10 @@
     <div class="quiz-wrap">
       <div class="row-between u-mb-1rem">
         <button class="btn btn-ghost btn-sm" data-back="home">← Back</button>
-        <span id="quota-note" class="dim"></span>
+        <div class="quota-meter hidden" id="quota-meter">
+          <div class="quota-pips" id="quota-pips"></div>
+          <span id="quota-note" class="dim"></span>
+        </div>
       </div>
 
       <div id="quiz-card" class="card card-pad-lg">
@@ -707,7 +710,35 @@
 
 </main>
 
-<div id="modal-host"></div>
+
+  <!-- Paywall overlay. One component, three triggers: mid-session, quota
+       exhausted, and locked mode. -->
+  <div id="paywall" class="paywall hidden" role="dialog" aria-modal="true" aria-labelledby="paywall-title">
+    <div class="paywall-card">
+      <span class="paywall-kicker" id="paywall-kicker"></span>
+      <h2 id="paywall-title"></h2>
+      <p class="paywall-sub" id="paywall-sub"></p>
+
+      <div class="paywall-stats" id="paywall-stats"></div>
+
+      <ul class="paywall-points">
+        <li><span class="tick">✓</span> <strong>Unlimited</strong> questions, every day</li>
+        <li><span class="tick">✓</span> <strong>Every class</strong> you are taking, not one subject</li>
+        <li><span class="tick">✓</span> Match, Practice Test, Review and <strong>AP Exam practice</strong></li>
+        <li><span class="tick">✓</span> Full mastery dashboard and weak-topic queue</li>
+      </ul>
+
+      <div class="paywall-price">
+        <strong>$8.99</strong><span class="dim">/month</span>
+      </div>
+
+      <button class="btn btn-primary btn-lg btn-block-center" id="paywall-upgrade">Unlock everything</button>
+      <button class="btn btn-ghost btn-block-center" id="paywall-dismiss">Not now</button>
+      <p class="dim paywall-fineprint">Cancel any time. The free plan stays free.</p>
+    </div>
+  </div>
+
+  <div id="modal-host"></div>
 
 <nav class="mobile-nav hidden" id="mobile-nav">
   <div class="mobile-nav-inner">

@@ -378,7 +378,16 @@ const routes = {
       return sendJson(res, 400, { error: 'Pick free, premium, or group.' });
     }
     billing.setUserPlan(user.id, plan);
-    sendJson(res, 200, { plan, message: `Switched to ${plan}. Testing mode only.` });
+    // Return the full refreshed user, not just the plan string. The client used
+    // to patch state.user.plan by hand and leave state.user.quota holding the
+    // OLD tier's limits, so switching to Premium still showed "5 of 5 free
+    // questions left" and kept the locks on.
+    const updated = currentUser(req);
+    sendJson(res, 200, {
+      plan,
+      user: publicUser(updated),
+      message: `Switched to ${plan}. Testing mode only.`,
+    });
   },
 
   'GET /api/subjects': async (req, res) => {
@@ -973,7 +982,14 @@ function warnAboutProductionConfig() {
   // because it is otherwise invisible until someone opens the modal.
   for (const file of ['TERMS.md', 'PRIVACY.md']) {
     const legalPath = path.join(__dirname, 'legal', file);
-    if (!fs.existsSync(legalPath)) continue;
+    if (!fs.existsSync(legalPath)) {
+      // This is how the live site shipped for weeks: the Dockerfile did not
+      // COPY legal/, so /api/legal answered 404 for every request while local
+      // development worked perfectly. Silence made it look like a front-end
+      // bug. Now it is impossible to boot without being told.
+      warnings.push(`legal/${file} is MISSING. /api/legal will return 404 and the Terms and Privacy links will not open. If this is a container, check that the Dockerfile copies legal/.`);
+      continue;
+    }
     const text = fs.readFileSync(legalPath, 'utf8');
     if (text.includes('PARENT_OR_GUARDIAN_LEGAL_NAME')) {
       warnings.push(`legal/${file} still names PARENT_OR_GUARDIAN_LEGAL_NAME as the operator. Replace it with a real adult's legal name before taking any payment.`);

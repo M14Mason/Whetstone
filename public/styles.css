@@ -157,8 +157,8 @@ body {
   min-height: 100dvh;
   background: var(--bg);
   background-image:
-    radial-gradient(900px 500px at 12% -8%, #6d5efc14, transparent 60%),
-    radial-gradient(800px 500px at 92% 4%, #a855f70f, transparent 55%);
+    radial-gradient(900px 500px at 12% -8%, color-mix(in srgb, var(--accent) 7%, transparent), transparent 60%),
+    radial-gradient(800px 500px at 92% 4%, color-mix(in srgb, var(--accent-2) 6%, transparent), transparent 55%);
   background-attachment: fixed;
   color: var(--text);
   font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
@@ -194,7 +194,7 @@ p { margin: 0 0 1.1rem; }
 .section-icon {
   width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
   display: grid; place-items: center; font-size: .95rem;
-  background: var(--accent-soft); border: 1px solid #6d5efc33; color: #b9aeff;
+  background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent); color: var(--accent);
 }
 .count-badge {
   font-size: .72rem; font-weight: 700; padding: .18rem .5rem;
@@ -417,8 +417,8 @@ input:focus, select:focus {
   display: inline-flex; align-items: center; gap: .5rem;
   font-size: .78rem; font-weight: 600; letter-spacing: .01em;
   padding: .4rem .85rem; border-radius: 999px;
-  background: var(--accent-soft); color: #b9aeff;
-  border: 1px solid #6d5efc33;
+  background: var(--accent-soft); color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
   margin-bottom: 1.5rem;
 }
 .hero h1 { margin-bottom: 1.1rem; }
@@ -433,7 +433,7 @@ input:focus, select:focus {
 .feature-icon {
   flex-shrink: 0; width: 34px; height: 34px; border-radius: 10px;
   display: grid; place-items: center; font-size: 1rem;
-  background: var(--accent-soft); border: 1px solid #6d5efc33;
+  background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
 }
 .feature strong { display: block; font-weight: 600; font-size: .95rem; margin-bottom: .1rem; }
 .feature span { font-size: .88rem; color: var(--text-secondary); line-height: 1.5; }
@@ -922,7 +922,7 @@ body.onboarding-lock::before {
   transition: all .16s var(--ease);
 }
 .channel-btn:hover { background: var(--surface-hover); color: var(--text); }
-.channel-btn.active { background: var(--accent-soft); border-color: #6d5efc44; color: var(--text); }
+.channel-btn.active { background: var(--accent-soft); border-color: color-mix(in srgb, var(--accent) 28%, transparent); color: var(--text); }
 .channel-hash { color: var(--text-muted); font-weight: 700; }
 .channel-btn .count-badge { margin-left: auto; }
 
@@ -962,7 +962,7 @@ body.onboarding-lock::before {
 .set-icon {
   width: 40px; height: 40px; border-radius: 11px; flex-shrink: 0;
   display: grid; place-items: center; font-size: 1.1rem;
-  background: var(--accent-soft); border: 1px solid #6d5efc33;
+  background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
 }
 .card-editor-row { display: grid; grid-template-columns: 1fr 1fr 40px; gap: .5rem; margin-bottom: .5rem; }
 .card-editor-row .btn { min-height: 44px; padding: 0; }
@@ -1194,7 +1194,7 @@ body { overscroll-behavior-y: none; }
 .u-c-bad { color:var(--bad); }
 .u-c-good { color:var(--good); }
 .u-c-h1a1200 { color:#1a1200; }
-.u-c-hb9aeff { color:#b9aeff; }
+.u-c-hb9aeff { color:var(--accent); }
 .u-c-hfbbf24 { color:#fbbf24; }
 .u-d-flex { display:flex; }
 .u-flex-1 { flex:1; }
@@ -1213,11 +1213,11 @@ body { overscroll-behavior-y: none; }
 .u-g-p5rem { gap:.5rem; }
 .u-g-p6rem { gap:.6rem; }
 .u-g-p75rem { gap:.75rem; }
-.u-glow-h34d39966 { --mode-glow:#34d39966; }
-.u-glow-h38bdf866 { --mode-glow:#38bdf866; }
-.u-glow-h6d5efc66 { --mode-glow:#6d5efc66; }
-.u-glow-hfb718566 { --mode-glow:#fb718566; }
-.u-glow-hfb923c66 { --mode-glow:#fb923c66; }
+.u-glow-h34d39966 { --mode-glow: color-mix(in srgb, var(--subj-science) 40%, transparent); }
+.u-glow-h38bdf866 { --mode-glow: color-mix(in srgb, var(--subj-cs) 40%, transparent); }
+.u-glow-h6d5efc66 { --mode-glow: color-mix(in srgb, var(--subj-math) 40%, transparent); }
+.u-glow-hfb718566 { --mode-glow: color-mix(in srgb, var(--subj-social) 40%, transparent); }
+.u-glow-hfb923c66 { --mode-glow: color-mix(in srgb, var(--accent) 40%, transparent); }
 .u-jc-center { justify-content:center; }
 .u-jc-flex-end { justify-content:flex-end; }
 .u-jc-space-between { justify-content:space-between; }
@@ -1365,7 +1365,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
   display: inline-flex; align-items: center; gap: .3rem;
   font-size: .66rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
   padding: .2rem .45rem; border-radius: 999px;
-  background: var(--accent-soft); color: #b9aeff; border: 1px solid #6d5efc33;
+  background: var(--accent-soft); color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
   vertical-align: middle;
 }
 /* The whole tile stays clickable so the tap explains the lock instead of
@@ -1377,7 +1377,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
   display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
   padding: .9rem 1.1rem; margin-bottom: 1.25rem;
   border-radius: var(--r);
-  background: var(--accent-soft); border: 1px solid #6d5efc33;
+  background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
   font-size: .9rem;
 }
 .upsell-inline .btn { margin-left: auto; }
@@ -1386,7 +1386,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
 }
 
 /* ==================== AP exam practice ==================== */
-.u-glow-hf43f5e66 { --mode-glow: #f43f5e66; }
+.u-glow-hf43f5e66 { --mode-glow: color-mix(in srgb, var(--subj-arts) 40%, transparent); }
 
 .ap-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
 .ap-table th {
@@ -1477,7 +1477,7 @@ html, body { max-width: 100%; overflow-x: hidden; }
   display: inline-block; margin-bottom: .75rem;
   font-size: .66rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
   padding: .28rem .7rem; border-radius: 999px;
-  background: var(--accent-soft); color: #b9aeff; border: 1px solid #6d5efc33;
+  background: var(--accent-soft); color: var(--accent); border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
 }
 .paywall-card h2 { font-size: 1.5rem; margin: 0 0 .5rem; }
 .paywall-sub { color: var(--text-secondary); font-size: .95rem; margin: 0 0 1.25rem; }

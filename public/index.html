@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0a0b10">
+<meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#17140f" media="(prefers-color-scheme: dark)">
 <title>Whetstone — Study what you actually keep missing</title>
 <meta name="description" content="Whetstone maps every unit of your actual courses, finds the topics you keep getting wrong, and drills them with flashcards, match games, and practice tests.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Webfonts load independently of the app stylesheet. If this request fails
      or is blocked, the app still styles correctly using the system stack. -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="stylesheet" href="/styles.css">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%236d5efc'/></svg>">
 </head>
@@ -19,49 +19,175 @@
 <header class="topbar">
   <a class="brand" href="/"><span class="brand-mark"></span><span>Whetstone</span></a>
   <nav id="nav" class="nav hidden">
-    <button data-view="home" class="nav-btn active">Study</button>
-    <button data-view="courses" class="nav-btn">Courses</button>
+    <button data-view="home" class="nav-btn active">Classes</button>
+    <button data-view="courses" class="nav-btn">Catalogue</button>
     <button data-view="progress" class="nav-btn">Progress</button>
     <button data-view="group" class="nav-btn">Group</button>
     <button data-view="plan" class="nav-btn">Plan</button>
     <button data-view="settings" class="nav-btn">Settings</button>
   </nav>
   <div class="topbar-right">
+    <div id="xp-bar" class="xp-bar hidden">
+      <span class="xp-level-badge" id="xp-level">1</span>
+      <div class="xp-track" title="Progress to the next level">
+        <div class="xp-fill" id="xp-fill"></div>
+      </div>
+      <span class="xp-count dim" id="xp-count"></span>
+    </div>
     <span id="streak-chip" class="streak hidden"></span>
-    <button id="avatar" class="avatar hidden" title="Account"></button>
+    <button id="avatar" class="avatar hidden" title="Your profile"></button>
   </div>
 </header>
 
 <main class="shell" id="main">
 
   <!-- ========================= LANDING ========================= -->
-  <section id="view-landing" class="view">
-    <div class="hero">
-      <div>
-        <span class="eyebrow">26,000+ questions across 144 courses</span>
-        <h1>Stop re-studying<br>what you <span class="grad">already know.</span></h1>
-        <p class="lede">
-          Pick your actual classes, unit by unit. Whetstone tracks every question
-          you miss, works out which topics are genuinely weak, and keeps sending
-          them back until they stick.
-        </p>
-        <ul class="feature-list">
-          <li class="feature">
-            <span class="feature-icon">◎</span>
-            <span><strong>Built around your real schedule</strong><span>Every AP, honors, and core high school course mapped down to individual units.</span></span>
-          </li>
-          <li class="feature">
-            <span class="feature-icon">⚡</span>
-            <span><strong>Four ways to study one set</strong><span>Adaptive practice, flashcards, a timed match game, and full practice tests.</span></span>
-          </li>
-          <li class="feature">
-            <span class="feature-icon">◆</span>
-            <span><strong>Study groups from 3 people</strong><span>Shared leaderboard ranked on improvement, not on who was already ahead.</span></span>
-          </li>
-        </ul>
-      </div>
+  <section id="view-landing" class="view landing">
 
-      <div class="card card-pad-lg auth-card hero-visual">
+    <!-- HERO -------------------------------------------------------------
+         Talks to the student, not the parent. The promise is specific
+         (your classes, your weak topics) because "study smarter" is what
+         every competitor already says. -->
+    <div class="hero-v2">
+      <div class="hero-copy">
+        <span class="eyebrow">25,000+ questions &middot; 159 courses &middot; every AP</span>
+        <h1>You already know<br>half of what you<br><span class="grad">keep revising.</span></h1>
+        <p class="lede">
+          Whetstone learns which topics you actually get wrong, then spends your
+          study time there. Pick your real classes, unit by unit, and stop
+          re-reading the chapters you already had down.
+        </p>
+        <div class="hero-cta">
+          <button class="btn btn-primary btn-lg" data-scroll-to="signup">Start free</button>
+          <button class="btn btn-ghost btn-lg" data-scroll-to="why">See how it works</button>
+        </div>
+        <p class="hint">Free forever. No card. Takes about a minute.</p>
+      </div>
+      <div class="hero-art" aria-hidden="true"></div>
+    </div>
+
+    <!-- THE PROBLEM ------------------------------------------------------ -->
+    <div class="band" id="why">
+      <h2 class="band-title">Re-reading is not studying</h2>
+      <p class="band-lede">
+        Most study apps give you a pile of cards and let you shuffle them. You end
+        up drilling the easy ones because they feel good, and quietly avoiding the
+        three topics that will actually cost you the grade.
+      </p>
+      <div class="proof-grid">
+        <div class="proof">
+          <span class="proof-num">3</span>
+          <span class="proof-label">topics usually account for most of a dropped letter grade</span>
+        </div>
+        <div class="proof">
+          <span class="proof-num">0</span>
+          <span class="proof-label">other apps that ask which classes you are actually taking</span>
+        </div>
+        <div class="proof">
+          <span class="proof-num">159</span>
+          <span class="proof-label">courses mapped down to individual units, not vague subjects</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- WHY WHETSTONE ---------------------------------------------------- -->
+    <div class="band band-alt">
+      <h2 class="band-title">What makes this different</h2>
+      <div class="why-grid">
+        <div class="why-card">
+          <span class="why-icon" data-subj="math">◎</span>
+          <h3>It knows your actual timetable</h3>
+          <p>
+            Add AP Biology, Honors Algebra 2 and English 11 and you get those
+            courses, broken into the units your teacher is actually teaching.
+            Other tools make you search a library and hope someone made a
+            decent set.
+          </p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon" data-subj="science">↻</span>
+          <h3>It hunts your weak spots</h3>
+          <p>
+            Every answer moves a rating for that specific topic. Get Mendelian
+            genetics wrong twice and it comes back tomorrow, then next week,
+            then only once it has stuck. You do not choose what to revise; the
+            gaps choose.
+          </p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon" data-subj="english">✎</span>
+          <h3>Real AP exam practice</h3>
+          <p>
+            Section timings, question counts and weightings taken from the
+            official exam pages, plus free-response prompts with the real
+            scoring rubrics. Where an exam has not been verified yet, it says so
+            rather than inventing a format.
+          </p>
+        </div>
+        <div class="why-card">
+          <span class="why-icon" data-subj="social">⚡</span>
+          <h3>Five ways to study one set</h3>
+          <p>
+            Adaptive practice, flashcards, a timed match game, full practice
+            tests and a queue of only the questions you have missed. Same
+            content, different pressure.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRICING ---------------------------------------------------------- -->
+    <div class="band" id="pricing">
+      <h2 class="band-title">Free, properly</h2>
+      <p class="band-lede">
+        Not a trial. The free plan has no expiry and no card. Premium removes the
+        daily caps and unlocks the timed modes.
+      </p>
+      <div class="tier-grid">
+        <div class="tier">
+          <h3>Free</h3>
+          <div class="tier-price">$0</div>
+          <ul class="tier-points">
+            <li><span class="tick">✓</span> 3 adaptive questions a day</li>
+            <li><span class="tick">✓</span> 5 review questions a day</li>
+            <li><span class="tick">✓</span> Unlimited flashcards</li>
+            <li><span class="tick">✓</span> One subject at a time</li>
+            <li><span class="tick tick-no">✕</span> Match, practice tests, AP exams</li>
+          </ul>
+        </div>
+        <div class="tier tier-featured">
+          <span class="price-badge">Most popular</span>
+          <h3>Premium</h3>
+          <div class="tier-price">$4.99<small>/mo</small></div>
+          <p class="tier-alt">or $29.99 a year &mdash; works out at $2.50 a month</p>
+          <ul class="tier-points">
+            <li><span class="tick">✓</span> <strong>Unlimited</strong> questions</li>
+            <li><span class="tick">✓</span> <strong>Every class</strong> you are taking</li>
+            <li><span class="tick">✓</span> Match, practice tests and AP exam practice</li>
+            <li><span class="tick">✓</span> Full mastery dashboard</li>
+            <li><span class="tick">✓</span> Weak-topic review queue</li>
+          </ul>
+        </div>
+        <div class="tier">
+          <h3>Study Group</h3>
+          <div class="tier-price">$3.99<small>/seat/mo</small></div>
+          <p class="tier-alt">Three people or more</p>
+          <ul class="tier-points">
+            <li><span class="tick">✓</span> Everything in Premium, each</li>
+            <li><span class="tick">✓</span> Cheaper per person than going solo</li>
+            <li><span class="tick">✓</span> Shared channels per shared class</li>
+            <li><span class="tick">✓</span> Leaderboard ranked on improvement</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIGN UP ---------------------------------------------------------- -->
+    <div class="band band-alt" id="signup">
+      <h2 class="band-title">Start with your worst subject</h2>
+      <p class="band-lede">That is where the fastest gains are.</p>
+      <div class="signup-wrap">
+      <div class="card card-pad-lg auth-card signup-card">
         <h2 class="u-mb-1p25rem">Create your free account</h2>
 
         <form id="signup-form" class="form">
@@ -86,6 +212,7 @@
           Already have an account?
           <button class="linkish" id="go-signin">Sign in</button>
         </p>
+      </div>
       </div>
     </div>
   </section>
@@ -179,7 +306,7 @@
             <span class="price-badge">Recommended</span>
             <div class="plan-col-head">
               <h3 class="u-m-0">Premium</h3>
-              <div class="price">$8.99<small>/mo</small></div>
+              <div class="price">$4.99<small>/mo</small></div>
             </div>
             <ul class="plan-points">
               <li><span class="tick">✓</span> <strong>Unlimited</strong> questions</li>
@@ -206,7 +333,7 @@
 
   <!-- ========================= HOME / MODE PICKER ========================= -->
   <section id="view-home" class="view hidden">
-    <div class="row-between u-mb-1p5rem">
+    <div class="row-between u-mb-1p25rem">
       <div>
         <h1 class="u-fs-1p9rem u-mb-p15rem" id="home-greeting"></h1>
         <p class="muted u-m-0" id="home-sub"></p>
@@ -214,13 +341,54 @@
     </div>
 
     <div class="stat-strip" id="home-stats"></div>
-
     <div id="upsell-banner" class="upsell-inline hidden"></div>
-    <div id="scope-banner" class="banner hidden u-mb-1p25rem"></div>
+
+    <div class="section-head">
+      <span class="section-icon">▦</span>
+      <h2>Your classes</h2>
+      <div class="spacer"></div>
+      <div class="seg seg-sm" id="course-sort" role="group" aria-label="Sort classes">
+        <button class="seg-btn" data-sort="mine">My order</button>
+        <button class="seg-btn" data-sort="weakest">Weakest</button>
+        <button class="seg-btn" data-sort="recent">Recent</button>
+      </div>
+    </div>
+
+    <div id="course-board" class="course-board"></div>
+    <p id="course-board-empty" class="muted hidden">
+      You have no classes yet. Add them from the Courses tab and they will show up here.
+    </p>
+
+    <div class="section-head">
+      <span class="section-icon">✎</span>
+      <h2>Your study sets</h2>
+      <span class="count-badge" id="home-set-count"></span>
+      <span class="spacer"></span>
+      <button class="btn btn-sm btn-primary" id="new-set-btn">+ New set</button>
+    </div>
+    <div id="home-sets" class="stack stagger"></div>
+  </section>
+
+  <!-- ===================== ONE COURSE (Canvas-style) ===================== -->
+  <section id="view-course" class="view hidden">
+    <button class="btn btn-ghost btn-sm u-mb-1rem" data-back="home">← All classes</button>
+
+    <div class="course-head">
+      <span class="course-head-dot" id="course-head-dot"></span>
+      <div class="u-minw-0">
+        <h1 class="u-fs-1p9rem u-mb-p15rem" id="course-head-name"></h1>
+        <p class="muted u-m-0" id="course-head-sub"></p>
+      </div>
+    </div>
+
+    <div class="course-progress">
+      <div class="progress-track"><div class="progress-fill" id="course-progress-fill"></div></div>
+      <span class="dim" id="course-progress-label"></span>
+    </div>
 
     <div class="section-head">
       <span class="section-icon">◎</span>
-      <h2>Study modes</h2>
+      <h2>Study this class</h2>
     </div>
     <div class="mode-grid stagger">
       <button class="mode-card u-glow-h6d5efc66" data-mode="learn">
@@ -256,22 +424,12 @@
     </div>
 
     <div class="section-head">
-      <span class="section-icon">▦</span>
-      <h2>Your courses</h2>
-      <span class="count-badge" id="home-course-count"></span>
-      <span class="spacer"></span>
-      <button class="btn btn-sm" data-view="courses">Manage</button>
+      <span class="section-icon">▤</span>
+      <h2>Units</h2>
+      <div class="spacer"></div>
+      <span class="dim" id="course-unit-count"></span>
     </div>
-    <div id="home-courses" class="course-card-grid stagger"></div>
-
-    <div class="section-head">
-      <span class="section-icon">✎</span>
-      <h2>Your study sets</h2>
-      <span class="count-badge" id="home-set-count"></span>
-      <span class="spacer"></span>
-      <button class="btn btn-sm btn-primary" id="new-set-btn">+ New set</button>
-    </div>
-    <div id="home-sets" class="stack stagger"></div>
+    <div id="course-units" class="unit-list"></div>
   </section>
 
   <!-- ========================= LEARN / QUIZ ========================= -->
@@ -513,12 +671,12 @@
       </div>
       <div class="card price-card featured">
         <span class="price-badge">Most popular</span>
-        <h3>Premium</h3><div class="price">$8.99<small>/mo</small></div>
+        <h3>Premium</h3><div class="price">$4.99<small>/mo</small></div>
         <ul><li>Unlimited questions</li><li>Every course and unit</li><li>All four study modes</li><li>Full mastery dashboard</li></ul>
         <button id="upgrade-btn" class="btn btn-primary btn-block">Upgrade</button>
       </div>
       <div class="card price-card">
-        <h3>Study Group</h3><div class="price">$6<small>/seat/mo</small></div>
+        <h3>Study Group</h3><div class="price">$3.99<small>/seat/mo</small></div>
         <ul><li>Minimum 3 people</li><li>Everything in Premium</li><li>Shared leaderboard</li></ul>
         <p class="hint">Set this up on the Group tab.</p>
       </div>
@@ -530,8 +688,8 @@
         <h2>Report a bug</h2>
       </div>
       <p class="muted u-fs-p9rem">
-        Reports are saved in your own database. Nothing is sent anywhere.
-        Run <code>npm run bugs</code> to export them all to a file.
+        Found something broken? Tell us. Reports go straight to the team and we
+        read every one.
       </p>
       <p class="muted u-fs-p9rem">Report bugs from the <strong>Settings</strong> tab.</p>
     </div>
@@ -610,11 +768,72 @@
     </div>
   </section>
 
+
+  <!-- ========================= PROFILE ========================= -->
+  <section id="view-profile" class="view hidden">
+    <div class="profile-head">
+      <div class="profile-avatar" id="profile-avatar" data-avatar="flame"></div>
+      <div class="u-minw-0">
+        <h1 class="u-fs-1p9rem u-mb-p15rem" id="profile-name"></h1>
+        <p class="muted u-m-0" id="profile-since"></p>
+      </div>
+    </div>
+
+    <div class="level-card">
+      <div class="row-between u-mb-p5rem">
+        <span class="level-big" id="profile-level">Level 1</span>
+        <span class="dim" id="profile-xp"></span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="profile-xp-fill"></div></div>
+      <p class="dim u-mt-p5rem u-m-0" id="profile-next"></p>
+    </div>
+
+    <div class="profile-stats" id="profile-stats"></div>
+
+    <div class="section-head">
+      <span class="section-icon">◈</span>
+      <h2>Badges</h2>
+      <div class="spacer"></div>
+      <span class="dim" id="profile-badge-count"></span>
+    </div>
+    <div class="badge-grid" id="profile-badges"></div>
+
+    <div class="section-head">
+      <span class="section-icon">▦</span>
+      <h2>Classes</h2>
+    </div>
+    <div class="profile-courses" id="profile-courses"></div>
+
+    <div class="section-head">
+      <span class="section-icon">☺</span>
+      <h2>Your look</h2>
+    </div>
+    <p class="muted u-fs-p9rem">Pick an avatar. This is what your study group sees.</p>
+    <div class="avatar-picker" id="avatar-picker"></div>
+  </section>
+
   <!-- ========================= RESET / VERIFY ========================= -->
   <!-- ========================= SETTINGS ========================= -->
   <section id="view-settings" class="view hidden">
     <h1 class="u-fs-1p9rem u-mb-p4rem">Settings</h1>
-    <p class="muted u-mb-1p5rem">Your account, your data, and a place to report anything broken.</p>
+    <p class="muted u-mb-1p5rem">Your account, your appearance, and a place to report anything broken.</p>
+
+    <div class="card">
+      <h2>Appearance</h2>
+      <p class="muted u-fs-p9rem">Follow your device, or pick one and stay there.</p>
+      <div class="seg" id="theme-switch" role="group" aria-label="Colour theme">
+        <button class="seg-btn" data-theme-choice="light">Light</button>
+        <button class="seg-btn" data-theme-choice="dark">Dark</button>
+        <button class="seg-btn" data-theme-choice="auto">Auto</button>
+      </div>
+
+      <h2 class="u-mt-1p5rem">Sound and vibration</h2>
+      <p class="muted u-fs-p9rem">Short tones when you answer, and a buzz on phones that support it.</p>
+      <div class="seg" id="sound-switch" role="group" aria-label="Sound effects">
+        <button class="seg-btn" data-sound-choice="on">On</button>
+        <button class="seg-btn" data-sound-choice="off">Off</button>
+      </div>
+    </div>
 
     <!-- Only rendered when the server reports testing mode. -->
     <div class="card hidden u-border-color-hf5a524" id="tester-card">
@@ -729,7 +948,7 @@
       </ul>
 
       <div class="paywall-price">
-        <strong>$8.99</strong><span class="dim">/month</span>
+        <strong>$4.99</strong><span class="dim">/month</span>
       </div>
 
       <button class="btn btn-primary btn-lg btn-block-center" id="paywall-upgrade">Unlock everything</button>
@@ -742,10 +961,10 @@
 
 <nav class="mobile-nav hidden" id="mobile-nav">
   <div class="mobile-nav-inner">
-    <button data-view="home" class="active"><span class="mn-icon">◎</span>Study</button>
-    <button data-view="courses"><span class="mn-icon">▦</span>Courses</button>
+    <button data-view="home" class="active"><span class="mn-icon">▦</span>Classes</button>
+    <button data-view="courses"><span class="mn-icon">＋</span>Add</button>
     <button data-view="progress"><span class="mn-icon">◱</span>Progress</button>
-    <button data-view="group"><span class="mn-icon">◆</span>Group</button>
+    <button data-view="profile"><span class="mn-icon">☺</span>Profile</button>
     <button data-view="settings"><span class="mn-icon">☰</span>Settings</button>
   </div>
 </nav>

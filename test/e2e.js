@@ -515,11 +515,18 @@ check('FRQ checking reports facts and never a score', async () => {
     'the thesis check must declare itself a hint');
 });
 
-check('an unverified AP course is refused rather than guessed', async () => {
-  const r = await call('GET', '/api/ap/exam?courseId=ap-art-history');
+check('a portfolio AP course explains itself instead of faking an exam', async () => {
+  // Art History used to be the example here, but it now has a verified format.
+  // The remaining "no normal exam" case is the portfolio courses: AP Drawing,
+  // 2-D Art and Design, Seminar and Research have no written exam at all, and
+  // the app must say so rather than inventing sections.
+  const r = await call('GET', '/api/ap/exam?courseId=ap-studio-art-2d');
   assert.strictEqual(r.status, 200);
   assert.strictEqual(r.data.exam.verified, false);
+  assert.strictEqual(r.data.exam.portfolio, true);
   assert.ok(!r.data.exam.sections, 'must not fabricate a format');
+  assert.ok(/portfolio/i.test(r.data.exam.message), 'must explain why');
+  assert.ok(r.data.exam.officialUrl, 'must link out to College Board');
 });
 
 check('free tier gets separate Learn and Review allowances', async () => {

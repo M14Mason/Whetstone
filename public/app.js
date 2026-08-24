@@ -17,7 +17,52 @@ const state = {
   onboarding: { grade: null, courses: new Set(), goal: null },
   catalog: null,
   premiumModes: [],
+  progression: null,
+  myCourses: [],
 };
+
+
+// ------------------------------------------------------------------ theme
+/* Light, dark, or follow the system.
+ *
+ * Default is 'auto', which tracks prefers-color-scheme live -- a phone that
+ * flips to dark at sunset should take the app with it without a reload. An
+ * explicit choice in Settings overrides that and persists.
+ *
+ * The initial theme is applied by a small inline-ish bootstrap before first
+ * paint (see applyTheme call at the bottom of this file) so there is no
+ * white flash for someone in dark mode. */
+const THEME_KEY = 'whetstone:theme';
+
+/* matchMedia is missing in some embedded webviews and in jsdom, and calling it
+ * unguarded at module scope took the ENTIRE app down with
+ * "window.matchMedia is not a function" -- not just the theme. A null-object
+ * fallback keeps everything else running and simply means "not dark". */
+const darkQuery = typeof window.matchMedia === 'function'
+  ? window.matchMedia('(prefers-color-scheme: dark)')
+  : { matches: false, addEventListener() {}, removeEventListener() {} };
+
+function storedTheme() {
+  try { return localStorage.getItem(THEME_KEY) || 'auto'; } catch { return 'auto'; }
+}
+
+function applyTheme(pref = storedTheme()) {
+  const dark = pref === 'dark' || (pref === 'auto' && darkQuery.matches);
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+}
+
+function setTheme(pref) {
+  try { localStorage.setItem(THEME_KEY, pref); } catch { /* private mode */ }
+  applyTheme(pref);
+  $$('[data-theme-choice]').forEach((b) =>
+    b.classList.toggle('active', b.dataset.themeChoice === pref));
+}
+
+// Only meaningful while the preference is 'auto'.
+darkQuery.addEventListener('change', () => { if (storedTheme() === 'auto') applyTheme('auto'); });
+
+applyTheme();
 
 // ------------------------------------------------------------------ helpers
 async function api(method, path, body) {
@@ -149,6 +194,7 @@ function showView(name) {
 
   if (name === 'home') renderHome();
   if (name === 'courses') loadCourses();
+  if (name === 'profile') loadProfile();
   if (name === 'progress') loadDashboard();
   if (name === 'group') { loadGroup(); loadChannels(); loadMessages(); startChatPolling(); }
   else stopChatPolling();
@@ -172,14 +218,16 @@ function renderChrome() {
   document.body.classList.toggle('onboarding-lock', onboardingPending());
   if (signedIn) {
     $('#avatar').textContent = (state.user.displayName || '?').charAt(0).toUpperCase();
+    if (state.progression) renderXpBar(state.progression);
   }
+  $('#xp-bar').classList.toggle('hidden', !showChrome);
 }
 
 $$('.nav-btn, .mobile-nav button').forEach((b) => {
   b.addEventListener('click', () => showView(b.dataset.view));
 });
 $$('[data-back]').forEach((b) => b.addEventListener('click', () => showView(b.dataset.back)));
-$('#avatar').addEventListener('click', () => showView('plan'));
+$('#avatar').addEventListener('click', () => showView('profile'));
 
 // ------------------------------------------------------------------ auth
 function authError(msg, target = '#auth-error') {
@@ -187,6 +235,14 @@ function authError(msg, target = '#auth-error') {
   e.textContent = msg;
   e.classList.remove('hidden');
 }
+
+/* Smooth-scroll the landing page CTAs to their section. */
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-scroll-to]');
+  if (!btn) return;
+  const target = document.getElementById(btn.dataset.scrollTo);
+  if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
 
 $('#go-signin').addEventListener('click', () => showView('signin'));
 $('#go-signup').addEventListener('click', () => showView('landing'));
@@ -450,82 +506,306 @@ function renderUpsellBanner() {
   el.querySelector('[data-upsell]').addEventListener('click', () => showView('plan'));
 }
 
+
+
+// ------------------------------------------------------------------ profile
+/* A real profile: who you are, how far you have got, what you have earned.
+ *
+ * Deliberately NOT a settings page. Account controls live in Settings; putting
+ * them here made the profile read as a form rather than something you would
+ * show someone. */
+
+const AVATARS = [
+  { id: 'flame', glyph: '◆', label: 'Ember' },
+  { id: 'leaf', glyph: '❦', label: 'Leaf' },
+  { id: 'bolt', glyph: '⚡', label: 'Bolt' },
+  { id: 'star', glyph: '★', label: 'Star' },
+  { id: 'moon', glyph: '☾', label: 'Moon' },
+  { id: 'wave', glyph: '≈', label: 'Wave' },
+  { id: 'peak', glyph: '▲', label: 'Peak' },
+  { id: 'orbit', glyph: '◉', label: 'Orbit' },
+];
+
+async function loadProfile() {
+  const u = state.user;
+  if (!u) return;
+
+  $('#profile-name').textContent = u.displayName || 'You';
+  $('#profile-since').textContent = u.createdAt
+    ? `Studying since ${new Date(u.createdAt).toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}`
+    : '';
+  $('#profile-avatar').dataset.avatar = u.avatar || 'flame';
+  $('#profile-avatar').textContent =
+    (AVATARS.find((a) => a.id === (u.avatar || 'flame')) || AVATARS[0]).glyph;
+
+  let prog = state.progression;
+  try {
+    const me = await api('GET', '/api/me');
+    state.user = me.user || state.user;
+    prog = me.progression || prog;
+    state.progression = prog;
+  } catch { /* keep whatever we already had */ }
+
+  if (prog) {
+    $('#profile-level').textContent = `Level ${prog.level}`;
+    $('#profile-xp').textContent = `${prog.xp} XP total`;
+    $('#profile-xp-fill').style.width = `${prog.percent}%`;
+    $('#profile-next').textContent = prog.neededForNext > 0
+      ? `${prog.neededForNext} XP to level ${prog.level + 1}`
+      : 'Max level';
+
+    const streak = prog.streak || {};
+    $('#profile-stats').innerHTML = `
+      <div class="pstat"><span class="pstat-num">${streak.current || 0}</span><span class="pstat-label">Day streak</span></div>
+      <div class="pstat"><span class="pstat-num">${streak.best || 0}</span><span class="pstat-label">Best streak</span></div>
+      <div class="pstat"><span class="pstat-num">${prog.badgeCount}/${prog.badgeTotal}</span><span class="pstat-label">Badges</span></div>
+      <div class="pstat"><span class="pstat-num">${(state.myCourses || []).length}</span><span class="pstat-label">Classes</span></div>`;
+
+    $('#profile-badge-count').textContent = `${prog.badgeCount} of ${prog.badgeTotal}`;
+    $('#profile-badges').innerHTML = prog.badges.map((b) => `
+      <div class="badge ${b.earned ? 'earned' : 'locked'}" title="${esc(b.description)}">
+        <span class="badge-icon">${esc(b.icon)}</span>
+        <span class="badge-name">${esc(b.name)}</span>
+        <span class="badge-desc">${esc(b.description)}</span>
+      </div>`).join('');
+  }
+
+  // Courses, with the progress the student has made in each.
+  try {
+    const { courses } = await api('GET', '/api/my-courses');
+    state.myCourses = courses || [];
+  } catch { /* leave as-is */ }
+
+  $('#profile-courses').innerHTML = (state.myCourses || []).length === 0
+    ? '<p class="muted">No classes yet.</p>'
+    : state.myCourses.map((c) => `
+        <div class="pcourse" data-subj="${subjectKey(c.category)}">
+          <span class="pcourse-dot"></span>
+          <span class="u-minw-0">
+            <span class="pcourse-name">${esc(c.name)}</span>
+            <span class="pcourse-meta dim">${c.masteryPercent === null ? 'Not started' : `${c.masteryPercent}% mastered`}</span>
+          </span>
+        </div>`).join('');
+
+  $('#avatar-picker').innerHTML = AVATARS.map((a) => `
+    <button class="avatar-opt${(state.user.avatar || 'flame') === a.id ? ' selected' : ''}"
+            data-avatar-pick="${a.id}" data-avatar="${a.id}" title="${esc(a.label)}"
+            aria-label="${esc(a.label)}">${a.glyph}</button>`).join('');
+
+  $$('#avatar-picker [data-avatar-pick]').forEach((b) => b.addEventListener('click', async () => {
+    const id = b.dataset.avatarPick;
+    try {
+      await api('POST', '/api/account/avatar', { avatar: id });
+      state.user.avatar = id;
+      loadProfile();
+      renderChrome();
+    } catch (err) { toast(err.message, 'bad'); }
+  }));
+}
+
+// ------------------------------------------------------------------ classes
+/* The home screen is the class list, the way Canvas and Google Classroom work.
+ *
+ * "Study everything" is gone on purpose: it produced sessions that wandered
+ * across four subjects, which felt busy but taught nothing in particular. You
+ * pick a class, then a mode inside it. */
+
+const SUBJECT_KEY = {
+  'Math': 'math', 'Science': 'science', 'English': 'english',
+  'Social Studies': 'social', 'World Languages': 'language', 'Arts': 'arts',
+  'Computer Science': 'cs', 'Business and Economics': 'business',
+  'Health and PE': 'health', 'Engineering and Technology': 'engineering',
+};
+function subjectKey(category) { return SUBJECT_KEY[category] || 'other'; }
+
+function courseSort() {
+  try { return localStorage.getItem('whetstone:sort') || 'mine'; } catch { return 'mine'; }
+}
+function setCourseSort(v) {
+  try { localStorage.setItem('whetstone:sort', v); } catch { /* private mode */ }
+}
+
+/* Manual order lives client-side and only applies to "My order". Choosing
+ * Weakest or Recent does not overwrite it, so switching back restores the
+ * arrangement the student made. */
+function manualOrder() {
+  try { return JSON.parse(localStorage.getItem('whetstone:order') || '[]'); } catch { return []; }
+}
+function setManualOrder(ids) {
+  try { localStorage.setItem('whetstone:order', JSON.stringify(ids)); } catch { /* private mode */ }
+}
+
+function sortCourses(list, mode) {
+  const copy = [...list];
+  if (mode === 'weakest') {
+    // Lowest mastery first; a course with no data yet sorts last rather than
+    // pretending to be 0% mastered.
+    return copy.sort((a, b) => {
+      const am = a.masteryPercent, bm = b.masteryPercent;
+      if (am === null && bm === null) return a.name.localeCompare(b.name);
+      if (am === null) return 1;
+      if (bm === null) return -1;
+      return am - bm;
+    });
+  }
+  if (mode === 'recent') {
+    return copy.sort((a, b) => (b.lastStudied || '').localeCompare(a.lastStudied || ''));
+  }
+  const order = manualOrder();
+  return copy.sort((a, b) => {
+    const ai = order.indexOf(a.id), bi = order.indexOf(b.id);
+    if (ai === -1 && bi === -1) return a.name.localeCompare(b.name);
+    if (ai === -1) return 1;
+    if (bi === -1) return -1;
+    return ai - bi;
+  });
+}
+
+function courseCard(c) {
+  const key = subjectKey(c.category);
+  const mastery = c.masteryPercent === null ? null : c.masteryPercent;
+  const weak = c.weakCount || 0;
+  return `
+    <button class="course-tile" data-course="${esc(c.id)}" data-subj="${key}" draggable="true">
+      <span class="course-tile-bar"></span>
+      <span class="course-tile-top">
+        <span class="course-tile-name">${esc(c.name)}</span>
+        <span class="pill pill-${esc(String(c.level || 'regular'))}">${esc(c.levelLabel || 'Regular')}</span>
+      </span>
+      <span class="course-tile-meta">${esc(c.category || '')}</span>
+      <span class="course-tile-track"><span class="course-tile-fill" data-width="${mastery === null ? 0 : mastery}"></span></span>
+      <span class="course-tile-stats">
+        <span>${mastery === null ? 'Not started' : `${mastery}% mastered`}</span>
+        ${weak > 0 ? `<span class="course-weak">${weak} weak topic${weak === 1 ? '' : 's'}</span>` : ''}
+      </span>
+      ${c.nextUnit ? `<span class="course-tile-next">Next: ${esc(c.nextUnit)}</span>` : ''}
+      ${c.lastStudied ? `<span class="course-tile-when dim">${esc(timeAgo(c.lastStudied))}</span>` : ''}
+    </button>`;
+}
+
 async function renderHome() {
-  renderModeLocks();
   renderUpsellBanner();
   const hour = new Date().getHours();
   const greet = hour < 12 ? 'Good morning' : hour < 18 ? 'Good afternoon' : 'Good evening';
   $('#home-greeting').textContent = `${greet}, ${state.user.displayName}`;
 
-  const q = state.user.quota;
+  const q = state.user.quota || {};
   $('#home-sub').textContent = q.limit === null
-    ? `${state.user.planLabel} · unlimited practice`
-    : `${q.remaining} of ${q.limit} free questions left today`;
+    ? 'Premium. Study as much as you like.'
+    : 'Pick a class to get started.';
 
-  const banner = $('#scope-banner');
-  const label = scopeLabel();
-  if (label) {
-    banner.innerHTML = `<span>Studying <strong>${esc(label)}</strong></span>
-      <button class="linkish u-ml-auto" id="clear-scope">Study everything instead</button>`;
-    banner.classList.remove('hidden');
-    $('#clear-scope').addEventListener('click', () => {
-      state.scope = { courseId: null, courseName: null, unit: null };
-      renderHome();
-    });
-  } else {
-    banner.classList.add('hidden');
-  }
-
-  // Stat strip. The top of the app looked empty with just a greeting; these
-  // give an at-a-glance reason to keep going.
-  try {
-    const { report } = await api('GET', '/api/dashboard');
-    const t = report.totals;
-    $('#home-stats').innerHTML = `
-      <div class="mini-stat">
-        <span class="mini-stat-icon u-bg-good-soft u-c-good">✓</span>
-        <span><span class="mini-stat-value">${t.overallAccuracy === null ? '—' : t.overallAccuracy + '%'}</span>
-        <span class="mini-stat-label">Accuracy</span></span>
-      </div>
-      <div class="mini-stat">
-        <span class="mini-stat-icon u-bg-accent-soft u-c-hb9aeff">◎</span>
-        <span><span class="mini-stat-value">${t.totalAttempts}</span>
-        <span class="mini-stat-label">Answered</span></span>
-      </div>
-      <div class="mini-stat">
-        <span class="mini-stat-icon u-bg-hfb923c22 u-c-hfbbf24">★</span>
-        <span><span class="mini-stat-value">${t.topicsMastered}</span>
-        <span class="mini-stat-label">Mastered</span></span>
-      </div>
-      <div class="mini-stat">
-        <span class="mini-stat-icon u-bg-bad-soft u-c-bad">↻</span>
-        <span><span class="mini-stat-value">${report.weakSpots.length}</span>
-        <span class="mini-stat-label">Weak spots</span></span>
-      </div>`;
-  } catch { $('#home-stats').innerHTML = ''; }
+  $$('#course-sort .seg-btn').forEach((b) =>
+    b.classList.toggle('active', b.dataset.sort === courseSort()));
 
   try {
     const { courses } = await api('GET', '/api/my-courses');
-    $('#home-course-count').textContent = courses.length;
-    $('#home-courses').innerHTML = courses.length === 0
-      ? `<div class="card empty-state"><span class="empty-emoji">▦</span>
-         <h3>No courses yet</h3><p class="muted">Add your classes to practice by unit.</p></div>`
-      : courses.map((c) => `
-        <button class="course-card course-open" data-id="${esc(c.course.id)}">
-          <div class="row-between u-ai-flex-start">
-            <div class="u-minw-0">
-              <h3>${esc(c.course.name)}</h3>
-              <div class="course-meta">${c.totals.unitsWithContent} of ${c.totals.units} units ready · ${c.totals.questions} questions</div>
-            </div>
-            ${levelPill(c.course.levelLabel)}
-          </div>
-          <div class="progress-mini"><span data-width="${c.totals.coveragePercent}"></span></div>
-        </button>`).join('');
-    $$('.course-open').forEach((b) => b.addEventListener('click', () => openCourse(b.dataset.id)));
-  } catch { /* signed out */ }
+    state.myCourses = courses || [];
+    const board = $('#course-board');
+    $('#course-board-empty').classList.toggle('hidden', state.myCourses.length > 0);
+    board.innerHTML = sortCourses(state.myCourses, courseSort()).map(courseCard).join('');
+
+    $$('#course-board [data-course]').forEach((el) => {
+      el.addEventListener('click', () => openCourseBoard(el.dataset.course));
+      bindTileDrag(el);
+    });
+  } catch (err) {
+    if (err.status !== 401) toast(err.message, 'bad');
+  }
+
+  try {
+    const home = await api('GET', '/api/dashboard');
+    const t = home.report.totals;
+    $('#home-stats').innerHTML = `
+      <div class="mini-stat"><span class="mini-stat-icon u-bg-good-soft u-c-good">✓</span>
+        <div class="u-minw-0"><div class="mini-stat-value">${t.overallAccuracy === null ? '—' : `${t.overallAccuracy}%`}</div>
+        <div class="mini-stat-label">Accuracy</div></div></div>
+      <div class="mini-stat"><span class="mini-stat-icon u-bg-accent-soft u-c-hb9aeff">◎</span>
+        <div class="u-minw-0"><div class="mini-stat-value">${t.totalAttempts}</div>
+        <div class="mini-stat-label">Answered</div></div></div>
+      <div class="mini-stat"><span class="mini-stat-icon u-bg-hfb923c22 u-c-hfbbf24">★</span>
+        <div class="u-minw-0"><div class="mini-stat-value">${t.topicsMastered}</div>
+        <div class="mini-stat-label">Mastered</div></div></div>
+      <div class="mini-stat"><span class="mini-stat-icon u-bg-bad-soft u-c-bad">↻</span>
+        <div class="u-minw-0"><div class="mini-stat-value">${home.report.weakSpots.length}</div>
+        <div class="mini-stat-label">Weak spots</div></div></div>`;
+  } catch { $('#home-stats').innerHTML = ''; }
 
   loadSets();
 }
+
+/* Drag to reorder. Touch devices fall back to long-press-free tapping, which is
+ * why the sort control exists too -- reorder must never be the ONLY way to
+ * arrange the board. */
+let dragged = null;
+function bindTileDrag(el) {
+  el.addEventListener('dragstart', () => { dragged = el; el.classList.add('dragging'); });
+  el.addEventListener('dragend', () => {
+    el.classList.remove('dragging');
+    dragged = null;
+    setManualOrder($$('#course-board [data-course]').map((x) => x.dataset.course));
+    // Manual arrangement implies you want to see it.
+    if (courseSort() !== 'mine') { setCourseSort('mine'); renderHome(); }
+  });
+  el.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    if (!dragged || dragged === el) return;
+    const board = $('#course-board');
+    const tiles = $$('#course-board [data-course]');
+    const from = tiles.indexOf(dragged), to = tiles.indexOf(el);
+    if (from < to) board.insertBefore(dragged, el.nextSibling);
+    else board.insertBefore(dragged, el);
+  });
+}
+
+$('#course-sort').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-sort]');
+  if (!btn) return;
+  setCourseSort(btn.dataset.sort);
+  renderHome();
+});
+
+/* One class. Modes here are scoped to it, so tapping Learn drills this course
+ * rather than everything at once. */
+async function openCourseBoard(courseId) {
+  const course = (state.myCourses || []).find((c) => c.id === courseId);
+  if (!course) return;
+
+  state.scope = { courseId, courseName: course.name, unit: null };
+  showView('course');
+
+  $('#course-head-name').textContent = course.name;
+  $('#course-head-sub').textContent = `${course.levelLabel || 'Regular'} · ${course.category || ''}`;
+  $('#course-head-dot').dataset.subj = subjectKey(course.category);
+
+  const pct = course.masteryPercent === null ? 0 : course.masteryPercent;
+  $('#course-progress-fill').style.width = `${pct}%`;
+  $('#course-progress-label').textContent = course.masteryPercent === null
+    ? 'No questions answered yet'
+    : `${pct}% mastered`;
+
+  renderModeLocks();
+
+  try {
+    const data = await api('GET', `/api/course?courseId=${encodeURIComponent(courseId)}`);
+    const units = data.units || [];
+    $('#course-unit-count').textContent = `${units.length} unit${units.length === 1 ? '' : 's'}`;
+    $('#course-units').innerHTML = units.map((u) => `
+      <button class="unit-row" data-unit="${esc(u.name)}" ${u.questions === 0 ? 'disabled' : ''}>
+        <span class="unit-row-main">
+          <span class="unit-row-name">${esc(u.name)}</span>
+          <span class="unit-row-meta dim">${u.questions === 0 ? 'No questions yet' : `${u.questions} questions`}</span>
+        </span>
+        <span class="unit-row-go">${u.questions === 0 ? '' : '→'}</span>
+      </button>`).join('');
+
+    $$('#course-units [data-unit]').forEach((b) => b.addEventListener('click', () => {
+      state.scope = { courseId, courseName: course.name, unit: b.dataset.unit };
+      showView('learn');
+      loadQuestion();
+    }));
+  } catch (err) { toast(err.message, 'bad'); }
+}
+
 
 async function loadSets() {
   try {
@@ -997,6 +1277,149 @@ function timeAgo(iso) {
   return `${Math.round(hrs / 24)}d ago`;
 }
 
+
+// ------------------------------------------------------------------ rewards
+/* XP, level-ups, badges, streaks, and the small sensory rewards that go with
+ * them.
+ *
+ * Sound is opt-out and defaults ON, but it is synthesised with the Web Audio
+ * API rather than shipped as audio files: two short tones cost nothing to
+ * download and cannot fail to load. Haptics are Android-only in practice --
+ * iOS Safari ignores navigator.vibrate -- so they are a bonus, never the only
+ * feedback for anything. */
+const rewards = { audio: null };
+
+function soundEnabled() {
+  try { return localStorage.getItem('whetstone:sound') !== 'off'; } catch { return true; }
+}
+function setSoundEnabled(on) {
+  try { localStorage.setItem('whetstone:sound', on ? 'on' : 'off'); } catch { /* private mode */ }
+}
+
+function tone(freqs, duration = 0.12) {
+  if (!soundEnabled()) return;
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    rewards.audio = rewards.audio || new Ctx();
+    const ctx = rewards.audio;
+    // Browsers suspend audio until a gesture; every caller here follows a tap.
+    if (ctx.state === 'suspended') ctx.resume();
+    freqs.forEach((f, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.value = f;
+      const start = ctx.currentTime + i * duration * 0.72;
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(0.16, start + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(start); osc.stop(start + duration + 0.02);
+    });
+  } catch { /* audio is a nicety, never a failure path */ }
+}
+
+function buzz(pattern) {
+  try { if (navigator.vibrate) navigator.vibrate(pattern); } catch { /* unsupported */ }
+}
+
+const sfx = {
+  correct() { tone([660, 880]); buzz(18); },
+  wrong() { tone([220, 165], 0.16); buzz([12, 40, 12]); },
+  levelUp() { tone([523, 659, 784, 1047], 0.14); buzz([20, 40, 20, 40, 30]); },
+  badge() { tone([784, 1047, 1319], 0.16); buzz([25, 50, 45]); },
+};
+
+/* A single celebration queue, so a level-up and two badges at once become one
+ * calm sequence rather than three overlapping popups. */
+const celebrations = [];
+let celebrating = false;
+
+function queueCelebration(html, kind) {
+  celebrations.push({ html, kind });
+  if (!celebrating) nextCelebration();
+}
+
+function nextCelebration() {
+  const next = celebrations.shift();
+  if (!next) { celebrating = false; return; }
+  celebrating = true;
+
+  const el = document.createElement('div');
+  el.className = `celebrate celebrate-${next.kind}`;
+  el.innerHTML = next.html;
+  document.body.appendChild(el);
+  if (next.kind === 'level') sfx.levelUp(); else sfx.badge();
+
+  setTimeout(() => {
+    el.classList.add('leaving');
+    setTimeout(() => { el.remove(); nextCelebration(); }, 320);
+  }, 2400);
+}
+
+function renderXpBar(prog) {
+  const bar = $('#xp-bar');
+  if (!bar || !prog) return;
+  bar.classList.remove('hidden');
+  $('#xp-level').textContent = prog.level;
+  $('#xp-fill').style.width = `${prog.percent}%`;
+  $('#xp-count').textContent = `${prog.intoLevel} / ${prog.intoLevel + prog.neededForNext} XP`;
+
+  const streak = prog.streak || {};
+  const chip = $('#streak-chip');
+  if (chip) {
+    const has = (streak.current || 0) > 0;
+    chip.classList.toggle('hidden', !has);
+    if (has) {
+      chip.textContent = `${streak.current} day${streak.current === 1 ? '' : 's'}`;
+      // At risk means "answered yesterday, nothing today yet". Nudge, do not
+      // panic: one question inside the free allowance keeps it alive.
+      chip.classList.toggle('at-risk', Boolean(streak.atRisk));
+      chip.title = streak.atRisk
+        ? 'Answer one question today to keep your streak.'
+        : `Best: ${streak.best} days`;
+    }
+  }
+}
+
+/* Called after every answer. */
+function applyRewards(data) {
+  if (data.correct) sfx.correct(); else sfx.wrong();
+
+  if (data.xp) {
+    state.progression = { ...(state.progression || {}), ...data.xp, streak: data.streak };
+    renderXpBar({
+      level: data.xp.level,
+      percent: data.xp.percent,
+      intoLevel: data.xp.total,
+      neededForNext: 0,
+      streak: data.streak,
+    });
+    if (data.xp.gained > 0) floatXp(data.xp.gained);
+    if (data.xp.leveledUp) {
+      queueCelebration(
+        `<span class="celebrate-icon">▲</span>
+         <strong>Level ${data.xp.level}</strong>
+         <span>Nice. Keep going.</span>`, 'level');
+    }
+  }
+
+  (data.newBadges || []).forEach((b) => queueCelebration(
+    `<span class="celebrate-icon">${esc(b.icon)}</span>
+     <strong>${esc(b.name)}</strong>
+     <span>${esc(b.description)}</span>`, 'badge'));
+}
+
+function floatXp(amount) {
+  const host = $('#quiz-card') || document.body;
+  const el = document.createElement('span');
+  el.className = 'xp-float';
+  el.textContent = `+${amount} XP`;
+  host.appendChild(el);
+  setTimeout(() => el.remove(), 1100);
+}
+
 // ------------------------------------------------------------------ paywall
 /* Conversion prompts.
  *
@@ -1218,6 +1641,7 @@ async function submitAnswer(choice) {
     $('#next-btn').focus();
     if (state.user) state.user.quota = data.quota;
     renderQuotaMeter(data.quota);
+    applyRewards(data);
     maybeMidSessionPaywall(data.quota, p.streak);
   } catch (err) {
     state.answered = false;
@@ -1890,6 +2314,11 @@ async function loadSettings() {
     <dt>Plan</dt><dd>${esc(u.plan || 'free')}</dd>`;
   $('#set-display').value = u.displayName || '';
 
+  $$('[data-theme-choice]').forEach((b) =>
+    b.classList.toggle('active', b.dataset.themeChoice === storedTheme()));
+  $$('[data-sound-choice]').forEach((b) =>
+    b.classList.toggle('active', b.dataset.soundChoice === (soundEnabled() ? 'on' : 'off')));
+
   // The switcher only exists when the server says testing mode is on.
   $('#tester-card').classList.toggle('hidden', !state.testingMode);
   if (state.testingMode) {
@@ -1901,6 +2330,20 @@ async function loadSettings() {
 
   loadMyBugs();
 }
+
+$('#sound-switch').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-sound-choice]');
+  if (!btn) return;
+  setSoundEnabled(btn.dataset.soundChoice === 'on');
+  $$('[data-sound-choice]').forEach((b) =>
+    b.classList.toggle('active', b.dataset.soundChoice === btn.dataset.soundChoice));
+  if (btn.dataset.soundChoice === 'on') sfx.correct();   // confirm audibly
+});
+
+$('#theme-switch').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-theme-choice]');
+  if (btn) setTheme(btn.dataset.themeChoice);
+});
 
 $('#plan-switch').addEventListener('click', async (e) => {
   const btn = e.target.closest('button[data-plan]');
@@ -2092,8 +2535,9 @@ document.addEventListener('keydown', (e) => {
   watchForDynamicStyles();
 
   try {
-    const { user, testingMode, premiumModes } = await api('GET', '/api/me');
+    const { user, testingMode, premiumModes, progression } = await api('GET', '/api/me');
     state.user = user;
+    state.progression = progression;
     state.testingMode = Boolean(testingMode);
     state.premiumModes = premiumModes || [];
   } catch { state.user = null; }

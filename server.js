@@ -10,6 +10,7 @@ const auth = require('./lib/auth');
 const adaptive = require('./lib/adaptive');
 const plans = require('./lib/plans');
 const apexam = require('./lib/apexam');
+const progression = require('./lib/progression');
 const groups = require('./lib/groups');
 const billing = require('./lib/billing');
 const questions = require('./lib/questions');
@@ -210,6 +211,8 @@ function publicUser(user) {
     emailVerified: auth.isEmailVerified(user.id),
     gradeLevel: user.grade_level || null,
     onboarded: Boolean(user.onboarded_at),
+    avatar: user.avatar || 'flame',
+    createdAt: user.created_at || null,
     courses: plans.userCourses(user.id).map((c) => ({
       id: c.id, name: c.name, levelLabel: c.levelLabel, category: c.category,
     })),
@@ -345,11 +348,28 @@ const routes = {
     const user = currentUser(req);
     sendJson(res, 200, {
       user: user ? publicUser(user) : null,
+      progression: user
+        ? progression.profileFor(user.id, plans.userOffsetMinutes ? plans.userOffsetMinutes(user.id) : 0)
+        : null,
       testingMode: config.testingMode,
       // The client greys these out. The server still enforces them; this is
       // only so the UI can explain the lock rather than fail on click.
       premiumModes: config.premiumModes,
     });
+  },
+
+  'POST /api/account/avatar': async (req, res) => {
+    const user = requireUser(req);
+    const body = await readJsonBody(req);
+    const ALLOWED = ['flame', 'leaf', 'bolt', 'star', 'moon', 'wave', 'peak', 'orbit'];
+    const avatar = String(body.avatar || '');
+    // Preset ids only. Uploads would mean storing and moderating images of
+    // minors, which is not a problem worth having for a decorative glyph.
+    if (!ALLOWED.includes(avatar)) {
+      throw Object.assign(new Error('Unknown avatar.'), { statusCode: 400 });
+    }
+    getDbHandle().prepare('UPDATE users SET avatar = ? WHERE id = ?').run(avatar, user.id);
+    sendJson(res, 200, { avatar, user: publicUser(currentUser(req)) });
   },
 
   'POST /api/account/display-name': async (req, res) => {
@@ -482,6 +502,17 @@ const routes = {
     const isCorrect = chosen === question.answer;
     const result = adaptive.recordResult(user.id, question, isCorrect, { chosen, mode });
 
+    // Progression. XP only for correct answers, weighted by difficulty; the
+    // streak counts any answer, so a nervous student is not pushed toward easy
+    // questions purely to protect a number.
+    const offsetMinutes = plans.userOffsetMinutes ? plans.userOffsetMinutes(user.id) : 0;
+    const xpGained = progression.xpForAnswer(question.difficulty, isCorrect);
+    const before = progression.profileFor(user.id, offsetMinutes);
+    progression.addXp(user.id, xpGained);
+    const streak = progression.touchStreak(user.id, offsetMinutes);
+    const newBadges = progression.checkBadges(user.id, { offsetMinutes });
+    const after = progression.profileFor(user.id, offsetMinutes);
+
     sendJson(res, 200, {
       correct: isCorrect,
       correctChoice: question.answer,
@@ -489,6 +520,15 @@ const routes = {
       progress: result,
       mode,
       quota: plans.checkModeQuota(user.id, mode),
+      xp: {
+        gained: xpGained,
+        total: after.xp,
+        level: after.level,
+        percent: after.percent,
+        leveledUp: after.level > before.level,
+      },
+      streak,
+      newBadges,
     });
   },
 
@@ -524,10 +564,10 @@ const routes = {
 
   'GET /api/my-courses': async (req, res) => {
     const user = requireUser(req);
-    const list = plans.userCourses(user.id);
-    sendJson(res, 200, {
-      courses: list.map((c) => plans.courseCoverage(c.id)),
-    });
+    // Flat, board-ready shape. The home screen is a class list now, so it needs
+    // mastery, weak-topic count, the next unit worth doing and when the student
+    // last touched it -- all per course, in one round trip.
+    sendJson(res, 200, { courses: plans.courseBoard(user.id) });
   },
 
   'POST /api/my-courses': async (req, res) => {

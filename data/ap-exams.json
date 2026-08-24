@@ -1,6 +1,6 @@
 {
  "_note": "Exam structure read from the official College Board 'About the Exam' page for each course, 2026-27 cycle. Courses absent from this file have no verified format recorded and must not have one invented; the app links students to College Board instead.",
- "_verifiedOn": "2026-08-23",
+ "_verifiedOn": "2026-08-24",
  "exams": {
   "ap-biology": {
    "name": "AP Biology",
@@ -529,6 +529,395 @@
      "minutes": 60,
      "weight": 30,
      "note": "Two written-response questions (four prompts) about your own Personalized Project Reference, plus the through-course program and video."
+    }
+   ]
+  },
+  "ap-physics-2": {
+   "name": "AP Physics 2: Algebra-Based",
+   "durationMin": 180,
+   "delivery": "hybrid",
+   "source": "https://apstudents.collegeboard.org/courses/ap-physics-2-algebra-based/assessment",
+   "examDate": "Thu, May 6, 2027",
+   "calculator": "Permitted. Equations sheet provided.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 42,
+     "minutes": 85,
+     "weight": 50,
+     "note": "Discrete questions plus sets built on a shared stimulus or data set."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 4,
+     "minutes": 95,
+     "weight": 50,
+     "note": "One each of: mathematical routines, translation between representations, experimental design and analysis, qualitative/quantitative translation."
+    }
+   ]
+  },
+  "ap-physics-c-mech": {
+   "name": "AP Physics C: Mechanics",
+   "durationMin": 180,
+   "delivery": "hybrid",
+   "source": "https://apstudents.collegeboard.org/courses/ap-physics-c-mechanics/assessment",
+   "examDate": "Mon, May 3, 2027",
+   "calculator": "Permitted. Equations sheet provided.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 42,
+     "minutes": 85,
+     "weight": 50,
+     "note": "Discrete questions plus sets built on a shared stimulus or data set."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 4,
+     "minutes": 95,
+     "weight": 50,
+     "note": "One each of: mathematical routines, translation between representations, experimental design and analysis, qualitative/quantitative translation."
+    }
+   ]
+  },
+  "ap-physics-c-em": {
+   "name": "AP Physics C: Electricity and Magnetism",
+   "durationMin": 180,
+   "delivery": "hybrid",
+   "source": "https://apstudents.collegeboard.org/courses/ap-physics-c-electricity-and-magnetism/assessment",
+   "examDate": "Wed, May 5, 2027",
+   "calculator": "Permitted. Equations sheet provided.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 42,
+     "minutes": 85,
+     "weight": 50,
+     "note": "Discrete questions plus sets built on a shared stimulus or data set."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 4,
+     "minutes": 95,
+     "weight": 50,
+     "note": "One each of: mathematical routines, translation between representations, experimental design and analysis, qualitative/quantitative translation."
+    }
+   ]
+  },
+  "ap-comparative-government": {
+   "name": "AP Comparative Government and Politics",
+   "durationMin": 150,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-comparative-government-and-politics/assessment",
+   "examDate": "Fri, May 14, 2027",
+   "calculator": "Not permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 55,
+     "minutes": 60,
+     "weight": 50,
+     "note": "Focused on the six course countries: China, Iran, Mexico, Nigeria, Russia and the UK."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 4,
+     "minutes": 90,
+     "weight": 50,
+     "note": "Conceptual analysis, quantitative analysis, comparative analysis, argument essay."
+    }
+   ]
+  },
+  "ap-art-history": {
+   "name": "AP Art History",
+   "durationMin": 180,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-art-history/assessment",
+   "examDate": "Wed, May 12, 2027",
+   "calculator": "Not permitted.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 80,
+     "minutes": 60,
+     "weight": 50,
+     "note": "Sets of 2-3 questions on colour images, plus individual questions."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 6,
+     "minutes": 120,
+     "weight": 50,
+     "note": "2 long essays (comparison; visual/contextual analysis) and 4 short essays (visual analysis, contextual analysis, attribution, continuity and change)."
+    }
+   ]
+  },
+  "ap-music-theory": {
+   "name": "AP Music Theory",
+   "durationMin": 160,
+   "delivery": "paper",
+   "source": "https://apstudents.collegeboard.org/courses/ap-music-theory/assessment",
+   "examDate": "Mon, May 10, 2027",
+   "calculator": "Not permitted.",
+   "note": "Multiple choice and written free response are on paper; the sight-singing responses are recorded on a device supplied by the school. Aural and sight-singing sections cannot be practised here.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 75,
+     "minutes": 80,
+     "weight": 45,
+     "note": "41-43 aural questions (~45 min) and 32-34 score-analysis questions (35 min)."
+    },
+    {
+     "id": "frq",
+     "label": "Section IIA: Free Response (Written)",
+     "count": 7,
+     "minutes": 70,
+     "weight": 45,
+     "note": "2 melodic dictation, 2 harmonic dictation, part writing from figured bass, part writing from Roman numerals, melody harmonisation."
+    },
+    {
+     "id": "sing",
+     "label": "Section IIB: Sight-Singing",
+     "count": 2,
+     "minutes": 10,
+     "weight": 10,
+     "note": "Two short diatonic melodies, recorded. 75 seconds to prepare, 30 seconds to perform each."
+    }
+   ]
+  },
+  "ap-latin": {
+   "name": "AP Latin",
+   "durationMin": 180,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-latin/assessment",
+   "examDate": "Fri, May 14, 2027",
+   "calculator": "Not permitted.",
+   "note": "2% of the free-response score comes from two in-class course-project checkpoints marked by your teacher.",
+   "sections": [
+    {
+     "id": "mcq",
+     "label": "Section I: Multiple Choice",
+     "count": 52,
+     "minutes": 65,
+     "weight": 50,
+     "note": "Sight and syllabus prose and poetry: 20 discrete, 6 short-set sight, 6 short-set syllabus, 20 long-set syllabus."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 5,
+     "minutes": 115,
+     "weight": 50,
+     "note": "1 short answer, 1 literal translation, 1 short essay on a syllabus passage, 2 short essays on project passages."
+    }
+   ]
+  },
+  "ap-spanish-language": {
+   "name": "AP Spanish Language and Culture",
+   "durationMin": 150,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-spanish-language-and-culture/assessment",
+   "examDate": "Thu, May 13, 2027",
+   "calculator": "Not permitted.",
+   "note": "Redesigned: free response comes FIRST, and two of its three tasks depend on a project you research beforehand. The Personalized Project Reference is due Fri, Apr 30, 2027. Speaking tasks are recorded in Bluebook and cannot be practised here.",
+   "sections": [
+    {
+     "id": "frq",
+     "label": "Section I: Free Response",
+     "count": 3,
+     "minutes": 70,
+     "weight": 50,
+     "note": "Project Presentation (20%), Project Q&A with 4 unseen recorded questions (15%), Argumentative Essay (15%, 55 min)."
+    },
+    {
+     "id": "mcq",
+     "label": "Section II: Multiple Choice",
+     "count": 55,
+     "minutes": 80,
+     "weight": 50,
+     "note": "Part A Listening: 25 questions, 40 min (25%). Part B Reading: 30 questions, 40 min (25%)."
+    }
+   ]
+  },
+  "ap-french": {
+   "name": "AP French Language and Culture",
+   "durationMin": 150,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-french-language-and-culture/assessment",
+   "examDate": "Thu, May 6, 2027",
+   "calculator": "Not permitted.",
+   "note": "Redesigned for 2027. Free response comes FIRST and two of its tasks depend on a project you research beforehand; the Personalized Project Reference is due Fri, Apr 30, 2027. Speaking tasks are recorded in Bluebook and cannot be practised here.",
+   "sections": [
+    {
+     "id": "frq",
+     "label": "Section I: Free Response",
+     "count": 3,
+     "minutes": 70,
+     "weight": 50,
+     "note": "Project Presentation (20%), Project Q&A with 4 unseen recorded questions (15%), Argumentative Essay (15%, 55 min)."
+    },
+    {
+     "id": "mcq",
+     "label": "Section II: Multiple Choice",
+     "count": 55,
+     "minutes": 80,
+     "weight": 50,
+     "note": "Part A Listening: 25 questions, 40 min. Part B Reading: 30 questions, 40 min."
+    }
+   ]
+  },
+  "ap-german": {
+   "name": "AP German Language and Culture",
+   "durationMin": 150,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-german-language-and-culture/assessment",
+   "examDate": "Fri, May 7, 2027",
+   "calculator": "Not permitted.",
+   "note": "Redesigned for 2027. Free response comes FIRST and two of its tasks depend on a project you research beforehand; the Personalized Project Reference is due Fri, Apr 30, 2027. Speaking tasks are recorded in Bluebook and cannot be practised here.",
+   "sections": [
+    {
+     "id": "frq",
+     "label": "Section I: Free Response",
+     "count": 3,
+     "minutes": 70,
+     "weight": 50,
+     "note": "Project Presentation (20%), Project Q&A with 4 unseen recorded questions (15%), Argumentative Essay (15%, 55 min)."
+    },
+    {
+     "id": "mcq",
+     "label": "Section II: Multiple Choice",
+     "count": 55,
+     "minutes": 80,
+     "weight": 50,
+     "note": "Part A Listening: 25 questions, 40 min. Part B Reading: 30 questions, 40 min."
+    }
+   ]
+  },
+  "ap-italian": {
+   "name": "AP Italian Language and Culture",
+   "durationMin": 150,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-italian-language-and-culture/assessment",
+   "examDate": "Mon, May 3, 2027",
+   "calculator": "Not permitted.",
+   "note": "Redesigned for 2027. Free response comes FIRST and two of its tasks depend on a project you research beforehand; the Personalized Project Reference is due Fri, Apr 30, 2027. Speaking tasks are recorded in Bluebook and cannot be practised here.",
+   "sections": [
+    {
+     "id": "frq",
+     "label": "Section I: Free Response",
+     "count": 3,
+     "minutes": 70,
+     "weight": 50,
+     "note": "Project Presentation (20%), Project Q&A with 4 unseen recorded questions (15%), Argumentative Essay (15%, 55 min)."
+    },
+    {
+     "id": "mcq",
+     "label": "Section II: Multiple Choice",
+     "count": 55,
+     "minutes": 80,
+     "weight": 50,
+     "note": "Part A Listening: 25 questions, 40 min. Part B Reading: 30 questions, 40 min."
+    }
+   ]
+  },
+  "ap-chinese": {
+   "name": "AP Chinese Language and Culture",
+   "durationMin": 120,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-chinese-language-and-culture/assessment",
+   "examDate": "Thu, May 13, 2027",
+   "calculator": "Not permitted.",
+   "note": "Redesigned for 2027. Free response comes FIRST and two of its tasks depend on a project you research beforehand; the Personalized Project Reference is due Fri, Apr 30, 2027. Speaking tasks are recorded in Bluebook and cannot be practised here. Text displays in simplified or traditional characters; input via Pinyin Simplified, Pinyin Traditional or Bopomofo.",
+   "sections": [
+    {
+     "id": "frq",
+     "label": "Section I: Free Response",
+     "count": 4,
+     "minutes": 55,
+     "weight": 50,
+     "note": "Project Presentation (20%), Project Q&A (15%), Story Narration (7.5%) and Email Response (7.5%) -- 30 minutes for both writing tasks."
+    },
+    {
+     "id": "mcq",
+     "label": "Section II: Multiple Choice",
+     "count": 55,
+     "minutes": 65,
+     "weight": 50,
+     "note": "Part A Listening: 25 questions, 25 min. Part B Reading: 30 questions, 40 min."
+    }
+   ]
+  },
+  "ap-japanese": {
+   "name": "AP Japanese Language and Culture",
+   "durationMin": 120,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-japanese-language-and-culture/assessment",
+   "examDate": "Tue, May 11, 2027",
+   "calculator": "Not permitted.",
+   "note": "Redesigned for 2027. Free response comes FIRST and two of its tasks depend on a project you research beforehand; the Personalized Project Reference is due Fri, Apr 30, 2027. Speaking tasks are recorded in Bluebook and cannot be practised here. Typing uses the Google Japanese IME (hiragana, katakana, kanji).",
+   "sections": [
+    {
+     "id": "frq",
+     "label": "Section I: Free Response",
+     "count": 4,
+     "minutes": 55,
+     "weight": 50,
+     "note": "Project Presentation (20%), Project Q&A (15%), Story Narration (7.5%) and Email Response (7.5%) -- 30 minutes for both writing tasks."
+    },
+    {
+     "id": "mcq",
+     "label": "Section II: Multiple Choice",
+     "count": 55,
+     "minutes": 65,
+     "weight": 50,
+     "note": "Part A Listening: 25 questions, 25 min. Part B Reading: 30 questions, 40 min."
+    }
+   ]
+  },
+  "ap-spanish-literature": {
+   "name": "AP Spanish Literature and Culture",
+   "durationMin": 180,
+   "delivery": "digital",
+   "source": "https://apstudents.collegeboard.org/courses/ap-spanish-literature-and-culture/assessment",
+   "examDate": "Fri, May 14, 2027",
+   "calculator": "Not permitted.",
+   "note": "Section IA is audio-based and cannot be practised here.",
+   "sections": [
+    {
+     "id": "listening",
+     "label": "Section IA: Multiple Choice, Interpretive Listening",
+     "count": 15,
+     "minutes": 20,
+     "weight": 10,
+     "note": "Three audio sets: an author interview, a recited poem (played twice), and a presentation on a literary topic."
+    },
+    {
+     "id": "mcq",
+     "label": "Section IB: Multiple Choice, Reading Analysis",
+     "count": 50,
+     "minutes": 60,
+     "weight": 40,
+     "note": "Six sets of 7-10 questions across required and non-required works, plus a passage of literary criticism."
+    },
+    {
+     "id": "frq",
+     "label": "Section II: Free Response",
+     "count": 4,
+     "minutes": 100,
+     "weight": 50,
+     "note": "2 short answers (text explanation; text and art comparison, ~15 min each) and 2 essays (single-text analysis; text comparison, ~35 min each)."
     }
    ]
   }

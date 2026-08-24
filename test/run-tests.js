@@ -27,6 +27,7 @@ const mailer = require('../lib/mailer');
 const monitor = require('../lib/monitor');
 const coursesLib = require('../lib/courses');
 const apexam = require('../lib/apexam');
+const progression = require('../lib/progression');
 const modes = require('../lib/modes');
 const social = require('../lib/social');
 const crypto = require('node:crypto');
@@ -890,11 +891,10 @@ test('an old database without attempts.mode still opens', () => {
     correct INTEGER NOT NULL, chosen INTEGER, answered_at TEXT NOT NULL)`);
   old.close();
 
-  // Opening it through our own init must migrate rather than throw.
-  const freshDb = require('../lib/db');
-  freshDb.close && freshDb.close();
-  freshDb.resetForTests ? freshDb.resetForTests() : null;
-
+  // NOTE: deliberately does NOT touch lib/db's shared handle. An earlier
+  // version called db.close() here, which tore down the in-memory database the
+  // whole suite shares and made 26 unrelated tests fail. This exercises the
+  // migration statements directly against the fixture instead.
   const handle = new DatabaseSync(tmp);
   const cols = () => handle.prepare('PRAGMA table_info(attempts)').all().map((c) => c.name);
   assert.ok(!cols().includes('mode'), 'fixture should start without the column');
@@ -920,6 +920,80 @@ test('the schema does not index attempts.mode before the migration adds it', () 
     'attempts.mode must not be indexed inside SCHEMA; old databases lack the column');
 });
 
+section('Progression');
+
+test('XP rewards correct answers and scales with difficulty', () => {
+  assert.strictEqual(progression.xpForAnswer('easy', false), 0, 'wrong answers earn nothing');
+  const easy = progression.xpForAnswer('easy', true);
+  const medium = progression.xpForAnswer('medium', true);
+  const hard = progression.xpForAnswer('hard', true);
+  assert.ok(hard > medium && medium > easy, `expected hard > medium > easy, got ${hard}/${medium}/${easy}`);
+  // Wrong answers must not be penalised, or students learn to dodge hard questions.
+  assert.strictEqual(progression.xpForAnswer('hard', false), 0);
+});
+
+test('level 2 arrives inside the first session', () => {
+  const target = progression.xpForLevel(2);
+  const perMedium = progression.xpForAnswer('medium', true);
+  const questions = Math.ceil(target / perMedium);
+  assert.ok(questions <= 12, `level 2 needs ${questions} questions; should be ~10`);
+  assert.strictEqual(progression.levelFromXp(0).level, 1);
+  assert.strictEqual(progression.levelFromXp(target).level, 2);
+});
+
+test('the level curve is monotonic and never stalls', () => {
+  let prev = -1;
+  for (let l = 1; l <= 40; l++) {
+    const need = progression.xpForLevel(l);
+    assert.ok(need > prev, `level ${l} needs ${need}, not more than level ${l - 1}`);
+    prev = need;
+  }
+});
+
+test('a streak survives on the FREE daily allowance', () => {
+  // The whole point: one question a day keeps it alive, and free users get
+  // three. A streak that requires paying is a hostage situation.
+  const { config } = require('../lib/config');
+  const freeLearn = config.freeDailyLimits.learn;
+  assert.ok(freeLearn >= 1, 'free users must be able to answer at least one question');
+
+  const user = makeUser();
+  const first = progression.touchStreak(user.id, 0, new Date('2026-03-01T12:00:00Z'));
+  assert.strictEqual(first.current, 1);
+  // Same day again does not double-count.
+  const same = progression.touchStreak(user.id, 0, new Date('2026-03-01T20:00:00Z'));
+  assert.strictEqual(same.current, 1);
+  // Next day increments.
+  const next = progression.touchStreak(user.id, 0, new Date('2026-03-02T09:00:00Z'));
+  assert.strictEqual(next.current, 2);
+  // A missed day resets and reports the break.
+  const broken = progression.touchStreak(user.id, 0, new Date('2026-03-05T09:00:00Z'));
+  assert.strictEqual(broken.current, 1);
+  assert.strictEqual(broken.broke, true);
+  assert.strictEqual(broken.best, 2, 'best should be remembered');
+});
+
+test('badges are awarded once and only once', () => {
+  const user = makeUser();
+  assert.strictEqual(progression.awardBadge(user.id, 'century'), true, 'first award');
+  assert.strictEqual(progression.awardBadge(user.id, 'century'), false, 'must not re-award');
+  assert.strictEqual(progression.awardBadge(user.id, 'not-a-real-badge'), false, 'unknown badge rejected');
+
+  const prof = progression.profileFor(user.id);
+  assert.ok(prof.badges.find((b) => b.id === 'century').earned);
+  assert.strictEqual(prof.badgeCount, 1);
+});
+
+test('the profile reports level, streak and every badge slot', () => {
+  const user = makeUser();
+  const prof = progression.profileFor(user.id);
+  assert.strictEqual(prof.level, 1);
+  assert.strictEqual(prof.xp, 0);
+  assert.ok(prof.badges.length >= 6, 'all badge slots should be listed, earned or not');
+  assert.ok(prof.badges.every((b) => b.name && b.description), 'every badge needs copy');
+  assert.strictEqual(prof.streak.current, 0);
+});
+
 section('AP exam practice');
 
 test('every AP course has an exam practice unit', () => {
@@ -929,6 +1003,18 @@ test('every AP course has an exam practice unit', () => {
     assert.ok(c.units.some((u) => u.name === apexam.examUnitName()),
       `${c.id} has no ${apexam.examUnitName()} unit`);
   }
+});
+
+test('every AP course has a verified format or a documented reason not to', () => {
+  // The goal was never "38 formats" -- four of these are portfolio or
+  // performance courses with no written exam at all. What matters is that no
+  // course is silently unaccounted for.
+  const cov = apexam.coverage();
+  const unaccounted = cov.filter((c) => !c.verifiedFormat && !c.portfolio);
+  assert.deepStrictEqual(unaccounted.map((c) => c.id), [],
+    'these AP courses have neither a verified format nor a portfolio note');
+  assert.strictEqual(cov.length, 38);
+  assert.ok(cov.filter((c) => c.verifiedFormat).length >= 34);
 });
 
 test('verified exam formats have section weights summing to 100', () => {

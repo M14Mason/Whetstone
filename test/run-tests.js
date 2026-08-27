@@ -298,11 +298,15 @@ test('mastery status thresholds behave', () => {
 section('Plans and quota');
 
 test('new users start on the free plan', () => {
+  const { config } = require('../lib/config');
+  const expected = config.plans.free.dailyQuestionLimit;
   const user = makeUser();
   const quota = plans.checkQuota(user.id);
   assert.strictEqual(quota.plan, 'free');
-  assert.strictEqual(quota.limit, 5);
-  assert.strictEqual(quota.remaining, 5);
+  // Read the limit from config rather than hardcoding it: this assertion
+  // broke twice when the free allowance changed.
+  assert.strictEqual(quota.limit, expected);
+  assert.strictEqual(quota.remaining, expected);
 });
 
 test('free tier exhausts after 5 questions in a day', () => {

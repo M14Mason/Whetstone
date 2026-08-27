@@ -351,7 +351,6 @@ const routes = {
       progression: user
         ? progression.profileFor(user.id, plans.userOffsetMinutes ? plans.userOffsetMinutes(user.id) : 0)
         : null,
-      testingMode: config.testingMode,
       // The client greys these out. The server still enforces them; this is
       // only so the UI can explain the lock rather than fail on click.
       premiumModes: config.premiumModes,
@@ -388,28 +387,6 @@ const routes = {
   // Lets a tester move between Free, Premium, and Study Group without Stripe,
   // so they can actually see what each tier unlocks. Returns 404 when testing
   // mode is off, so the endpoint does not exist at all in a real deployment.
-  'POST /api/dev/plan': async (req, res) => {
-    if (!config.testingMode) return sendJson(res, 404, { error: 'Not found' });
-    const user = requireUser(req, res);
-    if (!user) return;
-    const body = await readJsonBody(req);
-    const plan = String(body.plan || '');
-    if (!['free', 'premium', 'group'].includes(plan)) {
-      return sendJson(res, 400, { error: 'Pick free, premium, or group.' });
-    }
-    billing.setUserPlan(user.id, plan);
-    // Return the full refreshed user, not just the plan string. The client used
-    // to patch state.user.plan by hand and leave state.user.quota holding the
-    // OLD tier's limits, so switching to Premium still showed "5 of 5 free
-    // questions left" and kept the locks on.
-    const updated = currentUser(req);
-    sendJson(res, 200, {
-      plan,
-      user: publicUser(updated),
-      message: `Switched to ${plan}. Testing mode only.`,
-    });
-  },
-
   'GET /api/subjects': async (req, res) => {
     const user = currentUser(req);
     sendJson(res, 200, {

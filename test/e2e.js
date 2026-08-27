@@ -83,7 +83,9 @@ check('signup creates a session and returns a free-plan user', async () => {
   });
   assert.strictEqual(status, 201);
   assert.strictEqual(data.user.plan, 'free');
-  assert.strictEqual(data.user.quota.limit, 5);
+  // From config, not hardcoded -- the free allowance is a product decision
+  // that will keep moving.
+  assert.strictEqual(data.user.quota.limit, require('../lib/config').config.plans.free.dailyQuestionLimit);
   assert.ok(cookie.startsWith('whetstone_session='), 'no session cookie set');
 });
 

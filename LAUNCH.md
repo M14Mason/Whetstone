@@ -1,212 +1,276 @@
-# Whetstone Launch Runbook
+# Whetstone Launch Instructions
 
-Everything that has to happen before Whetstone takes a single dollar, in the
-order it has to happen. Written 23 Aug 2026.
+Do these in order. Each step says exactly what to click or type, and how to
+tell it worked.
 
-**Read Phase 0 first.** Some of it is legal, not technical, and it gates
-everything else. Nothing here is legal advice, and I am not a lawyer.
+**Run this at any point to see where you stand:**
 
----
+```bash
+node scripts/launch-check.js
+```
 
-## Where things stand
+It prints `[STOP]` for anything that will lose data, leak, or take money
+incorrectly, and `[warn]` for things you can live with. It exits 1 while any
+blocker remains. Right now it reports **4 blockers**, and this document is how
+you clear them.
 
-| | Status |
-|---|---|
-| App | Live at https://whetstone.onrender.com |
-| Catalogue | 159 courses: 62 regular, 56 honors, 38 AP, 3 test prep |
-| Question bank | 25,348 questions, 12,165 flashcards |
-| AP exam formats | 20 of 38 verified against College Board; 4 recorded as portfolio-only; **14 not yet researched** |
-| Tests | 135 unit, 37 e2e, 19 DOM smoke |
-| Payments | Demo mode. No card is ever charged. |
-| Database | `/tmp` on Render free plan. **Wiped on every deploy and every sleep.** |
+I am not a lawyer and none of this is legal advice.
 
 ---
 
-## Phase 0 - Before anything else (legal)
+## STEP 1 — An adult becomes the operator
 
-These block launch. They are not technical and you cannot code around them.
+**Why this is first:** in most US states a minor cannot form a binding
+contract. That affects your Terms, your ability to take payments, and any
+business entity. Stripe requires the account holder to be 18+. Every later step
+depends on this one.
 
-### 0.1 An adult owns the business
+1. Ask a parent or guardian to be the legal operator. Explain that they are
+   named in the Terms and that the Stripe account and bank account will be in
+   their name.
+2. Open `legal/TERMS.md` and `legal/PRIVACY.md`.
+3. Find and replace every `PARENT_OR_GUARDIAN_LEGAL_NAME` with their full legal
+   name, exactly as it appears on their ID.
 
-In most US states a minor cannot form a fully binding contract. That affects
-your Terms of Service, your ability to accept payments, and any business
-entity. Khan Academy requires its paying account holder to be 18+ for closely
-related reasons.
+```bash
+# From the repo root. Replace the name, keep the quotes.
+grep -rl PARENT_OR_GUARDIAN_LEGAL_NAME legal/ | \
+  xargs sed -i '' 's/PARENT_OR_GUARDIAN_LEGAL_NAME/Jane A. Ngo/g'
 
-- [ ] A parent or guardian agrees to be the legal operator
-- [ ] Replace `PARENT_OR_GUARDIAN_LEGAL_NAME` in `legal/TERMS.md` and
-      `legal/PRIVACY.md` with their full legal name.
-      The server warns about this at startup until you do.
-- [ ] Choose a business entity. A sole proprietorship in the adult's name is the
-      cheapest start. An LLC gives liability separation. California LLCs carry
-      an $800 minimum annual franchise tax - check current figures first.
+grep -rn PARENT_OR_GUARDIAN legal/    # must print nothing
+```
 
-### 0.2 A lawyer reads the terms
+**Verify:** `node scripts/launch-check.js` no longer lists the two legal
+blockers.
 
-`legal/TERMS.md` is a template and says so in a callout at the top. It contains
-an arbitration clause, a class-action waiver and a liability cap. **California
-limits or voids several of those**, and you set California as governing state.
+### 1b. Get the Terms actually read
 
-- [ ] An actual lawyer reviews both documents
-- [ ] Confirm the arbitration and liability clauses are enforceable in CA
-- [ ] Remove the "this is a template" callout once genuinely reviewed
+`legal/TERMS.md` is a template and says so. It contains an arbitration clause,
+a class-action waiver and a liability cap. **California limits or voids several
+of those**, and California is your governing state.
 
-### 0.3 COPPA and under-13 users
+- Have a lawyer read both documents.
+- Once genuinely reviewed, delete the "Read this before you launch" callout at
+  the top of `TERMS.md`.
 
-Signup asks birth year and gates at 13. That gate is a self-declared checkbox,
-the weakest form there is. If a child under 13 gets through, **COPPA applies**
-and requires verifiable parental consent. Penalties are per-violation.
+### 1c. Decide the under-13 rule
 
-- [ ] Decide: block under-13 outright (simplest), or build verifiable parental
-      consent (expensive, slow)
-- [ ] If blocking, enforce server-side on birth year, not just in the UI
-- [ ] Have the lawyer confirm your approach
+Signup asks for birth year and gates at 13, but it is a self-declared
+checkbox. If a child under 13 gets through, **COPPA applies** and requires
+verifiable parental consent, with per-violation penalties.
 
-### 0.4 Under-18 users generally
-
-Most users will be 13-17.
-
-- [ ] Terms should require parent/guardian permission for under-18s (they
-      currently do - verify the wording survives legal review)
-- [ ] Consider requiring a parent's email for the payment relationship, the way
-      Khan Academy does
-- [ ] Ask the lawyer about California's Age-Appropriate Design Code
+Simplest compliant answer: block under-13 outright, server-side, on birth year.
+Ask me and I will add it with a test.
 
 ---
 
-## Phase 1 - Stop losing user data
+## STEP 2 — Stop the database erasing itself
 
-**The single most important technical item.** Nothing else matters if accounts
-vanish.
+**This is the single most important technical step.** Nothing else matters if
+accounts vanish.
 
-`render.yaml` sets `DATABASE_PATH=/tmp/whetstone.db`. Render's free plan has no
-persistent disk, so `/tmp` is wiped on every redeploy **and every wake from
-sleep**. Accounts and progress do not survive. This is why your own login
-"broke" - Render deleted your account.
+`render.yaml` points `DATABASE_PATH` at `/tmp`. Render's free plan has no
+persistent disk, so `/tmp` is wiped on **every deploy and every wake from
+sleep**. This is why your own login "broke" — Render deleted your account.
 
-Pick one:
+### Option A — Render with a disk (fewest changes)
 
-### Option A - Render with a persistent disk (least change)
-- [ ] Upgrade off the free plan (paid tiers start around $7/month; verify current pricing)
-- [ ] Add a disk in `render.yaml`, mount at `/data`
-- [ ] Set `DATABASE_PATH=/data/whetstone.db` and `BACKUP_DIR=/data/backups`
-- [ ] Redeploy and confirm an account survives
+1. Go to https://dashboard.render.com and open the **whetstone** service.
+2. **Settings → Instance Type →** change from Free to a paid instance. Free
+   instances cannot have disks.
+3. **Disks → Add Disk.**
+   - Name: `whetstone-data`
+   - Mount path: `/data`
+   - Size: 1 GB
+4. **Environment →** set:
+   - `DATABASE_PATH` = `/data/whetstone.db`
+   - `BACKUP_DIR` = `/data/backups`
+5. **Manual Deploy → Deploy latest commit.**
 
-### Option B - Fly.io (already configured)
-`fly.toml` is in the repo and the Dockerfile already expects `/data`.
-- [ ] `fly volumes create whetstone_data --size 1`
-- [ ] Confirm the mount matches `DATABASE_PATH=/data/whetstone.db`
-- [ ] `fly deploy`
-- [ ] Confirm an account survives a redeploy
+### Option B — Fly.io (`fly.toml` is already in the repo)
 
-**Verify, do not assume.** Create an account, force a redeploy, log in again.
-If you can log in, the disk is real.
+```bash
+fly volumes create whetstone_data --size 1 --region sjc
+fly secrets set DATABASE_PATH=/data/whetstone.db BACKUP_DIR=/data/backups
+fly deploy
+```
 
-- [ ] Schedule automated backups (`npm run backup` exists)
-- [ ] Test restoring from a backup at least once
+### Verify it for real — do not skip this
 
----
+```bash
+# 1. Create an account on the live site.
+# 2. Force a redeploy (Render: Manual Deploy. Fly: fly deploy).
+# 3. Log in again with the same account.
+```
 
-## Phase 2 - Security and configuration
-
-### 2.1 Turn off testing mode
-`render.yaml` sets `TESTING_MODE=1`. By its own comment it "lets any account
-grant itself Premium". It also empties `premiumModes`, so **nothing is gated
-right now** and the paywall never fires.
-
-- [ ] Set `TESTING_MODE=0` (or remove it)
-- [ ] Confirm `/api/modes/match` returns 402 for a free account
-- [ ] Confirm the paywall appears when the Learn allowance runs out
-
-### 2.2 Session secret
-- [ ] Confirm `SESSION_SECRET` is platform-generated, not the default
-      (Render's `generateValue: true` does this - verify it took)
-- [ ] The server warns at startup if the default is still in use
-
-### 2.3 HTTPS and cookies
-- [ ] `PUBLIC_URL` must be `https://` in production or session cookies are not
-      marked Secure. The server warns about this.
-
-### 2.4 Rate limiting
-- [ ] Set `TRUST_PROXY=1` behind Render/Fly so rate limiting sees real client
-      IPs. Without it one abusive user can rate-limit everybody. With it set on
-      a host you do NOT control, a client can forge `X-Forwarded-For` and evade
-      limits entirely - so only set it behind a proxy you trust.
+If you can log in after a redeploy, the disk is real. If you cannot, the mount
+is wrong and everything else is pointless.
 
 ---
 
-## Phase 3 - Payments
+## STEP 3 — Secrets
 
-Currently `billingMode: demo`. No card is charged; "Upgrade" flips a database
-field.
+### 3a. SESSION_SECRET
 
-- [ ] The adult from Phase 0 creates the Stripe account (Stripe requires 18+)
-- [ ] Complete Stripe identity verification, connect a bank account
-- [ ] Set `STRIPE_SECRET_KEY`, `STRIPE_PUBLISHABLE_KEY`, `STRIPE_PRICE_PREMIUM`
-- [ ] Set `STRIPE_WEBHOOK_SECRET` - **without it subscriptions never activate**,
-      and the server warns at startup
-- [ ] Test with Stripe test cards, including a failed payment
-- [ ] Test cancellation end to end
-- [ ] Sales tax: digital subscriptions are taxable in some states. Stripe Tax
-      handles it for a fee. Ask the lawyer or an accountant.
+Currently the built-in default, which means anyone who reads the source can
+forge a login cookie for any account.
 
-**Do not skip:** verify a cancelled subscription actually re-locks premium
-modes. There is an e2e test for this, but confirm against real webhooks too.
+```bash
+openssl rand -base64 48
+```
+
+Render: **Environment → Add Environment Variable** → `SESSION_SECRET` = that
+value. (`render.yaml` already has `generateValue: true`, but confirm the
+dashboard shows a real value, not the default.)
+
+Fly: `fly secrets set SESSION_SECRET="paste-it-here"`
+
+**Changing this logs everyone out once.** Do it before you have users.
+
+### 3b. PUBLIC_URL
+
+Must be `https://`, or session cookies are not marked Secure.
+
+- Render: `PUBLIC_URL` = `https://whetstone.onrender.com` (or your domain)
+- Fly: `fly secrets set PUBLIC_URL="https://your-domain"`
+
+### 3c. TRUST_PROXY
+
+Set `TRUST_PROXY=1`. Behind Render or Fly, rate limiting otherwise sees the
+proxy's IP, so one abusive user rate-limits everybody.
+
+Only set this behind a proxy you control. On a host you do not control, a
+client can forge `X-Forwarded-For` and evade limits entirely.
 
 ---
 
-## Phase 4 - Before you tell anyone
+## STEP 4 — Email, or nobody can reset a password
 
-- [ ] `npm test` passes (135 unit, 37 e2e, 19 DOM smoke, plus bank verifier)
-- [ ] Sign up as a brand-new user on a phone, on cellular, not wifi
+Without this the app runs in console mode: reset and verification emails only
+print to the server log. A user who forgets their password is locked out
+permanently.
+
+1. Sign up at https://resend.com (free tier is enough to start).
+2. **Domains → Add Domain.** If you do not have one yet, you can start with
+   Resend's shared sending domain and move later.
+3. **API Keys → Create API Key.** Copy it once; it is not shown again.
+4. Set on your host:
+   - `RESEND_API_KEY` = the key
+   - `MAIL_FROM` = `Whetstone <hello@yourdomain.com>`
+
+**Verify:** use "Forgot your password?" on the live site with a real address
+and confirm the email arrives.
+
+---
+
+## STEP 5 — Payments (only when you are ready to charge)
+
+You can launch **free** without this. Billing currently runs in demo mode:
+"Upgrade" grants Premium and charges nothing. That is fine for a free launch
+and dishonest the moment you display a price, so do not advertise $4.99 until
+this is done.
+
+1. The adult from Step 1 creates the Stripe account at https://stripe.com
+   (Stripe requires 18+ and will verify identity).
+2. Complete identity verification and connect a bank account.
+3. **Products → Add Product:**
+   - `Whetstone Premium Monthly` — $4.99 / month recurring
+   - `Whetstone Premium Annual` — $29.99 / year recurring
+   - `Whetstone Study Group` — $3.99 / month recurring, per seat
+   Copy each **Price ID** (starts `price_`).
+4. **Developers → Webhooks → Add endpoint:**
+   - URL: `https://your-domain/api/billing/webhook`
+   - Events: `checkout.session.completed`, `customer.subscription.updated`,
+     `customer.subscription.deleted`
+   - Copy the **Signing secret** (starts `whsec_`).
+5. Set on your host:
+   - `STRIPE_SECRET_KEY` = `sk_live_...`
+   - `STRIPE_PUBLISHABLE_KEY` = `pk_live_...`
+   - `STRIPE_PRICE_PREMIUM` = `price_...`
+   - `STRIPE_WEBHOOK_SECRET` = `whsec_...`
+
+**Without `STRIPE_WEBHOOK_SECRET`, payments succeed and subscriptions never
+activate.** The launch check treats a missing one as a blocker.
+
+**Test with Stripe test keys first:** card `4242 4242 4242 4242`, any future
+expiry, any CVC. Then test a *declined* card: `4000 0000 0000 0002`.
+
+Sales tax on digital subscriptions applies in some states. Stripe Tax handles
+it for a fee. Ask the accountant.
+
+---
+
+## STEP 6 — Final checks before you share the link
+
+```bash
+node scripts/launch-check.js     # must say READY TO LAUNCH
+npm test                         # 142 unit, 37 e2e, 19 DOM smoke
+```
+
+Then, on the live site, on your phone, on cellular rather than wifi:
+
+- [ ] Sign up as a brand-new user
 - [ ] Complete onboarding end to end
-- [ ] Hit the free Learn limit and confirm the paywall fires
+- [ ] Answer 3 questions and hit the Learn wall — the paywall should appear
 - [ ] Confirm Review still works after Learn is exhausted (separate allowance)
-- [ ] Open Terms and Privacy from signup - they must render, not 404
-- [ ] Upgrade, confirm unlock, cancel, confirm re-lock
-- [ ] Check on a real iPhone and a real Android
-- [ ] Confirm `/api/health` returns ok
+- [ ] Open Terms and Privacy from the signup screen — they must render, not 404
+- [ ] Tap Match — it should show the Premium paywall, not fail silently
+- [ ] Check the streak appears and survives one question
+- [ ] Force a redeploy, then log back in with the same account
 
 ---
 
-## Phase 5 - Operations
+## STEP 7 — Go
 
-- [ ] Decide where support email goes. `masonngo70@gmail.com` is currently in
-      the legal documents and **is publicly visible in a public repo**.
-      Consider a dedicated address.
-- [ ] Set `RESEND_API_KEY` so password resets and verification actually send.
-      Without it the app runs in console mode and emails only print to the
-      server log, meaning **nobody can reset their password**.
-- [ ] Set `MAIL_FROM` to a domain you control
-- [ ] Watch `/api/health` for `errorRate` after launch
-- [ ] Have a plan for the first bug report. The in-app reporter writes to your
-      database; `npm run bugs` exports them.
+1. `git push` and let the host deploy.
+2. Confirm `https://your-domain/api/health` returns `"status":"ok"`.
+3. Share the link.
 
----
+**Watch for the first hour:** `/api/health` reports `errorRate` and
+`topErrorRoutes`. If `errorRate` climbs above a percent or two, something is
+wrong and the route name is in that payload.
 
-## Phase 6 - Content gaps
+Bug reports from users land in your database. Export them with:
 
-Not launch blockers, but users will notice.
-
-- [ ] **14 AP exam formats are still unresearched.** The app is honest about it,
-      labelling them "Format not verified" and linking to College Board rather
-      than inventing timings, but it is a visible gap. Remaining: Physics 2,
-      Physics C (Mechanics), Physics C (E&M), Comparative Government, Art
-      History, Music Theory, Latin, and the six world-language exams.
-- [ ] FRQ practice covers 11 courses (18 questions). Other verified courses get
-      MCQ practice and the format briefing only.
-- [ ] AP 2-D Art, AP Drawing, AP Seminar and AP Research are correctly recorded
-      as portfolio/performance courses with no written exam to practise.
+```bash
+npm run bugs
+```
 
 ---
 
-## The honest summary
+## Useful commands
 
-You cannot launch payments until an adult owns the entity and a lawyer has read
-the terms. That is Phase 0 and it is not negotiable.
+```bash
+node scripts/launch-check.js            # readiness, exits 1 on blockers
+npm test                                # full suite
+node scripts/purge-test-accounts.js     # dry run: list test accounts
+node scripts/purge-test-accounts.js --confirm   # delete them
+npm run backup                          # snapshot the database
+npm run bugs                            # export user bug reports
+```
 
-You should not run a real friend test until Phase 1 is done, because accounts
-currently disappear and testers will assume the app is broken - which is
-exactly what happened to you.
+---
 
-Everything after that is ordinary launch work.
+## What changed for launch
+
+- **`TESTING_MODE` no longer exists.** It disabled every premium gate and
+  exposed a route that let any signed-in account grant itself Premium — and it
+  shipped enabled, so none of the paywall existed on the live site while it was
+  on. Removed rather than merely defaulted off.
+- **`/api/dev/plan` deleted**, along with the in-app plan switcher.
+- **51 test accounts purged** from the local database (0 real accounts existed;
+  backup at `data/whetstone.db.prelaunch-*`).
+- If you want generous limits for a demo, set `FREE_LEARN_LIMIT` and
+  `FREE_REVIEW_LIMIT`. Those change how much is free. They never disable a gate
+  or grant a plan.
+
+## Current free tier
+
+| | Free | Premium |
+|---|---|---|
+| Learn | 3/day | unlimited |
+| Review Mistakes | 5/day | unlimited |
+| Flashcards | unlimited | unlimited |
+| Match, Practice Test, AP Exam | locked | unlimited |
+
+Premium $4.99/mo or $29.99/yr. Study Group $3.99/seat/mo, minimum 3.

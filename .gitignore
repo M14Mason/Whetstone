@@ -9,3 +9,10 @@ data/*.db-*
 .DS_Store
 coverage/
 tmp/
+
+# Database snapshots. data/*.db does NOT match these, and a 21MB binary very
+# nearly went into git history because of it.
+data/*.db.bak-*
+data/*.db.prelaunch-*
+data/*.db.*
+data/legal-backup/

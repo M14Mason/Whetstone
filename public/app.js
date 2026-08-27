@@ -2319,14 +2319,6 @@ async function loadSettings() {
   $$('[data-sound-choice]').forEach((b) =>
     b.classList.toggle('active', b.dataset.soundChoice === (soundEnabled() ? 'on' : 'off')));
 
-  // The switcher only exists when the server says testing mode is on.
-  $('#tester-card').classList.toggle('hidden', !state.testingMode);
-  if (state.testingMode) {
-    $('#tester-current').textContent = u.plan || 'free';
-    $$('#plan-switch button').forEach((b) => {
-      b.classList.toggle('active', b.dataset.plan === (u.plan || 'free'));
-    });
-  }
 
   loadMyBugs();
 }
@@ -2345,20 +2337,6 @@ $('#theme-switch').addEventListener('click', (e) => {
   if (btn) setTheme(btn.dataset.themeChoice);
 });
 
-$('#plan-switch').addEventListener('click', async (e) => {
-  const btn = e.target.closest('button[data-plan]');
-  if (!btn) return;
-  try {
-    const d = await api('POST', '/api/dev/plan', { plan: btn.dataset.plan });
-    // Take the whole user back: quota, limits and locks all move together.
-    state.user = d.user || { ...state.user, plan: d.plan };
-    toast(d.message, 'good');
-    loadSettings();
-    renderChrome();
-    renderModeLocks();
-    renderUpsellBanner();
-  } catch (err) { toast(err.message, 'bad'); }
-});
 
 $('#save-display').addEventListener('click', async () => {
   const name = $('#set-display').value.trim();
@@ -2535,10 +2513,9 @@ document.addEventListener('keydown', (e) => {
   watchForDynamicStyles();
 
   try {
-    const { user, testingMode, premiumModes, progression } = await api('GET', '/api/me');
+    const { user, premiumModes, progression } = await api('GET', '/api/me');
     state.user = user;
     state.progression = progression;
-    state.testingMode = Boolean(testingMode);
     state.premiumModes = premiumModes || [];
   } catch { state.user = null; }
 

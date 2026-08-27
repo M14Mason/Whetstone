@@ -19,7 +19,9 @@
     "test": "node --no-warnings test/run-tests.js && node --no-warnings test/e2e.js && node --no-warnings test/dom-smoke.js && node --no-warnings scripts/verify-bank.js",
     "test:unit": "node --no-warnings test/run-tests.js",
     "test:e2e": "node --no-warnings test/e2e.js",
-    "test:dom": "node --no-warnings test/dom-smoke.js"
+    "test:dom": "node --no-warnings test/dom-smoke.js",
+    "launch-check": "node scripts/launch-check.js",
+    "purge-test-accounts": "node scripts/purge-test-accounts.js"
   },
   "keywords": [
     "education",

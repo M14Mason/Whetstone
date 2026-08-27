@@ -22,12 +22,6 @@ services:
       - key: NODE_ENV
         value: production
 
-      # TESTING_MODE is OFF. With it on, every premium gate is disabled and any
-      # account can grant itself Premium, so nothing you built to sell the paid
-      # tier is actually visible. Set it to "1" again only for a short friend
-      # test, and never while payments are live.
-      - key: TESTING_MODE
-        value: "0"
 
       # Overrides the Dockerfile default of /data, which does not exist on the
       # free plan. The container runs as the non-root "node" user and /tmp is

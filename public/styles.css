@@ -352,8 +352,21 @@ a { color: var(--accent); }
      enough to read a definition you are editing. Stack them. */
   .cr-fields { grid-template-columns: 1fr; gap: .55rem; }
   .cr-num { margin-top: 1.5rem; }
-  .cr-del { margin-top: 1.5rem; }
+  /* 34px is below the 44px minimum, and this is the DELETE control. A
+     too-small destructive target is the worst combination: you miss it when
+     you want it and hit it when you do not. */
+  .cr-del { margin-top: 1.5rem; width: 44px; height: 44px; }
   .set-actions .btn { flex: 1 1 100%; }
+}
+
+/* ---- device-appropriate instructions -------------------------------------
+   "Click or press Space to flip" is nonsense on a phone: there is no click and
+   no Space key. Rather than write for the average device and be wrong on both,
+   ship both strings and let the media query pick. */
+.on-touch { display: none; }
+@media (hover: none) and (pointer: coarse) {
+  .on-pointer { display: none; }
+  .on-touch { display: inline; }
 }
 
 /* ---- group invite code ---------------------------------------------------

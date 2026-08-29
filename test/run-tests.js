@@ -1852,6 +1852,57 @@ test('the Stripe setup script looks for the prices we actually charge', () => {
   assert.strictEqual(want('WANT_SEAT_AMOUNT'), config.plans.group.priceCentsPerSeat);
 });
 
+
+// ===========================================================================
+// Avatars: one list, no drift
+// ===========================================================================
+const avatarLib = require('../lib/avatars');
+
+test('every avatar has an id, a label and a drawable path', () => {
+  assert.ok(avatarLib.AVATARS.length >= 16, 'expected at least sixteen avatars');
+  for (const a of avatarLib.AVATARS) {
+    assert.ok(a.id && typeof a.id === 'string', 'avatar needs an id');
+    assert.ok(a.label && typeof a.label === 'string', `${a.id} needs a label`);
+    assert.ok(a.path && a.path.startsWith('M'), `${a.id} path must be an SVG path`);
+  }
+  const ids = avatarLib.AVATARS.map((a) => a.id);
+  assert.strictEqual(new Set(ids).size, ids.length, 'avatar ids must be unique');
+});
+
+test('the default avatar is one that actually exists', () => {
+  // users.avatar defaults to this at the database level, so if it is not in
+  // the catalogue every new account renders a blank avatar.
+  assert.ok(avatarLib.isValidAvatar(avatarLib.DEFAULT_AVATAR));
+});
+
+test('avatar validation accepts the whole catalogue and nothing else', () => {
+  // The bug this replaces: the server hardcoded eight ids while the client
+  // offered sixteen, so half the picker returned "Unknown avatar."
+  for (const a of avatarLib.AVATARS) {
+    assert.strictEqual(avatarLib.isValidAvatar(a.id), true, `${a.id} should be valid`);
+  }
+  for (const bad of ['', 'nope', '../../etc/passwd', 'FLAME', null, undefined, 0]) {
+    assert.strictEqual(avatarLib.isValidAvatar(bad), false, `${String(bad)} should be rejected`);
+  }
+});
+
+test('the client does not keep its own avatar catalogue', () => {
+  const fsx = require('node:fs');
+  const pathy = require('node:path');
+  const appjs = fsx.readFileSync(pathy.join(__dirname, '..', 'public', 'app.js'), 'utf8');
+
+  // app.js may hold ONE fallback entry for first paint, but it must not carry
+  // a second full catalogue, because that is what silently drifted before.
+  const block = appjs.match(/let AVATARS = \[([\s\S]*?)\n\];/);
+  assert.ok(block, 'expected a single AVATARS declaration in app.js');
+  const entries = (block[1].match(/\bid:\s*'/g) || []).length;
+  assert.ok(entries <= 1,
+    `app.js hardcodes ${entries} avatars; it should read them from /api/me instead`);
+
+  assert.ok(/me\.avatars|avatars \} = await api/.test(appjs),
+    'app.js must take the avatar catalogue from the server');
+});
+
 // ===========================================================================
 runQueue().then(() => {
   console.log(`\n${'-'.repeat(52)}`);

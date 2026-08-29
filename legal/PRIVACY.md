@@ -1,10 +1,5 @@
 # Keen Privacy Policy
 
-**DRAFT TEMPLATE — NOT LEGAL ADVICE.**
-Written to describe what this app actually collects, based on its real database
-schema. Have an adult review it before launch. Fill in every `[BRACKETED]`
-placeholder.
-
 **Last updated: 2026-08-12**
 **Operated by: Tom Ngo**
 **Contact: masonngo70@gmail.com**

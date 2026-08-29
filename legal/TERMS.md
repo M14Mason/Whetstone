@@ -2,15 +2,6 @@
 
 **Version 2026-08-11**
 
-> **Read this before you launch.** These terms are written to be used, not as
-> filler, and they include the protections that actually matter: a disclaimer of
-> warranties, a liability cap, an indemnity, and an arbitration clause with a
-> class-action waiver. They are still a template. I am not a lawyer, this is not
-> legal advice, and **an adult must review and complete every `[BRACKETED]` field
-> before you accept a single payment.** Some clauses below (notably arbitration
-> and the liability cap) are limited or unenforceable in certain states and
-> countries, which is exactly the sort of thing a lawyer checks.
-
 **Operator:** Tom Ngo
 **Contact:** masonngo70@gmail.com
 **Governing state:** California

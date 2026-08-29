@@ -22,6 +22,7 @@ const courses = require('./lib/courses');
 const modes = require('./lib/modes');
 const social = require('./lib/social');
 const distractors = require('./lib/distractors');
+const avatars = require('./lib/avatars');
 
 // Bumping this forces existing users to re-accept the terms on next signup flow.
 const TOS_VERSION = '2026-08-11';
@@ -60,6 +61,18 @@ const MIME = {
   '.json': 'application/json; charset=utf-8',
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
+  // These were missing, so every photo and icon was served as
+  // application/octet-stream. Browsers sniff the bytes for an <img> so the hero
+  // still appeared, which is exactly why it went unnoticed. Safari is stricter
+  // about apple-touch-icon and about manifest icons, and a wrong type there
+  // means the home-screen icon silently falls back to a screenshot of the page.
+  '.png': 'image/png',
+  '.jpg': 'image/jpeg',
+  '.jpeg': 'image/jpeg',
+  '.webp': 'image/webp',
+  // Required for an installable web app. Served as anything else, the manifest
+  // is fetched and then ignored.
+  '.webmanifest': 'application/manifest+json',
 };
 
 // ---------------------------------------------------------------------------
@@ -362,17 +375,23 @@ const routes = {
       // The client greys these out. The server still enforces them; this is
       // only so the UI can explain the lock rather than fail on click.
       premiumModes: config.premiumModes,
+      // Sent so the client renders exactly the set the server will accept.
+      // Keeping a second copy in app.js is what produced "Unknown avatar."
+      avatars: avatars.AVATARS,
     });
   },
 
   'POST /api/account/avatar': async (req, res) => {
     const user = requireUser(req);
     const body = await readJsonBody(req);
-    const ALLOWED = ['flame', 'leaf', 'bolt', 'star', 'moon', 'wave', 'peak', 'orbit'];
     const avatar = String(body.avatar || '');
     // Preset ids only. Uploads would mean storing and moderating images of
     // minors, which is not a problem worth having for a decorative glyph.
-    if (!ALLOWED.includes(avatar)) {
+    //
+    // Validated against lib/avatars.js, which is the same list the client
+    // renders from. This used to be a hardcoded array of eight here while the
+    // client offered sixteen, so half the avatars failed to save.
+    if (!avatars.isValidAvatar(avatar)) {
       throw Object.assign(new Error('Unknown avatar.'), { statusCode: 400 });
     }
     getDbHandle().prepare('UPDATE users SET avatar = ? WHERE id = ?').run(avatar, user.id);
@@ -552,7 +571,30 @@ const routes = {
     // Flat, board-ready shape. The home screen is a class list now, so it needs
     // mastery, weak-topic count, the next unit worth doing and when the student
     // last touched it -- all per course, in one round trip.
-    sendJson(res, 200, { courses: plans.courseBoard(user.id) });
+    const row = getDbHandle().prepare('SELECT course_order FROM users WHERE id = ?').get(user.id);
+    let order = [];
+    try { order = JSON.parse(row && row.course_order) || []; } catch { order = []; }
+    sendJson(res, 200, { courses: plans.courseBoard(user.id), order });
+  },
+
+  /**
+   * Save the manual class order.
+   *
+   * This lived only in localStorage, so arranging your classes on a laptop did
+   * nothing on your phone, and clearing site data lost the arrangement. The
+   * users.course_order column has existed since the progression migration and
+   * was never actually written to.
+   *
+   * Stored as a JSON array of course ids. Ids the student is no longer enrolled
+   * in are harmless: sortCourses ignores anything it cannot find.
+   */
+  'POST /api/my-courses/order': async (req, res) => {
+    const user = requireUser(req);
+    const body = await readJsonBody(req);
+    const ids = Array.isArray(body.order) ? body.order.filter((x) => typeof x === 'string').slice(0, 200) : [];
+    getDbHandle().prepare('UPDATE users SET course_order = ? WHERE id = ?')
+      .run(JSON.stringify(ids), user.id);
+    sendJson(res, 200, { order: ids });
   },
 
   'POST /api/my-courses': async (req, res) => {

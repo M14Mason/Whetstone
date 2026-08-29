@@ -19,7 +19,20 @@
      .kmark SVG in the header. All three must be changed together; the tab
      disagreeing with the header is exactly the bug we just fixed once. -->
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='9' fill='%23c2410c'/><path d='M10 8 V30 H32' fill='none' stroke='%23faf7f2' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='.45'/><path d='M13.5 25 L20 18 L24.5 21.5 L31 11' fill='none' stroke='%23faf7f2' stroke-width='4.2' stroke-linecap='round' stroke-linejoin='round'/></svg>">
-<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='9' fill='%23c2410c'/><path d='M10 8 V30 H32' fill='none' stroke='%23faf7f2' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='.45'/><path d='M13.5 25 L20 18 L24.5 21.5 L31 11' fill='none' stroke='%23faf7f2' stroke-width='4.2' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<!-- Installable web app.
+     iOS does not read the manifest for the home-screen icon or the status bar,
+     so apple-touch-icon and apple-mobile-web-app-* have to be declared
+     separately. apple-touch-icon must be a real PNG; Safari ignores SVG here,
+     which is why these are rasterised files rather than the inline data URL
+     used for the favicon. -->
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="apple-touch-icon" href="/img/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Keen">
+<!-- black-translucent lets the app paint under the status bar. The safe-area
+     insets already handled in styles.css keep content clear of the notch. -->
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
 

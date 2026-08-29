@@ -527,7 +527,9 @@ $('#ob-upgrade').addEventListener('click', async () => {
   try {
     await completeOnboarding();
     const d = await api('POST', '/api/billing/premium', {});
-    if (d.url) { window.location.href = d.url; return; }   // hosted checkout
+    // closeOverlays() first: see the paywall handler for why leaving with
+    // body.modal-open applied breaks scrolling on the way back.
+    if (d.url) { closeOverlays(); window.location.href = d.url; return; }
     state.user = d.user;
     renderChrome();
     showView('home');
@@ -588,23 +590,18 @@ function renderUpsellBanner() {
  *
  * Sixteen instead of eight, because eight in a study group of five means people
  * collide almost immediately. */
-const AVATARS = [
-  { id: 'flame',    label: 'Ember',    path: 'M12 2.8c3.4 3.3 5.6 6 5.6 9.2a5.6 5.6 0 11-11.2 0c0-1.7.6-3 1.7-4.4.5 1 1.2 1.7 2 2 .3-2.5.9-4.6 1.9-6.8z' },
-  { id: 'leaf',     label: 'Leaf',     path: 'M20 4c0 9-5 14-11 14a5.6 5.6 0 01-5-3C4 8 11 4 20 4zM4.5 20c2-4.5 5-7.5 9-9.5' },
-  { id: 'bolt',     label: 'Bolt',     path: 'M13.5 2.5L5 13.2h5.2L9.8 21.5 19 10.4h-5.4z' },
-  { id: 'star',     label: 'Star',     path: 'M12 3l2.7 5.6 6.1.85-4.45 4.3 1.06 6.05L12 16.95 6.59 19.8l1.06-6.05L3.2 9.45l6.1-.85z' },
-  { id: 'moon',     label: 'Moon',     path: 'M20 14.5A8.5 8.5 0 019.6 4a8.5 8.5 0 1010.4 10.5z' },
-  { id: 'wave',     label: 'Wave',     path: 'M2.5 9c2.5-3 4.7-3 7 0s4.5 3 7 0 4.5-3 5-1.5M2.5 16c2.5-3 4.7-3 7 0s4.5 3 7 0 4.5-3 5-1.5' },
-  { id: 'peak',     label: 'Peak',     path: 'M2.5 19.5l6-11 4 6.5 3-4.5 6 9z' },
-  { id: 'orbit',    label: 'Orbit',    path: 'M12 7.5a4.5 4.5 0 100 9 4.5 4.5 0 000-9zM4.6 7.2c3.4-2 12.4-2.6 15.4.6M19.4 16.8c-3.4 2-12.4 2.6-15.4-.6' },
-  { id: 'anchor',   label: 'Anchor',   path: 'M12 7.8v13M12 3a2.4 2.4 0 100 4.8 2.4 2.4 0 000-4.8zM7.5 11.5h9M4 15a8 8 0 0016 0' },
-  { id: 'compass',  label: 'Compass',  path: 'M12 2.8a9.2 9.2 0 100 18.4 9.2 9.2 0 000-18.4zM15.8 8.2l-2 5.6-5.6 2 2-5.6z' },
-  { id: 'prism',    label: 'Prism',    path: 'M12 3l9 16H3zM12 3v16M7.5 11h9' },
-  { id: 'key',      label: 'Key',      path: 'M15.5 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM11.6 11.4L3 20v1.2h3.4v-2.4h2.4v-2.4h2.2z' },
-  { id: 'feather',  label: 'Feather',  path: 'M20.5 3.5C13 3.5 7 8 7 15v3l-3.5 3.5M7 18c8 0 12-4.5 12-9.5M10 15h6' },
-  { id: 'cog',      label: 'Cog',      path: 'M12 8.4a3.6 3.6 0 100 7.2 3.6 3.6 0 000-7.2zM12 1.8v3M12 19.2v3M22.2 12h-3M5 12H1.8M19.2 4.8l-2.1 2.1M6.9 17.1l-2.1 2.1M19.2 19.2l-2.1-2.1M6.9 6.9L4.8 4.8' },
-  { id: 'droplet',  label: 'Droplet',  path: 'M12 2.6l5.4 7.6a6.6 6.6 0 11-10.8 0z' },
-  { id: 'lantern',  label: 'Lantern',  path: 'M8.5 3h7M12 3v2.5M6.5 5.5h11l-1.5 12a2 2 0 01-2 1.8h-4a2 2 0 01-2-1.8zM12 19.3V22' },
+/* Avatars come from the server now, over /api/me.
+ *
+ * There used to be a hardcoded list here AND a hardcoded whitelist in
+ * server.js. The client offered sixteen, the server accepted eight, and the
+ * other eight failed with "Unknown avatar." with no explanation. The list now
+ * lives in lib/avatars.js only, so the two cannot disagree.
+ *
+ * The fallback below is deliberately just the default: if /api/me has not
+ * landed yet, we draw one known-good avatar rather than a guessed catalogue
+ * that might not match what the server will accept. */
+let AVATARS = [
+  { id: 'flame', label: 'Ember', path: 'M12 2.8c3.4 3.3 5.6 6 5.6 9.2a5.6 5.6 0 11-11.2 0c0-1.7.6-3 1.7-4.4.5 1 1.2 1.7 2 2 .3-2.5.9-4.6 1.9-6.8z' },
 ];
 
 function avatarSvg(id, cls = '') {
@@ -626,6 +623,7 @@ async function loadProfile() {
   let prog = state.progression;
   try {
     const me = await api('GET', '/api/me');
+    if (Array.isArray(me.avatars) && me.avatars.length) AVATARS = me.avatars;
     state.user = me.user || state.user;
     prog = me.progression || prog;
     state.progression = prog;
@@ -720,8 +718,17 @@ function setCourseSort(v) {
 function manualOrder() {
   try { return JSON.parse(localStorage.getItem('keen:order') || '[]'); } catch { return []; }
 }
+/* Saved in two places on purpose.
+ *
+ * localStorage is instant and survives a reload with no network, so the board
+ * never flickers back to the old order. The server copy is the durable one:
+ * without it, arranging your classes on a laptop did nothing on your phone,
+ * and clearing site data lost the arrangement entirely. The write is
+ * fire-and-forget because failing to save a preference must never interrupt
+ * what the student was doing. */
 function setManualOrder(ids) {
   try { localStorage.setItem('keen:order', JSON.stringify(ids)); } catch { /* private mode */ }
+  api('POST', '/api/my-courses/order', { order: ids }).catch(() => { /* retried next reorder */ });
 }
 
 function sortCourses(list, mode) {
@@ -754,8 +761,16 @@ function courseCard(c) {
   const key = subjectKey(c.category);
   const mastery = c.masteryPercent === null ? null : c.masteryPercent;
   const weak = c.weakCount || 0;
+  // The tile is wrapped so the drag handle can sit OUTSIDE the button. A button
+  // nested inside a button is invalid HTML and the inner one stops receiving
+  // reliable events, which is half of why reordering never worked.
   return `
-    <button class="course-tile" data-course="${esc(c.id)}" data-subj="${key}" draggable="true">
+    <div class="course-tile-wrap" data-course-wrap="${esc(c.id)}">
+    <span class="tile-handle" data-handle role="button" tabindex="0"
+          aria-label="Drag to reorder ${esc(c.name)}" title="Drag to reorder">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2 4h12M2 8h12M2 12h12"/></svg>
+    </span>
+    <button class="course-tile" data-course="${esc(c.id)}" data-subj="${key}">
       <span class="course-tile-bar"></span>
       <span class="course-tile-top">
         <span class="course-tile-name">${esc(c.name)}</span>
@@ -769,7 +784,8 @@ function courseCard(c) {
       </span>
       ${c.nextUnit ? `<span class="course-tile-next">Next: ${esc(c.nextUnit)}</span>` : ''}
       ${c.lastStudied ? `<span class="course-tile-when dim">${esc(timeAgo(c.lastStudied))}</span>` : ''}
-    </button>`;
+    </button>
+    </div>`;
 }
 
 async function renderHome() {
@@ -787,16 +803,21 @@ async function renderHome() {
     b.classList.toggle('active', b.dataset.sort === courseSort()));
 
   try {
-    const { courses } = await api('GET', '/api/my-courses');
+    const { courses, order } = await api('GET', '/api/my-courses');
     state.myCourses = courses || [];
+    // Adopt the server's order so a device that has never been reordered
+    // locally still shows the arrangement made somewhere else.
+    if (Array.isArray(order) && order.length) {
+      try { localStorage.setItem('keen:order', JSON.stringify(order)); } catch { /* private mode */ }
+    }
     const board = $('#course-board');
     $('#course-board-empty').classList.toggle('hidden', state.myCourses.length > 0);
     board.innerHTML = sortCourses(state.myCourses, courseSort()).map(courseCard).join('');
 
-    $$('#course-board [data-course]').forEach((el) => {
-      el.addEventListener('click', () => openCourseBoard(el.dataset.course));
-      bindTileDrag(el);
-    });
+    $$('#course-board [data-course]').forEach((el) =>
+      el.addEventListener('click', () => openCourseBoard(el.dataset.course)));
+    // The handle lives on the wrapper, not the button.
+    $$('#course-board [data-course-wrap]').forEach(bindTileDrag);
   } catch (err) {
     if (err.status !== 401) toast(err.message, 'bad');
   }
@@ -822,27 +843,82 @@ async function renderHome() {
   loadSets();
 }
 
-/* Drag to reorder. Touch devices fall back to long-press-free tapping, which is
- * why the sort control exists too -- reorder must never be the ONLY way to
- * arrange the board. */
-let dragged = null;
-function bindTileDrag(el) {
-  el.addEventListener('dragstart', () => { dragged = el; el.classList.add('dragging'); });
-  el.addEventListener('dragend', () => {
-    el.classList.remove('dragging');
-    dragged = null;
-    setManualOrder($$('#course-board [data-course]').map((x) => x.dataset.course));
-    // Manual arrangement implies you want to see it.
+
+/**
+ * Reorder classes by dragging the handle.
+ *
+ * This replaces HTML5 drag and drop (draggable="true" plus dragstart/dragover),
+ * which had two fatal problems: it does not fire on touch devices AT ALL, so
+ * reordering was simply impossible on a phone, and on desktop it was attached
+ * to the whole tile, so a slightly-draggy click read as a drag instead of
+ * opening the class.
+ *
+ * Pointer Events cover mouse, touch and stylus in one code path, and confining
+ * the drag to an explicit handle means the rest of the tile stays a plain
+ * button. The handle is the standard three lines people already recognise.
+ */
+function bindTileDrag(wrap) {
+  const handle = wrap.querySelector('[data-handle]');
+  if (!handle) return;
+
+  const board = $('#course-board');
+  let dragging = false;
+
+  const finish = () => {
+    if (!dragging) return;
+    dragging = false;
+    wrap.classList.remove('dragging');
+    document.body.classList.remove('is-reordering');
+    setManualOrder($$('#course-board [data-course-wrap]').map((x) => x.dataset.courseWrap));
+    // Having arranged them by hand, you plainly want to see that arrangement.
     if (courseSort() !== 'mine') { setCourseSort('mine'); renderHome(); }
+    else toast('Order saved.', 'good');
+  };
+
+  handle.addEventListener('pointerdown', (e) => {
+    e.preventDefault();          // stop the browser starting a text selection
+    dragging = true;
+    wrap.classList.add('dragging');
+    // Locks page scrolling for the duration, otherwise dragging a tile on a
+    // phone scrolls the list out from under your finger.
+    document.body.classList.add('is-reordering');
+    handle.setPointerCapture(e.pointerId);
   });
-  el.addEventListener('dragover', (e) => {
+
+  handle.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    // With the pointer captured, events keep coming to the handle even when the
+    // finger is over another tile, so ask the document what is actually under
+    // the cursor rather than relying on the event target.
+    const over = document.elementFromPoint(e.clientX, e.clientY);
+    const target = over && over.closest('[data-course-wrap]');
+    if (!target || target === wrap) return;
+
+    const tiles = $$('#course-board [data-course-wrap]');
+    const from = tiles.indexOf(wrap);
+    const to = tiles.indexOf(target);
+    if (from === -1 || to === -1) return;
+    if (from < to) board.insertBefore(wrap, target.nextSibling);
+    else board.insertBefore(wrap, target);
+  });
+
+  handle.addEventListener('pointerup', finish);
+  handle.addEventListener('pointercancel', finish);
+
+  // Keyboard equivalent. A drag-only control is unusable without a pointer,
+  // and this is two lines of code.
+  handle.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowUp' && e.key !== 'ArrowDown') return;
     e.preventDefault();
-    if (!dragged || dragged === el) return;
-    const board = $('#course-board');
-    const tiles = $$('#course-board [data-course]');
-    const from = tiles.indexOf(dragged), to = tiles.indexOf(el);
-    if (from < to) board.insertBefore(dragged, el.nextSibling);
-    else board.insertBefore(dragged, el);
+    const sibling = e.key === 'ArrowUp'
+      ? wrap.previousElementSibling
+      : wrap.nextElementSibling;
+    if (!sibling) return;
+    if (e.key === 'ArrowUp') board.insertBefore(wrap, sibling);
+    else board.insertBefore(sibling, wrap);
+    handle.focus();
+    setManualOrder($$('#course-board [data-course-wrap]').map((x) => x.dataset.courseWrap));
+    if (courseSort() !== 'mine') setCourseSort('mine');
   });
 }
 
@@ -1784,17 +1860,45 @@ $('#paywall-interval').addEventListener('click', (e) => {
 $('#paywall-dismiss').addEventListener('click', hidePaywall);
 $('#paywall-upgrade').addEventListener('click', async () => {
   const btn = $('#paywall-upgrade');
+  const original = btn.textContent;
   btn.disabled = true;
+  // Creating a Stripe Checkout session is a server-to-Stripe round trip, so
+  // there is a real second or two here where nothing visibly happens. Without
+  // a label change the button just looks dead and people click it again.
+  btn.textContent = 'Taking you to checkout…';
   try {
     const d = await api('POST', '/api/billing/premium', { interval: paywall.interval });
-    if (d.url) { window.location.href = d.url; return; }
+    if (d.url) {
+      // Tear the overlay down BEFORE leaving the page.
+      //
+      // This was the scroll bug. body.modal-open sets overflow:hidden. We used
+      // to navigate to Stripe with it still applied, and when the student
+      // pressed Back the browser restored the page from the back/forward cache
+      // with the DOM byte-for-byte as it was -- overlay class included. The
+      // paywall itself was gone from view, so all you noticed was that the page
+      // would no longer scroll, with no way to fix it but a reload.
+      closeOverlays();
+      window.location.href = d.url;
+      return;
+    }
     state.user = d.user;
     hidePaywall();
     renderChrome(); renderModeLocks(); renderUpsellBanner();
     toast('You are on Premium. Everything is unlocked.', 'good');
     if (state.view === 'learn') loadQuestion();
   } catch (err) { toast(err.message, 'bad'); }
-  finally { btn.disabled = false; }
+  finally { btn.disabled = false; btn.textContent = original; }
+});
+
+/* Belt and braces for the same class of bug.
+ *
+ * pageshow fires on a normal load AND on a back/forward-cache restore, and
+ * event.persisted tells you which. Clearing overlay state here means that no
+ * matter how the page was left -- Stripe, an external link, a mis-timed
+ * navigation -- coming back never leaves the body stuck at overflow:hidden.
+ * Any future code that forgets to clean up is covered too. */
+window.addEventListener('pageshow', (e) => {
+  if (e.persisted) closeOverlays();
 });
 
 // ------------------------------------------------------------------ learn
@@ -2456,7 +2560,7 @@ $('#leave-group-btn').addEventListener('click', async () => {
 $('#activate-group-btn').addEventListener('click', async () => {
   try {
     const d = await api('POST', '/api/billing/group', {});
-    if (d.url) { window.location.href = d.url; return; }
+    if (d.url) { closeOverlays(); window.location.href = d.url; return; }
     state.user = d.user; toast(d.message || 'Group activated.', 'good'); loadGroup();
   } catch (err) { toast(err.message, 'bad'); }
 });
@@ -2484,7 +2588,7 @@ async function loadPlan() {
 $('#upgrade-btn').addEventListener('click', async () => {
   try {
     const d = await api('POST', '/api/billing/premium', {});
-    if (d.url) { window.location.href = d.url; return; }
+    if (d.url) { closeOverlays(); window.location.href = d.url; return; }
     state.user = d.user; toast('Upgraded. Everything is unlocked.', 'good');
     loadPlan(); renderChrome(); renderModeLocks(); renderUpsellBanner();
   } catch (err) { toast(err.message, 'bad'); }
@@ -3030,7 +3134,9 @@ document.addEventListener('keydown', (e) => {
   watchForDynamicStyles();
 
   try {
-    const { user, premiumModes, progression } = await api('GET', '/api/me');
+    const { user, premiumModes, progression, avatars } = await api('GET', '/api/me');
+    // Server is the source of truth for which avatars exist.
+    if (Array.isArray(avatars) && avatars.length) AVATARS = avatars;
     state.user = user;
     state.progression = progression;
     state.premiumModes = premiumModes || [];

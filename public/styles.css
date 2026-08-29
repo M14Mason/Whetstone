@@ -2018,7 +2018,47 @@ body.is-offline .topbar { top: 38px; }
   transition: transform .18s var(--spring), border-color .18s var(--ease), box-shadow .18s var(--ease);
 }
 .course-tile:hover { transform: translateY(-2px); border-color: var(--border-bright); box-shadow: var(--shadow); }
-.course-tile.dragging { opacity: .5; transform: scale(.98); }
+
+/* ---- reorder handle ------------------------------------------------------
+   The wrapper is the grid item now, so the handle can sit outside the button.
+   It floats over the top-right corner rather than taking a row of its own,
+   which would push every tile taller for a control most people never touch. */
+.course-tile-wrap { position: relative; min-width: 0; }
+.course-tile-wrap.dragging { opacity: .55; transform: scale(.98); }
+.course-tile-wrap.dragging .course-tile { border-color: var(--accent); }
+
+.tile-handle {
+  position: absolute; top: 8px; right: 8px; z-index: 2;
+  width: 32px; height: 32px;
+  display: grid; place-items: center;
+  border-radius: 9px;
+  color: var(--text-secondary);
+  cursor: grab;
+  opacity: 0;
+  transition: opacity .16s var(--ease), background .16s var(--ease);
+  /* Without this the browser claims the gesture for scrolling before the
+     first pointermove ever reaches us, and the tile never moves. */
+  touch-action: none;
+}
+.tile-handle svg {
+  width: 15px; height: 15px; fill: none; stroke: currentColor;
+  stroke-width: 1.9; stroke-linecap: round;
+}
+.tile-handle:hover, .tile-handle:focus-visible {
+  background: var(--surface-hover); color: var(--text); opacity: 1;
+}
+.course-tile-wrap:hover .tile-handle { opacity: .7; }
+.course-tile-wrap.dragging .tile-handle { opacity: 1; cursor: grabbing; }
+
+/* On touch there is no hover, so a handle that only appears on hover is a
+   handle that does not exist. Always visible on a phone. */
+@media (hover: none) {
+  .tile-handle { opacity: .55; width: 40px; height: 40px; }
+}
+
+/* While a tile is being dragged the page must not scroll under the finger. */
+body.is-reordering { overflow: hidden; touch-action: none; }
+body.is-reordering .course-tile { pointer-events: none; }
 /* Colour spine identifies the subject at a glance, which is the whole reason
    a class grid beats a list. */
 .course-tile-bar { position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--subj-other); }

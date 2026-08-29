@@ -89,6 +89,14 @@ async function api(method, path, body) {
     const err = new Error(data.error || `Request failed (${res.status})`);
     err.status = res.status;
     err.data = data;
+    // A 401 while the client still believes it is signed in means the session
+    // died underneath us -- expired, or the server lost its database. Showing
+    // "You need to sign in." inside an empty quiz card, with the nav still
+    // rendered, reads as a broken app. Drop to the sign-in screen and say what
+    // happened.
+    if (res.status === 401 && path !== '/api/me' && typeof handleSessionLoss === 'function') {
+      handleSessionLoss();
+    }
     throw err;
   }
   return data;
@@ -179,10 +187,27 @@ function onboardingPending() {
   return Boolean(state.user) && !state.user.onboarded;
 }
 
+/**
+ * Anything that sets body.modal-open must be torn down when the view changes.
+ *
+ * body.modal-open sets overflow:hidden. Opening the Terms modal and then
+ * tapping the nav left that class on the body forever, so the home screen
+ * silently stopped scrolling and the only cure was a reload. Navigation is the
+ * one event guaranteed to happen, so it is the right place to clean up.
+ */
+function closeOverlays() {
+  const host = $('#modal-host');
+  if (host) host.innerHTML = '';
+  const pw = $('#paywall');
+  if (pw) pw.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+}
+
 function showView(name) {
   // The only escape hatch is signing out, which clears state.user first.
   if (onboardingPending() && name !== 'onboarding') return;
 
+  closeOverlays();
   state.view = name;
   $$('.view').forEach((v) => v.classList.add('hidden'));
   const el = $(`#view-${name}`);
@@ -279,12 +304,43 @@ $('#login-form').addEventListener('submit', async (e) => {
   } catch (err) { authError(err.message, '#signin-error'); }
 });
 
-$('#logout-btn').addEventListener('click', async () => {
-  await api('POST', '/api/auth/logout');
+/**
+ * Sign out cleanly. Shared by every sign-out control so they cannot drift.
+ *
+ * The logout call is best-effort: if it fails the local session is still torn
+ * down, because a student who pressed Sign out must end up signed out
+ * regardless of what the network did.
+ */
+async function signOut() {
+  try { await api('POST', '/api/auth/logout'); } catch { /* clear locally anyway */ }
   state.user = null;
+  state.myCourses = [];
+  state.scope = { courseId: null, courseName: null, unit: null };
+  closeOverlays();
   renderChrome();
   showView('landing');
-});
+}
+
+/* Called when the server says 401 but the client thought it was signed in. */
+let sessionLossShown = false;
+function handleSessionLoss() {
+  if (!state.user || sessionLossShown) return;
+  sessionLossShown = true;
+  state.user = null;
+  state.myCourses = [];
+  closeOverlays();
+  renderChrome();
+  showView('signin');
+  const notice = $('#auth-notice');
+  if (notice) {
+    notice.textContent = 'Your session ended. Sign in again to pick up where you left off.';
+    notice.classList.remove('hidden');
+  }
+  toast('Signed out. Please sign in again.', 'bad');
+  setTimeout(() => { sessionLossShown = false; }, 3000);
+}
+
+$('#logout-btn').addEventListener('click', signOut);
 
 $('#forgot-link').addEventListener('click', () => {
   $('#login-form').classList.add('hidden'); $('#forgot-form').classList.remove('hidden');
@@ -786,7 +842,11 @@ async function openCourseBoard(courseId) {
   renderModeLocks();
 
   try {
-    const data = await api('GET', `/api/course?courseId=${encodeURIComponent(courseId)}`);
+    // The route reads ?id=. Sending ?courseId= made courseCoverage(null) return
+    // nothing, so every class opened to "Course not found." with zero units --
+    // the view had already switched, which is why it looked like a half-failure
+    // rather than a dead request.
+    const data = await api('GET', `/api/course?id=${encodeURIComponent(courseId)}`);
     const units = data.units || [];
     $('#course-unit-count').textContent = `${units.length} unit${units.length === 1 ? '' : 's'}`;
     $('#course-units').innerHTML = units.map((u) => `
@@ -1865,37 +1925,99 @@ async function startReview() {
 async function loadCourses() {
   $('#course-detail').classList.add('hidden');
   $('#course-browse').classList.remove('hidden');
-  const { groups, stats } = await api('GET', '/api/courses');
-  $('#catalog-stats').textContent = `${stats.courses} courses · ${stats.units} units mapped`;
-  renderCourseGroups(groups);
+  try {
+    // Enrolment first: every row needs to know whether to show Add or Added,
+    // and landing straight on this tab means state.myCourses may be empty.
+    const { courses } = await api('GET', '/api/my-courses');
+    state.myCourses = courses || [];
+  } catch { /* signed out; rows fall back to "Add" */ }
+  try {
+    const { groups, stats } = await api('GET', '/api/courses');
+    $('#catalog-stats').textContent = `${stats.courses} courses · ${stats.units} units mapped`;
+    renderCourseGroups(groups);
+  } catch (err) { toast(err.message, 'bad'); }
+}
+
+/* The set of course ids the student has actually enrolled in. Kept as a Set so
+ * every row can answer "am I already in this?" without a lookup per render. */
+function myCourseIds() {
+  return new Set((state.myCourses || []).map((c) => c.id));
+}
+
+/**
+ * Add or drop a class, then refresh anything showing the enrolment.
+ *
+ * This endpoint takes the WHOLE list, not a delta, so both directions are the
+ * same call with a different array.
+ */
+async function setEnrolled(courseId, enrolled) {
+  const ids = myCourseIds();
+  if (enrolled) ids.add(courseId); else ids.delete(courseId);
+  try {
+    await api('POST', '/api/my-courses', { courseIds: [...ids] });
+    const { courses } = await api('GET', '/api/my-courses');
+    state.myCourses = courses || [];
+    if (state.user) state.user.courses = state.myCourses;
+    toast(enrolled ? 'Added to your classes.' : 'Removed from your classes.', enrolled ? 'good' : '');
+    return true;
+  } catch (err) {
+    toast(err.message, 'bad');
+    return false;
+  }
 }
 
 function renderCourseGroups(groups) {
+  const mine = myCourseIds();
   $('#course-groups').innerHTML = groups.map((g) => `
     <div class="card">
       <h2>${esc(g.category)}</h2>
       <div class="stack u-g-p4rem u-mt-p75rem">
         ${g.courses.map((c) => `
-          <button class="course-row course-open" data-id="${esc(c.id)}">
-            <span class="course-row-name">${esc(c.name)}</span>
-            <span class="dim">${c.units.length} units</span>
-            ${levelPill(c.levelLabel)}
-          </button>`).join('')}
+          <div class="course-row-wrap">
+            <button class="course-row course-open" data-id="${esc(c.id)}">
+              <span class="course-row-name">${esc(c.name)}</span>
+              <span class="dim">${c.units.length} units</span>
+              ${levelPill(c.levelLabel)}
+            </button>
+            <button class="btn btn-sm course-add${mine.has(c.id) ? ' is-added' : ' btn-primary'}"
+                    data-add="${esc(c.id)}">${mine.has(c.id) ? '✓ Added' : 'Add'}</button>
+          </div>`).join('')}
       </div>
     </div>`).join('');
   $$('#course-groups .course-open').forEach((b) =>
     b.addEventListener('click', () => openCourse(b.dataset.id)));
+
+  // Adding is a one-tap action from the list. Making the student open the
+  // course first, then find a button, is what made "add a class" feel missing.
+  $$('#course-groups [data-add]').forEach((b) => b.addEventListener('click', async () => {
+    const id = b.dataset.add;
+    const nowEnrolled = !myCourseIds().has(id);
+    b.disabled = true;
+    if (await setEnrolled(id, nowEnrolled)) {
+      b.textContent = nowEnrolled ? '✓ Added' : 'Add';
+      b.classList.toggle('is-added', nowEnrolled);
+      b.classList.toggle('btn-primary', !nowEnrolled);
+    }
+    b.disabled = false;
+  }));
 }
 
 $('#course-search').addEventListener('input', async (e) => {
   const q = e.target.value.trim();
-  const { groups } = await api('GET', `/api/courses${q ? `?search=${encodeURIComponent(q)}` : ''}`);
-  renderCourseGroups(groups);
+  try {
+    const { groups } = await api('GET', `/api/courses${q ? `?search=${encodeURIComponent(q)}` : ''}`);
+    renderCourseGroups(groups);
+  } catch (err) { toast(err.message, 'bad'); }
 });
 
 async function openCourse(courseId) {
-  showView('courses');
-  const data = await api('GET', `/api/course?id=${encodeURIComponent(courseId)}`);
+  // Already on this tab in the normal case; re-entering would re-run
+  // loadCourses and fight this function over which panel is visible.
+  if (state.view !== 'courses') showView('courses');
+  let data;
+  try {
+    data = await api('GET', `/api/course?id=${encodeURIComponent(courseId)}`);
+  } catch (err) { toast(err.message, 'bad'); return; }
   $('#course-browse').classList.add('hidden');
   $('#course-detail').classList.remove('hidden');
 
@@ -1916,6 +2038,23 @@ async function openCourse(courseId) {
     showView('home');
     toast(`Studying ${b.dataset.unit}`, 'good');
   }));
+
+  // Add / remove from this screen too, so whichever route the student took to
+  // get here ends in the same obvious action.
+  const paintAdd = () => {
+    const added = myCourseIds().has(data.course.id);
+    const btn = $('#cd-add');
+    btn.textContent = added ? 'Remove from my classes' : 'Add to my classes';
+    btn.classList.toggle('btn-primary', !added);
+  };
+  paintAdd();
+  $('#cd-add').onclick = async () => {
+    const btn = $('#cd-add');
+    btn.disabled = true;
+    await setEnrolled(data.course.id, !myCourseIds().has(data.course.id));
+    paintAdd();
+    btn.disabled = false;
+  };
 
   $('#cd-study').onclick = () => {
     state.scope = { courseId: data.course.id, courseName: data.course.name, unit: null };
@@ -2365,12 +2504,7 @@ $('#save-display').addEventListener('click', async () => {
   } catch (err) { toast(err.message, 'bad'); }
 });
 
-$('#settings-signout').addEventListener('click', async () => {
-  await api('POST', '/api/auth/logout');
-  state.user = null;
-  renderChrome();
-  showView('landing');
-});
+$('#settings-signout').addEventListener('click', signOut);
 
 // ------------------------------------------------------------------ bug reports
 $('#bug-form').addEventListener('submit', async (e) => {

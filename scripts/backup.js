@@ -26,7 +26,7 @@ function flag(name, fallback) {
 
 const DB_PATH = process.env.DATABASE_PATH
   ? path.resolve(process.env.DATABASE_PATH)
-  : path.join(__dirname, '..', 'data', 'whetstone.db');
+  : path.join(__dirname, '..', 'data', 'keen.db');
 
 const OUT_DIR = path.resolve(flag('--out', process.env.BACKUP_DIR || path.join(__dirname, '..', 'backups')));
 const KEEP = Number(flag('--keep', process.env.BACKUP_KEEP || 14));
@@ -40,7 +40,7 @@ if (!fs.existsSync(DB_PATH)) {
 fs.mkdirSync(OUT_DIR, { recursive: true });
 
 const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-const target = path.join(OUT_DIR, `whetstone-${stamp}.db`);
+const target = path.join(OUT_DIR, `keen-${stamp}.db`);
 
 let db;
 try {
@@ -81,7 +81,7 @@ try {
 
 // ------------------------------------------------------------------ pruning
 const backups = fs.readdirSync(OUT_DIR)
-  .filter((f) => /^whetstone-.*\.db$/.test(f))
+  .filter((f) => /^keen-.*\.db$/.test(f))
   .sort()
   .reverse();
 

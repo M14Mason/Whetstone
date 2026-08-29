@@ -13,7 +13,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 // Kept in the OS temp directory so the test never writes into the repo.
-const TMP_DB = path.join(require('node:os').tmpdir(), `whetstone-e2e-${process.pid}.db`);
+const TMP_DB = path.join(require('node:os').tmpdir(), `keen-e2e-${process.pid}.db`);
 for (const suffix of ['', '-wal', '-shm']) {
   if (fs.existsSync(TMP_DB + suffix)) fs.unlinkSync(TMP_DB + suffix);
 }
@@ -61,7 +61,7 @@ check('health endpoint reports a loaded question bank', async () => {
 });
 
 check('landing page and static assets are served', async () => {
-  for (const [route, needle] of [['/', 'Whetstone'], ['/styles.css', ':root'], ['/app.js', 'Whetstone front end']]) {
+  for (const [route, needle] of [['/', 'Keen'], ['/styles.css', ':root'], ['/app.js', 'Keen front end']]) {
     const res = await fetch(`${BASE}${route}`);
     assert.strictEqual(res.status, 200, `${route} returned ${res.status}`);
     assert.ok((await res.text()).includes(needle), `${route} missing expected content`);
@@ -86,7 +86,7 @@ check('signup creates a session and returns a free-plan user', async () => {
   // From config, not hardcoded -- the free allowance is a product decision
   // that will keep moving.
   assert.strictEqual(data.user.quota.limit, require('../lib/config').config.plans.free.dailyQuestionLimit);
-  assert.ok(cookie.startsWith('whetstone_session='), 'no session cookie set');
+  assert.ok(cookie.startsWith('keen_session='), 'no session cookie set');
 });
 
 check('under-13 signup is rejected over HTTP', async () => {
@@ -619,7 +619,7 @@ check('the legal documents are actually served', async () => {
     assert.strictEqual(status, 200, `/api/legal?doc=${doc} returned ${status}`);
     assert.ok(data.markdown && data.markdown.length > 500,
       `${doc} came back empty or truncated`);
-    assert.ok(/whetstone/i.test(data.markdown), `${doc} does not look like our document`);
+    assert.ok(/keen/i.test(data.markdown), `${doc} does not look like our document`);
   }
 });
 
@@ -636,7 +636,7 @@ check('the reset and verify pages are served', async () => {
   for (const route of ['/reset?token=abc', '/verify?token=abc']) {
     const res = await fetch(`${BASE}${route}`);
     assert.strictEqual(res.status, 200, `${route} returned ${res.status}`);
-    assert.ok((await res.text()).includes('Whetstone'));
+    assert.ok((await res.text()).includes('Keen'));
   }
 });
 
@@ -653,7 +653,7 @@ check('path traversal on static files is blocked', async () => {
   const server = createServer();
   await new Promise((resolve) => server.listen(0, resolve));
   BASE = `http://127.0.0.1:${server.address().port}`;
-  console.log(`\nWhetstone end-to-end test  (${BASE})\n`);
+  console.log(`\nKeen end-to-end test  (${BASE})\n`);
 
   let failed = 0;
   for (const { label, fn } of checks) {

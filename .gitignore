@@ -2,8 +2,8 @@ node_modules/
 *.log
 .env
 .env.local
-data/whetstone.db
-data/whetstone.db-journal
+data/keen.db
+data/keen.db-journal
 data/*.db
 data/*.db-*
 .DS_Store
@@ -16,3 +16,4 @@ data/*.db.bak-*
 data/*.db.prelaunch-*
 data/*.db.*
 data/legal-backup/
+LAUNCH-render-old.md.bak

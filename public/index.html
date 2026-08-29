@@ -5,23 +5,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#17140f" media="(prefers-color-scheme: dark)">
-<title>Whetstone — Study what you actually keep missing</title>
-<meta name="description" content="Whetstone maps every unit of your actual courses, finds the topics you keep getting wrong, and drills them with flashcards, match games, and practice tests.">
+<title>Keen — Study what you actually keep missing</title>
+<meta name="description" content="Keen maps every unit of your actual courses, finds the topics you keep getting wrong, and drills them with flashcards, match games, and practice tests.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Webfonts load independently of the app stylesheet. If this request fails
      or is blocked, the app still styles correctly using the system stack. -->
 <link rel="stylesheet" href="/styles.css">
-<!-- The tab icon has to be the same mark as the one in the header. This was
-     left on the old violet (#6d5efc) from the previous identity, so the tab and
-     the app disagreed on what colour the product even is. It now mirrors
-     .brand-mark: the amber gradient, the 8/26 corner radius, the -8deg tilt. -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23c2410c'/><stop offset='1' stop-color='%23ea580c'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='%23faf7f2'/><g transform='rotate(-8 50 50)'><rect x='18' y='18' width='64' height='64' rx='20' fill='url(%23g)'/></g></svg>">
+<!-- The Keen mark: an x/y graph whose line climbs, gives ground back once, and
+     leaves the frame still rising. The axes are drawn at reduced weight because
+     they are the fixed part (syllabus, exam date) and the data line is the
+     student. This is the SAME geometry as .brand-mark in styles.css and the
+     .kmark SVG in the header. All three must be changed together; the tab
+     disagreeing with the header is exactly the bug we just fixed once. -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='9' fill='%23c2410c'/><path d='M10 8 V30 H32' fill='none' stroke='%23faf7f2' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='.45'/><path d='M13.5 25 L20 18 L24.5 21.5 L31 11' fill='none' stroke='%23faf7f2' stroke-width='4.2' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'><rect width='40' height='40' rx='9' fill='%23c2410c'/><path d='M10 8 V30 H32' fill='none' stroke='%23faf7f2' stroke-width='3' stroke-linecap='round' stroke-linejoin='round' opacity='.45'/><path d='M13.5 25 L20 18 L24.5 21.5 L31 11' fill='none' stroke='%23faf7f2' stroke-width='4.2' stroke-linecap='round' stroke-linejoin='round'/></svg>">
 </head>
 <body>
 
 <header class="topbar">
-  <a class="brand" href="/"><span class="brand-mark"></span><span>Whetstone</span></a>
+  <a class="brand" href="/">
+    <!-- Inline SVG rather than a background image so the mark inherits
+         currentColor and stays correct in both themes without a second asset. -->
+    <svg class="brand-mark" viewBox="0 0 40 40" role="img" aria-label="Keen">
+      <path class="brand-axes" d="M9 6 V31 H34" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <path class="brand-line" d="M13 26 L20 18.5 L25 22.5 L33 9" fill="none" stroke-width="4.3" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <span>Keen</span>
+  </a>
   <nav id="nav" class="nav hidden">
     <button data-view="home" class="nav-btn active">Classes</button>
     <!-- Was "Catalogue" here and "Add" on the mobile bar. Same destination,
@@ -60,7 +71,7 @@
         <span class="eyebrow">25,000+ questions &middot; 159 courses &middot; every AP</span>
         <h1>You already know<br>half of what you<br><span class="grad">keep revising.</span></h1>
         <p class="lede">
-          Whetstone learns which topics you actually get wrong, then spends your
+          Keen learns which topics you actually get wrong, then spends your
           study time there. Pick your real classes, unit by unit, and stop
           re-reading the chapters you already had down.
         </p>
@@ -83,24 +94,24 @@
       </p>
       <!-- The picture is the argument: a full page of notes, three lines marked.
            It sits directly under the sentence it illustrates. -->
-      <img class="band-art" src="/img/focus.jpg" alt="A page of handwritten notes with only three lines marked" loading="lazy" decoding="async" width="1400" height="1045">
+      <img class="band-art" src="/img/focus.jpg" alt="A practice exam answer sheet, a notebook of worked-through problems, and a stack of index cards on a desk" loading="lazy" decoding="async" width="1400" height="1045">
       <div class="proof-grid">
         <div class="proof">
-          <span class="proof-num">3</span>
+          <span class="proof-num" data-count="3">3</span>
           <span class="proof-label">topics usually account for most of a dropped letter grade</span>
         </div>
         <div class="proof">
-          <span class="proof-num">0</span>
+          <span class="proof-num" data-count="0">0</span>
           <span class="proof-label">other apps that ask which classes you are actually taking</span>
         </div>
         <div class="proof">
-          <span class="proof-num">159</span>
+          <span class="proof-num" data-count="159">159</span>
           <span class="proof-label">courses mapped down to individual units, not vague subjects</span>
         </div>
       </div>
     </div>
 
-    <!-- WHY WHETSTONE ---------------------------------------------------- -->
+    <!-- WHY KEEN ---------------------------------------------------- -->
     <div class="band band-alt">
       <h2 class="band-title">What makes this different</h2>
       <div class="why-grid">
@@ -295,7 +306,7 @@
 
       <div id="ob-step-4" class="hidden">
         <h1 class="u-fs-2rem">Want to go unlimited?</h1>
-        <p class="muted">Whetstone is free forever. Premium removes the limits.</p>
+        <p class="muted">Keen is free forever. Premium removes the limits.</p>
 
         <div class="plan-compare">
           <div class="plan-col">
@@ -506,6 +517,9 @@
         <button id="flash-next" class="btn btn-primary">Next →</button>
       </div>
       <p class="hint center">Arrow keys to move, Space to flip</p>
+      <!-- Filled in by renderFlash: premium users get the swipe legend, free
+           users get a one-line description of what they would get. -->
+      <div id="flash-swipe-hint"></div>
     </div>
   </section>
 
@@ -824,6 +838,25 @@
     </div>
     <p class="muted u-fs-p9rem">Pick an avatar. This is what your study group sees.</p>
     <div class="avatar-picker" id="avatar-picker"></div>
+
+    <!-- Plan and Settings lost their mobile nav slots to Group, so they get
+         explicit rows here. Without these there is no route to sign out on a
+         phone at all. -->
+    <div class="section-head u-mt-2rem">
+      <h2>More</h2>
+    </div>
+    <div class="stack u-g-p5rem">
+      <button class="row-link" data-goto="plan">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="row-link-icon"><rect x="3.5" y="4.5" width="17" height="16" rx="3"/><path d="M3.5 9.5h17M8 3v3M16 3v3"/></svg>
+        <span class="row-link-main"><strong>Study plan</strong><span class="dim">What to do next, in order</span></span>
+        <span class="row-link-go">›</span>
+      </button>
+      <button class="row-link" data-goto="settings">
+        <svg viewBox="0 0 24 24" aria-hidden="true" class="row-link-icon"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.8v2.4M12 18.8v2.4M21.2 12h-2.4M5.2 12H2.8M18.5 5.5l-1.7 1.7M7.2 16.8l-1.7 1.7M18.5 18.5l-1.7-1.7M7.2 7.2L5.5 5.5"/></svg>
+        <span class="row-link-main"><strong>Settings</strong><span class="dim">Theme, sound, account, sign out</span></span>
+        <span class="row-link-go">›</span>
+      </button>
+    </div>
   </section>
 
   <!-- ========================= RESET / VERIFY ========================= -->
@@ -841,8 +874,13 @@
         <button class="seg-btn" data-theme-choice="auto">Auto</button>
       </div>
 
-      <h2 class="u-mt-1p5rem">Sound and vibration</h2>
-      <p class="muted u-fs-p9rem">Short tones when you answer, and a buzz on phones that support it.</p>
+    </div>
+
+    <!-- Sound was stacked inside the Appearance card with a second h2, which is
+         what made Settings feel crowded. One card, one decision. -->
+    <div class="card">
+      <h2>Sound</h2>
+      <p class="muted u-fs-p9rem">A short tone when you answer. Nothing else makes noise.</p>
       <div class="seg" id="sound-switch" role="group" aria-label="Sound effects">
         <button class="seg-btn" data-sound-choice="on">On</button>
         <button class="seg-btn" data-sound-choice="off">Off</button>
@@ -900,7 +938,7 @@
       <div class="card card-pad-lg center">
         <h1 class="u-fs-1p7rem" id="verify-title">Confirming your email...</h1>
         <p class="muted" id="verify-message"></p>
-        <button id="verify-continue" class="btn btn-primary hidden">Continue to Whetstone</button>
+        <button id="verify-continue" class="btn btn-primary hidden">Continue to Keen</button>
       </div>
     </div>
   </section>
@@ -908,18 +946,44 @@
   <!-- ========================= SET EDITOR ========================= -->
   <section id="view-set" class="view hidden">
     <button class="btn btn-ghost btn-sm u-mb-1rem" data-back="home">← Back</button>
-    <div class="card">
-      <h1 class="u-fs-1p6rem">Create a study set</h1>
-      <p class="muted">Add your own terms. They work in Flashcards, Match, and Learn.</p>
-      <label class="u-m-1rem-0">Set title<input id="set-title" type="text" placeholder="Bio Unit 4 vocab" maxlength="80"></label>
-      <div id="set-cards"></div>
-      <div class="row u-mt-1rem u-fw-wrap">
-        <button id="add-card-row" class="btn btn-sm">+ Add card</button>
-        <button id="save-set" class="btn btn-primary">Save set</button>
-        <button id="delete-set" class="btn btn-ghost hidden">Delete set</button>
+
+    <!-- Rebuilt. The old version was one flat card with three unlabelled inputs
+         per row and a save button that only told you what was wrong after you
+         pressed it. Now: a real header, numbered cards, a live count of how
+         many are complete, and a Save button that says why it is disabled. -->
+    <div class="set-head">
+      <div>
+        <h1 class="u-fs-1p7rem u-mb-p2rem" id="set-heading">Create a study set</h1>
+        <p class="muted u-m-0">Your own terms. They work in Flashcards, Match, and Learn.</p>
       </div>
-      <p id="set-msg" class="hint"></p>
+      <span class="set-progress" id="set-progress"></span>
     </div>
+
+    <div class="card card-pad-lg u-mb-1rem">
+      <label class="field">
+        <span class="field-label">Set title</span>
+        <input id="set-title" type="text" placeholder="Bio Unit 4 vocab" maxlength="80">
+      </label>
+      <label class="field u-mt-1rem">
+        <span class="field-label">Class <span class="dim">(optional)</span></span>
+        <select id="set-course"><option value="">Not tied to a class</option></select>
+        <span class="field-help">Linking a class lets Keen build multiple-choice questions
+          from your cards using real answers from that course.</span>
+      </label>
+    </div>
+
+    <div class="section-head"><h2>Cards</h2><div class="spacer"></div>
+      <span class="dim u-fs-p85rem">Front is the term, back is what it means</span></div>
+
+    <div id="set-cards" class="stack u-g-p6rem"></div>
+
+    <button id="add-card-row" class="btn btn-block u-mt-p75rem">+ Add another card</button>
+
+    <div class="set-actions">
+      <button id="save-set" class="btn btn-primary btn-lg">Save set</button>
+      <button id="delete-set" class="btn btn-ghost hidden">Delete set</button>
+    </div>
+    <p id="set-msg" class="hint"></p>
   </section>
 
 </main>
@@ -960,12 +1024,26 @@
   <div id="modal-host"></div>
 
 <nav class="mobile-nav hidden" id="mobile-nav">
+  <!-- Group had no route at all on a phone: it lived only in the desktop nav,
+       which is why study groups looked like they had been removed. Five tabs is
+       the comfortable maximum on a 390px screen, so Group takes the fifth slot
+       and Plan and Settings move onto the Profile page, which is where people
+       already look for them.
+
+       Icons are inline SVG, not glyphs. ☺ ▦ ◱ were text characters that render
+       as a different shape in every font and turn into colour emoji on some
+       phones, which is what made the profile icon look wrong. -->
   <div class="mobile-nav-inner">
-    <button data-view="home" class="active"><span class="mn-icon">▦</span>Classes</button>
-    <button data-view="courses"><span class="mn-icon">＋</span>Add</button>
-    <button data-view="progress"><span class="mn-icon">◱</span>Progress</button>
-    <button data-view="profile"><span class="mn-icon">☺</span>Profile</button>
-    <button data-view="settings"><span class="mn-icon">☰</span>Settings</button>
+    <button data-view="home" class="active">
+      <svg class="mn-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/></svg>Classes</button>
+    <button data-view="courses">
+      <svg class="mn-icon mn-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add</button>
+    <button data-view="progress">
+      <svg class="mn-icon mn-stroke" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 4v16h16"/><path d="M7.5 15l4-4.5 3 2.5 4.5-6"/></svg>Progress</button>
+    <button data-view="group">
+      <svg class="mn-icon mn-stroke" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.5 19.5a5.5 5.5 0 0111 0"/><path d="M16 6.2a3.2 3.2 0 010 4.6"/><path d="M18 14.6a5.5 5.5 0 012.5 4.9"/></svg>Group</button>
+    <button data-view="profile">
+      <svg class="mn-icon mn-stroke" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8.2" r="3.6"/><path d="M5 20a7 7 0 0114 0"/></svg>Profile</button>
   </div>
 </nav>
 

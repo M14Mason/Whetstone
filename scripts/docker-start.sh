@@ -13,8 +13,8 @@
 
 set -e
 
-DB="${DATABASE_PATH:-/tmp/whetstone.db}"
-SEED="/app/seed/whetstone.db"
+DB="${DATABASE_PATH:-/tmp/keen.db}"
+SEED="/app/seed/keen.db"
 
 if [ ! -f "$DB" ] && [ -f "$SEED" ]; then
   echo "  Restoring prebuilt question bank to $DB"

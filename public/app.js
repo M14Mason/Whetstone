@@ -1,6 +1,6 @@
 'use strict';
 
-/* Whetstone front end. Vanilla JS, no build step, no framework. */
+/* Keen front end. Vanilla JS, no build step, no framework. */
 
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => Array.from(document.querySelectorAll(s));
@@ -32,7 +32,7 @@ const state = {
  * The initial theme is applied by a small inline-ish bootstrap before first
  * paint (see applyTheme call at the bottom of this file) so there is no
  * white flash for someone in dark mode. */
-const THEME_KEY = 'whetstone:theme';
+const THEME_KEY = 'keen:theme';
 
 /* matchMedia is missing in some embedded webviews and in jsdom, and calling it
  * unguarded at module scope took the ENTIRE app down with
@@ -571,16 +571,39 @@ function renderUpsellBanner() {
  * them here made the profile read as a form rather than something you would
  * show someone. */
 
+/* Avatars are drawn, not typed.
+ *
+ * These used to be text glyphs (⚡ ★ ☾ ❦). A glyph is at the mercy of whatever
+ * font resolves it, and several of those characters have emoji presentation on
+ * iOS and Android, so the "avatar" arrived as a full-colour emoji that ignored
+ * the app's palette entirely. Every one of these is an inline SVG path drawn on
+ * a 24x24 grid, so it inherits currentColor and looks the same everywhere.
+ *
+ * Sixteen instead of eight, because eight in a study group of five means people
+ * collide almost immediately. */
 const AVATARS = [
-  { id: 'flame', glyph: '◆', label: 'Ember' },
-  { id: 'leaf', glyph: '❦', label: 'Leaf' },
-  { id: 'bolt', glyph: '⚡', label: 'Bolt' },
-  { id: 'star', glyph: '★', label: 'Star' },
-  { id: 'moon', glyph: '☾', label: 'Moon' },
-  { id: 'wave', glyph: '≈', label: 'Wave' },
-  { id: 'peak', glyph: '▲', label: 'Peak' },
-  { id: 'orbit', glyph: '◉', label: 'Orbit' },
+  { id: 'flame',    label: 'Ember',    path: 'M12 2.8c3.4 3.3 5.6 6 5.6 9.2a5.6 5.6 0 11-11.2 0c0-1.7.6-3 1.7-4.4.5 1 1.2 1.7 2 2 .3-2.5.9-4.6 1.9-6.8z' },
+  { id: 'leaf',     label: 'Leaf',     path: 'M20 4c0 9-5 14-11 14a5.6 5.6 0 01-5-3C4 8 11 4 20 4zM4.5 20c2-4.5 5-7.5 9-9.5' },
+  { id: 'bolt',     label: 'Bolt',     path: 'M13.5 2.5L5 13.2h5.2L9.8 21.5 19 10.4h-5.4z' },
+  { id: 'star',     label: 'Star',     path: 'M12 3l2.7 5.6 6.1.85-4.45 4.3 1.06 6.05L12 16.95 6.59 19.8l1.06-6.05L3.2 9.45l6.1-.85z' },
+  { id: 'moon',     label: 'Moon',     path: 'M20 14.5A8.5 8.5 0 019.6 4a8.5 8.5 0 1010.4 10.5z' },
+  { id: 'wave',     label: 'Wave',     path: 'M2.5 9c2.5-3 4.7-3 7 0s4.5 3 7 0 4.5-3 5-1.5M2.5 16c2.5-3 4.7-3 7 0s4.5 3 7 0 4.5-3 5-1.5' },
+  { id: 'peak',     label: 'Peak',     path: 'M2.5 19.5l6-11 4 6.5 3-4.5 6 9z' },
+  { id: 'orbit',    label: 'Orbit',    path: 'M12 7.5a4.5 4.5 0 100 9 4.5 4.5 0 000-9zM4.6 7.2c3.4-2 12.4-2.6 15.4.6M19.4 16.8c-3.4 2-12.4 2.6-15.4-.6' },
+  { id: 'anchor',   label: 'Anchor',   path: 'M12 7.8v13M12 3a2.4 2.4 0 100 4.8 2.4 2.4 0 000-4.8zM7.5 11.5h9M4 15a8 8 0 0016 0' },
+  { id: 'compass',  label: 'Compass',  path: 'M12 2.8a9.2 9.2 0 100 18.4 9.2 9.2 0 000-18.4zM15.8 8.2l-2 5.6-5.6 2 2-5.6z' },
+  { id: 'prism',    label: 'Prism',    path: 'M12 3l9 16H3zM12 3v16M7.5 11h9' },
+  { id: 'key',      label: 'Key',      path: 'M15.5 3.5a5.5 5.5 0 100 11 5.5 5.5 0 000-11zM11.6 11.4L3 20v1.2h3.4v-2.4h2.4v-2.4h2.2z' },
+  { id: 'feather',  label: 'Feather',  path: 'M20.5 3.5C13 3.5 7 8 7 15v3l-3.5 3.5M7 18c8 0 12-4.5 12-9.5M10 15h6' },
+  { id: 'cog',      label: 'Cog',      path: 'M12 8.4a3.6 3.6 0 100 7.2 3.6 3.6 0 000-7.2zM12 1.8v3M12 19.2v3M22.2 12h-3M5 12H1.8M19.2 4.8l-2.1 2.1M6.9 17.1l-2.1 2.1M19.2 19.2l-2.1-2.1M6.9 6.9L4.8 4.8' },
+  { id: 'droplet',  label: 'Droplet',  path: 'M12 2.6l5.4 7.6a6.6 6.6 0 11-10.8 0z' },
+  { id: 'lantern',  label: 'Lantern',  path: 'M8.5 3h7M12 3v2.5M6.5 5.5h11l-1.5 12a2 2 0 01-2 1.8h-4a2 2 0 01-2-1.8zM12 19.3V22' },
 ];
+
+function avatarSvg(id, cls = '') {
+  const a = AVATARS.find((x) => x.id === id) || AVATARS[0];
+  return `<svg class="avatar-art ${cls}" viewBox="0 0 24 24" aria-hidden="true"><path d="${a.path}"/></svg>`;
+}
 
 async function loadProfile() {
   const u = state.user;
@@ -591,8 +614,7 @@ async function loadProfile() {
     ? `Studying since ${new Date(u.createdAt).toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}`
     : '';
   $('#profile-avatar').dataset.avatar = u.avatar || 'flame';
-  $('#profile-avatar').textContent =
-    (AVATARS.find((a) => a.id === (u.avatar || 'flame')) || AVATARS[0]).glyph;
+  $('#profile-avatar').innerHTML = avatarSvg(u.avatar || 'flame');
 
   let prog = state.progression;
   try {
@@ -646,7 +668,7 @@ async function loadProfile() {
   $('#avatar-picker').innerHTML = AVATARS.map((a) => `
     <button class="avatar-opt${(state.user.avatar || 'flame') === a.id ? ' selected' : ''}"
             data-avatar-pick="${a.id}" data-avatar="${a.id}" title="${esc(a.label)}"
-            aria-label="${esc(a.label)}">${a.glyph}</button>`).join('');
+            aria-label="${esc(a.label)}">${avatarSvg(a.id)}</button>`).join('');
 
   $$('#avatar-picker [data-avatar-pick]').forEach((b) => b.addEventListener('click', async () => {
     const id = b.dataset.avatarPick;
@@ -657,6 +679,10 @@ async function loadProfile() {
       renderChrome();
     } catch (err) { toast(err.message, 'bad'); }
   }));
+
+  // Plan and Settings moved off the mobile nav to make room for Group.
+  $$('#view-profile [data-goto]').forEach((b) =>
+    b.addEventListener('click', () => showView(b.dataset.goto)));
 }
 
 // ------------------------------------------------------------------ classes
@@ -675,20 +701,20 @@ const SUBJECT_KEY = {
 function subjectKey(category) { return SUBJECT_KEY[category] || 'other'; }
 
 function courseSort() {
-  try { return localStorage.getItem('whetstone:sort') || 'mine'; } catch { return 'mine'; }
+  try { return localStorage.getItem('keen:sort') || 'mine'; } catch { return 'mine'; }
 }
 function setCourseSort(v) {
-  try { localStorage.setItem('whetstone:sort', v); } catch { /* private mode */ }
+  try { localStorage.setItem('keen:sort', v); } catch { /* private mode */ }
 }
 
 /* Manual order lives client-side and only applies to "My order". Choosing
  * Weakest or Recent does not overwrite it, so switching back restores the
  * arrangement the student made. */
 function manualOrder() {
-  try { return JSON.parse(localStorage.getItem('whetstone:order') || '[]'); } catch { return []; }
+  try { return JSON.parse(localStorage.getItem('keen:order') || '[]'); } catch { return []; }
 }
 function setManualOrder(ids) {
-  try { localStorage.setItem('whetstone:order', JSON.stringify(ids)); } catch { /* private mode */ }
+  try { localStorage.setItem('keen:order', JSON.stringify(ids)); } catch { /* private mode */ }
 }
 
 function sortCourses(list, mode) {
@@ -1318,10 +1344,10 @@ const keyboard = { pendingGoto: false };
  *
  * Reloading mid-session used to dump you back on the home screen. */
 function rememberView(name) {
-  try { sessionStorage.setItem('whetstone:view', name); } catch { /* private mode */ }
+  try { sessionStorage.setItem('keen:view', name); } catch { /* private mode */ }
 }
 function lastView() {
-  try { return sessionStorage.getItem('whetstone:view'); } catch { return null; }
+  try { return sessionStorage.getItem('keen:view'); } catch { return null; }
 }
 
 /* 5. Relative time, used by the group chat and bug list. */
@@ -1338,22 +1364,96 @@ function timeAgo(iso) {
 }
 
 
+/* ---- count-up numbers on the landing page --------------------------------
+ *
+ * The big proof numbers animate from 0 to their real value when they scroll
+ * into view. Three deliberate choices:
+ *
+ * 1. IntersectionObserver, not a scroll listener. A scroll handler fires on
+ *    every frame of every scroll for the life of the page; the observer fires
+ *    once per element and then unobserves itself.
+ * 2. requestAnimationFrame with a timestamp, not setInterval. setInterval drifts
+ *    and stutters, and rAF is paused automatically in a background tab, so the
+ *    animation cannot "finish" while nobody is looking.
+ * 3. The real number is already in the HTML. The animation overwrites it and
+ *    puts it back at the end, so a browser with no JS, no IntersectionObserver,
+ *    or reduced motion enabled simply shows the correct number immediately.
+ *    The content never depends on the effect running.
+ */
+function animateCount(el) {
+  const target = Number(el.dataset.count);
+  if (!Number.isFinite(target)) return;
+  const finish = () => { el.textContent = String(target); };
+  if (target === 0) return finish();
+
+  // Browsers pause requestAnimationFrame entirely in a hidden tab. If the
+  // element scrolls into view while the tab is in the background, the first
+  // frame never arrives, the callback never runs, and the number sits on "0"
+  // until the page is reloaded. Testing this in a background tab is exactly how
+  // that was found. Show the real value instead of scheduling an animation
+  // that cannot start.
+  if (document.hidden) return finish();
+
+  const DURATION = 900;
+  let started = null;
+  // Ease-out cubic: fast at the start, settling at the end. A linear count
+  // reads like a loading spinner; the deceleration is what makes it feel like
+  // it is arriving at a value.
+  const ease = (t) => 1 - Math.pow(1 - t, 3);
+
+  const step = (now) => {
+    if (started === null) started = now;
+    const t = Math.min(1, (now - started) / DURATION);
+    el.textContent = String(Math.round(ease(t) * target));
+    if (t < 1) requestAnimationFrame(step); else finish();
+  };
+  requestAnimationFrame(step);
+}
+
+function initCountUps() {
+  const els = $$('[data-count]');
+  if (els.length === 0) return;
+
+  // Respect the OS setting. Someone who has asked for less motion, often
+  // because animation makes them ill, should just see the number.
+  const reduced = window.matchMedia
+    && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced || !('IntersectionObserver' in window)) return;
+
+  const io = new IntersectionObserver((entries, obs) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      obs.unobserve(entry.target);   // count once, never again
+      // Zero it here, at the last possible moment, rather than up front. If we
+      // blanked every number on load and the animation then failed to run for
+      // any reason, the page would display zeros as though they were the data.
+      entry.target.textContent = '0';
+      animateCount(entry.target);
+    });
+  }, { threshold: 0.6 });
+
+  els.forEach((el) => io.observe(el));
+}
+
 // ------------------------------------------------------------------ rewards
 /* XP, level-ups, badges, streaks, and the small sensory rewards that go with
  * them.
  *
  * Sound is opt-out and defaults ON, but it is synthesised with the Web Audio
  * API rather than shipped as audio files: two short tones cost nothing to
- * download and cannot fail to load. Haptics are Android-only in practice --
- * iOS Safari ignores navigator.vibrate -- so they are a bonus, never the only
- * feedback for anything. */
+ * download and cannot fail to load.
+ *
+ * Vibration was removed entirely. iOS Safari ignores navigator.vibrate, so it
+ * only ever fired on Android, which meant it was a feature that silently did
+ * nothing for most users and could not be relied on for feedback. A setting
+ * that does nothing is worse than no setting. */
 const rewards = { audio: null };
 
 function soundEnabled() {
-  try { return localStorage.getItem('whetstone:sound') !== 'off'; } catch { return true; }
+  try { return localStorage.getItem('keen:sound') !== 'off'; } catch { return true; }
 }
 function setSoundEnabled(on) {
-  try { localStorage.setItem('whetstone:sound', on ? 'on' : 'off'); } catch { /* private mode */ }
+  try { localStorage.setItem('keen:sound', on ? 'on' : 'off'); } catch { /* private mode */ }
 }
 
 function tone(freqs, duration = 0.12) {
@@ -1368,11 +1468,17 @@ function tone(freqs, duration = 0.12) {
     freqs.forEach((f, i) => {
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = 'sine';
+      osc.type = 'triangle';
       osc.frequency.value = f;
       const start = ctx.currentTime + i * duration * 0.72;
       gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(0.16, start + 0.012);
+      // Peak was 0.16, which is inaudible over a classroom, headphones at a
+      // normal level, or a phone speaker outdoors. A pure sine wave also reads
+      // much quieter than its numeric amplitude suggests, because there are no
+      // harmonics. 0.52 is loud enough to be felt as feedback and still well
+      // under clipping. A triangle wave carries further than a sine at the
+      // same amplitude, so the tone also has some body to it now.
+      gain.gain.exponentialRampToValueAtTime(0.52, start + 0.012);
       gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
       osc.connect(gain); gain.connect(ctx.destination);
       osc.start(start); osc.stop(start + duration + 0.02);
@@ -1380,15 +1486,11 @@ function tone(freqs, duration = 0.12) {
   } catch { /* audio is a nicety, never a failure path */ }
 }
 
-function buzz(pattern) {
-  try { if (navigator.vibrate) navigator.vibrate(pattern); } catch { /* unsupported */ }
-}
-
 const sfx = {
-  correct() { tone([660, 880]); buzz(18); },
-  wrong() { tone([220, 165], 0.16); buzz([12, 40, 12]); },
-  levelUp() { tone([523, 659, 784, 1047], 0.14); buzz([20, 40, 20, 40, 30]); },
-  badge() { tone([784, 1047, 1319], 0.16); buzz([25, 50, 45]); },
+  correct() { tone([660, 880], 0.13); },
+  wrong() { tone([220, 165], 0.17); },
+  levelUp() { tone([523, 659, 784, 1047], 0.15); },
+  badge() { tone([784, 1047, 1319], 0.17); },
 };
 
 /* A single celebration queue, so a level-up and two badges at once become one
@@ -1749,6 +1851,19 @@ function renderFlash() {
   $('#flash-progress').style.width = `${((index + 1) / cards.length) * 100}%`;
   $('#flash-prev').disabled = index === 0;
   $('#flash-next').textContent = index === cards.length - 1 ? 'Finish' : 'Next →';
+
+  const hint = $('#flash-swipe-hint');
+  if (hint) {
+    hint.innerHTML = swipeEnabled()
+      ? `<div class="swipe-legend">
+           <span class="sl-retest">← Swipe left: <b>retest</b></span>
+           <span class="sl-know">Swipe right: <b>got it</b> →</span>
+         </div>`
+      // Free users are told what swiping does, not blocked mid-gesture. The
+      // deck still works exactly as it always has for them.
+      : `<p class="hint center dim">Premium adds swipe sorting: right to drop a card you know,
+         left to send it back into the deck.</p>`;
+  }
 }
 
 function flipCard() { state.flash.flipped = !state.flash.flipped; renderFlash(); }
@@ -1756,11 +1871,112 @@ $('#flash-card').addEventListener('click', flipCard);
 $('#flash-prev').addEventListener('click', () => {
   if (state.flash.index > 0) { state.flash.index--; state.flash.flipped = false; renderFlash(); }
 });
-$('#flash-next').addEventListener('click', () => {
-  if (state.flash.index < state.flash.cards.length - 1) {
-    state.flash.index++; state.flash.flipped = false; renderFlash();
-  } else { toast('Deck complete.', 'good'); showView('home'); }
-});
+$('#flash-next').addEventListener('click', () => advanceFlash());
+
+/* ---- swipe to sort ---------------------------------------------------------
+ *
+ * Premium only. Swipe right means you knew it and the card leaves the deck.
+ * Swipe left means retest, and the card is pushed back into the deck rather
+ * than dropped, so the run is not over until you have actually got them all.
+ *
+ * Free users keep the deck exactly as it was: Previous, Next, flip. Nothing is
+ * taken away from them, which matters because a paywall that removes something
+ * people already had is the fastest way to make them quit. This is why the
+ * pointer handlers refuse to arm at all on the free plan rather than arming and
+ * then showing an upgrade prompt mid-gesture.
+ *
+ * Pointer Events, not touchstart/touchmove: one code path covers finger, mouse
+ * and stylus, and setPointerCapture means a fast flick that leaves the element
+ * still delivers its pointerup.
+ */
+function swipeEnabled() {
+  return Boolean(state.user) && state.user.plan !== 'free';
+}
+
+function advanceFlash() {
+  const f = state.flash;
+  if (f.index < f.cards.length - 1) {
+    f.index++; f.flipped = false; renderFlash();
+  } else {
+    toast('Deck complete.', 'good');
+    showView('home');
+  }
+}
+
+/** Right: known, remove it. Left: retest, requeue it a few cards later. */
+function sortFlash(direction) {
+  const f = state.flash;
+  const card = f.cards[f.index];
+  if (!card) return;
+
+  if (direction === 'right') {
+    f.known = (f.known || 0) + 1;
+    f.cards.splice(f.index, 1);
+    if (f.index >= f.cards.length) f.index = Math.max(0, f.cards.length - 1);
+    if (f.cards.length === 0) {
+      toast(`Deck cleared. ${f.known} known.`, 'good');
+      showView('home');
+      return;
+    }
+  } else {
+    // Move it back by three, or to the end if the deck is short. Putting it
+    // straight to the end means you see it once more at best; three back means
+    // it comes round again while it is still fresh, which is the point.
+    const [c] = f.cards.splice(f.index, 1);
+    const target = Math.min(f.cards.length, f.index + 3);
+    f.cards.splice(target, 0, c);
+    f.retested = (f.retested || 0) + 1;
+    if (f.index >= f.cards.length) f.index = 0;
+  }
+  f.flipped = false;
+  renderFlash();
+}
+
+(function bindFlashSwipe() {
+  const card = $('#flash-card');
+  if (!card) return;
+  let startX = 0, startY = 0, dx = 0, dragging = false, moved = false;
+  const THRESHOLD = 70;   // px before a drag counts as a swipe
+
+  card.addEventListener('pointerdown', (e) => {
+    if (!swipeEnabled()) return;
+    dragging = true; moved = false;
+    startX = e.clientX; startY = e.clientY; dx = 0;
+    card.setPointerCapture(e.pointerId);
+    card.classList.add('is-dragging');
+  });
+
+  card.addEventListener('pointermove', (e) => {
+    if (!dragging) return;
+    dx = e.clientX - startX;
+    const dy = e.clientY - startY;
+    // A mostly-vertical drag is the user scrolling the page, not sorting.
+    if (!moved && Math.abs(dy) > Math.abs(dx)) { dragging = false; card.classList.remove('is-dragging'); return; }
+    if (Math.abs(dx) > 4) moved = true;
+    card.style.transform = `translateX(${dx}px) rotate(${dx * 0.04}deg)`;
+    card.style.opacity = String(Math.max(0.45, 1 - Math.abs(dx) / 420));
+    card.dataset.swipe = Math.abs(dx) < THRESHOLD ? '' : (dx > 0 ? 'right' : 'left');
+  });
+
+  const release = () => {
+    if (!dragging) return;
+    dragging = false;
+    card.classList.remove('is-dragging');
+    card.style.transform = '';
+    card.style.opacity = '';
+    card.dataset.swipe = '';
+    if (Math.abs(dx) >= THRESHOLD) sortFlash(dx > 0 ? 'right' : 'left');
+    dx = 0;
+  };
+  card.addEventListener('pointerup', release);
+  card.addEventListener('pointercancel', release);
+
+  // A drag must not also register as a click, or every swipe would flip the
+  // card on the way past.
+  card.addEventListener('click', (e) => {
+    if (moved) { e.stopImmediatePropagation(); moved = false; }
+  }, true);
+})();
 
 // ------------------------------------------------------------------ match
 async function startMatch() {
@@ -1979,8 +2195,10 @@ function renderCourseGroups(groups) {
               <span class="dim">${c.units.length} units</span>
               ${levelPill(c.levelLabel)}
             </button>
-            <button class="btn btn-sm course-add${mine.has(c.id) ? ' is-added' : ' btn-primary'}"
-                    data-add="${esc(c.id)}">${mine.has(c.id) ? '✓ Added' : 'Add'}</button>
+            <button class="course-add${mine.has(c.id) ? ' is-added' : ''}"
+                    data-add="${esc(c.id)}"
+                    title="${mine.has(c.id) ? 'Remove from my classes' : 'Add to my classes'}"
+                    aria-pressed="${mine.has(c.id)}">${mine.has(c.id) ? '✓' : '+'}<span class="sr-only">${mine.has(c.id) ? 'Remove' : 'Add'} ${esc(c.name)}</span></button>
           </div>`).join('')}
       </div>
     </div>`).join('');
@@ -1994,9 +2212,10 @@ function renderCourseGroups(groups) {
     const nowEnrolled = !myCourseIds().has(id);
     b.disabled = true;
     if (await setEnrolled(id, nowEnrolled)) {
-      b.textContent = nowEnrolled ? '✓ Added' : 'Add';
+      b.textContent = nowEnrolled ? '✓' : '+';
       b.classList.toggle('is-added', nowEnrolled);
-      b.classList.toggle('btn-primary', !nowEnrolled);
+      b.setAttribute('aria-pressed', String(nowEnrolled));
+      b.title = nowEnrolled ? 'Remove from my classes' : 'Add to my classes';
     }
     b.disabled = false;
   }));
@@ -2255,18 +2474,69 @@ async function handleTokenRoutes() {
 // ------------------------------------------------------------------ custom sets
 let editingSetId = null;
 
+/* A card row. Numbered, labelled, and with the two fields stacked on a phone.
+ * The old row was three bare controls in a line with placeholder text as the
+ * only label, which is why it felt sharp and unfinished: placeholders vanish
+ * the moment you type, so half way through filling it in you could no longer
+ * tell which box was which. */
 function cardRowHtml(front = '', back = '') {
   return `<div class="card-editor-row">
-    <input type="text" class="cr-front" placeholder="Term" value="${esc(front)}" maxlength="200">
-    <input type="text" class="cr-back" placeholder="Definition" value="${esc(back)}" maxlength="500">
-    <button type="button" class="btn btn-ghost cr-del" title="Remove">×</button>
+    <span class="cr-num"></span>
+    <div class="cr-fields">
+      <label class="cr-field">
+        <span class="cr-label">Term</span>
+        <input type="text" class="cr-front" value="${esc(front)}" maxlength="200"
+               placeholder="mitochondrion">
+      </label>
+      <label class="cr-field">
+        <span class="cr-label">Definition</span>
+        <input type="text" class="cr-back" value="${esc(back)}" maxlength="500"
+               placeholder="the organelle that produces most of a cell's ATP">
+      </label>
+    </div>
+    <button type="button" class="cr-del" title="Remove this card" aria-label="Remove this card">×</button>
   </div>`;
+}
+
+/** Live count of complete cards, plus a Save button that explains itself. */
+function refreshSetState() {
+  const rows = $$('#set-cards .card-editor-row');
+  rows.forEach((row, i) => {
+    const n = row.querySelector('.cr-num');
+    if (n) n.textContent = String(i + 1);
+    // Mark half-finished rows so an obviously incomplete card is visible
+    // before you press Save rather than after.
+    const f = row.querySelector('.cr-front').value.trim();
+    const b = row.querySelector('.cr-back').value.trim();
+    row.classList.toggle('is-partial', Boolean(f) !== Boolean(b));
+  });
+
+  const done = collectCards().length;
+  const need = 4;
+  const prog = $('#set-progress');
+  if (prog) {
+    prog.textContent = `${done} of ${need} ready`;
+    prog.classList.toggle('is-ready', done >= need);
+  }
+  const save = $('#save-set');
+  if (save) {
+    const titled = Boolean($('#set-title').value.trim());
+    save.disabled = done < need || !titled;
+    save.textContent = save.disabled
+      ? (!titled ? 'Add a title to save' : `Add ${need - done} more card${need - done === 1 ? '' : 's'}`)
+      : 'Save set';
+  }
 }
 
 function bindCardRows() {
   $$('#set-cards .cr-del').forEach((b) => b.addEventListener('click', () => {
-    if ($$('#set-cards .card-editor-row').length > 1) b.closest('.card-editor-row').remove();
+    if ($$('#set-cards .card-editor-row').length > 1) {
+      b.closest('.card-editor-row').remove();
+      refreshSetState();
+    }
   }));
+  $$('#set-cards input').forEach((i) => i.addEventListener('input', refreshSetState));
+  refreshSetState();
 }
 
 async function openSetEditor(setId = null) {
@@ -2275,16 +2545,33 @@ async function openSetEditor(setId = null) {
   $('#set-msg').textContent = '';
   $('#delete-set').classList.toggle('hidden', !setId);
 
+  // Offer the student's own classes so a set can be linked to one. That link
+  // is what lets /api/set/quiz pull real answers from the course bank.
+  const sel = $('#set-course');
+  if (sel) {
+    if (!state.myCourses || state.myCourses.length === 0) {
+      try { state.myCourses = (await api('GET', '/api/my-courses')).courses || []; } catch { /* offline */ }
+    }
+    sel.innerHTML = '<option value="">Not tied to a class</option>'
+      + (state.myCourses || []).map((c) =>
+        `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('');
+  }
+
   if (setId) {
     const { set } = await api('GET', `/api/set?id=${setId}`);
+    $('#set-heading').textContent = 'Edit study set';
     $('#set-title').value = set.title;
+    if (sel) sel.value = set.courseId || '';
     $('#set-cards').innerHTML = set.cards.length
       ? set.cards.map((c) => cardRowHtml(c.front, c.back)).join('')
       : cardRowHtml();
   } else {
+    $('#set-heading').textContent = 'Create a study set';
     $('#set-title').value = '';
+    if (sel) sel.value = '';
     $('#set-cards').innerHTML = cardRowHtml() + cardRowHtml() + cardRowHtml() + cardRowHtml();
   }
+  $('#set-title').oninput = refreshSetState;
   bindCardRows();
 }
 
@@ -2292,6 +2579,12 @@ $('#new-set-btn').addEventListener('click', () => openSetEditor(null));
 $('#add-card-row').addEventListener('click', () => {
   $('#set-cards').insertAdjacentHTML('beforeend', cardRowHtml());
   bindCardRows();
+  // Put the cursor in the row that was just created. Without this you have to
+  // scroll down and tap it yourself every single time, which is the single
+  // most annoying thing about writing a long set.
+  const rows = $$('#set-cards .card-editor-row');
+  const last = rows[rows.length - 1];
+  if (last) { last.scrollIntoView({ block: 'center', behavior: 'smooth' }); last.querySelector('.cr-front').focus(); }
 });
 
 function collectCards() {
@@ -2310,10 +2603,11 @@ $('#save-set').addEventListener('click', async () => {
   if (cards.length < 4) { $('#set-msg').textContent = 'Add at least 4 complete cards.'; return; }
 
   try {
+    const courseId = $('#set-course') ? $('#set-course').value || null : null;
     if (editingSetId) {
-      await api('POST', '/api/sets/update', { id: editingSetId, cards });
+      await api('POST', '/api/sets/update', { id: editingSetId, cards, courseId });
     } else {
-      const { set } = await api('POST', '/api/sets', { title, cards });
+      const { set } = await api('POST', '/api/sets', { title, cards, courseId });
       editingSetId = set.id;
     }
     toast('Set saved.', 'good');
@@ -2422,7 +2716,7 @@ function renderProfile(p) {
     host.innerHTML = `
       <h2>Your learning profile</h2>
       <p class="muted">
-        Answer a few questions and this fills in. Whetstone starts building a
+        Answer a few questions and this fills in. Keen starts building a
         picture of which topics you personally keep missing, and that picture
         is what makes the practice worth doing.
       </p>`;
@@ -2435,7 +2729,7 @@ function renderProfile(p) {
     : '<span class="muted">Nothing clearly weak yet.</span>';
 
   host.innerHTML = `
-    <h2>What Whetstone knows about you</h2>
+    <h2>What Keen knows about you</h2>
     <p class="muted u-fs-p92rem u-mb-1rem">
       Built from ${p.answered} answer${p.answered === 1 ? '' : 's'} across
       ${p.daysStudied} day${p.daysStudied === 1 ? '' : 's'}.
@@ -2672,6 +2966,9 @@ document.addEventListener('keydown', (e) => {
 
   renderChrome();
   setOffline(!navigator.onLine);
+  // Wire the landing-page counters once the DOM is settled. Safe to call even
+  // for a signed-in user: the observer simply never fires on a hidden section.
+  initCountUps();
 
   if (!state.user) showView('landing');
   else if (!state.user.onboarded) startOnboarding();

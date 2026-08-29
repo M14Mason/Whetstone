@@ -9,7 +9,7 @@
 
 services:
   - type: web
-    name: whetstone
+    name: keen
     runtime: docker
 
     # ------------------------------------------------------------------
@@ -22,7 +22,7 @@ services:
     # TO FIX (this starts billing you, so it is left for you to do):
     #   1. change  plan: free   to   plan: starter
     #   2. uncomment the `disk:` block below
-    #   3. change DATABASE_PATH to /data/whetstone.db
+    #   3. change DATABASE_PATH to /data/keen.db
     #      and BACKUP_DIR to /data/backups
     #   4. commit, push, and let Render redeploy
     #
@@ -31,7 +31,7 @@ services:
     plan: free
 
     # disk:
-    #   name: whetstone-data
+    #   name: keen-data
     #   mountPath: /data
     #   sizeGB: 1
 
@@ -50,7 +50,7 @@ services:
       # do not survive. Change both of these to /data once the disk above is
       # enabled. scripts/launch-check.js treats a /tmp database as a blocker.
       - key: DATABASE_PATH
-        value: /tmp/whetstone.db
+        value: /tmp/keen.db
 
       - key: BACKUP_DIR
         value: /tmp/backups
@@ -69,5 +69,5 @@ services:
       - key: PUBLIC_URL
         fromService:
           type: web
-          name: whetstone
+          name: keen
           envVarKey: RENDER_EXTERNAL_URL

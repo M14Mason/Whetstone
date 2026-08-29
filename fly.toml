@@ -1,9 +1,11 @@
-# Fly.io configuration for Whetstone.
+# Fly.io configuration for Keen.
 #
-# Rename "whetstone" below to your own app name; Fly app names are globally
-# unique. Then follow DEPLOY.md.
+# IMPORTANT: Fly app names are globally unique across every Fly customer, so
+# "keen" is certainly taken. `fly launch` will offer you a name; whatever you
+# accept must be written here, or later `fly deploy` runs will target the wrong
+# app or fail outright. LAUNCH.md walks through this.
 
-app = "whetstone"
+app = "keen-study"
 primary_region = "iad"   # change to the region nearest your users
 
 [build]
@@ -11,7 +13,7 @@ primary_region = "iad"   # change to the region nearest your users
 
 [env]
   PORT = "8080"
-  DATABASE_PATH = "/data/whetstone.db"
+  DATABASE_PATH = "/data/keen.db"
   BACKUP_DIR = "/data/backups"
   # Fly terminates TLS at its proxy and forwards the real client IP in
   # X-Forwarded-For, so rate limiting needs to read that header.
@@ -20,7 +22,7 @@ primary_region = "iad"   # change to the region nearest your users
 # The SQLite file must live on a persistent volume. Without this, every deploy
 # starts from an empty database and all user accounts and progress are lost.
 [[mounts]]
-  source = "whetstone_data"
+  source = "keen_data"
   destination = "/data"
 
 [http_service]
@@ -39,10 +41,16 @@ primary_region = "iad"   # change to the region nearest your users
     method = "GET"
     path = "/api/health"
 
-# A single shared-CPU machine with 256MB comfortably serves early traffic.
-# SQLite means you scale UP (bigger machine) rather than OUT (more machines):
-# multiple machines would each have their own separate database file.
+# A single shared-CPU machine. SQLite means you scale UP (a bigger machine)
+# rather than OUT (more machines): two machines would each end up with their
+# own separate database file and users would see different data depending on
+# which one answered.
+#
+# 512MB, not 256MB. The question bank is 25,348 rows and the process sits
+# around 156MB resident with a few users on it. 256MB leaves almost no headroom,
+# and the failure mode is not a slow app, it is the kernel OOM-killing Node
+# mid-request. The difference is roughly a dollar a month.
 [[vm]]
   size = "shared-cpu-1x"
-  memory = "256mb"
+  memory = "512mb"
   cpus = 1

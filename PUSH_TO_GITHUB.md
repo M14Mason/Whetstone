@@ -1,4 +1,4 @@
-# Pushing Whetstone to GitHub
+# Pushing Keen to GitHub
 
 The repository is already initialised with a full commit. It just needs a remote.
 
@@ -11,15 +11,15 @@ that is left, and it takes about two minutes.
 ## Option A — GitHub website (no tools to install)
 
 1. Go to <https://github.com/new>
-2. Repository name: `whetstone`
+2. Repository name: `keen`
 3. Leave **"Add a README"**, **"Add .gitignore"**, and **"Choose a license"**
    all UNCHECKED. The repo already has them, and checking them causes a conflict
    on first push.
 4. Click **Create repository**.
-5. Copy the URL GitHub shows you, then run this in the `whetstone` folder:
+5. Copy the URL GitHub shows you, then run this in the `keen` folder:
 
 ```bash
-git remote add origin https://github.com/YOUR-USERNAME/whetstone.git
+git remote add origin https://github.com/YOUR-USERNAME/keen.git
 git branch -M main
 git push -u origin main
 ```
@@ -35,8 +35,8 @@ not your account password (GitHub stopped accepting passwords over HTTPS in
 ```bash
 # one-time install: https://cli.github.com
 gh auth login
-cd whetstone
-gh repo create whetstone --public --source=. --remote=origin --push
+cd keen
+gh repo create keen --public --source=. --remote=origin --push
 ```
 
 That creates the repo and pushes in a single command.

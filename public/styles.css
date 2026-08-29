@@ -1,5 +1,5 @@
 /* ==========================================================================
-   Whetstone design system
+   Keen design system
 
    Notes on the choices here, since "why does this look generic" is a fair
    question to ask of any interface:
@@ -250,13 +250,138 @@ a { color: var(--accent); }
   letter-spacing: -.03em; color: var(--text); text-decoration: none;
   white-space: nowrap;
 }
+/* The Keen mark. Was a tilted amber tile; it is now the graph.
+   Keep this geometry identical to the favicon in index.html. */
 .brand-mark {
-  width: 26px; height: 26px; border-radius: 8px;
-  background: var(--gradient);
-  box-shadow: 0 0 0 1px #ffffff1a inset, 0 4px 14px var(--accent-glow);
-  transform: rotate(-8deg);
-  flex-shrink: 0;
+  width: 27px; height: 27px; flex-shrink: 0;
+  overflow: visible;
 }
+/* The axes are the fixed part, so they sit back. The data line is the subject
+   of the mark and carries full weight. */
+.brand-axes { stroke: var(--accent); opacity: .38; }
+.brand-line { stroke: var(--accent); }
+
+/* ---- icons ---------------------------------------------------------------
+   The nav used text glyphs (☺ ▦ ◱ ＋). Those are font-dependent, so they drew
+   differently on every device and some phones substituted colour emoji, which
+   is why the profile icon looked like an emoji. Real SVG, drawn by us. */
+.mn-icon { width: 21px; height: 21px; display: block; fill: currentColor; }
+.mn-icon.mn-stroke {
+  fill: none; stroke: currentColor; stroke-width: 1.9;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* A tappable row that navigates somewhere. Used for Plan and Settings on the
+   profile page now that they no longer have mobile nav slots. */
+.row-link {
+  display: flex; align-items: center; gap: .85rem; width: 100%;
+  background: var(--surface-solid); border: 1px solid var(--border);
+  border-radius: var(--r); padding: .9rem 1rem;
+  font-family: inherit; font-size: .95rem; color: var(--text);
+  text-align: left; cursor: pointer; min-height: 60px;
+  transition: background .18s var(--ease), border-color .18s var(--ease);
+}
+.row-link:hover { background: var(--surface-hover); border-color: var(--accent-soft); }
+.row-link-icon {
+  width: 22px; height: 22px; flex-shrink: 0; fill: none;
+  stroke: var(--accent); stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+.row-link-main { display: flex; flex-direction: column; gap: .1rem; flex: 1; min-width: 0; }
+.row-link-main .dim { font-size: .82rem; }
+.row-link-go { color: var(--text-secondary); font-size: 1.3rem; line-height: 1; }
+
+/* ---- study set editor ----------------------------------------------------
+   Rebuilt because the old editor was three unlabelled inputs in a row. The
+   fixes here are all about knowing where you are: a numbered card, a persistent
+   label above each field rather than a placeholder that disappears, a live
+   readiness count, and a visible marker on a half-filled row. */
+.set-head {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem;
+}
+.set-progress {
+  font-size: .85rem; font-weight: 600;
+  padding: .35rem .8rem; border-radius: 999px;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--text-secondary); white-space: nowrap;
+}
+.set-progress.is-ready {
+  background: color-mix(in srgb, var(--good) 12%, transparent);
+  border-color: color-mix(in srgb, var(--good) 40%, transparent);
+  color: var(--good);
+}
+
+.field { display: block; }
+.field-label { display: block; font-size: .85rem; font-weight: 600; margin-bottom: .35rem; }
+.field-help { display: block; font-size: .8rem; color: var(--text-secondary); margin-top: .4rem; line-height: 1.5; }
+
+.card-editor-row {
+  display: flex; align-items: flex-start; gap: .75rem;
+  background: var(--surface-solid); border: 1px solid var(--border);
+  border-radius: var(--r); padding: .9rem 1rem;
+  transition: border-color .18s var(--ease);
+}
+/* One field filled and the other empty means the card will be silently dropped
+   on save. Say so now, in place, instead of after the fact. */
+.card-editor-row.is-partial { border-color: color-mix(in srgb, var(--bad) 45%, transparent); }
+.cr-num {
+  flex: 0 0 auto; width: 26px; height: 26px; display: grid; place-items: center;
+  border-radius: 8px; background: var(--surface-hover);
+  font-size: .8rem; font-weight: 700; color: var(--text-secondary); margin-top: 1.35rem;
+}
+.cr-fields { flex: 1; min-width: 0; display: grid; grid-template-columns: 1fr 1.4fr; gap: .7rem; }
+.cr-field { display: block; min-width: 0; }
+.cr-label {
+  display: block; font-size: .72rem; font-weight: 600; letter-spacing: .04em;
+  text-transform: uppercase; color: var(--text-secondary); margin-bottom: .25rem;
+}
+.cr-field input { width: 100%; }
+.cr-del {
+  flex: 0 0 auto; width: 34px; height: 34px; margin-top: 1.1rem;
+  display: grid; place-items: center;
+  border: 1px solid transparent; border-radius: 9px; background: transparent;
+  color: var(--text-secondary); font-size: 1.15rem; line-height: 1; cursor: pointer;
+  transition: all .16s var(--ease);
+}
+.cr-del:hover { background: color-mix(in srgb, var(--bad) 12%, transparent); color: var(--bad); }
+
+.set-actions { display: flex; gap: .6rem; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; }
+
+@media (max-width: 620px) {
+  /* Side by side, the two fields are each about 130px on a phone, which is not
+     enough to read a definition you are editing. Stack them. */
+  .cr-fields { grid-template-columns: 1fr; gap: .55rem; }
+  .cr-num { margin-top: 1.5rem; }
+  .cr-del { margin-top: 1.5rem; }
+  .set-actions .btn { flex: 1 1 100%; }
+}
+
+/* ---- flashcard swipe -----------------------------------------------------
+   The card follows the finger, so it needs no transition while dragging and a
+   spring back when released. touch-action:pan-y lets the page still scroll
+   vertically while horizontal drags belong to the card. */
+.flash-card { touch-action: pan-y; }
+.flash-card.is-dragging { transition: none; cursor: grabbing; }
+/* A coloured edge appears once the drag passes the commit threshold, so you
+   know which way it will land before you let go. */
+.flash-card[data-swipe="right"] { box-shadow: 0 0 0 3px var(--good), var(--shadow-lg); }
+.flash-card[data-swipe="left"]  { box-shadow: 0 0 0 3px var(--bad), var(--shadow-lg); }
+.swipe-legend { display: flex; justify-content: center; gap: 1.4rem; margin-top: .6rem; }
+.swipe-legend span { font-size: .82rem; color: var(--text-secondary); }
+.swipe-legend b { font-weight: 650; }
+.swipe-legend .sl-know { color: var(--good); }
+.swipe-legend .sl-retest { color: var(--bad); }
+
+/* Avatar artwork. Stroke rather than fill so the shapes stay legible small and
+   pick up whatever colour the container sets. */
+.avatar-art {
+  width: 62%; height: 62%; display: block;
+  fill: none; stroke: currentColor; stroke-width: 1.7;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.avatar-opt .avatar-art, #avatar .avatar-art { width: 58%; height: 58%; }
+#profile-avatar .avatar-art { stroke-width: 1.5; }
+.avatar-opt, #profile-avatar, #avatar { display: grid; place-items: center; }
 
 .nav { display: flex; gap: .15rem; margin-left: .75rem; }
 .nav-btn {
@@ -995,8 +1120,12 @@ body.onboarding-lock::before {
   display: grid; place-items: center; font-size: 1.1rem;
   background: var(--accent-soft); border: 1px solid color-mix(in srgb, var(--accent) 22%, transparent);
 }
-.card-editor-row { display: grid; grid-template-columns: 1fr 1fr 40px; gap: .5rem; margin-bottom: .5rem; }
-.card-editor-row .btn { min-height: 44px; padding: 0; }
+/* The old three-column grid for the set editor lived here. It came LATER in
+   the file than the rebuilt .card-editor-row rules, so it silently won the
+   cascade and squashed the new layout: the fields kept the old 1fr 1fr 40px
+   track sizing and were pushed off to the right of the row number. Removed
+   rather than reordered, because two rules describing the same component is
+   how this happens in the first place. */
 
 /* ---- bug reporter ---- */
 .bug-item {
@@ -1115,8 +1244,8 @@ body.modal-open { overflow: hidden; }
   .channel-list { flex-direction: row; overflow-x: auto; padding-bottom: .35rem; }
   .channel-btn { white-space: nowrap; }
   .chat-window { height: 380px; }
-  .card-editor-row { grid-template-columns: 1fr 1fr; }
-  .card-editor-row .btn { grid-column: span 2; }
+  /* Old set-editor grid overrides removed with the rule they modified. The
+     mobile behaviour now lives with the rest of the editor styles. */
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1304,16 +1433,43 @@ html, body { max-width: 100%; overflow-x: hidden; }
    button is invalid HTML and the inner click never fires reliably. */
 .course-row-wrap { display: flex; align-items: stretch; gap: .5rem; }
 .course-row-wrap .course-row { flex: 1; min-width: 0; }
-.course-row-wrap .course-add { flex: 0 0 auto; align-self: center; white-space: nowrap; }
+
+/* The Add control was a filled primary button on every row. With 159 rows that
+   is 159 shouting orange buttons down the page, which made the catalogue
+   exhausting to look at and gave no clue which row mattered. It is now a quiet
+   circular affordance that only fills in on hover or focus. The row still reads
+   as a list of classes rather than a wall of calls to action. */
+.course-add {
+  flex: 0 0 auto; align-self: center;
+  width: 38px; height: 38px; padding: 0;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 1.15rem; font-weight: 500; line-height: 1;
+  cursor: pointer;
+  transition: all .16s var(--ease);
+}
+.course-add:hover:not(:disabled), .course-add:focus-visible {
+  background: var(--accent); border-color: var(--accent);
+  color: var(--accent-contrast, #fff);
+}
 .course-add.is-added {
-  background: var(--good-soft, color-mix(in srgb, var(--good) 14%, transparent));
-  border-color: color-mix(in srgb, var(--good) 40%, transparent);
+  background: color-mix(in srgb, var(--good) 14%, transparent);
+  border-color: color-mix(in srgb, var(--good) 42%, transparent);
   color: var(--good);
 }
+.course-add.is-added:hover { background: var(--bad-soft, color-mix(in srgb, var(--bad) 12%, transparent));
+  border-color: color-mix(in srgb, var(--bad) 42%, transparent); color: var(--bad); }
+/* Label is for screen readers; the glyph carries it visually. */
+.course-add .sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
 @media (max-width: 480px) {
-  /* Stacking keeps both targets a full-width 44px tap area on a phone. */
-  .course-row-wrap { flex-direction: column; gap: .35rem; }
-  .course-row-wrap .course-add { align-self: stretch; }
+  /* Still a 44px target on a phone, still not a full-width orange bar. */
+  .course-add { width: 44px; height: 44px; }
 }
 
 @media (max-width: 720px) {

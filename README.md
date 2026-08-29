@@ -1,8 +1,8 @@
-# Whetstone
+# Keen
 
 **Sharpen what you keep getting wrong.**
 
-Whetstone is an adaptive study platform for high school and college students. It
+Keen is an adaptive study platform for high school and college students. It
 tracks every question you miss, works out which topics are actually weak, and
 keeps sending them back until they stick. Study groups start at 3 people, and the
 leaderboard ranks improvement instead of who was already ahead.
@@ -15,7 +15,7 @@ Zero npm dependencies. Clone it, run it, it works.
 
 ```bash
 git clone <your-repo-url>
-cd whetstone
+cd keen
 npm start
 ```
 
@@ -32,7 +32,7 @@ Requires **Node.js 22.5 or newer** (it uses the built-in `node:sqlite` module).
 > the database somewhere local instead:
 >
 > ```bash
-> DATABASE_PATH=~/whetstone.db npm start
+> DATABASE_PATH=~/keen.db npm start
 > ```
 
 ```bash
@@ -104,7 +104,7 @@ is demoralizing).
 ## Project layout
 
 ```
-whetstone/
+keen/
 ├── server.js              HTTP server, routing, API endpoints
 ├── lib/
 │   ├── adaptive.js        Elo ratings, spaced repetition, question selection
@@ -267,7 +267,7 @@ account deletion, error monitoring, and database backups. See
 ## Deploying
 
 Any host that runs Node 22.5+ with a persistent disk works. The SQLite file
-lives at `data/whetstone.db`.
+lives at `data/keen.db`.
 
 ```bash
 PORT=8080 SESSION_SECRET=$(openssl rand -hex 32) PUBLIC_URL=https://yourdomain.com npm start

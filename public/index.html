@@ -928,8 +928,13 @@
         <li><span class="tick">✓</span> Full mastery dashboard and weak-topic queue</li>
       </ul>
 
+      <div class="seg seg-sm paywall-interval" id="paywall-interval" role="group" aria-label="Billing period">
+        <button class="seg-btn active" data-interval="annual">Annual &middot; save 50%</button>
+        <button class="seg-btn" data-interval="monthly">Monthly</button>
+      </div>
       <div class="paywall-price">
-        <strong>$4.99</strong><span class="dim">/month</span>
+        <strong id="paywall-amount">$29.99</strong><span class="dim" id="paywall-period">/year</span>
+        <div class="dim paywall-equiv" id="paywall-equiv">works out at $2.50 a month</div>
       </div>
 
       <button class="btn btn-primary btn-lg btn-block-center" id="paywall-upgrade">Unlock everything</button>

@@ -295,6 +295,48 @@ test('mastery status thresholds behave', () => {
 });
 
 // ===========================================================================
+test('one account per email, regardless of capitalisation or spacing', () => {
+  // Enforced in three places and all three are asserted here: the UNIQUE
+  // constraint in the schema, the explicit duplicate check in createUser, and
+  // the normalisation that makes Test@X.com and test@x.com the same account.
+  const email = `dupe-${Date.now()}@example.com`;
+  const first = auth.createUser({
+    email, password: 'correct-horse-battery', displayName: 'First',
+    birthYear: 2009, timezoneOffsetMinutes: 0,
+  });
+  assert.ok(first.id);
+
+  // Same address again.
+  assert.throws(() => auth.createUser({
+    email, password: 'different-password-entirely', displayName: 'Second',
+    birthYear: 2009, timezoneOffsetMinutes: 0,
+  }), /already exists/i, 'a duplicate email must be refused');
+
+  // Same address with different case and surrounding whitespace.
+  assert.throws(() => auth.createUser({
+    email: `  ${email.toUpperCase()}  `, password: 'another-password-here',
+    displayName: 'Third', birthYear: 2009, timezoneOffsetMinutes: 0,
+  }), /already exists/i, 'case and whitespace must not create a second account');
+
+  // And login finds the one account whichever way it is typed.
+  assert.strictEqual(auth.getUserByEmail(email.toUpperCase()).id, first.id);
+  assert.strictEqual(auth.getUserByEmail(`  ${email}  `).id, first.id);
+});
+
+test('the users table enforces email uniqueness at the database level', () => {
+  // Belt and braces: even if the application check were bypassed, the schema
+  // must refuse a second row.
+  const db = require('../lib/db').getDb();
+  const cols = db.prepare('PRAGMA table_info(users)').all();
+  const emailCol = cols.find((c) => c.name === 'email');
+  assert.ok(emailCol, 'users.email must exist');
+  assert.strictEqual(emailCol.notnull, 1, 'email must be NOT NULL');
+
+  const indexes = db.prepare('PRAGMA index_list(users)').all();
+  assert.ok(indexes.some((i) => i.unique === 1),
+    'users must carry a UNIQUE index covering email');
+});
+
 section('Plans and quota');
 
 test('new users start on the free plan', () => {

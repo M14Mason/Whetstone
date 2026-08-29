@@ -11,7 +11,30 @@ services:
   - type: web
     name: whetstone
     runtime: docker
+
+    # ------------------------------------------------------------------
+    # ACCOUNTS DO NOT SURVIVE ON THE FREE PLAN.
+    #
+    # Free instances get no persistent disk, so DATABASE_PATH below points
+    # at /tmp, which Render wipes on every deploy AND every wake from
+    # sleep. Every account and all progress is destroyed each time.
+    #
+    # TO FIX (this starts billing you, so it is left for you to do):
+    #   1. change  plan: free   to   plan: starter
+    #   2. uncomment the `disk:` block below
+    #   3. change DATABASE_PATH to /data/whetstone.db
+    #      and BACKUP_DIR to /data/backups
+    #   4. commit, push, and let Render redeploy
+    #
+    # Then VERIFY: make an account, redeploy, and log in again.
+    # ------------------------------------------------------------------
     plan: free
+
+    # disk:
+    #   name: whetstone-data
+    #   mountPath: /data
+    #   sizeGB: 1
+
     dockerfilePath: ./Dockerfile
     region: oregon
 
@@ -23,14 +46,19 @@ services:
         value: production
 
 
-      # Overrides the Dockerfile default of /data, which does not exist on the
-      # free plan. The container runs as the non-root "node" user and /tmp is
-      # the one location it can reliably write to.
+      # TEMPORARY. /tmp is wiped on every deploy and every sleep, so accounts
+      # do not survive. Change both of these to /data once the disk above is
+      # enabled. scripts/launch-check.js treats a /tmp database as a blocker.
       - key: DATABASE_PATH
         value: /tmp/whetstone.db
 
       - key: BACKUP_DIR
         value: /tmp/backups
+
+      # Behind Render's proxy, rate limiting must read the forwarded client IP
+      # or one abusive user throttles everybody.
+      - key: TRUST_PROXY
+        value: "1"
 
       # Signs session cookies. Render generates a strong random value and keeps
       # it out of the repo. Never hardcode this.

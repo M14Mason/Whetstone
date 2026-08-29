@@ -1915,3 +1915,8 @@ body.is-offline .topbar { top: 38px; }
   .profile-avatar { width: 60px; height: 60px; font-size: 1.6rem; border-radius: 20px; }
   .badge-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* Billing period toggle inside the paywall. */
+.paywall-interval { width: 100%; margin-bottom: .9rem; }
+.paywall-interval .seg-btn { flex: 1; font-size: .8rem; }
+.paywall-equiv { font-size: .78rem; margin-top: .2rem; }

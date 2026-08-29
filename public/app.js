@@ -1437,6 +1437,9 @@ function floatXp(amount) {
  * stay free. */
 const paywall = {
   shownThisSession: new Set(),
+  // Annual is preselected: it is the better deal for the student AND the
+  // better outcome for the business, so it should not be the hidden option.
+  interval: 'annual',
 };
 
 function paywallCopy(trigger, ctx = {}) {
@@ -1530,12 +1533,24 @@ function renderQuotaMeter(quota) {
   $('#quota-note').classList.toggle('quota-low', quota.remaining <= 2);
 }
 
+$('#paywall-interval').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-interval]');
+  if (!btn) return;
+  paywall.interval = btn.dataset.interval;
+  $$('#paywall-interval .seg-btn').forEach((b) =>
+    b.classList.toggle('active', b.dataset.interval === paywall.interval));
+  const annual = paywall.interval === 'annual';
+  $('#paywall-amount').textContent = annual ? '$29.99' : '$4.99';
+  $('#paywall-period').textContent = annual ? '/year' : '/month';
+  $('#paywall-equiv').textContent = annual ? 'works out at $2.50 a month' : 'billed monthly, cancel any time';
+});
+
 $('#paywall-dismiss').addEventListener('click', hidePaywall);
 $('#paywall-upgrade').addEventListener('click', async () => {
   const btn = $('#paywall-upgrade');
   btn.disabled = true;
   try {
-    const d = await api('POST', '/api/billing/premium', {});
+    const d = await api('POST', '/api/billing/premium', { interval: paywall.interval });
     if (d.url) { window.location.href = d.url; return; }
     state.user = d.user;
     hidePaywall();

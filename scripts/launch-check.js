@@ -64,6 +64,9 @@ for (const file of ['TERMS.md', 'PRIVACY.md']) {
   if (text.includes('PARENT_OR_GUARDIAN_LEGAL_NAME')) {
     blockers.push(`legal/${file} still names PARENT_OR_GUARDIAN_LEGAL_NAME as the operator. ` +
       'An adult must be named before you take money.');
+  } else {
+    const m = text.match(/\*\*Operator:\*\*\s*(.+)|\*\*Operated by:\s*(.+?)\*\*/);
+    if (m) ok.push(`legal/${file} operator: ${(m[1] || m[2] || '').trim()}`);
   }
   const leftovers = [...new Set((text.match(/\[[A-Z][A-Z ./-]{2,}\]/g) || [])
     .filter((t) => t !== '[BRACKETED]'))];
@@ -81,6 +84,18 @@ if (!live) {
   ok.push('Stripe keys are present');
   if (!config.stripe.webhookSecret) {
     blockers.push('STRIPE_WEBHOOK_SECRET is missing. Payments will succeed and subscriptions will never activate.');
+  }
+  if (!config.stripe.pricePremiumMonthly) {
+    blockers.push('STRIPE_PRICE_PREMIUM_MONTHLY is missing. Monthly checkout will fail.');
+  }
+  // The landing page advertises an annual plan, so it must be sellable.
+  if (!config.stripe.pricePremiumAnnual) {
+    blockers.push('STRIPE_PRICE_PREMIUM_ANNUAL is missing, but the site advertises $29.99/year. ' +
+      'Either create the annual price in Stripe or remove the claim from the landing page.');
+  }
+  if (!config.stripe.priceGroupSeatMonthly) {
+    warnings.push('STRIPE_PRICE_GROUP_SEAT_MONTHLY is missing. Study Group checkout will fail, ' +
+      'though the other tiers work.');
   }
 }
 

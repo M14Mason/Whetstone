@@ -11,7 +11,7 @@
 > and the liability cap) are limited or unenforceable in certain states and
 > countries, which is exactly the sort of thing a lawyer checks.
 
-**Operator:** PARENT_OR_GUARDIAN_LEGAL_NAME
+**Operator:** Tom Ngo
 **Contact:** masonngo70@gmail.com
 **Governing state:** California
 
@@ -121,7 +121,7 @@ consumer law.
 ## 9. Our intellectual property
 
 The software, questions, explanations, course structure, and branding are owned
-by PARENT_OR_GUARDIAN_LEGAL_NAME and protected by copyright and other laws. Your
+by Tom Ngo and protected by copyright and other laws. Your
 subscription grants a personal, non-transferable, revocable licence to use them
 for your own studying. It transfers no ownership.
 
@@ -165,7 +165,7 @@ limitations, so they may not fully apply to you.
 
 ## 13. Indemnity
 
-You agree to indemnify and hold harmless PARENT_OR_GUARDIAN_LEGAL_NAME and its owners from
+You agree to indemnify and hold harmless Tom Ngo and its owners from
 any claim, demand, loss, or expense (including reasonable legal fees) arising
 out of your User Content, your use of the service, or your violation of these
 Terms or of any law or third-party right.

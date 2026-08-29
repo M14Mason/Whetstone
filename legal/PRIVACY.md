@@ -6,7 +6,7 @@ schema. Have an adult review it before launch. Fill in every `[BRACKETED]`
 placeholder.
 
 **Last updated: 2026-08-12**
-**Operated by: PARENT_OR_GUARDIAN_LEGAL_NAME**
+**Operated by: Tom Ngo**
 **Contact: masonngo70@gmail.com**
 
 ---

@@ -858,7 +858,10 @@ const routes = {
 
   'POST /api/billing/premium': async (req, res) => {
     const user = requireUser(req);
-    const result = await billing.startPremiumCheckout(user);
+    const body = await readJsonBody(req).catch(() => ({}));
+    // 'annual' or 'monthly'. Anything else falls back to monthly rather than
+    // erroring, so an older client keeps working.
+    const result = await billing.startPremiumCheckout(user, body.interval);
     sendJson(res, 200, { ...result, user: publicUser(auth.getUserById(user.id)) });
   },
 

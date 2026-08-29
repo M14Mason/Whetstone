@@ -1833,6 +1833,25 @@ test('an expired code is never included in the group payload', () => {
   assert.strictEqual(payload.inviteExpiresAt, null);
 });
 
+
+test('the Stripe setup script looks for the prices we actually charge', () => {
+  const fsx = require('node:fs');
+  const pathy = require('node:path');
+  const { config } = require('../lib/config');
+  const script = fsx.readFileSync(pathy.join(__dirname, '..', 'scripts', 'stripe-setup.sh'), 'utf8');
+
+  // The script finds prices in Stripe by matching on amount, so if someone
+  // changes a price in lib/config and not here, it silently stops finding the
+  // right price and offers to create a duplicate at the old amount.
+  const want = (name) => {
+    const m = script.match(new RegExp(`^${name}=(\\d+)$`, 'm'));
+    return m ? Number(m[1]) : null;
+  };
+  assert.strictEqual(want('WANT_MONTHLY_AMOUNT'), config.plans.premium.priceCents);
+  assert.strictEqual(want('WANT_ANNUAL_AMOUNT'), config.plans.premium.priceCentsAnnual);
+  assert.strictEqual(want('WANT_SEAT_AMOUNT'), config.plans.group.priceCentsPerSeat);
+});
+
 // ===========================================================================
 runQueue().then(() => {
   console.log(`\n${'-'.repeat(52)}`);

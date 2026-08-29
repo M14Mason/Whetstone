@@ -1,117 +1,224 @@
 #!/bin/bash
 #
-# Connect Stripe to Keen.
+# Connect Stripe to Keen, without hunting for price IDs in the dashboard.
 #
-#   bash scripts/stripe-setup.sh <your-fly-app-name>
+#   bash scripts/stripe-setup.sh
 #
-# This prompts you for each value and pipes it straight to Fly. Nothing is
-# echoed to the screen, nothing is written to a file, and nothing lands in your
-# shell history, which is what would happen if you typed the keys onto a
-# command line instead.
+# You paste ONE thing: your Stripe secret key. Everything else is read from
+# your Stripe account over the API:
 #
-# A live Stripe secret key is enough for someone to issue refunds and read your
-# customers' details. Treat it like a bank password.
+#   - finds the three prices by amount and interval, or offers to create them
+#   - creates the webhook endpoint and captures its signing secret
+#   - pushes all five values to Fly
+#
+# Nothing is echoed to the screen, written to a file, or left in your shell
+# history. A live secret key is enough to issue refunds and read customer
+# details, so it is treated like a bank password.
 
 set -u
 export PATH="$HOME/.fly/bin:$PATH"
-
-APP="${1:-}"
-if [ -z "$APP" ]; then
-  echo "Usage: bash scripts/stripe-setup.sh <your-fly-app-name>"
-  echo "Find it with:  fly apps list"
-  exit 1
-fi
 
 cd "$(dirname "$0")/.." || exit 1
 
 say()  { printf '\n\033[1m%s\033[0m\n' "$*"; }
 ok()   { printf '  \033[32mok\033[0m   %s\n' "$*"; }
 bad()  { printf '  \033[31mno\033[0m   %s\n' "$*"; }
+info() { printf '       %s\n' "$*"; }
+die()  { printf '\n\033[31mSTOPPED\033[0m %s\n\n' "$*"; exit 1; }
 
+# What we are looking for. Amounts are in cents and must match lib/config.js.
+WANT_MONTHLY_AMOUNT=499
+WANT_ANNUAL_AMOUNT=2999
+WANT_SEAT_AMOUNT=399
+
+# ------------------------------------------------------------------ app name
+APP="${1:-}"
+if [ -z "$APP" ] && [ -f fly.toml ]; then
+  APP=$(grep -m1 '^app = ' fly.toml | sed 's/app = "\(.*\)"/\1/')
+fi
+[ -n "$APP" ] || die "Could not work out your Fly app name.
+  Run:  fly apps list
+  Then: bash scripts/stripe-setup.sh <that-name>"
+
+command -v fly >/dev/null 2>&1 || die "The Fly CLI is not installed."
+fly status --app "$APP" >/dev/null 2>&1 \
+  || die "Fly does not know about an app called \"$APP\".
+  Run 'fly apps list' and pass the right one, or run scripts/fly-setup.sh first."
+
+ok "Fly app: $APP"
+
+# ------------------------------------------------------------------- the key
 cat <<'INTRO'
 
 ────────────────────────────────────────────────────────────
   Connecting Stripe
 ────────────────────────────────────────────────────────────
 
-Before you start, have the Stripe dashboard open with three products created:
+You need one thing: your Stripe SECRET KEY.
 
-    Keen Premium Monthly      $4.99   recurring, monthly
-    Keen Premium Annual      $29.99   recurring, yearly
-    Keen Study Group Seat     $3.99   recurring, monthly
+Where to find it, exactly:
 
-You need the PRICE id from each, not the product id.
+  1. Go to  https://dashboard.stripe.com/apikeys
+  2. Make sure the "Test mode" toggle at the TOP RIGHT is OFF
+  3. Find the row called "Secret key"
+  4. Click "Reveal live key" and copy it
 
-    price_xxxx   correct
-    prod_xxxx    wrong, and gives you a checkout page that will not load
-
-Click a product, scroll to Pricing, and copy the id under the amount.
-
-Nothing you type below will be shown on screen.
+It starts with sk_live_ and is long. Nothing you paste will appear on screen.
 
 INTRO
 
-read -r -p "Ready? [y/N] " GO
-case "$GO" in [yY]*) ;; *) echo "Nothing changed."; exit 0 ;; esac
+printf '  Paste your Stripe secret key: '
+read -r -s SK
+echo
 
-# ------------------------------------------------------------------ collect
-# -s hides the input. Each value is validated for its expected prefix, because
-# pasting a product id where a price id belongs is the most common mistake here
-# and it fails silently at checkout rather than at setup.
-ask() {
-  local var="$1" label="$2" prefix="$3" value=""
-  while true; do
-    printf '\n  %s\n  ' "$label"
-    read -r -s value
-    echo
-    if [ -z "$value" ]; then bad "empty, try again"; continue; fi
-    case "$value" in
-      "$prefix"*) ok "looks right (starts with $prefix)"; break ;;
-      prod_*) bad "that is a PRODUCT id. You want the PRICE id, starting with $prefix" ;;
-      *) bad "expected it to start with $prefix" ;;
-    esac
-  done
-  printf -v "$var" '%s' "$value"
+[ -n "$SK" ] || die "Nothing pasted."
+case "$SK" in
+  sk_live_*) ok "live key" ;;
+  sk_test_*) ok "TEST key. Fine for a rehearsal, but real cards will not work." ;;
+  pk_*) die "That is a PUBLISHABLE key (pk_). You want the SECRET key (sk_)." ;;
+  rk_*) die "That is a restricted key (rk_). Use the full secret key (sk_)." ;;
+  *) die "That does not look like a Stripe secret key. It should start with sk_" ;;
+esac
+
+# One small helper so every API call is identical. --fail-with-body keeps the
+# error JSON so we can show Stripe's own message rather than a bare exit code.
+api() {
+  local method="$1" path="$2"; shift 2
+  curl -s -X "$method" "https://api.stripe.com/v1/$path" -u "$SK:" "$@"
 }
 
-say "Step 1 of 5: the secret key"
-echo "  Stripe: Developers -> API keys -> Secret key -> Reveal"
-ask SK "Paste your LIVE secret key:" "sk_live_"
+say "Checking the key works"
+ACCT=$(api GET account)
+if printf '%s' "$ACCT" | grep -q '"error"'; then
+  bad "Stripe rejected the key:"
+  printf '%s' "$ACCT" | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{console.log('       '+JSON.parse(d).error.message)}catch{console.log(d)}})"
+  exit 1
+fi
+BIZ=$(printf '%s' "$ACCT" | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{const a=JSON.parse(d);console.log(a.business_profile&&a.business_profile.name||a.settings&&a.settings.dashboard&&a.settings.dashboard.display_name||a.id)})")
+ok "connected to Stripe account: $BIZ"
 
-say "Step 2 of 5: monthly price"
-ask PM "Paste the price id for Premium Monthly (\$4.99):" "price_"
+# --------------------------------------------------------------- find prices
+say "Looking for your prices"
 
-say "Step 3 of 5: annual price"
-ask PA "Paste the price id for Premium Annual (\$29.99):" "price_"
+PRICES=$(api GET "prices?limit=100&active=true&expand[]=data.product")
 
-say "Step 4 of 5: group seat price"
-ask PG "Paste the price id for Study Group Seat (\$3.99):" "price_"
+# Match on amount + interval, which is what actually identifies the product.
+# Matching on the product NAME would break the moment you rename anything.
+match() {
+  printf '%s' "$PRICES" | node -e "
+    let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{
+      const amount=Number(process.argv[1]), interval=process.argv[2];
+      let list=[];
+      try { list=(JSON.parse(d).data)||[]; } catch { }
+      const hit=list.find(p =>
+        p.unit_amount===amount &&
+        p.recurring && p.recurring.interval===interval &&
+        p.currency==='usd');
+      process.stdout.write(hit ? hit.id : '');
+    });
+  " "$1" "$2"
+}
 
-cat <<EOF
+PM=$(match "$WANT_MONTHLY_AMOUNT" month)
+PA=$(match "$WANT_ANNUAL_AMOUNT" year)
+PG=$(match "$WANT_SEAT_AMOUNT" month)
 
-  Step 5 of 5: the webhook
+# The monthly premium and the seat price are both $-something per month, so if
+# only one of them exists the matcher could pick the wrong one. Guard against
+# them resolving to the same price.
+if [ -n "$PM" ] && [ "$PM" = "$PG" ]; then PG=""; fi
 
-  In Stripe: Developers -> Webhooks -> Add endpoint
+report() { if [ -n "$2" ]; then ok "$1 -> $2"; else bad "$1 -> not found"; fi; }
+report "Premium monthly  \$4.99/mo " "$PM"
+report "Premium annual   \$29.99/yr" "$PA"
+report "Group seat       \$3.99/mo " "$PG"
 
-    Endpoint URL:
-      https://$APP.fly.dev/api/webhooks/stripe
+# ------------------------------------------------------------- create missing
+if [ -z "$PM" ] || [ -z "$PA" ] || [ -z "$PG" ]; then
+  say "Some prices do not exist yet"
+  info "I can create the missing ones in your Stripe account now, with the"
+  info "exact amounts your app and your Terms already advertise."
+  echo
+  printf '  Create them? [y/N] '
+  read -r MAKE
+  case "$MAKE" in
+    [yY]*) ;;
+    *) die "Nothing changed. Create them yourself at
+  https://dashboard.stripe.com/products
+then run this script again." ;;
+  esac
 
-    Events to send:
-      checkout.session.completed
-      customer.subscription.updated
-      customer.subscription.deleted
+  # Creates a product and its recurring price, returns the price id.
+  mkprice() {
+    local name="$1" amount="$2" interval="$3"
+    local prod
+    prod=$(api POST products -d "name=$name" \
+      | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{const j=JSON.parse(d);process.stdout.write(j.id||'')})")
+    [ -n "$prod" ] || return 1
+    api POST prices \
+      -d "product=$prod" \
+      -d "unit_amount=$amount" \
+      -d "currency=usd" \
+      -d "recurring[interval]=$interval" \
+      | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{const j=JSON.parse(d);process.stdout.write(j.id||'')})"
+  }
 
-  Then click "Reveal" under Signing secret.
+  if [ -z "$PM" ]; then
+    PM=$(mkprice "Keen Premium Monthly" "$WANT_MONTHLY_AMOUNT" month)
+    [ -n "$PM" ] && ok "created Premium monthly -> $PM" || die "Could not create the monthly price."
+  fi
+  if [ -z "$PA" ]; then
+    PA=$(mkprice "Keen Premium Annual" "$WANT_ANNUAL_AMOUNT" year)
+    [ -n "$PA" ] && ok "created Premium annual -> $PA" || die "Could not create the annual price."
+  fi
+  if [ -z "$PG" ]; then
+    PG=$(mkprice "Keen Study Group Seat" "$WANT_SEAT_AMOUNT" month)
+    [ -n "$PG" ] && ok "created Group seat -> $PG" || die "Could not create the seat price."
+  fi
+fi
 
-  This one matters more than it looks. Without it Stripe takes the payment and
-  never tells your server, so the student is charged and stays on the free plan.
+# ----------------------------------------------------------------- webhook
+say "Setting up the webhook"
+info "This is the part that turns a payment into an unlocked account."
+info "Without it Stripe takes the money and never tells your server."
 
-EOF
+HOOK_URL="https://$APP.fly.dev/api/webhooks/stripe"
 
-ask WH "Paste the webhook signing secret:" "whsec_"
+# Reuse an existing endpoint for this URL rather than stacking duplicates.
+# Stripe only returns a signing secret at creation time, so if one already
+# exists we have to replace it to learn its secret.
+EXISTING=$(api GET "webhook_endpoints?limit=100" \
+  | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{
+      let l=[];try{l=JSON.parse(d).data||[]}catch{}
+      const hit=l.find(w=>w.url===process.argv[1]);
+      process.stdout.write(hit?hit.id:'');
+    })" "$HOOK_URL")
 
-# ------------------------------------------------------------------- apply
-say "Sending to Fly"
+if [ -n "$EXISTING" ]; then
+  info "an endpoint for this URL already exists; replacing it so we can read"
+  info "its signing secret (Stripe only reveals that once, at creation)"
+  api POST "webhook_endpoints/$EXISTING" -d "disabled=true" >/dev/null
+  api DELETE "webhook_endpoints/$EXISTING" >/dev/null
+fi
+
+HOOK=$(api POST webhook_endpoints \
+  -d "url=$HOOK_URL" \
+  -d "enabled_events[]=checkout.session.completed" \
+  -d "enabled_events[]=customer.subscription.updated" \
+  -d "enabled_events[]=customer.subscription.deleted" \
+  -d "description=Keen production")
+
+WH=$(printf '%s' "$HOOK" | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{process.stdout.write(JSON.parse(d).secret||'')}catch{}})")
+
+if [ -z "$WH" ]; then
+  bad "Could not create the webhook. Stripe said:"
+  printf '%s' "$HOOK" | node -e "let d='';process.stdin.on('data',c=>d+=c).on('end',()=>{try{console.log('       '+JSON.parse(d).error.message)}catch{console.log(d)}})"
+  exit 1
+fi
+ok "webhook created at $HOOK_URL"
+
+# -------------------------------------------------------------------- apply
+say "Sending everything to Fly"
 
 if fly secrets set \
     STRIPE_SECRET_KEY="$SK" \
@@ -122,43 +229,40 @@ if fly secrets set \
     --app "$APP" >/dev/null 2>&1; then
   ok "all five secrets set"
 else
-  bad "could not set secrets. Is the app name right?  fly apps list"
+  bad "Could not set the secrets on Fly."
   exit 1
 fi
 
-# Clear them from this shell immediately.
 unset SK PM PA PG WH
 
 say "Waiting for the redeploy"
-echo "  Setting secrets restarts the app automatically."
-sleep 40
+info "setting secrets restarts the app automatically"
+sleep 45
 
 HEALTH=$(curl -s -m 25 "https://$APP.fly.dev/api/health")
 say "Result"
 if printf '%s' "$HEALTH" | grep -q '"billingMode":"live"'; then
   ok "billing is LIVE"
 else
-  bad "billing still reports demo mode"
-  printf '  %s\n' "$HEALTH"
-  echo "  Wait another minute and check again:"
-  echo "    curl https://$APP.fly.dev/api/health"
+  bad "still reporting demo mode. Give it another minute, then:"
+  info "curl https://$APP.fly.dev/api/health"
 fi
 
 cat <<EOF
 
 ────────────────────────────────────────────────────────────
-  Before you tell anyone the price
+  One thing left before you advertise the price
 ────────────────────────────────────────────────────────────
 
 Put ONE REAL CARD through it. Not a test card.
 
-  1. Open https://$APP.fly.dev and upgrade to Premium with a real card.
-  2. Confirm the charge appears in the Stripe dashboard.
-  3. Confirm the app actually unlocks Match, Test and AP exam practice.
-  4. Refund yourself in Stripe.
+  1. Open https://$APP.fly.dev and upgrade to Premium with a real card
+  2. Check the charge appears at https://dashboard.stripe.com/payments
+  3. Check the app actually unlocks Match, Test and AP exam practice
+  4. Refund yourself at that same payments page
 
-Test mode does not prove the webhook works in production, and the webhook is
-the part that turns a payment into an unlocked account. If step 3 fails, the
-webhook is misconfigured and every customer will be charged for nothing.
+Step 3 is the one that matters. Test mode does not exercise the production
+webhook, and the webhook is what converts a payment into an unlocked account.
+If the charge lands but the app stays locked, stop selling and tell me.
 
 EOF

@@ -285,10 +285,17 @@ const routes = {
       const { token } = tokens.issue(user.id, tokens.PURPOSE.RESET);
       await mailer.send(mailer.passwordResetEmail(user.email, token));
     }
+    const live = mailer.isLive();
     sendJson(res, 200, {
       ok: true,
-      message: 'If an account exists for that address, a reset link is on its way.',
-      mailMode: mailer.isLive() ? 'live' : 'console',
+      message: live
+        ? 'If an account exists for that address, a reset link is on its way.'
+        // Do not tell someone a link is coming when it demonstrably is not.
+        // Without a mail provider configured this endpoint prints to a log the
+        // user cannot see, so the honest answer is a human address.
+        : 'Email is not switched on yet, so we cannot send you a link automatically.',
+      mailMode: live ? 'live' : 'console',
+      supportEmail: live ? null : config.supportEmail,
     });
   },
 
@@ -891,6 +898,13 @@ const routes = {
     const body = await readJsonBody(req);
     const group = groups.createGroup(user.id, body.name);
     sendJson(res, 201, { group });
+  },
+
+  // Mint a fresh invite code. Rate limited with the other write endpoints so
+  // a member cannot sit there cycling codes.
+  'POST /api/groups/invite': async (req, res) => {
+    const user = requireUser(req);
+    sendJson(res, 200, groups.refreshInviteCode(user.id));
   },
 
   'POST /api/groups/join': async (req, res) => {

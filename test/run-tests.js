@@ -1712,6 +1712,127 @@ test('the free daily limits in TERMS.md match the enforced limits', () => {
     'TERMS.md does not state the real free Review allowance');
 });
 
+
+// ===========================================================================
+// Study groups: seat minimum and short-lived invite codes
+// ===========================================================================
+const groupsLib = require('../lib/groups');
+
+test('an invite code with no expiry recorded counts as expired', () => {
+  // Groups created before this feature existed have a NULL expiry. They must
+  // NOT keep working forever; they must be forced to mint a fresh code.
+  assert.strictEqual(groupsLib.inviteIsValid({ invite_expires_at: null }), false);
+  assert.strictEqual(groupsLib.inviteIsValid({}), false);
+  assert.strictEqual(groupsLib.inviteIsValid(null), false);
+});
+
+test('an invite code is valid before its deadline and dead after it', () => {
+  const now = Date.now();
+  const live = { invite_expires_at: new Date(now + 60 * 1000).toISOString() };
+  const dead = { invite_expires_at: new Date(now - 1000).toISOString() };
+  assert.strictEqual(groupsLib.inviteIsValid(live, now), true);
+  assert.strictEqual(groupsLib.inviteIsValid(dead, now), false);
+  // Exactly on the boundary is expired, not valid.
+  const edge = { invite_expires_at: new Date(now).toISOString() };
+  assert.strictEqual(groupsLib.inviteIsValid(edge, now), false);
+});
+
+test('a garbled expiry timestamp fails closed', () => {
+  assert.strictEqual(groupsLib.inviteIsValid({ invite_expires_at: 'not a date' }), false);
+});
+
+test('the invite window is two minutes', () => {
+  assert.strictEqual(groupsLib.INVITE_TTL_MS, 2 * 60 * 1000);
+});
+
+test('a group cannot be activated below the seat minimum', () => {
+  const { config } = require('../lib/config');
+  const min = config.plans.group.minSeats;
+  assert.strictEqual(min, 3, 'the documented minimum is three seats');
+
+  const owner = makeUser();
+  const group = groupsLib.createGroup(owner.id, 'Bio crew');
+  assert.strictEqual(group.memberCount, 1);
+
+  // One member: paying must be refused.
+  assert.throws(() => groupsLib.assertCanActivate(group.id), /at least 3 members/i);
+
+  // Two members: still refused. This is the case a UI-only check would miss.
+  const second = makeUser();
+  groupsLib.joinGroup(second.id, group.inviteCode);
+  assert.strictEqual(groupsLib.memberCount(group.id), 2);
+  assert.throws(() => groupsLib.assertCanActivate(group.id), /at least 3 members/i);
+
+  // Three members: allowed.
+  const third = makeUser();
+  groupsLib.joinGroup(third.id, group.inviteCode);
+  assert.strictEqual(groupsLib.assertCanActivate(group.id), 3);
+
+  const activated = groupsLib.activateGroup(group.id, 3);
+  assert.strictEqual(activated.active, true);
+});
+
+test('a paid group deactivates when it drops below three members', () => {
+  const owner = makeUser();
+  const group = groupsLib.createGroup(owner.id, 'Shrinking');
+  const b = makeUser();
+  const c = makeUser();
+  groupsLib.joinGroup(b.id, group.inviteCode);
+  groupsLib.joinGroup(c.id, group.inviteCode);
+  groupsLib.activateGroup(group.id, 3);
+  assert.strictEqual(groupsLib.getGroup(group.id).active, true);
+
+  // Someone leaves. The group is now two people and must stop granting the
+  // paid plan, or two students keep Premium on a three-seat subscription.
+  groupsLib.leaveGroup(c.id);
+  assert.strictEqual(groupsLib.getGroup(group.id).active, false);
+});
+
+test('an expired code is refused, and a fresh one works', () => {
+  const owner = makeUser();
+  const group = groupsLib.createGroup(owner.id, 'Expiry test');
+  const joiner = makeUser();
+
+  // Force the code to be stale, the way it would be after two minutes.
+  const dbh = require('../lib/db').getDb();
+  dbh.prepare('UPDATE study_groups SET invite_expires_at = ? WHERE id = ?')
+    .run(new Date(Date.now() - 1000).toISOString(), group.id);
+
+  assert.throws(() => groupsLib.joinGroup(joiner.id, group.inviteCode), /expired/i);
+
+  // The owner mints a new one and the join now succeeds.
+  const fresh = groupsLib.refreshInviteCode(owner.id);
+  assert.ok(fresh.inviteCode && fresh.inviteCode !== group.inviteCode,
+    'refreshing must produce a different code');
+  const joined = groupsLib.joinGroup(joiner.id, fresh.inviteCode);
+  assert.strictEqual(joined.memberCount, 2);
+});
+
+test('refreshing a code immediately invalidates the previous one', () => {
+  const owner = makeUser();
+  const group = groupsLib.createGroup(owner.id, 'Revoke test');
+  const oldCode = group.inviteCode;
+  groupsLib.refreshInviteCode(owner.id);
+
+  // This is the revoke path: a code shared too widely can be killed by
+  // pressing the button again.
+  const stranger = makeUser();
+  assert.throws(() => groupsLib.joinGroup(stranger.id, oldCode), /No group found/i);
+});
+
+test('an expired code is never included in the group payload', () => {
+  const owner = makeUser();
+  const group = groupsLib.createGroup(owner.id, 'Leak test');
+  const dbh = require('../lib/db').getDb();
+  dbh.prepare('UPDATE study_groups SET invite_expires_at = ? WHERE id = ?')
+    .run(new Date(Date.now() - 1000).toISOString(), group.id);
+
+  // "Not rendered by the client" is not the same as "not disclosed".
+  const payload = groupsLib.getGroup(group.id);
+  assert.strictEqual(payload.inviteCode, null);
+  assert.strictEqual(payload.inviteExpiresAt, null);
+});
+
 // ===========================================================================
 runQueue().then(() => {
   console.log(`\n${'-'.repeat(52)}`);

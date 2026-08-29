@@ -222,7 +222,7 @@ function showView(name) {
   if (name === 'profile') loadProfile();
   if (name === 'progress') loadDashboard();
   if (name === 'group') { loadGroup(); loadChannels(); loadMessages(); startChatPolling(); }
-  else stopChatPolling();
+  else { stopChatPolling(); stopInviteTimer(); }
   // A running exam timer must not keep ticking after you navigate away.
   if (name !== 'apexam') apClearTimer();
   if (name === 'plan') loadPlan();
@@ -355,9 +355,16 @@ $('#forgot-form').addEventListener('submit', async (e) => {
   try {
     const data = await api('POST', '/api/auth/request-reset', { email: new FormData(e.target).get('email') });
     const n = $('#auth-notice');
-    n.textContent = data.mailMode === 'console'
-      ? `${data.message} (Demo mode: the link is printed in the server terminal.)`
-      : data.message;
+    if (data.mailMode === 'console' && data.supportEmail) {
+      // Being told "a link is on its way" when no mail provider exists is how
+      // somebody ends up locked out of their own account, refreshing an inbox
+      // that will never receive anything. Give them a person to contact.
+      n.innerHTML = `${esc(data.message)} Email
+        <a href="mailto:${esc(data.supportEmail)}?subject=Keen%20password%20reset">${esc(data.supportEmail)}</a>
+        and we will reset it for you.`;
+    } else {
+      n.textContent = data.message;
+    }
     n.classList.remove('hidden');
     $('#signin-error').classList.add('hidden');
   } catch (err) { authError(err.message, '#signin-error'); }
@@ -1667,6 +1674,73 @@ function hidePaywall() {
   if (paywall.lastTrigger === 'limit' || paywall.lastTrigger === 'reviewLimit') showView('home');
 }
 
+/* ---- group invite codes ----------------------------------------------------
+ *
+ * Codes are valid for two minutes. That is short enough that the countdown has
+ * to be visible, or the feature just reads as broken: you would show someone a
+ * code, they would type it, and it would be rejected with no explanation.
+ *
+ * One interval for the whole screen, cleared whenever the code is repainted or
+ * the view changes. A timer per render leaks one interval per navigation, and
+ * on a page people leave open all evening that adds up.
+ */
+let inviteTimer = null;
+
+function stopInviteTimer() {
+  if (inviteTimer) { clearInterval(inviteTimer); inviteTimer = null; }
+}
+
+function paintInviteCode(code, expiresAt) {
+  stopInviteTimer();
+  const codeEl = $('#group-code');
+  const timerEl = $('#group-code-timer');
+  const btn = $('#group-code-new');
+  if (!codeEl || !timerEl || !btn) return;
+
+  if (!code || !expiresAt) {
+    codeEl.textContent = '······';
+    codeEl.classList.add('is-empty');
+    timerEl.textContent = 'No active code';
+    timerEl.className = 'invite-timer is-dead';
+    btn.textContent = 'Get a code';
+    return;
+  }
+
+  codeEl.textContent = code;
+  codeEl.classList.remove('is-empty');
+  btn.textContent = 'New code';
+
+  const deadline = Date.parse(expiresAt);
+  const tick = () => {
+    const left = deadline - Date.now();
+    if (left <= 0) {
+      // Expire it in the UI at the same moment the server would reject it, so
+      // nobody reads out a code that has already stopped working.
+      stopInviteTimer();
+      paintInviteCode(null, null);
+      return;
+    }
+    const secs = Math.ceil(left / 1000);
+    timerEl.textContent = `Expires in ${Math.floor(secs / 60)}:${String(secs % 60).padStart(2, '0')}`;
+    timerEl.className = `invite-timer${secs <= 30 ? ' is-urgent' : ''}`;
+  };
+  tick();
+  inviteTimer = setInterval(tick, 250);
+}
+
+const inviteBtn = $('#group-code-new');
+if (inviteBtn) {
+  inviteBtn.addEventListener('click', async () => {
+    inviteBtn.disabled = true;
+    try {
+      const r = await api('POST', '/api/groups/invite');
+      paintInviteCode(r.inviteCode, r.inviteExpiresAt);
+      toast('New code. Valid for two minutes.', 'good');
+    } catch (err) { toast(err.message, 'bad'); }
+    inviteBtn.disabled = false;
+  });
+}
+
 /* Show the mid-session prompt once per day per account, at the point where the
  * student is engaged but close to the cap. Repeating it every session would be
  * nagging, and nagging is what makes people uninstall. */
@@ -2339,7 +2413,7 @@ async function loadGroup() {
 
   const g = data.group;
   $('#group-name').textContent = g.name;
-  $('#group-code').textContent = g.inviteCode;
+  paintInviteCode(g.inviteCode, g.inviteExpiresAt);
   const s = $('#group-status');
   s.textContent = g.active ? 'Active' : `${g.seatsNeededToActivate} more to unlock`;
   s.className = `pill ${g.active ? 'pill-test-prep' : 'pill-regular'}`;

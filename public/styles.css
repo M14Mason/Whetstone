@@ -356,6 +356,24 @@ a { color: var(--accent); }
   .set-actions .btn { flex: 1 1 100%; }
 }
 
+/* ---- group invite code ---------------------------------------------------
+   The countdown is part of the control, not decoration. It turns amber in the
+   last 30 seconds so you know to regenerate before you start reading the code
+   out to somebody. */
+.invite-box {
+  display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+  margin: 1rem 0;
+}
+.invite-meta { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
+.invite-timer {
+  font-variant-numeric: tabular-nums;
+  font-size: .85rem; font-weight: 600; color: var(--text-secondary);
+  white-space: nowrap;
+}
+.invite-timer.is-urgent { color: var(--warn, #d97706); }
+.invite-timer.is-dead { color: var(--text-secondary); }
+.code-display.is-empty { opacity: .35; letter-spacing: .3em; }
+
 /* ---- flashcard swipe -----------------------------------------------------
    The card follows the finger, so it needs no transition while dragging and a
    spring back when released. touch-action:pan-y lets the page still scroll

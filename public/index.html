@@ -648,10 +648,19 @@
     <div id="group-detail" class="hidden">
       <div class="card">
         <div class="row-between">
-          <div><h2 id="group-name"></h2><p class="dim u-m-0">Share this code with friends</p></div>
+          <div><h2 id="group-name"></h2><p class="dim u-m-0">Invite codes last two minutes</p></div>
           <span id="group-status" class="pill"></span>
         </div>
-        <div class="code-display u-m-1rem-0" id="group-code"></div>
+        <!-- A two minute code is only usable if you can see the clock and mint
+             a new one in one tap. Hiding either turns the security win into a
+             support problem. -->
+        <div class="invite-box">
+          <div class="code-display" id="group-code"></div>
+          <div class="invite-meta">
+            <span id="group-code-timer" class="invite-timer"></span>
+            <button id="group-code-new" class="btn btn-sm">Get a code</button>
+          </div>
+        </div>
         <div class="seat-track" id="group-seats"></div>
         <div class="row">
           <button id="activate-group-btn" class="btn btn-primary hidden"></button>

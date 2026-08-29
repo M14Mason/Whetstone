@@ -32,7 +32,7 @@ try {
   process.exit(0);
 }
 
-const TMP_DB = path.join(require('node:os').tmpdir(), `whetstone-dom-${process.pid}.db`);
+const TMP_DB = path.join(require('node:os').tmpdir(), `keen-dom-${process.pid}.db`);
 for (const s of ['', '-wal', '-shm']) {
   if (fs.existsSync(TMP_DB + s)) fs.unlinkSync(TMP_DB + s);
 }
@@ -97,7 +97,7 @@ async function loadPage(base, cookie) {
   const server = createServer();
   await new Promise((r) => server.listen(0, r));
   const base = `http://127.0.0.1:${server.address().port}/`;
-  console.log(`\nWhetstone DOM smoke test  (${base})\n`);
+  console.log(`\nKeen DOM smoke test  (${base})\n`);
 
   // ---- static cross-check: every id app.js queries must exist in the markup
   const html = fs.readFileSync(path.join(PUBLIC_DIR, 'index.html'), 'utf8');

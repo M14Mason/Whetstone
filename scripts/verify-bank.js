@@ -458,7 +458,7 @@ for (const q of all) {
 }
 const topics = new Set(all.map((q) => `${q.subject}/${q.topic}`));
 
-console.log('\nWhetstone question bank verification\n');
+console.log('\nKeen question bank verification\n');
 console.log(`Files:      ${files.length}`);
 console.log(`Questions:  ${all.length}`);
 console.log(`Topics:     ${topics.size}`);

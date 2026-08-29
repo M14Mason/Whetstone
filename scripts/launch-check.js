@@ -30,7 +30,7 @@ if (!dbPath) {
   blockers.push(
     `DATABASE_PATH points at ${dbPath}. On a container this is wiped on every ` +
     'deploy and every sleep, so ALL accounts and progress are lost. Move it to ' +
-    'a mounted persistent disk (for example /data/whetstone.db).');
+    'a mounted persistent disk (for example /data/keen.db).');
 } else {
   ok.push(`Database path is ${dbPath}`);
 }
@@ -116,7 +116,7 @@ else warnings.push('TRUST_PROXY is off. Behind a proxy, rate limiting sees the p
 // ---------------------------------------------------------------- report
 const line = (s) => console.log(s);
 line('');
-line('  WHETSTONE LAUNCH CHECK');
+line('  KEEN LAUNCH CHECK');
 line('  ' + '='.repeat(60));
 if (ok.length) {
   line('');

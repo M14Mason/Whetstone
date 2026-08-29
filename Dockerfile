@@ -1,4 +1,4 @@
-# Whetstone container image.
+# Keen container image.
 #
 # Node 22 is required for the built-in node:sqlite module. Alpine keeps the
 # image small; the app has zero npm dependencies so there is nothing to install.
@@ -31,13 +31,13 @@ COPY scripts/docker-start.sh /app/scripts/docker-start.sh
 # because the bank is now 26,942 questions, which is long enough to fail a
 # platform health check and long enough that a tester assumes the app is dead.
 RUN mkdir -p /app/seed \
- && DATABASE_PATH=/app/seed/whetstone.db node scripts/seed.js \
+ && DATABASE_PATH=/app/seed/keen.db node scripts/seed.js \
  && chmod +x /app/scripts/docker-start.sh \
  && chown -R node:node /app/seed
 
 ENV NODE_ENV=production \
     PORT=8080 \
-    DATABASE_PATH=/data/whetstone.db \
+    DATABASE_PATH=/data/keen.db \
     BACKUP_DIR=/data/backups
 
 # Drop root. The volume is chowned at deploy time by the platform.

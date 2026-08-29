@@ -39,7 +39,7 @@ if (bugs.length === 0) {
 }
 
 const lines = [
-  `# Whetstone bug reports`,
+  `# Keen bug reports`,
   '',
   `Exported ${new Date().toISOString()}`,
   `${bugs.length} ${showAll ? 'total' : 'open'} report(s)`,

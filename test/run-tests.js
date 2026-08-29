@@ -1,7 +1,7 @@
 'use strict';
 
 /**
- * Whetstone test suite. No test framework, just Node.
+ * Keen test suite. No test framework, just Node.
  * Run with: npm test
  *
  * Everything runs against an in-memory database so tests never touch real data.
@@ -80,7 +80,7 @@ function makeUser(overrides = {}) {
 }
 
 // ===========================================================================
-console.log('\nWhetstone test suite');
+console.log('\nKeen test suite');
 
 section('Question bank');
 
@@ -924,7 +924,7 @@ test('an old database without attempts.mode still opens', () => {
   const pathx = require('node:path');
   const fsx = require('node:fs');
 
-  const tmp = pathx.join(osx.tmpdir(), `whetstone-migrate-${process.pid}.db`);
+  const tmp = pathx.join(osx.tmpdir(), `keen-migrate-${process.pid}.db`);
   for (const suffix of ['', '-wal', '-shm']) {
     if (fsx.existsSync(tmp + suffix)) fsx.unlinkSync(tmp + suffix);
   }
@@ -1606,6 +1606,110 @@ test('verifier tells a leaked JS value apart from the English word "undefined"',
   for (const s of leaks) {
     assert.strictEqual(leakedValue(s), true, `template leak went undetected: ${s}`);
   }
+});
+
+
+// ===========================================================================
+// Distractors: the wrong answers for a student's own cards
+// ===========================================================================
+const distractors = require('../lib/distractors');
+
+test('a distractor is rejected when it is the correct answer in disguise', () => {
+  const chosen = new Set();
+  assert.strictEqual(distractors.isUsableDistractor('Mitochondrion ', 'mitochondrion', chosen), false);
+  assert.strictEqual(distractors.isUsableDistractor('MITOCHONDRION', 'mitochondrion', chosen), false);
+  assert.strictEqual(distractors.isUsableDistractor('ribosome', 'mitochondrion', chosen), true);
+});
+
+test('a distractor wildly longer or shorter than the answer is rejected', () => {
+  const chosen = new Set();
+  // Option length is the oldest tell in multiple choice.
+  assert.strictEqual(distractors.isUsableDistractor('no', 'the powerhouse of the cell', chosen), false);
+  assert.strictEqual(
+    distractors.isUsableDistractor('a very long winded answer that goes on and on and on', 'atp', chosen),
+    false
+  );
+});
+
+test('a quiz built from a set uses the other cards as the wrong answers', () => {
+  const cards = [
+    { front: 'Powerhouse of the cell', back: 'mitochondrion' },
+    { front: 'Protein factory', back: 'ribosome' },
+    { front: 'Packages proteins', back: 'golgi body' },
+    { front: 'Controls the cell', back: 'the nucleus' },
+  ];
+  const { questions, skipped } = distractors.quizFromSet(cards, [], []);
+  assert.strictEqual(skipped, 0, 'no card should be skipped when siblings are available');
+  assert.strictEqual(questions.length, 4);
+  for (const q of questions) {
+    assert.strictEqual(q.choices.length, 4, 'every question needs four options');
+    assert.ok(q.answer >= 0 && q.answer < 4, 'the answer index must point into choices');
+    const backs = cards.map((c) => c.back);
+    // Every option must be a real answer from somewhere, never invented.
+    q.choices.forEach((c) => assert.ok(backs.includes(c), `invented option: ${c}`));
+    assert.strictEqual(new Set(q.choices).size, 4, 'options must be distinct');
+  }
+});
+
+test('a card with no believable wrong answers is skipped, not padded', () => {
+  // Two cards means only one sibling, so there can never be three distractors.
+  const cards = [
+    { front: 'A', back: 'alpha' },
+    { front: 'B', back: 'bravo' },
+  ];
+  const { questions, skipped } = distractors.quizFromSet(cards, [], []);
+  assert.strictEqual(questions.length, 0);
+  assert.strictEqual(skipped, 2);
+});
+
+test('the course bank fills in when a set is too small on its own', () => {
+  const cards = [
+    { front: 'A', back: 'alpha' },
+    { front: 'B', back: 'bravo' },
+  ];
+  const bank = ['delta', 'gamma', 'epsilon'];
+  const { questions, skipped } = distractors.quizFromSet(cards, [], bank);
+  assert.strictEqual(skipped, 0);
+  assert.strictEqual(questions.length, 2);
+});
+
+// ===========================================================================
+// The published Terms must state the prices we actually charge
+// ===========================================================================
+test('TERMS.md quotes the same prices as lib/config', () => {
+  const fsx = require('node:fs');
+  const pathy = require('node:path');
+  const { config } = require('../lib/config');
+  const terms = fsx.readFileSync(pathy.join(__dirname, '..', 'legal', 'TERMS.md'), 'utf8');
+
+  const money = (cents) => `$${(cents / 100).toFixed(2)}`;
+
+  // This test exists because the Terms said $8.99 and $6.00 while the app
+  // charged $4.99 and $3.99. Publishing a contract that states a different
+  // price than you take is a real problem, not a typo, and nothing in the
+  // codebase noticed for weeks.
+  const premium = config.plans.premium;
+  const group = config.plans.group;
+  assert.ok(terms.includes(money(premium.priceCents)),
+    `TERMS.md does not mention the monthly price ${money(premium.priceCents)}`);
+  assert.ok(terms.includes(money(premium.priceCentsAnnual)),
+    `TERMS.md does not mention the annual price ${money(premium.priceCentsAnnual)}`);
+  assert.ok(terms.includes(money(group.priceCentsPerSeat)),
+    `TERMS.md does not mention the per-seat price ${money(group.priceCentsPerSeat)}`);
+
+  // And it has to explain how to get out, not just how to pay.
+  assert.ok(/how to cancel/i.test(terms), 'TERMS.md has no cancellation section');
+});
+
+test('the free daily limits in TERMS.md match the enforced limits', () => {
+  const fsx = require('node:fs');
+  const pathy = require('node:path');
+  const { config } = require('../lib/config');
+  const terms = fsx.readFileSync(pathy.join(__dirname, '..', 'legal', 'TERMS.md'), 'utf8');
+  assert.ok(terms.includes(`${config.freeDailyLimits.learn} Learn`),
+    'TERMS.md does not state the real free Learn allowance');
+  assert.ok(terms.includes(`${config.freeDailyLimits.review} Review`),
+    'TERMS.md does not state the real free Review allowance');
 });
 
 // ===========================================================================

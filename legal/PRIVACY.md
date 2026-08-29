@@ -1,4 +1,4 @@
-# Whetstone Privacy Policy
+# Keen Privacy Policy
 
 **DRAFT TEMPLATE — NOT LEGAL ADVICE.**
 Written to describe what this app actually collects, based on its real database
@@ -59,7 +59,7 @@ to which account. Stripe's own privacy policy governs the data they hold:
 ## 3. Who we share with
 
 We do not sell your data. We share it only with services required to run
-Whetstone:
+Keen:
 
 | Service | What it receives | Purpose |
 |---|---|---|
@@ -72,14 +72,14 @@ We may disclose data if legally required to do so.
 
 ## 4. Users under 18
 
-Whetstone is for ages **13 and up**. We do not knowingly collect personal
+Keen is for ages **13 and up**. We do not knowingly collect personal
 information from children under 13. If you believe a child under 13 has created
 an account, contact masonngo70@gmail.com and we will delete it promptly.
 
 If you are between 13 and 18, please get a parent or guardian's permission
 before signing up, and have them handle any payment.
 
-Note for schools: if a school or district wants to use Whetstone with students,
+Note for schools: if a school or district wants to use Keen with students,
 additional obligations (such as FERPA) may apply. Contact us before doing so.
 
 ## 5. How long we keep data

@@ -1,6 +1,6 @@
-# Deploying Whetstone to Fly.io
+# Deploying Keen to Fly.io
 
-Fly is the recommended host because Whetstone stores data in a SQLite file and
+Fly is the recommended host because Keen stores data in a SQLite file and
 Fly gives you a persistent volume on the free-ish tier. Vercel and Netlify
 functions do **not** keep a writable disk between requests, so the database
 would silently reset on every deploy.
@@ -34,11 +34,11 @@ fly auth signup     # or: fly auth login
 
 ## Step 3: pick your app name
 
-App names are globally unique, so `whetstone` is probably taken. Edit
+App names are globally unique, so `keen` is probably taken. Edit
 `fly.toml` and change the first line:
 
 ```toml
-app = "whetstone-yourname"
+app = "keen-yourname"
 ```
 
 Also set `primary_region` to the code nearest your users (`fly platform regions`
@@ -47,11 +47,11 @@ lists them). `iad` is Virginia, `lax` is Los Angeles, `ord` is Chicago.
 ## Step 4: create the app and its volume
 
 ```bash
-cd whetstone
-fly apps create whetstone-yourname
+cd keen
+fly apps create keen-yourname
 
 # The volume holds the database. Without it, every deploy wipes all accounts.
-fly volumes create whetstone_data --size 1 --region iad --yes
+fly volumes create keen_data --size 1 --region iad --yes
 ```
 
 `--size 1` is 1GB, far more than enough. The volume name must match the
@@ -61,7 +61,7 @@ fly volumes create whetstone_data --size 1 --region iad --yes
 
 ```bash
 fly secrets set SESSION_SECRET="$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")"
-fly secrets set PUBLIC_URL="https://whetstone-yourname.fly.dev"
+fly secrets set PUBLIC_URL="https://keen-yourname.fly.dev"
 ```
 
 Secrets are encrypted and injected as environment variables at runtime. Never
@@ -87,7 +87,7 @@ You should see the startup banner in the logs with no `WARNING` lines. If
 ## Step 7: verify the deployment
 
 ```bash
-curl https://whetstone-yourname.fly.dev/api/health
+curl https://keen-yourname.fly.dev/api/health
 ```
 
 Expect `"status":"ok"` and a question count over 1,000. Then in a browser:
@@ -102,13 +102,13 @@ deploy. Check the `[[mounts]]` block in `fly.toml` and re-run step 4.
 ## Custom domain (optional, ~$12/year)
 
 1. Buy a domain (Cloudflare and Namecheap are both fine).
-2. `fly certs create whetstone.com`
+2. `fly certs create keen.com`
 3. Fly prints the DNS records to add at your registrar. Add them.
 4. Wait for propagation, usually minutes.
 5. Update the public URL so links in emails and Stripe redirects are correct:
 
 ```bash
-fly secrets set PUBLIC_URL="https://whetstone.com"
+fly secrets set PUBLIC_URL="https://keen.com"
 ```
 
 ---
@@ -122,14 +122,14 @@ relying only on those is thin. Take your own:
 fly ssh console -C "node /app/scripts/backup.js"
 
 # Copy one down to your machine
-fly ssh sftp get /data/backups/whetstone-2026-08-10T12-00-00.db
+fly ssh sftp get /data/backups/keen-2026-08-10T12-00-00.db
 ```
 
 Run this weekly at minimum. `scripts/backup.js` uses `VACUUM INTO`, which is
 safe on a live database, and it verifies the snapshot opens before reporting
 success.
 
-To restore: stop the app, replace `/data/whetstone.db` with a backup file,
+To restore: stop the app, replace `/data/keen.db` with a backup file,
 start it again.
 
 ---
@@ -143,7 +143,7 @@ students.
 1. Sign up at resend.com (free tier: 3,000 emails/month).
 2. Verify a domain, or use their test sender to start.
 3. `fly secrets set RESEND_API_KEY="re_..."`
-4. `fly secrets set MAIL_FROM="Whetstone <noreply@yourdomain.com>"`
+4. `fly secrets set MAIL_FROM="Keen <noreply@yourdomain.com>"`
 
 ## Turning on error monitoring (optional but recommended)
 

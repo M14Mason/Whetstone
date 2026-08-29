@@ -1,6 +1,6 @@
 # Start here
 
-Read this first. It gets Whetstone running on your Mac in about two minutes,
+Read this first. It gets Keen running on your Mac in about two minutes,
 then tells you exactly what to do next.
 
 ---
@@ -11,7 +11,7 @@ then tells you exactly what to do next.
 node --version
 ```
 
-You need **v22.5.0 or higher**. Whetstone uses Node's built-in SQLite, which
+You need **v22.5.0 or higher**. Keen uses Node's built-in SQLite, which
 older versions do not have.
 
 If the version is lower, or the command is not found, download the **LTS**
@@ -24,17 +24,17 @@ You are reading this file, so you already found and unzipped the project. Open
 Terminal, then:
 
 ```bash
-cd ~/Downloads/whetstone
+cd ~/Downloads/keen
 npm start
 ```
 
-Adjust the path if you unzipped somewhere else. Drag the `whetstone` folder onto
+Adjust the path if you unzipped somewhere else. Drag the `keen` folder onto
 the Terminal window after typing `cd ` and it will fill in the path for you.
 
 You should see:
 
 ```
-  Whetstone running at http://localhost:3000
+  Keen running at http://localhost:3000
   Questions loaded: 1026
   Billing mode: DEMO (no payments taken)
 ```
@@ -47,7 +47,7 @@ Your folder is in iCloud, Dropbox, or another synced location, and SQLite cannot
 run there. Put the database somewhere local instead:
 
 ```bash
-DATABASE_PATH=~/whetstone.db npm start
+DATABASE_PATH=~/keen.db npm start
 ```
 
 ### If you get `command not found: npm`

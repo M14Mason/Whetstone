@@ -21,12 +21,13 @@ const monitor = require('./lib/monitor');
 const courses = require('./lib/courses');
 const modes = require('./lib/modes');
 const social = require('./lib/social');
+const distractors = require('./lib/distractors');
 
 // Bumping this forces existing users to re-accept the terms on next signup flow.
 const TOS_VERSION = '2026-08-11';
 
 const PUBLIC_DIR = path.join(__dirname, 'public');
-const SESSION_COOKIE = 'whetstone_session';
+const SESSION_COOKIE = 'keen_session';
 
 /**
  * Security headers applied to every response.
@@ -774,6 +775,12 @@ const routes = {
     const user = requireUser(req);
     const body = await readJsonBody(req);
     social.replaceCards(Number(body.id), user.id, body.cards);
+    // The linked class is editable too. Without this, a set created before the
+    // class picker existed could never be attached to one, and unattached sets
+    // cannot draw distractors from a course bank.
+    if (Object.prototype.hasOwnProperty.call(body, 'courseId')) {
+      social.setSetCourse(Number(body.id), user.id, body.courseId || null);
+    }
     sendJson(res, 200, { set: social.getSet(Number(body.id), user.id) });
   },
 
@@ -781,6 +788,49 @@ const routes = {
     const user = requireUser(req);
     const body = await readJsonBody(req);
     sendJson(res, 200, social.deleteSet(Number(body.id), user.id));
+  },
+
+  /**
+   * Turn a student's own set into multiple choice.
+   *
+   * The wrong answers come from real content, never from invention: other
+   * cards in the same set first, then answers from the same course unit, then
+   * anywhere in the course. lib/distractors.js explains why in detail.
+   *
+   * A card that cannot be given three believable wrong answers is skipped and
+   * counted, and the count is returned so the UI can say so plainly rather
+   * than quietly serving a shorter quiz than the student expected.
+   */
+  'GET /api/set/quiz': async (req, res) => {
+    const user = requireUser(req);
+    const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+    const set = social.getSet(Number(url.searchParams.get('id')), user.id);
+    if (!set) throw Object.assign(new Error('Set not found.'), { statusCode: 404 });
+
+    // A set is attached to a course, not to a unit, so there is no unit-level
+    // pool to prefer here. Sibling cards do the heavy lifting; the course bank
+    // is the backstop when a set is small.
+    const courseAnswers = [];
+    if (set.courseId) {
+      // The answer text of a multiple-choice question is choices[answer].
+      const rows = getDbHandle()
+        .prepare('SELECT choices, answer FROM questions WHERE course_id = ? LIMIT 800')
+        .all(set.courseId);
+      for (const r of rows) {
+        let choices;
+        try { choices = JSON.parse(r.choices); } catch { continue; }
+        const text = Array.isArray(choices) ? choices[r.answer] : null;
+        if (text) courseAnswers.push(text);
+      }
+    }
+
+    const { questions, skipped } = distractors.quizFromSet(set.cards, [], courseAnswers);
+    sendJson(res, 200, {
+      title: set.title,
+      questions,
+      skipped,
+      total: set.cards.length,
+    });
   },
 
   // ----------------------------------------------------------- bug reports
@@ -1072,7 +1122,7 @@ function start() {
   janitor.unref();
 
   server.listen(config.port, () => {
-    console.log(`\n  Whetstone running at ${config.publicUrl}`);
+    console.log(`\n  Keen running at ${config.publicUrl}`);
     console.log(`  Questions loaded: ${questions.countQuestions()}`);
     console.log(`  Billing mode: ${isBillingLive() ? 'LIVE (Stripe)' : 'DEMO (no payments taken)'}`);
     for (const warning of warnAboutProductionConfig()) {

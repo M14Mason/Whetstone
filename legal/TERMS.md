@@ -1,4 +1,4 @@
-# Whetstone Terms of Service
+# Keen Terms of Service
 
 **Version 2026-08-11**
 
@@ -21,7 +21,7 @@ By creating an account you agree to these Terms and to the Privacy Policy.
 
 ## 1. Eligibility
 
-You must be **13 or older** to use Whetstone. If you are under 18, you may only
+You must be **13 or older** to use Keen. If you are under 18, you may only
 use it with the permission of a parent or legal guardian, and that adult is
 responsible for any charges on the account.
 
@@ -38,14 +38,14 @@ account belongs to a child under 13, we will delete it and its data.
 
 We may suspend or terminate accounts that violate these Terms.
 
-## 3. What Whetstone is, and what it is not
+## 3. What Keen is, and what it is not
 
-Whetstone is a **study practice tool**. It presents practice questions, tracks
+Keen is a **study practice tool**. It presents practice questions, tracks
 which topics you miss, and adjusts what it shows you.
 
 **We do not promise any academic outcome.** We make no guarantee about test
 scores, grades, exam results, admissions, or job outcomes. Studying with
-Whetstone is not a substitute for your coursework, your teacher, or official
+Keen is not a substitute for your coursework, your teacher, or official
 preparation materials.
 
 Practice questions are written by us. They are **not** official questions from
@@ -97,19 +97,38 @@ Do not:
 
 ## 7. Plans, billing, and cancellation
 
-- **Free:** limited daily questions, one subject at a time, no charge.
-- **Premium:** $8.99 per month.
-- **Study Group:** $6.00 per seat per month, minimum 3 seats, billed to the
+- **Free:** 3 Learn questions and 5 Review questions per day, no charge, no card,
+  no time limit. Flashcards are included. Match, practice tests, and AP exam
+  practice are not.
+- **Premium:** **$4.99 per month**, or **$29.99 per year** (which works out at
+  $2.50 a month). Unlimited questions in every mode.
+- **Study Group:** **$3.99 per seat per month**, minimum 3 seats, billed to the
   group organiser.
 
 Payments are processed by **Stripe**. We never receive or store your full card
 number. Prices are in US dollars and exclude tax, which is added at checkout
 where required.
 
-**Subscriptions renew automatically** at the then-current price until cancelled.
-Cancel any time from your account; access continues to the end of the paid
-period. We may change prices with at least **30 days'** notice to active
-subscribers.
+### How billing works
+
+**Subscriptions renew automatically** at the then-current price until you cancel.
+Monthly plans renew every month on the day you subscribed; annual plans renew
+every twelve months.
+
+### How to cancel
+
+Cancel any time from **Settings**, or by emailing masonngo70@gmail.com. There is
+no cancellation fee and you do not have to talk to anyone to do it. When you
+cancel:
+
+- You keep Premium until the end of the period you have already paid for.
+- You are not charged again.
+- Your account, your classes, and your progress stay exactly where they are. You
+  drop back to the free plan; nothing is deleted.
+
+We may change prices with at least **30 days'** notice to active subscribers,
+sent to the email address on your account. If you do not want the new price,
+cancel before it takes effect.
 
 ## 8. Refunds
 
@@ -127,7 +146,7 @@ for your own studying. It transfers no ownership.
 
 ## 10. Service availability and changes
 
-We aim to keep Whetstone running but **do not guarantee uninterrupted or
+We aim to keep Keen running but **do not guarantee uninterrupted or
 error-free access.** We may modify, suspend, or discontinue features at any
 time. If we permanently shut down the service, we will give reasonable notice
 and refund any prepaid unused period.
@@ -207,7 +226,7 @@ located in **[COUNTY, STATE]** have exclusive jurisdiction.
 
 We may update these Terms. For material changes we will notify account holders
 by email or in-app notice at least **30 days** before they take effect, and we
-will ask you to accept the new version. Continuing to use Whetstone after the
+will ask you to accept the new version. Continuing to use Keen after the
 effective date means you accept the updated Terms.
 
 ## 17. Termination

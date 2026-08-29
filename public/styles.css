@@ -1246,7 +1246,7 @@ body { overscroll-behavior-y: none; }
 .u-g-p75rem { gap:.75rem; }
 .u-glow-h34d39966 { --mode-glow: color-mix(in srgb, var(--subj-science) 40%, transparent); }
 .u-glow-h38bdf866 { --mode-glow: color-mix(in srgb, var(--subj-cs) 40%, transparent); }
-.u-glow-h6d5efc66 { --mode-glow: color-mix(in srgb, var(--subj-math) 40%, transparent); }
+.u-glow-learn { --mode-glow: color-mix(in srgb, var(--subj-math) 40%, transparent); }
 .u-glow-hfb718566 { --mode-glow: color-mix(in srgb, var(--subj-social) 40%, transparent); }
 .u-glow-hfb923c66 { --mode-glow: color-mix(in srgb, var(--accent) 40%, transparent); }
 .u-jc-center { justify-content:center; }

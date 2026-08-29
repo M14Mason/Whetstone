@@ -1714,7 +1714,13 @@ function paywallCopy(trigger, ctx = {}) {
     title: ctx.remaining === 1
       ? 'One question left today.'
       : `${ctx.remaining} questions left today.`,
-    sub: 'Free accounts get 5 a day. You are mid-session and about to run out. Premium keeps it going.',
+    // The "5" here was hardcoded while the Learn allowance is 3, so the paywall
+    // said "2 questions left today. Free accounts get 5 a day." directly above
+    // a stat reading "1 question today". Three numbers, two of them disagreeing.
+    // Read the real limit off the quota the server just sent.
+    sub: ctx.limit
+      ? `Free accounts get ${ctx.limit} a day. You are mid-session and about to run out. Premium keeps it going.`
+      : 'You are mid-session and about to run out. Premium keeps it going.',
   };
 }
 
@@ -1828,7 +1834,12 @@ function maybeMidSessionPaywall(quota, streak) {
   // Trigger with 2 left: enough runway that "keep going" is a real offer.
   if (quota.remaining > 2 || quota.remaining <= 0) return;
   paywall.shownThisSession.add(key);
-  showPaywall('midway', { remaining: quota.remaining, streak, courses: (state.user.courses || []).length });
+  showPaywall('midway', {
+    remaining: quota.remaining,
+    limit: quota.limit,          // so the copy quotes the real allowance
+    streak,
+    courses: (state.user.courses || []).length,
+  });
 }
 
 function renderQuotaMeter(quota) {

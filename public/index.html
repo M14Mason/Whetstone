@@ -1022,10 +1022,13 @@
       <div class="paywall-stats" id="paywall-stats"></div>
 
       <ul class="paywall-points">
-        <li><span class="tick">✓</span> <strong>Unlimited</strong> questions, every day</li>
-        <li><span class="tick">✓</span> <strong>Every class</strong> you are taking, not one subject</li>
-        <li><span class="tick">✓</span> Match, Practice Test, Review and <strong>AP Exam practice</strong></li>
-        <li><span class="tick">✓</span> Full mastery dashboard and weak-topic queue</li>
+        <!-- The wording after the tick is wrapped in a single <span> so the grid
+             sees exactly two children. Without it a mid-sentence <strong> became
+             its own grid item and the line broke apart. -->
+        <li><span class="tick">✓</span> <span><strong>Unlimited</strong> questions, every day</span></li>
+        <li><span class="tick">✓</span> <span><strong>Every class</strong> you are taking, not one subject</span></li>
+        <li><span class="tick">✓</span> <span>Match, Practice Test, Review and <strong>AP Exam practice</strong></span></li>
+        <li><span class="tick">✓</span> <span>Full mastery dashboard and weak-topic queue</span></li>
       </ul>
 
       <div class="seg seg-sm paywall-interval" id="paywall-interval" role="group" aria-label="Billing period">

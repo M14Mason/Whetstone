@@ -515,6 +515,13 @@ a { color: var(--accent); }
   color: var(--accent); text-align: left;
 }
 .linkish:hover { color: var(--accent-2); text-decoration: underline; }
+/* A link-styled button is still a tap target. At 17px tall these were well
+   under the 44px minimum, which on a phone means you hit them by luck. Padding
+   is vertical only, so the text stays visually flush with the sentence around
+   it while the hit area extends above and below. */
+@media (hover: none) {
+  .linkish { padding: .7rem 0; min-height: 44px; }
+}
 
 /* ============================ forms ============================ */
 .form { display: flex; flex-direction: column; gap: .9rem; }
@@ -1712,7 +1719,16 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .paywall-stat span { font-size: .7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; margin-top: .2rem; }
 
 .paywall-points { list-style: none; margin: 0 0 1.25rem; padding: 0; display: grid; gap: .5rem; text-align: left; }
-.paywall-points li { display: flex; gap: .6rem; align-items: flex-start; font-size: .9rem; line-height: 1.5; }
+/* The tick is a flex item; everything after it must be ONE flex item.
+   With plain `display:flex` on the li, a <strong> mid-sentence became its own
+   flex child, so "Every class" and "you are taking, not one subject" wrapped
+   independently and left a ragged hole between them. Obvious at 375px, invisible
+   on a desktop where the line never wrapped. Grid with a fixed first column and
+   the text in the second fixes it structurally. */
+.paywall-points li {
+  display: grid; grid-template-columns: auto 1fr; gap: .6rem;
+  align-items: start; font-size: .9rem; line-height: 1.5;
+}
 
 .paywall-price { margin-bottom: 1rem; font-family: 'Bricolage Grotesque', sans-serif; }
 .paywall-price strong { font-size: 2.1rem; font-weight: 800; letter-spacing: -.03em; }

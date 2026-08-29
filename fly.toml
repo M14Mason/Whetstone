@@ -6,7 +6,7 @@
 # app or fail outright. LAUNCH.md walks through this.
 
 app = "keen-study"
-primary_region = "iad"   # change to the region nearest your users
+primary_region = "sjc"   # San Jose. Nearest region to California.
 
 [build]
   dockerfile = "Dockerfile"

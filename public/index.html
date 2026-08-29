@@ -12,7 +12,11 @@
 <!-- Webfonts load independently of the app stylesheet. If this request fails
      or is blocked, the app still styles correctly using the system stack. -->
 <link rel="stylesheet" href="/styles.css">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='24' fill='%236d5efc'/></svg>">
+<!-- The tab icon has to be the same mark as the one in the header. This was
+     left on the old violet (#6d5efc) from the previous identity, so the tab and
+     the app disagreed on what colour the product even is. It now mirrors
+     .brand-mark: the amber gradient, the 8/26 corner radius, the -8deg tilt. -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0' stop-color='%23c2410c'/><stop offset='1' stop-color='%23ea580c'/></linearGradient></defs><rect width='100' height='100' rx='22' fill='%23faf7f2'/><g transform='rotate(-8 50 50)'><rect x='18' y='18' width='64' height='64' rx='20' fill='url(%23g)'/></g></svg>">
 </head>
 <body>
 
@@ -20,7 +24,10 @@
   <a class="brand" href="/"><span class="brand-mark"></span><span>Whetstone</span></a>
   <nav id="nav" class="nav hidden">
     <button data-view="home" class="nav-btn active">Classes</button>
-    <button data-view="courses" class="nav-btn">Catalogue</button>
+    <!-- Was "Catalogue" here and "Add" on the mobile bar. Same destination,
+         two names, and neither told the student that this is where you add a
+         class. One word, used everywhere. -->
+    <button data-view="courses" class="nav-btn">Add a class</button>
     <button data-view="progress" class="nav-btn">Progress</button>
     <button data-view="group" class="nav-btn">Group</button>
     <button data-view="plan" class="nav-btn">Plan</button>
@@ -74,6 +81,9 @@
         up drilling the easy ones because they feel good, and quietly avoiding the
         three topics that will actually cost you the grade.
       </p>
+      <!-- The picture is the argument: a full page of notes, three lines marked.
+           It sits directly under the sentence it illustrates. -->
+      <img class="band-art" src="/img/focus.jpg" alt="A page of handwritten notes with only three lines marked" loading="lazy" decoding="async" width="1400" height="1045">
       <div class="proof-grid">
         <div class="proof">
           <span class="proof-num">3</span>
@@ -553,11 +563,12 @@
     <div id="course-browse">
       <div class="row-between u-mb-1p25rem">
         <div>
-          <h1 class="u-fs-1p9rem u-mb-p15rem">Courses</h1>
+          <h1 class="u-fs-1p9rem u-mb-p15rem">Add a class</h1>
           <p class="muted u-m-0" id="catalog-stats"></p>
         </div>
-        <button id="edit-courses-btn" class="btn btn-sm">Edit my courses</button>
+        <button id="edit-courses-btn" class="btn btn-sm">Redo setup</button>
       </div>
+      <p class="muted u-mb-1rem">Find your class below and press <strong>Add</strong>. It shows up on your home screen straight away.</p>
       <div class="course-search"><input id="course-search" type="search" placeholder="Search courses..."></div>
       <div id="course-groups" class="stack"></div>
     </div>
@@ -570,7 +581,10 @@
             <h1 class="u-fs-1p6rem u-mb-p3rem" id="cd-name"></h1>
             <div class="row u-g-p5rem"><span id="cd-level" class="pill"></span><span id="cd-coverage" class="dim"></span></div>
           </div>
-          <button id="cd-study" class="btn btn-primary">Study this course</button>
+          <div class="row u-g-p5rem">
+            <button id="cd-add" class="btn btn-primary">Add to my classes</button>
+            <button id="cd-study" class="btn">Study this course</button>
+          </div>
         </div>
       </div>
       <h2 class="u-mb-p8rem">Units</h2>

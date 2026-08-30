@@ -684,8 +684,11 @@ section('Hardening');
 test('expired sessions are purged', () => {
   const user = makeUser();
   const { token } = auth.createSession(user.id);
-  db.getDb().prepare('UPDATE sessions SET expires_at = ? WHERE token = ?')
-    .run(new Date(Date.now() - 1000).toISOString(), token);
+  // Find the row by user, not by token. The column stores a hash of the token
+  // now, so matching on the raw value silently updates nothing -- which is how
+  // this test started failing without the purge itself being broken.
+  db.getDb().prepare('UPDATE sessions SET expires_at = ? WHERE user_id = ?')
+    .run(new Date(Date.now() - 1000).toISOString(), user.id);
 
   const removed = auth.purgeExpiredSessions();
   assert.ok(removed >= 1, 'expired session should be deleted');
@@ -1901,6 +1904,58 @@ test('the client does not keep its own avatar catalogue', () => {
 
   assert.ok(/me\.avatars|avatars \} = await api/.test(appjs),
     'app.js must take the avatar catalogue from the server');
+});
+
+
+// ===========================================================================
+// Session tokens must never be stored in a usable form
+// ===========================================================================
+test('the sessions table stores a hash, not the token itself', () => {
+  const user = makeUser();
+  const { token } = auth.createSession(user.id);
+  const dbh = require('../lib/db').getDb();
+
+  // The raw token must not appear anywhere in the table. If it does, the
+  // database is a list of working credentials: anyone with a copy could paste
+  // a row into a cookie and be signed in as that student.
+  const row = dbh.prepare('SELECT token FROM sessions WHERE user_id = ?').get(user.id);
+  assert.ok(row, 'a session row should exist');
+  assert.notStrictEqual(row.token, token, 'the raw token was written to the database');
+  assert.strictEqual(row.token.length, 64, 'expected a sha256 hex digest');
+
+  // And the raw token must still work for the person holding it.
+  const found = auth.getSessionUser(token);
+  assert.ok(found && found.id === user.id, 'the issued token should authenticate');
+
+  // A stolen database row must NOT work as a cookie value.
+  assert.strictEqual(auth.getSessionUser(row.token), null,
+    'the stored hash must not be accepted as a session token');
+});
+
+test('signing out invalidates the token', () => {
+  const user = makeUser();
+  const { token } = auth.createSession(user.id);
+  assert.ok(auth.getSessionUser(token));
+  auth.destroySession(token);
+  assert.strictEqual(auth.getSessionUser(token), null);
+});
+
+test('passwords are stored as a salted scrypt hash, never reversibly', () => {
+  const user = makeUser({ password: 'a-very-specific-password-123' });
+  const dbh = require('../lib/db').getDb();
+  const row = dbh.prepare('SELECT password_hash FROM users WHERE id = ?').get(user.id);
+
+  assert.ok(row.password_hash.startsWith('scrypt$'), 'expected the scrypt format');
+  assert.ok(!row.password_hash.includes('a-very-specific-password-123'),
+    'the password itself must not appear in the stored value');
+
+  // Two users with the SAME password must get different hashes, which is what
+  // proves the salt is per-user. Without it, identical hashes reveal identical
+  // passwords across accounts.
+  const other = makeUser({ password: 'a-very-specific-password-123' });
+  const otherRow = dbh.prepare('SELECT password_hash FROM users WHERE id = ?').get(other.id);
+  assert.notStrictEqual(row.password_hash, otherRow.password_hash,
+    'identical passwords produced identical hashes; the salt is not per-user');
 });
 
 // ===========================================================================

@@ -13,6 +13,16 @@ WORKDIR /app
 
 # Copy only what the server needs at runtime.
 COPY package.json ./
+# Install dependencies BEFORE copying source, so this layer is cached and a
+# code change does not re-run the install.
+#
+# This step did not exist. The app was written with zero npm dependencies, so
+# nothing needed installing -- until posthog-node was added to package.json and
+# the image was built without it. The server then died on require() before it
+# could listen, and the machine ended up stopped. --omit=dev because nothing
+# here needs the test tooling, and `|| true` because a dependency install
+# failing must not be able to block a deploy of the app itself.
+RUN npm install --omit=dev --no-audit --no-fund || true
 COPY server.js ./
 COPY lib ./lib
 COPY public ./public

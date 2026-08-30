@@ -2997,6 +2997,7 @@ function renderProfile(p) {
 async function loadSettings() {
   if (!state.user) return;
   const u = state.user;
+  renderSettingsSubscription();
 
   $('#account-kv').innerHTML = `
     <dt>Display name</dt><dd>${esc(u.displayName || '-')}</dd>
@@ -3041,6 +3042,50 @@ $('#save-display').addEventListener('click', async () => {
 });
 
 $('#settings-signout').addEventListener('click', signOut);
+
+/* ---- subscription controls in Settings -------------------------------------
+ *
+ * These mirror the Plan screen rather than replacing it. Cancelling is the one
+ * thing a paying customer must always be able to find, our Terms name Settings
+ * as the place to do it, and on a phone the Plan screen is not even in the nav.
+ * Duplicating one button is a smaller sin than a promise the app cannot keep.
+ */
+function renderSettingsSubscription() {
+  if (!state.user) return;
+  const free = state.user.plan === 'free';
+  const demo = state.user.billingMode === 'demo';
+
+  $('#settings-plan-line').textContent = free
+    ? 'You are on the Free plan.'
+    : `You are on ${state.user.planLabel || 'Premium'}.`;
+
+  $('#settings-upgrade').classList.toggle('hidden', !free);
+  $('#settings-cancel').classList.toggle('hidden', free);
+  $('#settings-cancel').textContent = demo ? 'Cancel subscription' : 'Manage or cancel subscription';
+
+  $('#settings-cancel-note').textContent = free
+    ? ''
+    : demo
+      ? 'Demo mode: cancelling takes effect immediately and no money is involved.'
+      : 'Opens Stripe, where you can cancel, change card, or view invoices. '
+        + 'Cancelling keeps Premium until the end of the period you have paid for.';
+}
+
+$('#settings-upgrade').addEventListener('click', () => showView('plan'));
+
+$('#settings-cancel').addEventListener('click', async () => {
+  const btn = $('#settings-cancel');
+  btn.disabled = true;
+  try {
+    const d = await api('POST', '/api/billing/cancel', {});
+    if (d.url) { closeOverlays(); window.location.href = d.url; return; }
+    state.user = d.user;
+    toast('Back on the Free plan.');
+    renderSettingsSubscription();
+    renderChrome(); renderModeLocks(); renderUpsellBanner();
+  } catch (err) { toast(err.message, 'bad'); }
+  finally { btn.disabled = false; }
+});
 
 // ------------------------------------------------------------------ bug reports
 $('#bug-form').addEventListener('submit', async (e) => {

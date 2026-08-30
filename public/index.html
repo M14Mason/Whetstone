@@ -939,6 +939,20 @@
       <div class="u-mt-1rem" id="my-bugs"></div>
     </div>
 
+    <!-- Subscription lives HERE as well as on the Plan screen.
+         The Terms say "Cancel any time from Settings", and Settings is simply
+         where people look for it. Having it only on Plan -- which is not even
+         in the mobile nav -- made a documented promise effectively untrue. -->
+    <div class="card" id="settings-subscription-card">
+      <h2>Subscription</h2>
+      <p class="muted u-fs-p9rem" id="settings-plan-line"></p>
+      <div class="row u-g-p5rem u-fw-wrap">
+        <button class="btn btn-primary hidden" id="settings-upgrade">Upgrade to Premium</button>
+        <button class="btn-secondary hidden" id="settings-cancel">Manage or cancel subscription</button>
+      </div>
+      <p class="hint" id="settings-cancel-note"></p>
+    </div>
+
     <div class="card">
       <h2>Session</h2>
       <p class="muted u-fs-p9rem">Signs you out on this device only.</p>

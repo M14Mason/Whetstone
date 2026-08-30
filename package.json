@@ -31,5 +31,7 @@
     "quiz"
   ],
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "posthog-node": "^5.51.4"
+  }
 }

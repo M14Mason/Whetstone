@@ -1,0 +1,187 @@
+{
+  "version": 1,
+  "runId": "abacbb88-97cd-43e1-b553-688e7ae40e33",
+  "tasks": [
+    {
+      "id": "e694a31c-f244-49e6-b69f-af872cdd43cc",
+      "type": "warehouse",
+      "status": "pending",
+      "dependsOn": [
+        "0129aca3-0c62-4dd0-bdf3-4fa55d3896ca",
+        "eedaa00d-998e-43f7-8781-11e091767da0",
+        "377f8a9e-359b-4beb-afc7-f3b832922c1a",
+        "b5b9c404-c77f-4038-b858-1be51e05aa8f",
+        "bd66eca3-f70b-44a7-9ab4-caa2e93be6f5",
+        "b01c14b0-fa49-4020-94b8-9562a41ab37f",
+        "b51985cb-95f7-4f40-a392-c70d67938846"
+      ],
+      "inputs": {
+        "sources": [
+          {
+            "kind": "Stripe",
+            "label": "Stripe",
+            "mode": "in-cli",
+            "matchedSignal": "found `STRIPE_SECRET_KEY` in `.env.example`"
+          },
+          {
+            "kind": "Resend",
+            "label": "Resend",
+            "mode": "in-cli",
+            "matchedSignal": "found `RESEND_API_KEY` in `.env.example`"
+          }
+        ]
+      },
+      "attempts": 0,
+      "maxAttempts": 2,
+      "enqueuedBy": "orchestrator",
+      "optional": true,
+      "createdAt": "2026-08-30T05:16:37.978Z"
+    },
+    {
+      "id": "0129aca3-0c62-4dd0-bdf3-4fa55d3896ca",
+      "type": "install",
+      "label": "Add PostHog SDK",
+      "status": "done",
+      "dependsOn": [],
+      "inputs": {},
+      "attempts": 1,
+      "maxAttempts": 2,
+      "enqueuedBy": "orchestrator",
+      "createdAt": "2026-08-30T05:16:45.302Z",
+      "startedAt": "2026-08-30T05:16:54.365Z",
+      "handoff": {
+        "goals": "Install the appropriate PostHog JavaScript/Node SDK with the project's package manager.",
+        "did": "Installed the server-side Node SDK package `posthog-node` using `npm install posthog-node`. The application is a CommonJS Node HTTP server (`server.js`) with server-side API routes, so `posthog-node` is the applicable library; no browser-only `posthog-js` package was added. npm resolved the published version and added it to the manifest and lockfile.",
+        "forNextAgent": "Import `posthog-node` for server instrumentation. The dependency resolved successfully as `posthog-node` 5.51.4 (manifest range `^5.51.4`). Configure its token and host from environment variables; do not hardcode values.",
+        "filesTouched": [
+          "package.json",
+          "package-lock.json"
+        ],
+        "evidence": "`detect_package_manager` found no existing lockfile and recommended npm. Ran `npm install posthog-node`, which completed successfully: added 3 packages and audited 4 with 0 vulnerabilities. Verified `package.json` declares `posthog-node: ^5.51.4` and `package-lock.json` records resolved `posthog-node` 5.51.4.",
+        "assumptions": "The server-side API routes make server event capture the intended integration target. Client-side browser instrumentation, if needed, belongs to a later task."
+      },
+      "finishedAt": "2026-08-30T05:17:10.441Z"
+    },
+    {
+      "id": "eedaa00d-998e-43f7-8781-11e091767da0",
+      "type": "init",
+      "label": "Initialize PostHog",
+      "status": "done",
+      "dependsOn": [],
+      "inputs": {},
+      "attempts": 1,
+      "maxAttempts": 2,
+      "enqueuedBy": "orchestrator",
+      "createdAt": "2026-08-30T05:16:45.303Z",
+      "startedAt": "2026-08-30T05:16:54.367Z",
+      "handoff": {
+        "goals": "Initialize PostHog once for this Node.js server, set the real environment configuration through wizard tools, and document the configuration names in .env.example.",
+        "did": "Created lib/posthog.js as the shared server-side PostHog initialization point. It imports PostHog from posthog-node, reads POSTHOG_PROJECT_TOKEN and POSTHOG_HOST from environment variables, constructs one client when both are configured, and sets enableExceptionAutocapture: true. Missing configuration is a no-op in production and reports the framework-required explicit errors in non-production. Edited server.js to load this singleton as { posthog }; later server instrumentation should import that same export rather than construct a new client. Used set_env_values to set POSTHOG_PROJECT_TOKEN and POSTHOG_HOST in the ignored .env. Added documented, non-real placeholder values for those keys to .env.example.",
+        "forNextAgent": "Import { posthog } from ./lib/posthog in server.js (or the corresponding relative path) for all server-side capture and exception work. The imported singleton can be null in production if configuration is absent, so call sites must guard it. This is a long-running Node process, so capture routes can use the shared singleton and graceful shutdown should await posthog.shutdown() before process exit. No browser SDK exists yet. CSP was reviewed and left unchanged: script-src and connect-src remain self-only; worker-src is absent/unhandled because no browser PostHog features were introduced.",
+        "filesTouched": [
+          "lib/posthog.js",
+          "server.js",
+          ".env.example",
+          ".env"
+        ],
+        "evidence": "Read the created lib/posthog.js, the updated server.js import, and the updated .env.example documentation. check_env_keys confirmed POSTHOG_PROJECT_TOKEN and POSTHOG_HOST are present in .env. posthog-node was already listed in package.json, so no installation was required. Per task instruction, no build, linter, or test was run.",
+        "assumptions": "Assumed subsequent tasks will add guarded capture calls and graceful PostHog shutdown handling. The .env file contains the real configured public token and host through wizard tools; its values were not read or exposed."
+      },
+      "finishedAt": "2026-08-30T05:17:57.846Z"
+    },
+    {
+      "id": "377f8a9e-359b-4beb-afc7-f3b832922c1a",
+      "type": "identify",
+      "label": "Add user identity",
+      "status": "running",
+      "dependsOn": [
+        "0129aca3-0c62-4dd0-bdf3-4fa55d3896ca",
+        "eedaa00d-998e-43f7-8781-11e091767da0"
+      ],
+      "inputs": {},
+      "attempts": 1,
+      "maxAttempts": 2,
+      "enqueuedBy": "orchestrator",
+      "createdAt": "2026-08-30T05:16:47.575Z",
+      "startedAt": "2026-08-30T05:17:59.554Z"
+    },
+    {
+      "id": "b5b9c404-c77f-4038-b858-1be51e05aa8f",
+      "type": "error-tracking",
+      "label": "Enable error tracking",
+      "status": "running",
+      "dependsOn": [
+        "0129aca3-0c62-4dd0-bdf3-4fa55d3896ca",
+        "eedaa00d-998e-43f7-8781-11e091767da0"
+      ],
+      "inputs": {},
+      "attempts": 1,
+      "maxAttempts": 2,
+      "enqueuedBy": "orchestrator",
+      "createdAt": "2026-08-30T05:16:47.576Z",
+      "startedAt": "2026-08-30T05:17:59.556Z"
+    },
+    {
+      "id": "bd66eca3-f70b-44a7-9ab4-caa2e93be6f5",
+      "type": "capture",
+      "label": "Instrument key events",
+      "status": "pending",
+      "dependsOn": [
+        "377f8a9e-359b-4beb-afc7-f3b832922c1a"
+      ],
+      "inputs": {},
+      "attempts": 0,
+      "maxAttempts": 2,
+      "enqueuedBy": "orchestrator",
+      "createdAt": "2026-08-30T05:16:48.947Z"
+    },
+    {
+      "id": "b01c14b0-fa49-4020-94b8-9562a41ab37f",
+      "type": "review",
+      "label": "Review integration",
+      "status": "pending",
+      "dependsOn": [
+        "0129aca3-0c62-4dd0-bdf3-4fa55d3896ca",
+        "eedaa00d-998e-43f7-8781-11e091767da0",
+        "377f8a9e-359b-4beb-afc7-f3b832922c1a",
+        "bd66eca3-f70b-44a7-9ab4-caa2e93be6f5",
+        "b5b9c404-c77f-4038-b858-1be51e05aa8f"
+      ],
+      "inputs": {},
+      "attempts": 0,
+      "maxAttempts": 2,
+      "enqueuedBy": "orchestrator",
+      "createdAt": "2026-08-30T05:16:51.349Z"
+    },
+    {
+      "id": "b51985cb-95f7-4f40-a392-c70d67938846",
+      "type": "dashboard",
+      "label": "Create product insights",
+      "status": "pending",
+      "dependsOn": [
+        "bd66eca3-f70b-44a7-9ab4-caa2e93be6f5"
+      ],
+      "inputs": {},
+      "attempts": 0,
+      "maxAttempts": 2,
+      "enqueuedBy": "orchestrator",
+      "createdAt": "2026-08-30T05:16:51.352Z"
+    },
+    {
+      "id": "cbf13b48-6dc0-4634-8ac5-9cd89f9d607d",
+      "type": "report",
+      "label": "Summarize setup",
+      "status": "pending",
+      "dependsOn": [
+        "b01c14b0-fa49-4020-94b8-9562a41ab37f",
+        "b51985cb-95f7-4f40-a392-c70d67938846",
+        "e694a31c-f244-49e6-b69f-af872cdd43cc"
+      ],
+      "inputs": {},
+      "attempts": 0,
+      "maxAttempts": 2,
+      "enqueuedBy": "orchestrator",
+      "createdAt": "2026-08-30T05:16:53.018Z"
+    }
+  ]
+}

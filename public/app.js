@@ -200,8 +200,41 @@ function closeOverlays() {
   if (host) host.innerHTML = '';
   const pw = $('#paywall');
   if (pw) pw.classList.add('hidden');
-  document.body.classList.remove('modal-open');
+  // BOTH classes set overflow:hidden. Clearing only modal-open left
+  // is-reordering behind, which is a second, identical way to end up on a page
+  // that will not scroll.
+  document.body.classList.remove('modal-open', 'is-reordering');
 }
+
+/* Last line of defence for scroll locking.
+ *
+ * Every overflow:hidden on the body is added by one code path and removed by
+ * another, and the removal is always conditional on something happening:
+ * a pointerup, a close button, a navigation. Anything that interrupts that --
+ * a lost pointer capture, a re-render mid-drag, an alt-tab, a dropped event --
+ * leaves the page permanently unscrollable with no visible cause. It is the
+ * single most confusing failure the app has had, and it has now been reported
+ * three times.
+ *
+ * So rather than trusting each path, this asserts the invariant: if no overlay
+ * is actually on screen and no drag is actually in progress, the body must not
+ * be locked. Cheap, runs on events that fire constantly anyway, and it cannot
+ * mask a real overlay because it checks whether one is visible first.
+ */
+function assertScrollable() {
+  const paywallOpen = !$('#paywall').classList.contains('hidden');
+  const modalOpen = Boolean($('#modal-host') && $('#modal-host').innerHTML);
+  const dragging = Boolean(document.querySelector('.course-tile-wrap.dragging'));
+  if (!paywallOpen && !modalOpen) document.body.classList.remove('modal-open');
+  if (!dragging) document.body.classList.remove('is-reordering');
+}
+
+// pointerup fires at the end of every click and every drag, anywhere on the
+// page, including drags that ended somewhere unexpected. visibilitychange
+// covers coming back from another tab or app.
+window.addEventListener('pointerup', assertScrollable);
+window.addEventListener('pointercancel', assertScrollable);
+document.addEventListener('visibilitychange', () => { if (!document.hidden) assertScrollable(); });
 
 function showView(name) {
   // The only escape hatch is signing out, which clears state.user first.
@@ -2580,7 +2613,14 @@ $('#activate-group-btn').addEventListener('click', async () => {
 async function loadPlan() {
   $('#plan-label').textContent = state.user.planLabel;
   $('#upgrade-btn').classList.toggle('hidden', state.user.plan !== 'free');
-  $('#cancel-btn').classList.toggle('hidden', state.user.plan === 'free' || state.user.billingMode !== 'demo');
+  // Was also hidden whenever billingMode !== 'demo', so the button vanished for
+  // every real paying customer the moment Stripe went live -- the exact people
+  // who need it. Show it to anyone who is not on the free plan; what it does
+  // then depends on the mode, and the server decides that.
+  $('#cancel-btn').classList.toggle('hidden', state.user.plan === 'free');
+  $('#cancel-btn').textContent = state.user.billingMode === 'demo'
+    ? 'Cancel subscription'
+    : 'Manage or cancel subscription';
   $('#verify-banner').classList.toggle('hidden', Boolean(state.user.emailVerified));
   $('#verify-banner').innerHTML = 'Your email is not confirmed yet. <button class="linkish" id="send-verify">Send confirmation</button>';
   const sv = $('#send-verify');
@@ -2605,13 +2645,26 @@ $('#upgrade-btn').addEventListener('click', async () => {
   } catch (err) { toast(err.message, 'bad'); }
 });
 $('#cancel-btn').addEventListener('click', async () => {
-  if (!confirm('Cancel and return to the Free plan?')) return;
-  const d = await api('POST', '/api/billing/cancel', {});
-  // Locks and the upsell banner must come BACK on downgrade, not just on
-  // upgrade -- otherwise a cancelled account keeps premium modes unlocked
-  // in the UI until a full page reload.
-  state.user = d.user; toast('Back on the Free plan.');
-  loadPlan(); renderChrome(); renderModeLocks(); renderUpsellBanner();
+  const btn = $('#cancel-btn');
+  btn.disabled = true;
+  try {
+    const d = await api('POST', '/api/billing/cancel', {});
+    if (d.url) {
+      // Live billing: Stripe's own portal handles the cancellation, and also
+      // updating a card and viewing invoices. closeOverlays() first for the
+      // same bfcache reason as checkout.
+      closeOverlays();
+      window.location.href = d.url;
+      return;
+    }
+    // Demo mode downgrades on the spot. Locks and the upsell banner have to
+    // come BACK, not just go away on upgrade, or a cancelled account keeps
+    // premium modes unlocked in the UI until a full reload.
+    state.user = d.user;
+    toast('Back on the Free plan.');
+    loadPlan(); renderChrome(); renderModeLocks(); renderUpsellBanner();
+  } catch (err) { toast(err.message, 'bad'); }
+  finally { btn.disabled = false; }
 });
 
 // ------------------------------------------------------------------ reset/verify

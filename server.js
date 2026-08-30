@@ -5,6 +5,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const { config, isBillingLive } = require('./lib/config');
+const { posthog } = require('./lib/posthog');
 const { init: initDb, getDb: getDbHandle } = require('./lib/db');
 const auth = require('./lib/auth');
 const adaptive = require('./lib/adaptive');
@@ -41,13 +42,18 @@ const SECURITY_HEADERS = {
   'Referrer-Policy': 'same-origin',
   'Content-Security-Policy': [
     "default-src 'self'",
-    "script-src 'self'",
+    // Umami analytics is a third-party script, so 'self' alone silently blocks
+    // it: the tag sits in index.html, the browser refuses to load it, and the
+    // dashboard just shows zero visitors with no error anywhere obvious.
+    // Both directives are needed -- script-src to load the file, connect-src
+    // for the beacon it sends back. Named origin only, never a wildcard.
+    "script-src 'self' https://cloud.umami.is",
     // Google Fonts serves the stylesheet from one origin and the font files
     // from another, so both need allowing. Everything else stays locked down.
     "style-src 'self' https://fonts.googleapis.com",
     "font-src 'self' https://fonts.gstatic.com",
     "img-src 'self' data:",
-    "connect-src 'self'",
+    "connect-src 'self' https://cloud.umami.is",
     "form-action 'self'",
     "frame-ancestors 'none'",
     "base-uri 'self'",
@@ -980,10 +986,21 @@ const routes = {
     sendJson(res, 200, { ...result, group: groups.getGroup(group.id), user: publicUser(auth.getUserById(user.id)) });
   },
 
+  /**
+   * Cancel, or get to the place where you can.
+   *
+   * In demo mode this downgrades immediately. With live billing it returns a
+   * Stripe billing-portal URL, because a real subscription has to be cancelled
+   * at Stripe or the money keeps moving regardless of what our database says.
+   */
   'POST /api/billing/cancel': async (req, res) => {
     const user = requireUser(req);
+    if (billing.isBillingLive()) {
+      const { url } = await billing.openBillingPortal(user);
+      return sendJson(res, 200, { url, mode: 'portal' });
+    }
     billing.cancelDemo(user);
-    sendJson(res, 200, { user: publicUser(auth.getUserById(user.id)) });
+    sendJson(res, 200, { mode: 'demo', user: publicUser(auth.getUserById(user.id)) });
   },
 
   'POST /api/webhooks/stripe': async (req, res) => {

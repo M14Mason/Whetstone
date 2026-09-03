@@ -24,9 +24,10 @@ const modes = require('./lib/modes');
 const social = require('./lib/social');
 const distractors = require('./lib/distractors');
 const avatars = require('./lib/avatars');
+const consent = require('./lib/consent');
 
 // Bumping this forces existing users to re-accept the terms on next signup flow.
-const TOS_VERSION = '2026-08-11';
+const TOS_VERSION = config.tosVersion;
 
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const SESSION_COOKIE = 'keen_session';
@@ -1001,12 +1002,44 @@ const routes = {
     sendJson(res, 200, { ...result, user: publicUser(user) });
   },
 
+  /**
+   * The exact renewal terms for an offer, composed server-side.
+   *
+   * The client renders this verbatim and echoes the hash back when it starts
+   * checkout. Composing the sentence in the browser instead would mean the
+   * stored proof of consent only proved that a box was ticked, not what the
+   * box said. See lib/consent.js.
+   */
+  'GET /api/billing/disclosure': async (req, res) => {
+    requireUser(req);
+    const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
+    const plan = url.searchParams.get('plan') === 'group' ? 'group' : 'premium';
+    const interval = url.searchParams.get('interval') === 'annual' ? 'annual' : 'monthly';
+    const seats = Number(url.searchParams.get('seats')) || undefined;
+    sendJson(res, 200, consent.disclosureFor(plan, interval, seats));
+  },
+
   'POST /api/billing/premium': async (req, res) => {
     const user = requireUser(req);
     const body = await readJsonBody(req).catch(() => ({}));
     // 'annual' or 'monthly'. Anything else falls back to monthly rather than
     // erroring, so an older client keeps working.
-    const result = await billing.startPremiumCheckout(user, body.interval);
+    const interval = body.interval === 'annual' ? 'annual' : 'monthly';
+
+    // Consent first, Stripe second, and never the other way round. ROSCA and
+    // California's ARL both require express consent to the renewal terms
+    // BEFORE billing information is collected, and Stripe Checkout is where
+    // billing information gets collected. Recording it after the session was
+    // created would satisfy the letter of nothing.
+    consent.recordConsent(user, {
+      plan: 'premium',
+      interval,
+      agreed: body.agreedToRenewal,
+      payerAttested: body.payerAttested,
+      disclosureHash: body.disclosureHash,
+    });
+
+    const result = await billing.startPremiumCheckout(user, interval);
     sendJson(res, 200, { ...result, user: publicUser(auth.getUserById(user.id)) });
   },
 
@@ -1015,6 +1048,16 @@ const routes = {
     const body = await readJsonBody(req);
     const group = groups.getGroupForUser(user.id);
     if (!group) throw Object.assign(new Error('Create or join a group first.'), { statusCode: 400 });
+
+    consent.recordConsent(user, {
+      plan: 'group',
+      interval: 'monthly',
+      seats: body.seats,
+      agreed: body.agreedToRenewal,
+      payerAttested: body.payerAttested,
+      disclosureHash: body.disclosureHash,
+    });
+
     const result = await billing.startGroupCheckout(user, group.id, body.seats);
     sendJson(res, 200, { ...result, group: groups.getGroup(group.id), user: publicUser(auth.getUserById(user.id)) });
   },

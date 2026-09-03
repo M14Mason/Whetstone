@@ -1082,9 +1082,34 @@
         <div class="dim paywall-equiv" id="paywall-equiv">works out at $2.50 a month</div>
       </div>
 
-      <button class="btn btn-primary btn-lg btn-block-center" id="paywall-upgrade">Unlock everything</button>
+      <!-- Automatic renewal disclosure and consent.
+           Federal ROSCA and California's ARL (as amended by AB 2863, in force
+           since 1 July 2025) both require the renewal terms to be disclosed
+           clearly BEFORE billing information is taken, and require express
+           consent to those terms given SEPARATELY from any other agreement.
+           So this is its own block with its own checkbox, sitting above the
+           button, not a line of grey text under it and not folded into the
+           Terms checkbox at signup.
+
+           The text is filled in from GET /api/billing/disclosure and is never
+           composed here: the client echoes back a hash of what it rendered,
+           and the server refuses the checkout if it does not match. -->
+      <div class="renewal-notice" id="renewal-notice">
+        <h3 class="renewal-title">Before you pay, the important part</h3>
+        <p class="renewal-text" id="renewal-text"></p>
+        <label class="renewal-check">
+          <input type="checkbox" id="renewal-agree">
+          <span id="renewal-agree-label"></span>
+        </label>
+        <label class="renewal-check">
+          <input type="checkbox" id="renewal-payer">
+          <span id="renewal-payer-label"></span>
+        </label>
+      </div>
+
+      <button class="btn btn-primary btn-lg btn-block-center" id="paywall-upgrade" disabled>Unlock everything</button>
       <button class="btn btn-ghost btn-block-center" id="paywall-dismiss">Not now</button>
-      <p class="dim paywall-fineprint">Cancel any time. The free plan stays free.</p>
+      <p class="dim paywall-fineprint">Cancel any time in Settings, in two clicks. The free plan stays free.</p>
     </div>
   </div>
 

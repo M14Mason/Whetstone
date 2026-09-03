@@ -106,6 +106,24 @@ where required.
 Monthly plans renew every month on the day you subscribed; annual plans renew
 every twelve months.
 
+Before you pay, we show you the renewal terms on screen and ask you to tick a
+box confirming you understand them. That box is separate from accepting these
+Terms, and it is never pre-ticked. We keep a record of exactly what those terms
+said and when you agreed to them, for at least three years, so that if you ever
+dispute a charge there is a clear answer about what you were told.
+
+### If you are under 18
+
+Most Keen accounts belong to high school students, and many of them are minors.
+Before any payment we ask you to confirm that you are 18 or older, or that a
+parent or guardian has given you permission to pay.
+
+Please take that seriously. If you are under 18 and you pay without permission,
+the person whose card it is can reverse the charge, and in most US states a
+minor can cancel the agreement outright. We would rather you ask first than
+have that conversation later. If a parent or guardian contacts us about a charge
+made by a minor without their permission, we will refund it.
+
 ### How to cancel
 
 Cancel any time from **Settings**, or by emailing masonngo70@gmail.com. There is

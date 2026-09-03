@@ -1800,6 +1800,11 @@ function showPaywall(trigger, ctx = {}) {
   const hardWall = trigger === 'limit' || trigger === 'reviewLimit';
   $('#paywall-dismiss').textContent = hardWall ? 'Back to study modes' : 'Not now';
   paywall.lastTrigger = trigger;
+  // Fetch the renewal terms every time the paywall opens. Not cached, because
+  // the boxes reset on every open and the person has to read and agree again;
+  // and because a price change must never be able to reach someone as a stale
+  // sentence sitting in a long-lived tab.
+  loadRenewalDisclosure();
 }
 
 function hidePaywall() {
@@ -1908,6 +1913,59 @@ function renderQuotaMeter(quota) {
   $('#quota-note').classList.toggle('quota-low', quota.remaining <= 2);
 }
 
+/* ------------------------------------------------- automatic renewal consent
+ *
+ * The renewal terms are written by the server and rendered here verbatim. The
+ * hash of that text goes back with the checkout request, and the server
+ * refuses to charge anyone if it does not match what it would have written.
+ *
+ * That round trip is the point. If this file composed the sentence itself,
+ * the stored consent record would prove only that a box was ticked, not what
+ * the box said, and a later redesign could soften the wording without leaving
+ * a trace. Fetching it means every stored consent carries the exact words the
+ * student read.
+ *
+ * Both boxes start empty on every open, deliberately. A remembered tick is a
+ * default, and a default is not consent.
+ */
+async function loadRenewalDisclosure() {
+  const agree = $('#renewal-agree');
+  const payer = $('#renewal-payer');
+  agree.checked = false;
+  payer.checked = false;
+  paywall.disclosureHash = null;
+  syncUpgradeGate();
+
+  try {
+    const d = await api('GET', `/api/billing/disclosure?plan=premium&interval=${paywall.interval}`);
+    $('#renewal-text').textContent = d.text;
+    $('#renewal-agree-label').textContent = d.checkboxLabel;
+    $('#renewal-payer-label').textContent = d.payerLabel;
+    paywall.disclosureHash = d.hash;
+  } catch {
+    // Never leave a payable state we cannot describe. If the terms will not
+    // load, the button stays dead and says why, rather than sending someone
+    // to a card form having disclosed nothing.
+    $('#renewal-text').textContent =
+      'The renewal terms could not be loaded, so we are not going to take your money yet. Check your connection and reopen this screen.';
+    $('#renewal-agree-label').textContent = '';
+    $('#renewal-payer-label').textContent = '';
+    paywall.disclosureHash = null;
+  }
+  syncUpgradeGate();
+}
+
+/** The upgrade button is a function of the two boxes and nothing else. */
+function syncUpgradeGate() {
+  const ready = Boolean(paywall.disclosureHash)
+    && $('#renewal-agree').checked
+    && $('#renewal-payer').checked;
+  $('#paywall-upgrade').disabled = !ready;
+}
+
+$('#renewal-agree').addEventListener('change', syncUpgradeGate);
+$('#renewal-payer').addEventListener('change', syncUpgradeGate);
+
 $('#paywall-interval').addEventListener('click', (e) => {
   const btn = e.target.closest('[data-interval]');
   if (!btn) return;
@@ -1918,7 +1976,97 @@ $('#paywall-interval').addEventListener('click', (e) => {
   $('#paywall-amount').textContent = annual ? '$29.99' : '$4.99';
   $('#paywall-period').textContent = annual ? '/year' : '/month';
   $('#paywall-equiv').textContent = annual ? 'works out at $2.50 a month' : 'billed monthly, cancel any time';
+  // Switching plan changes the amount and the period, so the disclosure the
+  // person already agreed to is now describing a different deal. Re-fetch and
+  // clear both ticks: consent to $29.99 a year is not consent to $4.99 a month.
+  loadRenewalDisclosure();
 });
+
+/* Coming back from Stripe.
+ *
+ * Nothing handled these parameters before, so a student who had just paid us
+ * real money was returned to a silent home screen with no confirmation that
+ * anything had happened. That is bad manners and it is also a compliance gap:
+ * California's ARL requires a post-purchase acknowledgment that repeats the
+ * renewal terms and says how to cancel, in a form the person can keep.
+ *
+ * The receipt itself comes from Stripe by email. What this adds is the part
+ * Stripe does not send: confirmation in the app, the renewal terms restated,
+ * and a direct route to the cancel button so "how do I stop this" is answered
+ * at the exact moment people wonder it, rather than months later when they
+ * are annoyed.
+ */
+function handleBillingReturn() {
+  const params = new URLSearchParams(window.location.search);
+  const billing = params.get('billing');
+  if (!billing) return;
+
+  // Strip the parameter immediately so a refresh, or a shared link, does not
+  // replay the message. replaceState keeps it out of history entirely.
+  const clean = window.location.pathname + window.location.hash;
+  window.history.replaceState({}, '', clean);
+
+  if (billing === 'cancelled') {
+    toast('No payment was taken. You are still on the free plan.', 'info');
+    return;
+  }
+  if (billing === 'managed') {
+    toast('Billing updated.', 'good');
+    return;
+  }
+  if (billing !== 'success') return;
+
+  // The webhook is what actually flips the plan, and it can land a second or
+  // two after the redirect. Re-read the user rather than assuming.
+  api('GET', '/api/me').then(({ user }) => { if (user) state.user = user; })
+    .catch(() => {})
+    .finally(() => {
+      renderChrome(); renderModeLocks(); renderUpsellBanner();
+      showPurchaseAcknowledgment();
+    });
+}
+
+/** The acknowledgment itself. Same modal shape as showLegal(). */
+function showPurchaseAcknowledgment() {
+  const host = $('#modal-host');
+  host.innerHTML = `
+    <div class="modal-backdrop">
+      <div class="modal" role="dialog" aria-modal="true" aria-label="Subscription confirmed">
+        <div class="modal-head">
+          <h2 class="u-m-0">You are on Premium</h2>
+          <button class="btn btn-sm btn-ghost" id="ack-close">Close</button>
+        </div>
+        <div class="modal-doc">
+          <p>Everything is unlocked. Your receipt is on its way by email.</p>
+          <div class="renewal-notice">
+            <h3 class="renewal-title">What you signed up for</h3>
+            <p class="renewal-text" id="ack-terms">Loading your terms…</p>
+          </div>
+          <p>You can cancel any time in <strong>Settings</strong>, under Plan and billing.
+             Cancelling keeps your access until the period you already paid for runs out.</p>
+          <button class="btn btn-ghost" id="ack-settings">Show me where to cancel</button>
+        </div>
+      </div>
+    </div>`;
+
+  const onKey = (e) => { if (e.key === 'Escape') close(); };
+  const close = () => {
+    host.innerHTML = '';
+    document.removeEventListener('keydown', onKey);
+    document.body.classList.remove('modal-open');
+  };
+  document.body.classList.add('modal-open');
+  document.addEventListener('keydown', onKey);
+  $('#ack-close').addEventListener('click', close);
+  $('#ack-settings').addEventListener('click', () => { close(); showView('settings'); });
+  $('#ack-close').focus();
+
+  // Restate the same server-authored sentence they agreed to, so the
+  // acknowledgment and the stored consent cannot say different things.
+  api('GET', `/api/billing/disclosure?plan=premium&interval=${paywall.interval}`)
+    .then((d) => { const el = $('#ack-terms'); if (el) el.textContent = d.text; })
+    .catch(() => { const el = $('#ack-terms'); if (el) el.textContent = 'See Terms for the full renewal terms.'; });
+}
 
 $('#paywall-dismiss').addEventListener('click', hidePaywall);
 $('#paywall-upgrade').addEventListener('click', async () => {
@@ -1930,7 +2078,15 @@ $('#paywall-upgrade').addEventListener('click', async () => {
   // a label change the button just looks dead and people click it again.
   btn.textContent = 'Taking you to checkout…';
   try {
-    const d = await api('POST', '/api/billing/premium', { interval: paywall.interval });
+    const d = await api('POST', '/api/billing/premium', {
+      interval: paywall.interval,
+      agreedToRenewal: $('#renewal-agree').checked,
+      payerAttested: $('#renewal-payer').checked,
+      // Proof of what was on screen. The server recomputes this and refuses
+      // the charge if it differs, which is what stops a stale tab from
+      // consenting to last month's price.
+      disclosureHash: paywall.disclosureHash,
+    });
     if (d.url) {
       // Tear the overlay down BEFORE leaving the page.
       //
@@ -1950,7 +2106,12 @@ $('#paywall-upgrade').addEventListener('click', async () => {
     toast('You are on Premium. Everything is unlocked.', 'good');
     if (state.view === 'learn') loadQuestion();
   } catch (err) { toast(err.message, 'bad'); }
-  finally { btn.disabled = false; btn.textContent = original; }
+  finally {
+    btn.textContent = original;
+    // Restore the gate, not the button. Blindly re-enabling would leave an
+    // upgrade button live after a failure even with the boxes unticked.
+    syncUpgradeGate();
+  }
 });
 
 /* Belt and braces for the same class of bug.
@@ -3310,6 +3471,8 @@ document.addEventListener('keydown', (e) => {
   // Wire the landing-page counters once the DOM is settled. Safe to call even
   // for a signed-in user: the observer simply never fires on a hidden section.
   initCountUps();
+
+  handleBillingReturn();
 
   if (!state.user) showView('landing');
   else if (!state.user.onboarded) startOnboarding();

@@ -2265,3 +2265,64 @@ body.is-reordering .course-tile { pointer-events: none; }
 .paywall-interval { width: 100%; margin-bottom: .9rem; }
 .paywall-interval .seg-btn { flex: 1; font-size: .8rem; }
 .paywall-equiv { font-size: .78rem; margin-top: .2rem; }
+
+/* ---------------------------------------------------------------- renewal
+   The automatic-renewal disclosure inside the paywall.
+
+   Styled to be READ, which is the opposite of how fine print usually gets
+   styled. Regulators call the standard "clear and conspicuous", and courts
+   have repeatedly held that grey 10px text under a button is neither. So:
+   full contrast body text at the same size as everything else, a tinted panel
+   that separates it from the marketing copy above, and generous tap targets
+   on the checkboxes.
+
+   Nothing here is ever pre-ticked, and the upgrade button stays disabled
+   until both boxes are on. A pre-ticked box is not consent, it is a default,
+   and that distinction is the entire subject of the California statute. */
+.renewal-notice {
+  margin: 1rem 0 .85rem;
+  padding: .9rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface-2, rgba(255, 255, 255, .04));
+  text-align: left;
+}
+.renewal-title {
+  margin: 0 0 .45rem;
+  font-size: .95rem;
+  font-weight: 650;
+  letter-spacing: -.01em;
+}
+.renewal-text {
+  margin: 0 0 .7rem;
+  font-size: .88rem;
+  line-height: 1.5;
+  /* Full-strength text, not .dim. This is the part that must be conspicuous. */
+  color: var(--text);
+  white-space: pre-line; /* the server sends one requirement per line */
+}
+.renewal-check {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: .6rem;
+  align-items: start;
+  padding: .4rem 0;
+  font-size: .85rem;
+  line-height: 1.45;
+  cursor: pointer;
+}
+.renewal-check input {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  accent-color: var(--accent);
+  cursor: pointer;
+  flex: none;
+}
+/* Disabled upgrade button must look disabled. An enabled-looking button that
+   silently does nothing reads as a broken app and gets rage-clicked. */
+#paywall-upgrade[disabled] {
+  opacity: .45;
+  cursor: not-allowed;
+  filter: saturate(.6);
+}

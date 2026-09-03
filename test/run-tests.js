@@ -2071,3 +2071,152 @@ runQueue().then(() => {
   }
   console.log('\nAll tests passed.\n');
 });
+
+
+// ===========================================================================
+// Automatic renewal consent (ROSCA + California ARL / AB 2863)
+// ===========================================================================
+const consent = require('../lib/consent');
+
+test('the disclosure states every term the law requires it to state', () => {
+  const d = consent.disclosureFor('premium', 'monthly');
+  const text = d.text.toLowerCase();
+
+  // Each of these is a separate statutory requirement, so each is asserted
+  // separately. A single "contains the word renew" check would pass on a
+  // disclosure that had quietly lost the price or the cancellation route.
+  assert.ok(text.includes('renews by itself') || text.includes('renews'), 'must say it renews');
+  assert.ok(d.text.includes('$4.99'), 'must state the recurring amount');
+  assert.ok(text.includes('every month'), 'must state how often');
+  assert.ok(text.includes('until you cancel'), 'must say it continues until cancelled');
+  assert.ok(text.includes('settings'), 'must say where to cancel');
+  assert.ok(!text.includes('call') || text.includes('no phone call'),
+    'must not require a phone call to cancel');
+});
+
+test('annual and monthly disclosures describe different deals', () => {
+  const m = consent.disclosureFor('premium', 'monthly');
+  const a = consent.disclosureFor('premium', 'annual');
+  assert.ok(m.text.includes('$4.99') && m.text.includes('every month'));
+  assert.ok(a.text.includes('$29.99') && a.text.includes('every year'));
+  // The hashes must differ, or consenting to one would silently consent to
+  // the other, which is the exact failure the hash exists to prevent.
+  assert.notStrictEqual(m.hash, a.hash);
+});
+
+test('the disclosure amount always matches what config would charge', () => {
+  const { config: cfg } = require('../lib/config');
+  assert.strictEqual(consent.disclosureFor('premium', 'monthly').amountCents, cfg.plans.premium.priceCents);
+  assert.strictEqual(consent.disclosureFor('premium', 'annual').amountCents, cfg.plans.premium.priceCentsAnnual);
+  // Group price is per seat, so the disclosure has to do the multiplication.
+  const g = consent.disclosureFor('group', 'monthly', 4);
+  assert.strictEqual(g.amountCents, cfg.plans.group.priceCentsPerSeat * 4);
+  assert.ok(g.text.includes('$15.96'), 'group disclosure states the real total, not the per-seat price');
+});
+
+test('group seats below the minimum still price at the minimum', () => {
+  const { config: cfg } = require('../lib/config');
+  const g = consent.disclosureFor('group', 'monthly', 1);
+  assert.strictEqual(g.seats, cfg.plans.group.minSeats);
+});
+
+test('consent is refused unless both boxes are ticked', () => {
+  const user = makeUser();
+  const d = consent.disclosureFor('premium', 'monthly');
+  const base = { plan: 'premium', interval: 'monthly', disclosureHash: d.hash };
+
+  assert.throws(
+    () => consent.recordConsent(user, { ...base, agreed: false, payerAttested: true }),
+    /renews automatically/i,
+    'no renewal tick means no charge');
+
+  assert.throws(
+    () => consent.recordConsent(user, { ...base, agreed: true, payerAttested: false }),
+    /18 or older/i,
+    'no payer attestation means no charge');
+});
+
+test('consent is refused when the client showed different wording', () => {
+  const user = makeUser();
+  assert.throws(
+    () => consent.recordConsent(user, {
+      plan: 'premium', interval: 'monthly',
+      agreed: true, payerAttested: true,
+      disclosureHash: 'a'.repeat(64),
+    }),
+    /plan details changed/i);
+});
+
+test('a stale tab cannot consent to the annual price and be charged monthly', () => {
+  const user = makeUser();
+  const annual = consent.disclosureFor('premium', 'annual');
+  // Hash from the annual screen, request says monthly. Must not go through.
+  assert.throws(
+    () => consent.recordConsent(user, {
+      plan: 'premium', interval: 'monthly',
+      agreed: true, payerAttested: true,
+      disclosureHash: annual.hash,
+    }),
+    /plan details changed/i);
+});
+
+test('a recorded consent stores the exact words the person saw', () => {
+  const user = makeUser();
+  const d = consent.disclosureFor('premium', 'annual');
+  consent.recordConsent(user, {
+    plan: 'premium', interval: 'annual',
+    agreed: true, payerAttested: true, disclosureHash: d.hash,
+  });
+
+  const row = consent.latestConsent(user.id);
+  assert.ok(row, 'consent was stored');
+  // The stored text must be the disclosure itself, not a summary of it.
+  assert.strictEqual(row.disclosure, d.text);
+  assert.strictEqual(row.disclosure_hash, consent.hashDisclosure(row.disclosure));
+  assert.strictEqual(row.amount_cents, 2999);
+  assert.strictEqual(row.payer_attested, 1);
+  assert.ok(row.terms_version, 'stamped with the terms version in force at the time');
+  assert.ok(!Number.isNaN(Date.parse(row.consented_at)), 'timestamped');
+});
+
+test('deleting an account keeps the consent record but detaches the person', () => {
+  // AB 2863 requires proof of consent to be retained for three years. A
+  // deletion request must not destroy the evidence that answers a chargeback,
+  // but it must stop the row pointing at a person.
+  const dbh = require('../lib/db').getDb();
+  const user = makeUser();
+  const d = consent.disclosureFor('premium', 'monthly');
+  consent.recordConsent(user, {
+    plan: 'premium', interval: 'monthly',
+    agreed: true, payerAttested: true, disclosureHash: d.hash,
+  });
+
+  auth.deleteAccount(user.id);
+
+  const orphan = dbh.prepare('SELECT * FROM renewal_consents WHERE email = ?').get(user.email);
+  assert.ok(orphan, 'the consent record survives the deletion');
+  assert.strictEqual(orphan.user_id, null, 'but no longer points at a user row');
+});
+
+test('Terms disclose the consent record and the under-18 position', () => {
+  const terms = fsMod.readFileSync(pathMod.join(__dirname, '..', 'legal', 'TERMS.md'), 'utf8');
+  assert.match(terms, /separate from accepting these\s+Terms/i,
+    'Terms must say the renewal box is separate');
+  assert.match(terms, /never pre-ticked/i);
+  assert.match(terms, /three years/i, 'Terms must state the retention period');
+  assert.match(terms, /parent or guardian/i, 'Terms must address minors paying');
+});
+
+test('the paywall ships the consent block and a disabled upgrade button', () => {
+  // A regression here is invisible in normal use: the server would still
+  // refuse the charge, but the student would meet a dead button with no
+  // explanation. Assert the markup exists rather than trusting it.
+  const html = fsMod.readFileSync(pathMod.join(__dirname, '..', 'public', 'index.html'), 'utf8');
+  assert.ok(html.includes('id="renewal-agree"'), 'renewal checkbox present');
+  assert.ok(html.includes('id="renewal-payer"'), 'payer attestation checkbox present');
+  assert.match(html, /id="paywall-upgrade"[^>]*disabled/,
+    'upgrade button must ship disabled, so consent is required to enable it');
+  // Neither box may be pre-ticked. A default is not consent.
+  assert.ok(!/id="renewal-agree"[^>]*checked/.test(html), 'renewal box must not be pre-ticked');
+  assert.ok(!/id="renewal-payer"[^>]*checked/.test(html), 'payer box must not be pre-ticked');
+});

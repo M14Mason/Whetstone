@@ -2220,3 +2220,28 @@ test('the paywall ships the consent block and a disabled upgrade button', () => 
   assert.ok(!/id="renewal-agree"[^>]*checked/.test(html), 'renewal box must not be pre-ticked');
   assert.ok(!/id="renewal-payer"[^>]*checked/.test(html), 'payer box must not be pre-ticked');
 });
+
+test('settings always offers exactly one of upgrade or cancel, never neither', () => {
+  // Mason reported "i cannot find the cancel" and he was right: the cancel
+  // button used to be hidden whenever billing was live, so the only people who
+  // could see it were the ones who had nothing to cancel.
+  //
+  // Both buttons ship with the `hidden` class and renderSettingsSubscription()
+  // is what reveals one. If that call is ever dropped from loadSettings(), a
+  // paying customer lands on a settings page with no way to stop being
+  // charged, and nothing else in the app would look wrong. Assert the wiring.
+  const app = fsMod.readFileSync(pathMod.join(__dirname, '..', 'public', 'app.js'), 'utf8');
+  const html = fsMod.readFileSync(pathMod.join(__dirname, '..', 'public', 'index.html'), 'utf8');
+
+  assert.ok(html.includes('id="settings-cancel"'), 'cancel button exists');
+  assert.match(app, /async function loadSettings\(\)[\s\S]{0,300}renderSettingsSubscription\(\)/,
+    'loadSettings must call renderSettingsSubscription, or neither button ever appears');
+
+  // The two toggles must be exact opposites of the same condition.
+  assert.match(app, /#settings-upgrade'\)\.classList\.toggle\('hidden', !free\)/);
+  assert.match(app, /#settings-cancel'\)\.classList\.toggle\('hidden', free\)/);
+
+  // And the cancel button must never be gated on billing mode again.
+  assert.ok(!/#settings-cancel'\)\.classList\.toggle\('hidden',[^)]*demo/.test(app),
+    'cancel visibility must not depend on billing mode');
+});

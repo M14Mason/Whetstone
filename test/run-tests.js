@@ -1997,6 +1997,64 @@ test('no overlay that locks scrolling animates its own opacity from zero', () =>
     '.view uses an animation that starts at opacity 0; a stall would blank the whole app');
 });
 
+
+// ===========================================================================
+// Account deletion actually deletes
+// ===========================================================================
+test('deleting an account removes the user and everything attached to it', () => {
+  const dbh = require('../lib/db').getDb();
+  const user = makeUser();
+
+  // Give the account some real data so the cascade has something to remove.
+  // attempts.question_id is a real foreign key, so borrow an id that exists
+  // rather than inventing one.
+  const q = dbh.prepare('SELECT id, subject, topic FROM questions LIMIT 1').get();
+  dbh.prepare("INSERT INTO attempts (user_id, question_id, subject, topic, correct, chosen, answered_at) VALUES (?,?,?,?,?,?,?)")
+    .run(user.id, q.id, q.subject, q.topic, 1, 0, new Date().toISOString());
+  const set = social.createSet(user.id, { title: 'Doomed set', cards: [
+    { front: 'a', back: 'alpha' }, { front: 'b', back: 'bravo' },
+  ] });
+  auth.createSession(user.id);
+
+  const removed = auth.deleteAccount(user.id);
+  assert.ok(removed.attempts >= 1, 'should report what it removed');
+
+  // The point of the test: nothing is left behind in any table.
+  assert.strictEqual(dbh.prepare('SELECT COUNT(*) n FROM users WHERE id = ?').get(user.id).n, 0);
+  assert.strictEqual(dbh.prepare('SELECT COUNT(*) n FROM attempts WHERE user_id = ?').get(user.id).n, 0,
+    'answer history survived deletion');
+  assert.strictEqual(dbh.prepare('SELECT COUNT(*) n FROM sessions WHERE user_id = ?').get(user.id).n, 0,
+    'a live session survived deletion, so the account is still reachable');
+  assert.strictEqual(dbh.prepare('SELECT COUNT(*) n FROM custom_sets WHERE user_id = ?').get(user.id).n, 0,
+    'study sets survived deletion');
+  assert.strictEqual(dbh.prepare('SELECT COUNT(*) n FROM custom_cards WHERE set_id = ?').get(set.id).n, 0,
+    'cards were orphaned rather than deleted');
+});
+
+test('the privacy policy names every third party that receives data', () => {
+  const fsx = require('node:fs');
+  const pathy = require('node:path');
+  const pp = fsx.readFileSync(pathy.join(__dirname, '..', 'legal', 'PRIVACY.md'), 'utf8');
+
+  // If a processor is added to the stack and not to this list, the policy
+  // becomes untrue, which is the actual legal exposure.
+  for (const vendor of ['Stripe', 'Resend', 'Fly.io', 'Umami', 'PostHog']) {
+    assert.ok(pp.includes(vendor), `PRIVACY.md does not disclose ${vendor}`);
+  }
+  // Sentry was listed but is not used. Naming a processor you do not use is
+  // just as wrong as omitting one you do.
+  assert.ok(!pp.includes('Sentry'), 'PRIVACY.md still lists Sentry, which is not in the stack');
+
+  // \s+ rather than a literal space: the policy is hard-wrapped markdown, so
+  // any phrase long enough to matter will have a newline somewhere inside it.
+  assert.ok(/do\s+not\s+sell\s+your\s+personal\s+information/i.test(pp),
+    'PRIVACY.md should state the CCPA do-not-sell position');
+  assert.ok(/automated decision|adaptive engine/i.test(pp),
+    'PRIVACY.md should explain the automated processing that drives the product');
+  assert.ok(/Delete your account/i.test(pp),
+    'PRIVACY.md should point at the self-serve deletion control');
+});
+
 // ===========================================================================
 runQueue().then(() => {
   console.log(`\n${'-'.repeat(52)}`);

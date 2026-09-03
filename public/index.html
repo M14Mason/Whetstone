@@ -958,6 +958,29 @@
       <p class="muted u-fs-p9rem">Signs you out on this device only.</p>
       <button class="btn-secondary" id="settings-signout">Sign out</button>
     </div>
+
+    <!-- Right to deletion. CCPA calls it deletion, GDPR calls it erasure, and
+         the Privacy Policy already promised it. It has to be self-serve. -->
+    <div class="card danger-card">
+      <h2>Delete your account</h2>
+      <p class="muted u-fs-p9rem">
+        This removes your account, your classes, every answer you have given, your
+        progress and your study sets. It cannot be undone and we cannot get it back
+        for you.
+      </p>
+      <button class="btn-secondary" id="delete-account-open">Delete my account</button>
+      <div id="delete-account-confirm" class="hidden u-mt-1rem">
+        <label class="field">
+          <span class="field-label">Type your password to confirm</span>
+          <input id="delete-account-password" type="password" autocomplete="current-password">
+        </label>
+        <div class="row u-g-p5rem u-mt-p75rem u-fw-wrap">
+          <button class="btn btn-danger" id="delete-account-go">Permanently delete</button>
+          <button class="btn btn-ghost" id="delete-account-cancel">Keep my account</button>
+        </div>
+        <p class="hint" id="delete-account-msg"></p>
+      </div>
+    </div>
   </section>
 
   <section id="view-reset" class="view hidden">

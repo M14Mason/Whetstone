@@ -3092,6 +3092,39 @@ function renderSettingsSubscription() {
 
 $('#settings-upgrade').addEventListener('click', () => showView('plan'));
 
+/* ---- account deletion ------------------------------------------------------
+ * Two steps on purpose. A single button that wipes everything is too easy to
+ * hit by accident, and a typed password is the only confirmation that proves
+ * it is the account owner and not somebody who borrowed the laptop.
+ */
+$('#delete-account-open').addEventListener('click', () => {
+  $('#delete-account-confirm').classList.remove('hidden');
+  $('#delete-account-password').focus();
+});
+$('#delete-account-cancel').addEventListener('click', () => {
+  $('#delete-account-confirm').classList.add('hidden');
+  $('#delete-account-password').value = '';
+  $('#delete-account-msg').textContent = '';
+});
+$('#delete-account-go').addEventListener('click', async () => {
+  const btn = $('#delete-account-go');
+  const pw = $('#delete-account-password').value;
+  if (!pw) { $('#delete-account-msg').textContent = 'Enter your password to confirm.'; return; }
+  btn.disabled = true;
+  try {
+    await api('POST', '/api/account/delete', { password: pw });
+    // Everything is gone; there is no state left worth keeping in memory.
+    state.user = null;
+    state.myCourses = [];
+    closeOverlays();
+    renderChrome();
+    showView('landing');
+    toast('Your account and all its data have been deleted.');
+  } catch (err) {
+    $('#delete-account-msg').textContent = err.message;
+  } finally { btn.disabled = false; }
+});
+
 $('#settings-cancel').addEventListener('click', async () => {
   const btn = $('#settings-cancel');
   btn.disabled = true;

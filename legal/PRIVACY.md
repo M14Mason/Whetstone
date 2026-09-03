@@ -51,7 +51,30 @@ We keep only a Stripe customer identifier so we know which subscription belongs
 to which account. Stripe's own privacy policy governs the data they hold:
 <https://stripe.com/privacy>
 
-## 3. Who we share with
+## 3. Automated decision-making and how the adaptive engine works
+
+Keen decides what to show you next automatically. You should know how, because
+it is the whole product and it runs on your data.
+
+Every answer you give updates two numbers: a rating for your ability in that
+topic, and a running average of how often you get that topic right. The next
+question is chosen to sit slightly above your current rating, and topics you
+keep missing come back sooner. It is the same idea as a chess rating, applied
+to a syllabus.
+
+**This is a statistical algorithm, not a chatbot.** Keen does not use a large
+language model, does not send your work to an AI provider, and does not
+generate answers with AI. Every question and explanation in the bank was
+written and checked before it ever reached you. We say this plainly because
+"powered by AI" is often used loosely, and in our case it would be untrue.
+
+The algorithm decides what you practise. It does not decide anything with legal
+or similarly significant effects: it does not grade you, report on you, or
+share conclusions about you with your school, your parents, or anyone else.
+If you disagree with what it is showing you, you can pick any class or unit
+yourself and study that instead.
+
+## 4. Who we share with
 
 We do not sell your data. We share it only with services required to run
 Keen:
@@ -59,13 +82,20 @@ Keen:
 | Service | What it receives | Purpose |
 |---|---|---|
 | Stripe | Email, subscription details | Processing payments |
-| Resend | Email address | Sending password resets |
-| Fly.io | All app data, stored on their servers | Hosting |
-| [Sentry, if enabled] | Error details, which may include a user id | Diagnosing crashes |
+| Resend | Email address | Sending password resets and verification |
+| Fly.io | All app data, stored on their servers in the United States | Hosting and database storage |
+| Hostinger | Nothing about you. It answers DNS for keenlearning.org only | Domain name |
+| Umami | Page views, referring site, country, browser type. No cookies, no account identifiers, nothing that identifies you personally | Counting visitors |
+| PostHog | Error and usage events, which may include an account id, when enabled | Diagnosing faults |
 
-We may disclose data if legally required to do so.
+Umami and PostHog are analytics. Umami is cookieless by design and does not
+build a profile of you. If either is not configured, no data goes to it at all.
 
-## 4. Users under 18
+We may disclose data if legally required to do so. **We do not sell your
+personal information, and we do not share it for cross-context behavioural
+advertising**, as those terms are used in the California Consumer Privacy Act.
+
+## 5. Users under 18
 
 Keen is for ages **13 and up**. We do not knowingly collect personal
 information from children under 13. If you believe a child under 13 has created
@@ -77,7 +107,7 @@ before signing up, and have them handle any payment.
 Note for schools: if a school or district wants to use Keen with students,
 additional obligations (such as FERPA) may apply. Contact us before doing so.
 
-## 5. How long we keep data
+## 6. How long we keep data
 
 - **Account data:** until you delete your account.
 - **Answer history:** until you delete your account. It is what makes the
@@ -88,22 +118,29 @@ additional obligations (such as FERPA) may apply. Contact us before doing so.
 - **Backups:** may retain data for up to 14 days after deletion before being
   rotated out.
 
-## 6. Your rights
+## 7. Your rights
 
 You can:
 
 - **See your data.** Ask and we will send you a copy.
 - **Correct it.** Change your display name in the app; email us for anything
   else.
-- **Delete it.** Email masonngo70@gmail.com and we will delete your account and its
-  data, except anything we must keep for tax or legal reasons (payment records
-  are typically kept 7 years).
+- **Delete it yourself, immediately.** Settings has a **Delete your account**
+  button. It removes your account, your classes, every answer you have given,
+  your progress and your study sets straight away. You do not have to ask us,
+  wait for us, or explain why. You can also email masonngo70@gmail.com if you
+  would rather we did it.
+
+  Two things survive deletion, and only these: payment records Stripe is
+  required to retain for tax purposes (typically 7 years), and any bug report
+  you filed, which is kept so a real fault does not disappear but is detached
+  from you and no longer linked to your account.
 - **Withdraw consent.** Stop using the service and ask us to delete your data.
 
 Depending on where you live (for example the EU under GDPR, or California under
 CCPA) you may have additional rights. Contact us and we will honour them.
 
-## 7. Security
+## 8. Security
 
 - Passwords are hashed with **scrypt** and a unique random salt.
 - Sessions use random 256-bit tokens in HttpOnly cookies.
@@ -115,16 +152,16 @@ CCPA) you may have additional rights. Contact us and we will honour them.
 No system is perfectly secure. If we discover a breach affecting your personal
 data, we will notify affected users promptly.
 
-## 8. Cookies
+## 9. Cookies
 
 We use exactly one cookie: a session cookie that keeps you signed in. There are
 no advertising or analytics cookies and no third-party trackers.
 
-## 9. Changes
+## 10. Changes
 
 If we make a material change to this policy, we will notify account holders by
 email. The "Last updated" date above always reflects the current version.
 
-## 10. Contact
+## 11. Contact
 
 Questions, requests, or complaints: **masonngo70@gmail.com**

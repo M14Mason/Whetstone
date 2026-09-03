@@ -524,6 +524,13 @@ a { color: var(--accent); }
 }
 .btn-secondary:disabled { opacity: .45; cursor: not-allowed; }
 
+/* Irreversible actions look irreversible. */
+.btn-danger {
+  background: var(--bad); border-color: var(--bad); color: #fff;
+}
+.btn-danger:hover:not(:disabled) { filter: brightness(1.08); }
+.danger-card { border-color: color-mix(in srgb, var(--bad) 30%, var(--border)); }
+
 .btn-block { width: 100%; }
 .btn-sm { padding: .45rem .8rem; font-size: .84rem; min-height: 36px; border-radius: var(--r-sm); }
 .btn-lg { padding: .9rem 1.6rem; font-size: 1rem; border-radius: var(--r); }

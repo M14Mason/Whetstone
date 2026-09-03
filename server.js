@@ -404,6 +404,39 @@ const routes = {
     sendJson(res, 200, { avatar, user: publicUser(currentUser(req)) });
   },
 
+  /**
+   * Delete your own account.
+   *
+   * Password required, because this is irreversible and a borrowed laptop is a
+   * real threat model for a school-age audience.
+   *
+   * An active paid subscription BLOCKS deletion. Deleting the account here
+   * would not touch Stripe, so the card would keep being charged every month
+   * for a service the person no longer has an account on, and they would have
+   * no way to log in and stop it. Making them cancel first is the difference
+   * between a clean exit and silently billing someone forever.
+   */
+  'POST /api/account/delete': async (req, res) => {
+    const user = requireUser(req);
+    if (!enforceLimit(req, res, 'reset', ratelimit.LIMITS.reset)) return;
+    const body = await readJsonBody(req);
+
+    if (!auth.verifyPassword(String(body.password || ''), user.password_hash)) {
+      throw Object.assign(new Error('That password is not correct.'), { statusCode: 400 });
+    }
+
+    const plan = plans.effectivePlan(user.id);
+    if (plan.id !== 'free' && billing.isBillingLive()) {
+      throw Object.assign(new Error(
+        'Cancel your subscription first, or you would keep being charged after the account is gone. '
+        + 'Settings has a Manage or cancel subscription button.'
+      ), { statusCode: 400 });
+    }
+
+    const removed = auth.deleteAccount(user.id);
+    sendJson(res, 200, { ok: true, removed }, { 'Set-Cookie': clearedCookie() });
+  },
+
   'POST /api/account/display-name': async (req, res) => {
     const user = requireUser(req, res);
     if (!user) return;

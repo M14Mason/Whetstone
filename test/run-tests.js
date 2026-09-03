@@ -1958,6 +1958,45 @@ test('passwords are stored as a salted scrypt hash, never reversibly', () => {
     'identical passwords produced identical hashes; the salt is not per-user');
 });
 
+
+// ===========================================================================
+// Overlays must never be able to hold the scroll lock while invisible
+// ===========================================================================
+test('no overlay that locks scrolling animates its own opacity from zero', () => {
+  const fsx = require('node:fs');
+  const pathy = require('node:path');
+  const css = fsx.readFileSync(pathy.join(__dirname, '..', 'public', 'styles.css'), 'utf8');
+
+  // This is the bug that produced four separate "I cannot scroll" reports.
+  // .paywall and .modal-backdrop both apply body.modal-open, which sets
+  // overflow:hidden. Both used `animation: fade-in`, whose first frame is
+  // opacity 0. A browser pauses CSS animations in a throttled tab, so the
+  // overlay could sit at 0% forever: invisible, but still holding the page
+  // locked, with nothing on screen to explain it.
+  //
+  // Asserting on the CSS rather than on behaviour because the failure only
+  // reproduces under animation throttling, which a unit test cannot create.
+  const ruleFor = (sel) => {
+    const m = css.match(new RegExp(`\\n\\${sel}\\s*\\{([^}]*)\\}`));
+    return m ? m[1] : null;
+  };
+
+  for (const sel of ['.paywall', '.modal-backdrop']) {
+    const body = ruleFor(sel);
+    assert.ok(body, `expected a ${sel} rule`);
+    assert.ok(!/animation:\s*fade-in/.test(body),
+      `${sel} animates opacity from 0; a stalled animation would leave it invisible while it holds the scroll lock`);
+    assert.ok(/opacity:\s*1/.test(body),
+      `${sel} should pin opacity so it cannot exist while invisible`);
+  }
+
+  // Views hold every screen in the app. Same rule, bigger blast radius.
+  const viewRule = css.match(/\n\.view\s*\{([^}]*)\}/);
+  assert.ok(viewRule, 'expected a .view rule');
+  assert.ok(!/animation:\s*rise\s/.test(viewRule[1]),
+    '.view uses an animation that starts at opacity 0; a stall would blank the whole app');
+});
+
 // ===========================================================================
 runQueue().then(() => {
   console.log(`\n${'-'.repeat(52)}`);

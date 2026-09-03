@@ -230,7 +230,13 @@ a { color: var(--accent); }
 /* ============================ layout ============================ */
 .shell { max-width: 1120px; margin: 0 auto; padding: 2rem 1.25rem 6rem; }
 .narrow { max-width: 480px; margin: 0 auto; }
-.view { animation: rise .32s var(--ease); }
+/* Every screen in the app is a .view. This used to run `rise`, which starts at
+   opacity 0, so a stalled or paused animation could leave the ENTIRE app
+   invisible -- the same failure mode as the paywall, with a bigger blast
+   radius. Views now slide without fading, so there is no frame of this
+   animation in which the screen is blank. */
+.view { animation: rise-solid .32s var(--ease); }
+@keyframes rise-solid { from { transform: translateY(10px); } to { transform: none; } }
 @keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 @keyframes pop { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
 
@@ -1192,7 +1198,9 @@ body.onboarding-lock::before {
   position: fixed; inset: 0; z-index: 100;
   background: #05060acc; backdrop-filter: blur(6px);
   display: grid; place-items: center; padding: 1.25rem;
-  animation: fade-in .2s var(--ease);
+  /* Same rule as the paywall: this element holds body.modal-open, so it must
+     never be able to exist while invisible. No opacity animation. */
+  opacity: 1;
 }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 .modal {
@@ -1700,11 +1708,30 @@ html, body { max-width: 100%; overflow-x: hidden; }
 .quota-low { color: var(--warn) !important; font-weight: 600; }
 
 /* ==================== paywall ==================== */
+/* THE SCROLL BUG LIVED HERE. Four reports, three wrong fixes.
+ *
+ * This had `animation: fade-in .22s`, and fade-in runs `from { opacity: 0 }`.
+ * While an animation is running or paused, the animated value beats the
+ * element's own style, so the paywall's visibility depended entirely on that
+ * animation reaching 100%. Browsers pause CSS animations in a backgrounded or
+ * throttled tab. If the mid-session paywall opened and the animation stalled at
+ * 0%, you got a paywall with opacity 0 -- completely invisible -- while
+ * body.modal-open kept overflow:hidden applied.
+ *
+ * The result was a page that simply stopped scrolling, with nothing on screen
+ * to explain why and no way out but a reload. Caught by instrumenting the live
+ * site and reading back computed styles: display grid, opacity 0, canScroll
+ * false.
+ *
+ * So: an overlay NEVER animates its own opacity from 0. The backdrop is opaque
+ * the instant it exists. The card inside it keeps its entrance animation,
+ * because a stuck card is a cosmetic problem, not a locked page.
+ */
 .paywall {
   position: fixed; inset: 0; z-index: 120;
   display: grid; place-items: center; padding: 1.25rem;
   background: #05060ae6; backdrop-filter: blur(10px);
-  animation: fade-in .22s var(--ease);
+  opacity: 1;
   overflow-y: auto;
 }
 .paywall-card {
@@ -1713,8 +1740,16 @@ html, body { max-width: 100%; overflow-x: hidden; }
   border: 1px solid var(--accent);
   border-radius: var(--r-xl); padding: 2rem 1.75rem;
   box-shadow: var(--shadow-lg), 0 0 60px -20px var(--accent-glow);
-  animation: pop .32s var(--spring);
+  /* forwards + a keyframe set that ENDS visible, so a stalled animation cannot
+     leave the card invisible either. */
+  animation: pop-in .32s var(--spring) forwards;
   text-align: center;
+}
+/* Deliberately does not start at opacity 0. Scale alone reads as an entrance,
+   and there is no state of this animation in which the card is unreadable. */
+@keyframes pop-in {
+  from { transform: scale(.94); }
+  to   { transform: none; }
 }
 .paywall-kicker {
   display: inline-block; margin-bottom: .75rem;

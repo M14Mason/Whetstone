@@ -221,9 +221,28 @@ function closeOverlays() {
  * be locked. Cheap, runs on events that fire constantly anyway, and it cannot
  * mask a real overlay because it checks whether one is visible first.
  */
+/**
+ * Is this element genuinely on screen, as opposed to merely "not hidden"?
+ *
+ * The distinction is the whole bug. The paywall was display:grid with opacity 0
+ * because a stalled CSS animation held it at its `from` frame, so a class check
+ * said "an overlay is open, keep the page locked" while the user saw an empty
+ * screen that would not scroll. A lock may only be held by something a person
+ * can actually SEE.
+ */
+function isReallyVisible(el) {
+  if (!el || el.classList.contains('hidden')) return false;
+  const cs = getComputedStyle(el);
+  if (cs.display === 'none' || cs.visibility === 'hidden') return false;
+  if (Number(cs.opacity) < 0.05) return false;
+  const r = el.getBoundingClientRect();
+  return r.width > 0 && r.height > 0;
+}
+
 function assertScrollable() {
-  const paywallOpen = !$('#paywall').classList.contains('hidden');
-  const modalOpen = Boolean($('#modal-host') && $('#modal-host').innerHTML);
+  const paywallOpen = isReallyVisible($('#paywall'));
+  const host = $('#modal-host');
+  const modalOpen = Boolean(host && host.innerHTML) && isReallyVisible(host.firstElementChild);
   const dragging = Boolean(document.querySelector('.course-tile-wrap.dragging'));
   if (!paywallOpen && !modalOpen) document.body.classList.remove('modal-open');
   if (!dragging) document.body.classList.remove('is-reordering');

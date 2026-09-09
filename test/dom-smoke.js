@@ -120,6 +120,19 @@ async function loadPage(base, cookie) {
   check('every element app.js queries exists in index.html', missing.length === 0,
     missing.length ? `missing: ${missing.join(', ')}` : '');
 
+  // ---- the boot path must never be able to hang
+  //
+  // The site once sat on a blank page indefinitely: boot() awaited /api/me
+  // before painting anything, and fetch has no timeout, so a machine waking
+  // from sleep produced a white screen with no error and no way out.
+  check('every fetch has a timeout',
+    /new AbortController\(\)/.test(js) && /controller\.abort\(\)/.test(js),
+    'api() can hang forever without an AbortController timeout');
+
+  check('first paint does not wait on the network',
+    /if \(!returning\) showView\('landing'\);/.test(js),
+    'boot() must paint before awaiting /api/me, or a slow server shows a blank page');
+
   // ---- signed-out landing page
   const anon = await loadPage(base);
   check('landing page loads with no JavaScript errors', anon.errors.length === 0,

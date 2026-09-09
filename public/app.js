@@ -65,22 +65,35 @@ darkQuery.addEventListener('change', () => { if (storedTheme() === 'auto') apply
 applyTheme();
 
 // ------------------------------------------------------------------ helpers
-async function api(method, path, body) {
+async function api(method, path, body, { timeoutMs = 20000 } = {}) {
   let res;
+  // fetch has no timeout of its own. Without one, a request to a server that
+  // accepts the connection and then goes quiet -- a machine waking from sleep,
+  // a flaky phone connection, a proxy holding the socket -- hangs forever, and
+  // anything awaiting it hangs with it. That is what left the page blank.
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     res = await fetch(path, {
       method,
       headers: body ? { 'Content-Type': 'application/json' } : {},
       body: body ? JSON.stringify(body) : undefined,
+      signal: controller.signal,
     });
-  } catch {
-    // fetch only rejects on a network-level failure, so this really is the
-    // connection rather than a server error. Say so plainly.
+  } catch (cause) {
+    // fetch only rejects on a network-level failure or an abort, so this really
+    // is the connection rather than a server error. Say so plainly.
     setOffline(true);
-    const err = new Error('You appear to be offline. Check your connection and try again.');
+    const timedOut = cause && cause.name === 'AbortError';
+    const err = new Error(timedOut
+      ? 'Keen took too long to respond. Check your connection and try again.'
+      : 'You appear to be offline. Check your connection and try again.');
     err.status = 0;
     err.offline = true;
+    err.timedOut = timedOut;
     throw err;
+  } finally {
+    clearTimeout(timer);
   }
   if (res.ok) setOffline(false);
   let data = {};
@@ -431,6 +444,8 @@ $('#login-form').addEventListener('submit', async (e) => {
  */
 async function signOut() {
   try { await api('POST', '/api/auth/logout'); } catch { /* clear locally anyway */ }
+  // Next visit should paint the landing page immediately again.
+  markReturningVisitor(false);
   state.user = null;
   state.myCourses = [];
   state.scope = { courseId: null, courseName: null, unit: null };
@@ -3519,17 +3534,51 @@ document.addEventListener('keydown', (e) => {
 });
 
 // ------------------------------------------------------------------ boot
+// Has this browser ever held a session? Not a credential and not a claim that
+// anyone is signed in now -- purely a hint about what to paint first, so a
+// returning student does not get the marketing page flashed at them.
+const RETURNING_KEY = 'keen_returning';
+function isReturningVisitor() {
+  try { return localStorage.getItem(RETURNING_KEY) === '1'; } catch { return false; }
+}
+function markReturningVisitor(on) {
+  try {
+    if (on) localStorage.setItem(RETURNING_KEY, '1');
+    else localStorage.removeItem(RETURNING_KEY);
+  } catch { /* private mode: the hint is optional */ }
+}
+
 (async function boot() {
   watchForDynamicStyles();
 
+  // Paint before waiting on the network.
+  //
+  // This used to await /api/me before showing anything at all, with no timeout.
+  // On a machine waking from sleep, or any slow connection, that left a
+  // completely blank page for as long as the request took -- indistinguishable
+  // from the site being down. A first-time visitor gets the landing page
+  // immediately now, and the session check corrects the view afterwards.
+  const returning = isReturningVisitor();
+  if (!returning) showView('landing');
+
+  let reachable = true;
   try {
-    const { user, premiumModes, progression, avatars } = await api('GET', '/api/me');
+    const { user, premiumModes, progression, avatars } = await api('GET', '/api/me', undefined, { timeoutMs: 12000 });
     // Server is the source of truth for which avatars exist.
     if (Array.isArray(avatars) && avatars.length) AVATARS = avatars;
     state.user = user;
     state.progression = progression;
     state.premiumModes = premiumModes || [];
-  } catch { state.user = null; }
+    markReturningVisitor(Boolean(user));
+  } catch (err) {
+    state.user = null;
+    reachable = !(err && err.offline);
+  }
+
+  // Unreachable server, and we held the paint back for a returning visitor:
+  // show the landing page rather than nothing. setOffline has already put the
+  // banner up, so the reason is on screen instead of being a mystery.
+  if (!reachable && returning) showView('landing');
 
   if (await handleTokenRoutes()) { renderChrome(); return; }
 

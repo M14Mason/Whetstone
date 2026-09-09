@@ -50,7 +50,11 @@ function check(label, ok, detail = '') {
 }
 
 // jsdom does not implement these; they are not real failures.
-const IGNORABLE = /scrollTo|fonts\.googleapis|Could not load link|Not implemented/i;
+// Third-party resources are unreachable in a sandboxed test run, and an
+// analytics tag that fails to load must never read as an application error:
+// the app is built to work without it, and treating it as a failure here is
+// what trains everyone to ignore a red suite.
+const IGNORABLE = /scrollTo|fonts\.googleapis|cloud\.umami\.is|Could not load link|Could not load script|Not implemented/i;
 
 async function loadPage(base, cookie) {
   const errors = [];
@@ -104,8 +108,14 @@ async function loadPage(base, cookie) {
   const js = fs.readFileSync(path.join(PUBLIC_DIR, 'app.js'), 'utf8');
   const ids = new Set([...html.matchAll(/id="([^"]+)"/g)].map((m) => m[1]));
   const referenced = [...new Set([...js.matchAll(/\$\('#([A-Za-z0-9_-]+)'\)/g)].map((m) => m[1]))];
-  // These are created at runtime inside innerHTML, so they are not in the file.
-  const RUNTIME_IDS = new Set(['clear-scope', 'send-verify', 'modal-close', 'modal-backdrop']);
+  // Some elements are built by app.js itself and never appear in the file. The
+  // list used to be maintained by hand, so every new injected element failed
+  // this check until somebody remembered to add it here. Any id app.js writes
+  // in an id="..." attribute counts as one it creates.
+  const RUNTIME_IDS = new Set([
+    ...[...js.matchAll(/id="([A-Za-z0-9_-]+)"/g)].map((m) => m[1]),
+    ...[...js.matchAll(/id='([A-Za-z0-9_-]+)'/g)].map((m) => m[1]),
+  ]);
   const missing = referenced.filter((id) => !ids.has(id) && !RUNTIME_IDS.has(id));
   check('every element app.js queries exists in index.html', missing.length === 0,
     missing.length ? `missing: ${missing.join(', ')}` : '');

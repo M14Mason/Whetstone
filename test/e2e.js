@@ -160,8 +160,43 @@ check('free users cannot select two subjects', async () => {
   assert.match(data.error, /Free plan covers 1 subject/);
 });
 
-check('demo upgrade unlocks unlimited practice', async () => {
+/**
+ * Upgrade the way a real client has to.
+ *
+ * Billing refuses to run without recorded consent to the renewal terms, and the
+ * disclosure hash has to match the wording the server can prove it showed. So
+ * the test fetches the disclosure first, exactly like the upgrade screen does.
+ * Posting an empty body here would only prove that the consent gate can be
+ * skipped, which is the opposite of what these tests are for.
+ */
+async function consentBody(plan, interval = 'monthly', seats) {
+  const query = new URLSearchParams({ plan, interval });
+  if (seats) query.set('seats', String(seats));
+  const { data } = await call('GET', `/api/billing/disclosure?${query}`);
+  return {
+    agreedToRenewal: true,
+    payerAttested: true,
+    disclosureHash: data.hash,
+    interval,
+    ...(seats ? { seats } : {}),
+  };
+}
+
+check('billing refuses to start without consent to the renewal terms', async () => {
   const { status, data } = await call('POST', '/api/billing/premium', {});
+  assert.strictEqual(status, 400, 'an empty body must not reach Stripe');
+  assert.match(data.error, /renews automatically/i);
+});
+
+check('billing refuses when the disclosure hash does not match', async () => {
+  const { status } = await call('POST', '/api/billing/premium', {
+    agreedToRenewal: true, payerAttested: true, disclosureHash: 'not-the-hash',
+  });
+  assert.strictEqual(status, 400, 'a stale or forged disclosure must not reach Stripe');
+});
+
+check('demo upgrade unlocks unlimited practice', async () => {
+  const { status, data } = await call('POST', '/api/billing/premium', await consentBody('premium'));
   assert.strictEqual(status, 200);
   assert.strictEqual(data.mode, 'demo');
   assert.strictEqual(data.user.plan, 'premium');
@@ -205,7 +240,7 @@ check('a group needs 3 members before it can be paid for', async () => {
   assert.strictEqual(created.data.group.seatsNeededToActivate, 2);
 
   // Owner tries to pay with only themselves in the group.
-  const tooEarly = await call('POST', '/api/billing/group', {});
+  const tooEarly = await call('POST', '/api/billing/group', await consentBody('group', 'monthly', 3));
   assert.strictEqual(tooEarly.status, 400);
   assert.match(tooEarly.data.error, /at least 3 members/);
 
@@ -225,7 +260,7 @@ check('a group needs 3 members before it can be paid for', async () => {
   }
 
   cookie = ownerCookie;
-  const activated = await call('POST', '/api/billing/group', {});
+  const activated = await call('POST', '/api/billing/group', await consentBody('group', 'monthly', 3));
   assert.strictEqual(activated.status, 200);
   assert.strictEqual(activated.data.group.active, true);
   assert.strictEqual(activated.data.group.memberCount, 3);
@@ -475,7 +510,7 @@ check('AP exam routes are gated, then work end to end', async () => {
   r = await call('GET', '/api/ap/exam?courseId=ap-biology');
   assert.strictEqual(r.status, 402, `expected 402 for a free user, got ${r.status}`);
 
-  r = await call('POST', '/api/billing/premium', {});
+  r = await call('POST', '/api/billing/premium', await consentBody('premium'));
   assert.strictEqual(r.status, 200, 'upgrade failed');
 
   r = await call('GET', '/api/ap/exam?courseId=ap-biology&mcqLimit=5');
@@ -594,7 +629,7 @@ check('switching plans actually changes what you can reach', async () => {
 
   // Premium unlocks it, and the response carries a refreshed user so the UI
   // does not keep showing stale free-tier limits.
-  r = await call('POST', '/api/billing/premium', {});
+  r = await call('POST', '/api/billing/premium', await consentBody('premium'));
   assert.strictEqual(r.status, 200);
   assert.strictEqual(r.data.user.plan, 'premium');
   assert.strictEqual(r.data.user.quota.limit, null, 'premium quota must be unlimited');

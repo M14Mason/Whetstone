@@ -6,7 +6,21 @@
 <meta name="theme-color" content="#faf7f2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#17140f" media="(prefers-color-scheme: dark)">
 <title>Keen — Study what you actually keep missing</title>
-<meta name="description" content="Keen maps every unit of your actual courses, finds the topics you keep getting wrong, and drills them with flashcards, match games, and practice tests.">
+<meta name="description" content="Keen finds the topics you keep getting wrong and drills them until they stick. {{QUESTION_COUNT}} questions across {{COURSE_COUNT}} courses, mapped unit by unit.">
+<link rel="canonical" href="{{ORIGIN}}/">
+
+<!-- og:url and the canonical are filled in server-side from the request origin,
+     so they stay correct on localhost, on fly.dev and on keenlearning.org
+     without anyone remembering to edit this file. -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Keen">
+<meta property="og:title" content="Keen — study what you actually keep missing">
+<meta property="og:description" content="{{QUESTION_COUNT}} practice questions across {{COURSE_COUNT}} courses, mapped to the units of your real classes. Free to start.">
+<meta property="og:url" content="{{ORIGIN}}/">
+<meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Keen — study what you actually keep missing">
+<meta name="twitter:description" content="{{QUESTION_COUNT}} practice questions across {{COURSE_COUNT}} courses, mapped to the units of your real classes. Free to start.">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -35,6 +49,9 @@
 <!-- black-translucent lets the app paint under the status bar. The safe-area
      insets already handled in styles.css keep content clear of the notch. -->
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<script type="application/ld+json">
+{{JSONLD}}
+</script>
 </head>
 <body>
 
@@ -83,7 +100,7 @@
          every competitor already says. -->
     <div class="hero-v2">
       <div class="hero-copy">
-        <span class="eyebrow">25,000+ questions &middot; 159 courses &middot; every AP</span>
+        <span class="eyebrow">{{QUESTION_COUNT}} questions &middot; {{COURSE_COUNT}} courses &middot; every AP</span>
         <h1>You already know<br>half of what you<br><span class="grad">keep revising.</span></h1>
         <p class="lede">
           Keen learns which topics you actually get wrong, then spends your
@@ -243,6 +260,7 @@
           <p class="hint center">Free forever. No card required.</p>
         </form>
 
+        <p id="referral-welcome" class="referral-welcome hidden"></p>
         <p id="auth-error" class="error hidden"></p>
         <p class="hint center u-mt-1p25rem">
           Already have an account?
@@ -251,6 +269,19 @@
       </div>
       </div>
     </div>
+
+    <!-- Answer-first content block. For humans first, but it is also the only
+         prose a crawler or an assistant can read without an account, and it is
+         the exact text mirrored into the FAQPage schema in the head. Schema
+         that does not match visible copy is a structured-data violation. -->
+    <section class="landing-faq" id="faq" aria-labelledby="faq-heading">
+      <h2 id="faq-heading">Common questions</h2>
+      <div class="seo-faq">{{FAQ_HTML}}</div>
+      <p class="dim">
+        Looking for a specific class?
+        <a href="/courses">See all {{COURSE_COUNT}} courses with questions</a>, each broken down by unit.
+      </p>
+    </section>
   </section>
 
   <!-- ========================= SIGN IN ========================= -->
@@ -715,6 +746,27 @@
     <h1 class="u-fs-1p9rem u-mb-1p25rem">Plan &amp; account</h1>
     <div id="verify-banner" class="banner hidden u-mb-1rem"></div>
     <div id="billing-banner" class="banner hidden u-mb-1rem"></div>
+
+    <!-- Referrals sit above the price cards on purpose: the moment someone is
+         looking at what Premium costs is the moment "get it free" is worth
+         reading. -->
+    <div class="card" id="referral-card">
+      <div class="section-head u-mt-0">
+        <span class="section-icon">&#127873;</span>
+        <h2>Give 14 days, get 14 days</h2>
+      </div>
+      <p class="muted u-fs-p9rem">
+        Send a friend your link. They start with 14 days of Premium free, and you get 14 days
+        once they have confirmed their email and answered 10 questions.
+      </p>
+
+      <div class="referral-link-row">
+        <input id="referral-link" type="text" readonly aria-label="Your referral link">
+        <button id="referral-copy" class="btn btn-primary" type="button">Copy</button>
+      </div>
+      <p class="hint" id="referral-code-line"></p>
+      <div class="referral-stats" id="referral-stats"></div>
+    </div>
 
     <div class="grid-3 u-mb-1p25rem">
       <div class="card price-card">

@@ -324,6 +324,70 @@ document.addEventListener('click', (e) => {
 $('#go-signin').addEventListener('click', () => showView('signin'));
 $('#go-signup').addEventListener('click', () => showView('landing'));
 
+/**
+ * A referral code arrives as ?ref=CODE on the landing page.
+ *
+ * It is also stashed in sessionStorage, because the usual path is: tap a
+ * friend's link, read the page, wander off, come back. Losing the code on the
+ * first navigation would silently drop the reward and neither person would ever
+ * know why.
+ */
+const referralCode = (() => {
+  const fromUrl = new URLSearchParams(location.search).get('ref');
+  try {
+    if (fromUrl) sessionStorage.setItem('keen_ref', fromUrl);
+    return fromUrl || sessionStorage.getItem('keen_ref') || null;
+  } catch {
+    return fromUrl || null; // private mode: the URL alone still works
+  }
+})();
+
+if (referralCode) {
+  const welcome = $('#referral-welcome');
+  if (welcome) {
+    welcome.textContent = 'A friend sent you 14 days of Premium. Create your account to start it.';
+    welcome.classList.remove('hidden');
+  }
+}
+
+async function loadReferrals() {
+  const card = $('#referral-card');
+  if (!card) return;
+  try {
+    const r = await api('GET', '/api/referrals');
+    $('#referral-link').value = r.link;
+    $('#referral-code-line').textContent = `Your code: ${r.code}`;
+
+    // Pending is reported separately from earned deliberately. "1 joined, still
+    // working toward 10 questions" is something the referrer can act on; a
+    // single blended number tells them nothing.
+    const parts = [];
+    if (r.rewarded) parts.push(`<strong>${r.rewarded}</strong> friend${r.rewarded === 1 ? '' : 's'} earned you ${r.rewarded * r.daysPerReferral} days`);
+    if (r.pending) parts.push(`<strong>${r.pending}</strong> joined, still working toward ${r.activationQuestions} questions`);
+    if (!parts.length) parts.push('No referrals yet. Your link works the moment you send it.');
+    if (r.daysRemaining > 0) {
+      parts.push(`Premium from referrals runs for another <strong>${r.daysRemaining}</strong> day${r.daysRemaining === 1 ? '' : 's'}`);
+    }
+    $('#referral-stats').innerHTML = parts.map((p) => `<p>${p}</p>`).join('');
+
+    const copy = $('#referral-copy');
+    copy.onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(r.shareMessage);
+        copy.textContent = 'Copied';
+        setTimeout(() => { copy.textContent = 'Copy'; }, 1800);
+      } catch {
+        // Clipboard access is refused in some mobile browsers. Selecting the
+        // text is a working fallback rather than a dead button.
+        $('#referral-link').select();
+        toast('Press and hold to copy the link.', 'good');
+      }
+    };
+  } catch {
+    card.classList.add('hidden');
+  }
+}
+
 $('#signup-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const f = new FormData(e.target);
@@ -337,7 +401,9 @@ $('#signup-form').addEventListener('submit', async (e) => {
       password: f.get('password'), birthYear: Number(f.get('birthYear')),
       timezoneOffsetMinutes: new Date().getTimezoneOffset(),
       acceptTerms: true,
+      referralCode,
     });
+    try { sessionStorage.removeItem('keen_ref'); } catch { /* nothing to clean up */ }
     state.user = user;
     renderChrome();
     startOnboarding();
@@ -2791,6 +2857,7 @@ $('#activate-group-btn').addEventListener('click', async () => {
 
 // ------------------------------------------------------------------ plan
 async function loadPlan() {
+  loadReferrals();
   $('#plan-label').textContent = state.user.planLabel;
   $('#upgrade-btn').classList.toggle('hidden', state.user.plan !== 'free');
   // Was also hidden whenever billingMode !== 'demo', so the button vanished for

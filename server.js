@@ -25,6 +25,8 @@ const social = require('./lib/social');
 const distractors = require('./lib/distractors');
 const avatars = require('./lib/avatars');
 const consent = require('./lib/consent');
+const seo = require('./lib/seo');
+const referrals = require('./lib/referrals');
 
 // Bumping this forces existing users to re-accept the terms on next signup flow.
 const TOS_VERSION = config.tosVersion;
@@ -68,6 +70,9 @@ const MIME = {
   '.json': 'application/json; charset=utf-8',
   '.svg': 'image/svg+xml',
   '.ico': 'image/x-icon',
+  '.txt': 'text/plain; charset=utf-8',
+  '.xml': 'application/xml; charset=utf-8',
+  '.md': 'text/markdown; charset=utf-8',
   // These were missing, so every photo and icon was served as
   // application/octet-stream. Browsers sniff the bytes for an <img> so the hero
   // still appeared, which is exactly why it went unnoticed. Safari is stricter
@@ -85,6 +90,18 @@ const MIME = {
 // ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
+
+function sendText(res, statusCode, body, contentType) {
+  res.writeHead(statusCode, {
+    'Content-Type': contentType,
+    'Content-Length': Buffer.byteLength(body),
+    // Cheap to regenerate, and must not go stale as the question bank grows,
+    // but crawlers should not refetch on every hit either.
+    'Cache-Control': 'public, max-age=3600',
+    ...SECURITY_HEADERS,
+  });
+  res.end(body);
+}
 
 function sendJson(res, statusCode, payload, extraHeaders = {}) {
   const body = JSON.stringify(payload);
@@ -222,6 +239,11 @@ function publicUser(user) {
   const quota = plans.checkQuota(user.id);
   const group = groups.getGroupForUser(user.id);
   return {
+    // Present only while time-granted Premium (a referral reward) is running,
+    // so the interface can say when it ends rather than expiring silently.
+    premiumUntil: user.premium_until && new Date(user.premium_until) > new Date()
+      ? user.premium_until
+      : null,
     id: user.id,
     email: user.email,
     displayName: user.display_name,
@@ -247,6 +269,35 @@ function publicUser(user) {
 // ---------------------------------------------------------------------------
 
 const routes = {
+  // ----------------------------------------------------------------- search
+  // Generated rather than checked in, so every absolute URL matches the origin
+  // the request arrived on. A hardcoded canonical is wrong on localhost, wrong
+  // on fly.dev, and wrong again the day the domain changes.
+  'GET /robots.txt': async (req, res) => {
+    sendText(res, 200, seo.robotsTxt(seo.originFor(req)), 'text/plain; charset=utf-8');
+  },
+
+  'GET /sitemap.xml': async (req, res) => {
+    sendText(res, 200, seo.sitemapXml(seo.originFor(req), getDbHandle()), 'application/xml; charset=utf-8');
+  },
+
+  'GET /llms.txt': async (req, res) => {
+    sendText(res, 200, seo.llmsTxt(seo.originFor(req), getDbHandle()), 'text/plain; charset=utf-8');
+  },
+
+  'GET /pricing.md': async (req, res) => {
+    sendText(res, 200, seo.pricingMarkdown(seo.originFor(req), getDbHandle()), 'text/markdown; charset=utf-8');
+  },
+
+  'GET /courses': async (req, res) => {
+    const db = getDbHandle();
+    sendText(res, 200, seo.courseIndexHtml({
+      origin: seo.originFor(req),
+      entries: seo.publishedCourses(db),
+      totals: seo.catalogueTotals(db),
+    }), MIME['.html']);
+  },
+
   'POST /api/auth/signup': async (req, res) => {
     if (!enforceLimit(req, res, 'signup', ratelimit.LIMITS.signup)) return;
     const body = await readJsonBody(req);
@@ -274,8 +325,25 @@ const routes = {
     getDbHandle().prepare('UPDATE users SET tos_accepted_at = ?, tos_version = ? WHERE id = ?')
       .run(new Date().toISOString(), TOS_VERSION, user.id);
 
+    // Arriving through a friend's link starts the free trial days immediately.
+    // An unknown or self-referring code is ignored rather than failing signup:
+    // a broken link must never cost us the account.
+    let referral = null;
+    if (body.referralCode) {
+      try {
+        referral = referrals.attachReferral(user.id, body.referralCode);
+      } catch (err) {
+        monitor.recordError(err);
+      }
+    }
+
     const { token, expiresAt } = auth.createSession(user.id);
-    sendJson(res, 201, { user: publicUser(user) }, { 'Set-Cookie': sessionCookie(token, expiresAt) });
+    sendJson(
+      res,
+      201,
+      { user: publicUser(auth.getUserById(user.id)), referral },
+      { 'Set-Cookie': sessionCookie(token, expiresAt) }
+    );
   },
 
   'POST /api/auth/login': async (req, res) => {
@@ -545,6 +613,15 @@ const routes = {
 
     const isCorrect = chosen === question.answer;
     const result = adaptive.recordResult(user.id, question, isCorrect, { chosen, mode });
+
+    // Referrals pay out on activation, not on signup, so the qualifying moment
+    // is an answered question. A cheap no-op unless a pending referral exists,
+    // and never allowed to break answering a question.
+    try {
+      referrals.maybeReward(user.id);
+    } catch (err) {
+      monitor.recordError(err);
+    }
 
     // Progression. XP only for correct answers, weighted by difficulty; the
     // streak counts any answer, so a nervous student is not pushed toward easy
@@ -1010,6 +1087,11 @@ const routes = {
    * stored proof of consent only proved that a box was ticked, not what the
    * box said. See lib/consent.js.
    */
+  'GET /api/referrals': async (req, res) => {
+    const user = requireUser(req);
+    sendJson(res, 200, referrals.summaryFor(user.id, seo.originFor(req)));
+  },
+
   'GET /api/billing/disclosure': async (req, res) => {
     requireUser(req);
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
@@ -1114,6 +1196,44 @@ const routes = {
 // Static files
 // ---------------------------------------------------------------------------
 
+// Paths the front end renders itself. Anything else without a file extension
+// is a real 404 rather than a silent copy of the home page.
+const CLIENT_ROUTES = new Set(['/reset', '/verify', '/settings']);
+
+/**
+ * Serve the app shell with its absolute URLs and structured data filled in.
+ *
+ * index.html carries placeholders rather than a hardcoded domain, because the
+ * canonical, the Open Graph URL and the schema @ids all have to be absolute and
+ * all have to match the host the visitor actually used.
+ */
+function serveShell(req, res, statusCode = 200) {
+  fs.readFile(path.join(PUBLIC_DIR, 'index.html'), (err, shell) => {
+    if (err) return sendJson(res, 404, { error: 'Not found' });
+    const origin = seo.originFor(req);
+    const db = getDbHandle();
+    const totals = seo.catalogueTotals(db);
+    let html = shell.toString('utf8');
+
+    if (html.includes('{{JSONLD}}')) {
+      html = html.replace('{{JSONLD}}', seo.jsonLdSafe(seo.shellJsonLd(origin, db)));
+    }
+    html = html.replace('{{FAQ_HTML}}', seo.shellFaqHtml());
+    html = html.split('{{QUESTION_COUNT}}').join(totals.questions.toLocaleString('en-US') + '+');
+    html = html.split('{{COURSE_COUNT}}').join(String(totals.courses));
+    html = html.split('{{ORIGIN}}').join(origin);
+
+    const body = Buffer.from(html, 'utf8');
+    res.writeHead(statusCode, {
+      'Content-Type': MIME['.html'],
+      'Content-Length': body.length,
+      'Cache-Control': 'no-cache',
+      ...SECURITY_HEADERS,
+    });
+    res.end(body);
+  });
+}
+
 function serveStatic(req, res, pathname) {
   const relative = pathname === '/' ? 'index.html' : pathname.replace(/^\/+/, '');
   const filePath = path.join(PUBLIC_DIR, relative);
@@ -1122,15 +1242,19 @@ function serveStatic(req, res, pathname) {
   if (!filePath.startsWith(PUBLIC_DIR)) {
     return sendJson(res, 403, { error: 'Forbidden' });
   }
+  // The shell is templated, so it never goes down the raw-file path.
+  if (relative === 'index.html') return serveShell(req, res);
+
   fs.readFile(filePath, (err, data) => {
     if (err) {
-      // Unknown paths fall back to the app shell so client-side views work.
+      // Client-routed views get the shell. Everything else is a real 404.
+      //
+      // This used to return 200 plus the shell for ANY unknown extensionless
+      // path: a soft 404, which lets a crawler index an unbounded number of
+      // URLs that are all the same page, and makes a broken link look healthy.
       if (!path.extname(relative)) {
-        return fs.readFile(path.join(PUBLIC_DIR, 'index.html'), (e2, shell) => {
-          if (e2) return sendJson(res, 404, { error: 'Not found' });
-          res.writeHead(200, { 'Content-Type': MIME['.html'] });
-          res.end(shell);
-        });
+        if (CLIENT_ROUTES.has(`/${relative}`)) return serveShell(req, res);
+        return serveShell(req, res, 404);
       }
       return sendJson(res, 404, { error: 'Not found' });
     }
@@ -1182,6 +1306,25 @@ function createServer() {
       if (url.pathname.startsWith('/api/')) {
         return sendJson(res, 404, { error: `No route for ${key}` });
       }
+
+      // Server-rendered course pages: /courses/ap-biology
+      const courseMatch = req.method === 'GET' && url.pathname.match(/^\/courses\/([a-z0-9-]+)$/);
+      if (courseMatch) {
+        const db = getDbHandle();
+        const course = courses.getCourse(courseMatch[1]);
+        const coverage = course ? plans.courseCoverage(course.id) : null;
+        // A course with no questions 404s. Ranking a page that leads to an
+        // empty unit earns one visit and no second one.
+        if (!course || !coverage || coverage.totals.questions === 0) {
+          return serveShell(req, res, 404);
+        }
+        return sendText(res, 200, seo.coursePageHtml({
+          course, coverage,
+          origin: seo.originFor(req),
+          totals: seo.catalogueTotals(db),
+        }), MIME['.html']);
+      }
+
       if (req.method === 'GET') return serveStatic(req, res, url.pathname);
       return sendJson(res, 405, { error: 'Method not allowed' });
     }

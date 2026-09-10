@@ -244,6 +244,13 @@ function publicUser(user) {
     premiumUntil: user.premium_until && new Date(user.premium_until) > new Date()
       ? user.premium_until
       : null,
+    // Set while a paid subscription is running but scheduled to end. The
+    // account is still Premium until this date; saying so is the difference
+    // between a customer who trusts the cancellation and one who disputes the
+    // charge.
+    cancelsAt: user.premium_cancels_at && new Date(user.premium_cancels_at) > new Date()
+      ? user.premium_cancels_at
+      : null,
     id: user.id,
     email: user.email,
     displayName: user.display_name,

@@ -2473,3 +2473,14 @@ body.is-reordering .course-tile { pointer-events: none; }
   color: #fff;
 }
 .starter-list li.is-done .starter-tick { background: var(--accent); border-color: var(--accent); }
+
+/* A scheduled cancellation, stated on the account screen. */
+.plan-ending { color: var(--text-muted); font-weight: 500; }
+
+/* Class tiles: equal heights within a row.
+   The grid item is .course-tile-wrap and it stretches to the tallest tile in
+   its row, but the tile inside it did not, so a class with progress made every
+   short "Not started" card in that row end early and float with dead space
+   under it. That ragged bottom edge is the "weird spacing". */
+.course-board .course-tile-wrap { height: 100%; }
+.course-board .course-tile { height: 100%; }

@@ -605,6 +605,58 @@ test('webhook events upgrade and downgrade users', () => {
   assert.strictEqual(plans.effectivePlan(user.id).id, 'free');
 });
 
+test('cancelling at period end is recorded, not ignored', () => {
+  // Cancelling does not delete a subscription. Stripe flips
+  // cancel_at_period_end and sends customer.subscription.updated, which the
+  // app used to ignore entirely - so the account read "Premium" with no end
+  // date until it silently expired, and the customer had no way to tell the
+  // cancellation had worked.
+  const user = makeUser();
+  billing.applyWebhookEvent({
+    type: 'checkout.session.completed',
+    data: { object: { metadata: { user_id: String(user.id), kind: 'premium' }, customer: 'cus_cancel' } },
+  });
+  assert.strictEqual(plans.effectivePlan(user.id).id, 'premium');
+
+  const endsAt = Math.floor(Date.now() / 1000) + 14 * 24 * 60 * 60;
+  const res = billing.applyWebhookEvent({
+    type: 'customer.subscription.updated',
+    data: { object: { customer: 'cus_cancel', cancel_at_period_end: true, current_period_end: endsAt } },
+  });
+  assert.strictEqual(res.action, 'cancellation_scheduled');
+
+  const row = db.getDb().prepare('SELECT premium_cancels_at FROM users WHERE id = ?').get(user.id);
+  assert.ok(row.premium_cancels_at, 'no cancellation date was stored');
+  assert.ok(new Date(row.premium_cancels_at) > new Date(), 'the stored date is in the past');
+  // Still Premium until that date. Cancelling must not cut access early.
+  assert.strictEqual(plans.effectivePlan(user.id).id, 'premium');
+});
+
+test('resuming inside the notice period clears the pending cancellation', () => {
+  const user = makeUser();
+  billing.applyWebhookEvent({
+    type: 'checkout.session.completed',
+    data: { object: { metadata: { user_id: String(user.id), kind: 'premium' }, customer: 'cus_resume' } },
+  });
+  billing.applyWebhookEvent({
+    type: 'customer.subscription.updated',
+    data: {
+      object: {
+        customer: 'cus_resume',
+        cancel_at_period_end: true,
+        current_period_end: Math.floor(Date.now() / 1000) + 86400,
+      },
+    },
+  });
+  const res = billing.applyWebhookEvent({
+    type: 'customer.subscription.updated',
+    data: { object: { customer: 'cus_resume', cancel_at_period_end: false } },
+  });
+  assert.strictEqual(res.action, 'cancellation_cleared');
+  const row = db.getDb().prepare('SELECT premium_cancels_at FROM users WHERE id = ?').get(user.id);
+  assert.strictEqual(row.premium_cancels_at, null, 'the cancellation date survived a resume');
+});
+
 // ===========================================================================
 section('Regression tests for bugs found in audit');
 

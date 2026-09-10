@@ -2986,6 +2986,22 @@ async function loadPlan() {
   $('#cancel-btn').textContent = state.user.billingMode === 'demo'
     ? 'Cancel subscription'
     : 'Manage or cancel subscription';
+
+  // A scheduled cancellation must be visible on the account screen. Stripe
+  // keeps the subscription active until the period ends, so without this the
+  // page reads "Premium" exactly as before and the customer cannot tell
+  // whether cancelling worked.
+  const label = $('#plan-label');
+  if (label) {
+    if (state.user.cancelsAt) {
+      const on = new Date(state.user.cancelsAt).toLocaleDateString(undefined,
+        { month: 'long', day: 'numeric', year: 'numeric' });
+      label.innerHTML = `${esc(state.user.planLabel)} <span class="plan-ending">· ends ${esc(on)}</span>`;
+      $('#cancel-btn').textContent = 'Resume subscription';
+    } else {
+      label.textContent = state.user.planLabel;
+    }
+  }
   $('#verify-banner').classList.toggle('hidden', Boolean(state.user.emailVerified));
   $('#verify-banner').innerHTML = 'Your email is not confirmed yet. <button class="linkish" id="send-verify">Send confirmation</button>';
   const sv = $('#send-verify');

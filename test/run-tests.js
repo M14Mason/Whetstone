@@ -657,6 +657,28 @@ test('resuming inside the notice period clears the pending cancellation', () => 
   assert.strictEqual(row.premium_cancels_at, null, 'the cancellation date survived a resume');
 });
 
+test('a placeholder API key does not switch mail into live mode', () => {
+  // Pasting `re_...` out of documentation set the key to a non-empty string,
+  // which flipped the app to live and made every confirmation email fail
+  // silently at the provider. Console mode is strictly better than that: the
+  // link at least reaches the log.
+  const mailer = require('../lib/mailer');
+  const original = process.env.RESEND_API_KEY;
+  try {
+    process.env.RESEND_API_KEY = 're_...';
+    assert.strictEqual(mailer.isLive(), false, 'placeholder key was treated as live');
+    process.env.RESEND_API_KEY = 're_short';
+    assert.strictEqual(mailer.isLive(), false, 'an implausibly short key was treated as live');
+    process.env.RESEND_API_KEY = 're_AbCdEf0123456789XyZq';
+    assert.strictEqual(mailer.isLive(), true, 'a real-shaped key was not treated as live');
+    delete process.env.RESEND_API_KEY;
+    assert.strictEqual(mailer.isLive(), false, 'no key at all should be console mode');
+  } finally {
+    if (original === undefined) delete process.env.RESEND_API_KEY;
+    else process.env.RESEND_API_KEY = original;
+  }
+});
+
 // ===========================================================================
 section('Regression tests for bugs found in audit');
 

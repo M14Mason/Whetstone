@@ -124,9 +124,11 @@ check('answering returns grading, explanation, and rating movement', async () =>
   assert.ok(typeof data.explanation === 'string' && data.explanation.length > 0);
   assert.ok(Number.isInteger(data.progress.abilityAfter));
   // Quota counts answers, not questions fetched: this is the first answer.
-  // Free Learn allowance is 3/day (config.freeDailyLimits.learn).
+  // Read the allowance from config rather than restating it, so changing the
+  // free tier does not silently break a test that looks unrelated.
+  const freeLearn = require('../lib/config').config.freeDailyLimits.learn;
   assert.strictEqual(data.quota.used, 1);
-  assert.strictEqual(data.quota.remaining, 2);
+  assert.strictEqual(data.quota.remaining, freeLearn - 1);
 });
 
 check('an invalid answer index is rejected', async () => {
@@ -139,8 +141,11 @@ check('an invalid answer index is rejected', async () => {
 });
 
 check('free tier blocks once the Learn allowance is gone', async () => {
-  // Two answered above; burn the rest.
-  for (let i = 0; i < 10; i++) {
+  // Two answered above; burn the rest. Driven by the configured allowance
+  // rather than a fixed loop count, which silently stopped exhausting the
+  // quota the moment the free tier got more generous.
+  const learnAllowance = require('../lib/config').config.freeDailyLimits.learn;
+  for (let i = 0; i < learnAllowance + 2; i++) {
     const nextRes = await call('GET', '/api/quiz/next');
     if (nextRes.status === 402) break;
     await call('POST', '/api/quiz/answer', {
@@ -579,7 +584,9 @@ check('free tier gets separate Learn and Review allowances', async () => {
   r = await call('GET', '/api/quiz/next');
   assert.strictEqual(r.status, 200);
   const learnLimit = r.data.quota.limit;
-  assert.strictEqual(learnLimit, 3, `expected a 3-question Learn allowance, got ${learnLimit}`);
+  const expectedLearn = require('../lib/config').config.freeDailyLimits.learn;
+  assert.strictEqual(learnLimit, expectedLearn,
+    `Learn allowance should match config (${expectedLearn}), got ${learnLimit}`);
 
   // Burn Learn completely.
   for (let i = 0; i < learnLimit; i++) {
@@ -594,7 +601,9 @@ check('free tier gets separate Learn and Review allowances', async () => {
   r = await call('GET', '/api/modes/review');
   assert.strictEqual(r.status, 200,
     `Review must not be consumed by Learn, got ${r.status}`);
-  assert.strictEqual(r.data.quota.limit, 5, 'Review allowance should be 5');
+  const expectedReview = require('../lib/config').config.freeDailyLimits.review;
+  assert.strictEqual(r.data.quota.limit, expectedReview,
+    `Review allowance should match config (${expectedReview})`);
   assert.ok(r.data.quota.remaining > 0, 'Review should have questions left');
 });
 

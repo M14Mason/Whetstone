@@ -88,7 +88,7 @@ Do not:
 
 ## 7. Plans, billing, and cancellation
 
-- **Free:** 3 Learn questions and 5 Review questions per day, no charge, no card,
+- **Free:** 15 Learn questions and 10 Review questions per day, no charge, no card,
   no time limit. Flashcards are included. Match, practice tests, and AP exam
   practice are not.
 - **Premium:** **$4.99 per month**, or **$29.99 per year** (which works out at
@@ -208,7 +208,7 @@ both sides agree to try for **30 days** before starting formal proceedings.
 If that fails, any dispute arising out of these Terms or the service will be
 resolved by **binding individual arbitration** administered by [ARBITRATION
 PROVIDER, e.g. the American Arbitration Association] under its consumer rules,
-in [COUNTY, STATE] or by video, rather than in court. Judgment on the award may
+in San Diego County, California or by video, rather than in court. Judgment on the award may
 be entered in any court of competent jurisdiction.
 
 **You and we each waive the right to a jury trial and to participate in a class
@@ -229,7 +229,7 @@ section is void and disputes proceed in the courts of California.
 
 These Terms are governed by the laws of the State of **California**, without regard
 to conflict-of-law rules. Subject to Section 14, the state and federal courts
-located in **[COUNTY, STATE]** have exclusive jurisdiction.
+located in **San Diego County, California** have exclusive jurisdiction.
 
 ## 16. Changes to these Terms
 

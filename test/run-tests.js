@@ -351,16 +351,30 @@ test('new users start on the free plan', () => {
   assert.strictEqual(quota.remaining, expected);
 });
 
-test('free tier exhausts after 5 questions in a day', () => {
+test('free tier exhausts at exactly the configured allowance', () => {
+  // This used to hardcode 5 and answer 5 questions. It passed against a limit
+  // of 3 only because answering past the cap still leaves remaining at 0, so
+  // it was not actually testing the boundary at all. It now reads the
+  // allowance and checks the question either side of it.
+  const { config } = require('../lib/config');
+  const limit = config.plans.free.dailyQuestionLimit;
   const user = makeUser();
-  for (let i = 0; i < 5; i++) {
+
+  for (let i = 0; i < limit - 1; i++) {
     const q = adaptive.selectNextQuestion(user.id, ['Math']);
     adaptive.recordResult(user.id, q, true);
   }
-  const quota = plans.checkQuota(user.id);
-  assert.strictEqual(quota.used, 5);
+  let quota = plans.checkQuota(user.id);
+  assert.strictEqual(quota.used, limit - 1);
+  assert.strictEqual(quota.remaining, 1);
+  assert.strictEqual(quota.exhausted, false, 'exhausted one question early');
+
+  const last = adaptive.selectNextQuestion(user.id, ['Math']);
+  adaptive.recordResult(user.id, last, true);
+  quota = plans.checkQuota(user.id);
+  assert.strictEqual(quota.used, limit);
   assert.strictEqual(quota.remaining, 0);
-  assert.strictEqual(quota.exhausted, true);
+  assert.strictEqual(quota.exhausted, true, 'did not exhaust at the limit');
 });
 
 test('premium users are unlimited', () => {

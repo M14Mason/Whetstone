@@ -133,6 +133,29 @@ async function loadPage(base, cookie) {
     /if \(!returning\) showView\('landing'\);/.test(js),
     'boot() must paint before awaiting /api/me, or a slow server shows a blank page');
 
+  // ---- nothing third-party may block the first paint
+  //
+  // This is the bug that made the site look dead: a render-blocking stylesheet
+  // on fonts.googleapis.com. The browser paints nothing until it resolves, and
+  // on a network that drops the packets rather than refusing them it never
+  // resolves. The app must render on its own CSS alone.
+  // <noscript> content is inert in a scripting browser, so a fallback
+  // stylesheet in there blocks nothing. Strip those before scanning.
+  const head = html.slice(0, html.indexOf('</head>'))
+    .replace(/<noscript>[\s\S]*?<\/noscript>/g, '');
+  const blockingThirdParty = [...head.matchAll(/<link\b[^>]*>/g)]
+    .map((m) => m[0])
+    .filter((tag) => /rel=["']stylesheet["']/.test(tag))
+    .filter((tag) => /https?:\/\//.test(tag))
+    .filter((tag) => !/media=["']print["']/.test(tag));
+  check('no third-party stylesheet blocks the first paint',
+    blockingThirdParty.length === 0,
+    blockingThirdParty.join(' | '));
+
+  check('third-party scripts cannot delay DOMContentLoaded',
+    !/<script[^>]+src=["']https?:\/\/[^"']+["'][^>]*>/.test(head),
+    'a third-party <script> tag in <head> holds up DOMContentLoaded when blocked');
+
   // ---- onboarding must end in the product, not in a menu
   check('finishing onboarding starts a question',
     /await completeOnboarding\(\);\s*\n\s*\/\/[\s\S]{0,600}?startMode\('learn'\);/.test(js),

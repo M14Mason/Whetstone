@@ -25,10 +25,40 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Keen — study what you actually keep missing">
 <meta name="twitter:description" content="{{QUESTION_COUNT}} practice questions across {{COURSE_COUNT}} courses, mapped to the units of your real classes. Free to start.">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+<!-- Webfonts, loaded WITHOUT blocking the first paint.
+     A plain <link rel="stylesheet"> to a third-party host is render-blocking:
+     the browser paints nothing at all until it resolves. When that host is
+     slow, filtered, or black-holed - school wifi, DNS filtering, an extension,
+     any firewall that drops packets instead of refusing them - the request
+     hangs and the page stays completely white with the tab still spinning.
+     Indistinguishable from the site being down, and it was the actual cause.
+     media="print" makes the browser fetch it without blocking paint; onload
+     promotes it to the real stylesheet once it has arrived. If it never
+     arrives, the app renders on the system stack in styles.css and the only
+     thing lost is the typeface, which is what the old comment claimed but the
+     old markup did not deliver. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" media="print" onload="this.media='all';this.onload=null"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap"></noscript>
 
-<script defer src="https://cloud.umami.is/script.js" data-website-id="23dccc91-e03e-4a76-aa58-5293d5113589"></script>
+<!-- Analytics, attached after the page is up and never before it.
+     A deferred script still has to finish before DOMContentLoaded fires, so a
+     blocked analytics host keeps the tab spinner running and delays anything
+     waiting on that event. Loading it after window.load means a blocked or
+     ad-blocked tracker costs a page view and nothing else. An optional
+     analytics package has already taken this site down once. -->
+<script>
+  addEventListener('load', () => {
+    const a = document.createElement('script');
+    a.src = 'https://cloud.umami.is/script.js';
+    a.defer = true;
+    a.dataset.websiteId = '23dccc91-e03e-4a76-aa58-5293d5113589';
+    a.onerror = () => { /* blocked or offline: not an app problem */ };
+    document.head.appendChild(a);
+  }, { once: true });
+</script>
 <!-- Webfonts load independently of the app stylesheet. If this request fails
      or is blocked, the app still styles correctly using the system stack. -->
 <link rel="stylesheet" href="/styles.css">

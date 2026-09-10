@@ -45,6 +45,33 @@ RUN mkdir -p /app/seed \
  && chmod +x /app/scripts/docker-start.sh \
  && chown -R node:node /app/seed
 
+# Make every copied file readable by the unprivileged runtime user.
+#
+# THIS IS WHY THE SITE WENT DOWN ON 10 SEP 2026. Docker COPY preserves the mode
+# of each file in the build context. A developer machine with a restrictive
+# umask produces 600 files; they land here root-owned and unreadable to `node`,
+# and the container dies with
+#
+#   Error: EACCES: permission denied, open '/app/server.js'
+#
+# four seconds into every boot. Fly restarts it ten times, gives up, and serves
+# 502 to every visitor. Nothing in the application code is wrong, which is what
+# makes it so expensive to find.
+#
+# a+rX, not a+rx: capital X sets the execute bit on directories only, so files
+# do not all become executable.
+RUN chmod -R a+rX /app && chmod a+rx /app/scripts/docker-start.sh
+
+# Prove it as the user that will actually run the app. A build that produces an
+# unreadable image must fail HERE, loudly, in fifteen seconds - not silently in
+# production forty minutes later.
+RUN su node -c 'test -r /app/server.js \
+ && test -r /app/lib/config.js \
+ && test -r /app/public/index.html \
+ && test -r /app/public/app.js \
+ && test -x /app/scripts/docker-start.sh' \
+ && echo "verified: the runtime user can read the application"
+
 ENV NODE_ENV=production \
     PORT=8080 \
     DATABASE_PATH=/data/keen.db \

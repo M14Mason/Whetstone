@@ -649,8 +649,15 @@ async function completeOnboarding() {
 $('#ob-finish').addEventListener('click', async () => {
   try {
     await completeOnboarding();
-    showView('home');
-    toast('You are all set. Pick a study mode.', 'good');
+    // Straight into a question rather than back to a menu.
+    //
+    // This used to land on home with "pick a study mode", which puts a
+    // five-way decision in front of someone at the exact moment they were most
+    // willing to just start. The product's value is answering a question and
+    // being told what you are weak at. Everything else can be discovered later,
+    // by a student who has already seen it work once.
+    startMode('learn');
+    toast('Answer a few and Keen starts finding your weak spots.', 'good');
   } catch (err) { toast(err.message, 'bad'); }
 });
 
@@ -971,6 +978,7 @@ async function renderHome() {
       <div class="mini-stat"><span class="mini-stat-icon u-bg-bad-soft u-c-bad">↻</span>
         <div class="u-minw-0"><div class="mini-stat-value">${home.report.weakSpots.length}</div>
         <div class="mini-stat-label">Weak spots</div></div></div>`;
+    renderStarter(t.totalAttempts);
   } catch { $('#home-stats').innerHTML = ''; }
 
   loadSets();
@@ -1158,6 +1166,68 @@ function renderModeLocks() {
     } else if (!locked && badge) {
       badge.remove();
     }
+  });
+}
+
+// Questions that make a first session feel like it worked. Deliberately the
+// free Learn allowance (config.freeDailyLimits.learn) rather than a bigger
+// round number: a checklist a free account cannot finish today is a checklist
+// that teaches the student the product is not for them.
+const FIRST_SESSION_TARGET = 3;
+
+/**
+ * The first-run checklist.
+ *
+ * Steps are ordered by value rather than by setup order, and the account step
+ * is pre-ticked. Once the student clears the target the card removes itself
+ * for good, and Hide removes it immediately for anyone who does not want it.
+ */
+function renderStarter(answered) {
+  const card = $('#starter-card');
+  if (!card) return;
+
+  let dismissed = false;
+  try { dismissed = localStorage.getItem('keen_starter_done') === '1'; } catch { /* private mode */ }
+
+  if (dismissed || answered >= FIRST_SESSION_TARGET) {
+    card.classList.add('hidden');
+    return;
+  }
+
+  const hasCourses = (state.user?.courses || []).length > 0;
+  const steps = [
+    { label: 'Account created', done: true },
+    { label: 'Courses picked', done: hasCourses },
+    {
+      label: `Answer ${FIRST_SESSION_TARGET} questions`,
+      done: answered >= FIRST_SESSION_TARGET,
+      detail: answered > 0 ? `${answered} of ${FIRST_SESSION_TARGET}` : null,
+    },
+    { label: 'See your weak spots', done: false },
+  ];
+
+  const doneCount = steps.filter((x) => x.done).length;
+  $('#starter-fill').style.width = `${Math.round((doneCount / steps.length) * 100)}%`;
+
+  const left = FIRST_SESSION_TARGET - answered;
+  $('#starter-sub').textContent = answered === 0
+    ? 'Keen needs a few answers before it can tell you anything useful. About three minutes.'
+    : `${left} more question${left === 1 ? '' : 's'} and your weak spots appear on Progress.`;
+
+  $('#starter-list').innerHTML = steps.map((x) => `
+    <li class="${x.done ? 'is-done' : ''}">
+      <span class="starter-tick">${x.done ? '✓' : ''}</span>
+      <span>${x.label}${x.detail ? ` <span class="dim">${x.detail}</span>` : ''}</span>
+    </li>`).join('');
+
+  card.classList.remove('hidden');
+}
+
+const starterDismissBtn = $('#starter-dismiss');
+if (starterDismissBtn) {
+  starterDismissBtn.addEventListener('click', () => {
+    try { localStorage.setItem('keen_starter_done', '1'); } catch { /* nothing to persist to */ }
+    $('#starter-card').classList.add('hidden');
   });
 }
 

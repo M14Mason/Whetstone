@@ -411,6 +411,21 @@
       </div>
     </div>
 
+    <!-- First-run checklist. It opens with a step already ticked on purpose:
+         a checklist starting at zero reads as a chore, one starting part way
+         reads as something worth finishing. It removes itself once the student
+         has answered enough for the weak-spot model to mean anything, so it
+         never becomes permanent furniture. -->
+    <div class="card starter hidden" id="starter-card">
+      <div class="row-between u-mb-p8rem">
+        <h2 class="starter-title">Find your first weak spot</h2>
+        <button class="linkish" id="starter-dismiss" type="button">Hide</button>
+      </div>
+      <p class="muted u-fs-p9rem" id="starter-sub"></p>
+      <div class="starter-bar"><div class="starter-fill" id="starter-fill"></div></div>
+      <ul class="starter-list" id="starter-list"></ul>
+    </div>
+
     <div class="stat-strip" id="home-stats"></div>
     <div id="upsell-banner" class="upsell-inline hidden"></div>
 

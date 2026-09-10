@@ -133,6 +133,11 @@ async function loadPage(base, cookie) {
     /if \(!returning\) showView\('landing'\);/.test(js),
     'boot() must paint before awaiting /api/me, or a slow server shows a blank page');
 
+  // ---- onboarding must end in the product, not in a menu
+  check('finishing onboarding starts a question',
+    /await completeOnboarding\(\);\s*\n\s*\/\/[\s\S]{0,600}?startMode\('learn'\);/.test(js),
+    'onboarding should drop into practice, not showView(\'home\')');
+
   // ---- signed-out landing page
   const anon = await loadPage(base);
   check('landing page loads with no JavaScript errors', anon.errors.length === 0,

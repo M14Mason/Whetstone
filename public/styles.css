@@ -2431,3 +2431,45 @@ body.is-reordering .course-tile { pointer-events: none; }
 .referral-stats { margin-top: .75rem; }
 .referral-stats p { color: var(--text-secondary); font-size: .88rem; margin: 0 0 .3rem; }
 .referral-stats strong { color: var(--text); }
+
+/* First-run checklist -------------------------------------------------------
+   Shown only until the student has answered enough for the weak-spot model to
+   say anything. It uses the same tokens as the rest of the app, so light and
+   dark both follow without a second set of rules. */
+.starter { border-color: var(--border-bright); }
+.starter-title { font-size: 1.05rem; margin: 0; }
+.starter-bar {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--surface-hover);
+  overflow: hidden;
+  margin: .75rem 0 1rem;
+}
+.starter-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width .35s ease;
+}
+.starter-list { list-style: none; padding: 0; margin: 0; display: grid; gap: .5rem; }
+.starter-list li {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  color: var(--text-secondary);
+  font-size: .92rem;
+}
+.starter-list li.is-done { color: var(--text-muted); }
+.starter-list li.is-done > span:last-child { text-decoration: line-through; }
+.starter-tick {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-bright);
+  display: grid;
+  place-items: center;
+  font-size: .7rem;
+  color: #fff;
+}
+.starter-list li.is-done .starter-tick { background: var(--accent); border-color: var(--accent); }

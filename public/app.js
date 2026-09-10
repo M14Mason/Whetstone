@@ -252,11 +252,28 @@ function isReallyVisible(el) {
   return r.width > 0 && r.height > 0;
 }
 
+// How many pointers are physically down right now.
+//
+// A reorder lock is only ever legitimate while a finger is on the glass. The
+// DOM alone cannot tell us that: if the tile being dragged is destroyed by a
+// re-render mid-drag, or the pointerup lands on an element that has gone away,
+// the .dragging class disappears with it and every DOM-based check concludes
+// the drag is still running. Counting pointers is independent of all of that.
+let pointersDown = 0;
+window.addEventListener('pointerdown', () => { pointersDown += 1; }, true);
+const releasePointer = () => { pointersDown = Math.max(0, pointersDown - 1); };
+window.addEventListener('pointerup', releasePointer, true);
+window.addEventListener('pointercancel', releasePointer, true);
+// A pointer that leaves the window never reports up. Treat losing focus as
+// every finger lifting, because it effectively is.
+window.addEventListener('blur', () => { pointersDown = 0; });
+
 function assertScrollable() {
   const paywallOpen = isReallyVisible($('#paywall'));
   const host = $('#modal-host');
   const modalOpen = Boolean(host && host.innerHTML) && isReallyVisible(host.firstElementChild);
-  const dragging = Boolean(document.querySelector('.course-tile-wrap.dragging'));
+  // Two conditions, not one. The class can outlive the drag; a finger cannot.
+  const dragging = pointersDown > 0 && Boolean(document.querySelector('.course-tile-wrap.dragging'));
   if (!paywallOpen && !modalOpen) document.body.classList.remove('modal-open');
   if (!dragging) document.body.classList.remove('is-reordering');
 }
@@ -267,6 +284,22 @@ function assertScrollable() {
 window.addEventListener('pointerup', assertScrollable);
 window.addEventListener('pointercancel', assertScrollable);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) assertScrollable(); });
+
+// The heartbeat, and the reason this should be the last scroll-bug fix.
+//
+// Four reports and four fixes so far, and every one of them trusted a specific
+// teardown path to run: a close handler, a pointerup on a specific element, a
+// navigation. Each fix closed the path that had been reported and left the
+// class of bug intact, because the failure is always "the cleanup did not
+// happen", and there are unlimited ways for that to be true - an exception
+// between locking and wiring the close button, an element destroyed by a
+// re-render, a pointer released off-window, a throttled tab.
+//
+// So stop trusting teardown. Four times a second, ask the only question that
+// matters: is this page locked with nothing on screen that justifies it? If
+// so, unlock it. A stuck lock now lasts 250ms instead of until reload, whatever
+// caused it, including causes nobody has hit yet.
+setInterval(assertScrollable, 250);
 
 function showView(name) {
   // The only escape hatch is signing out, which clears state.user first.

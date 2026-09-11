@@ -688,9 +688,9 @@ $('#ob-next-3').addEventListener('click', () => {
   const note = $('#ob-premium-note');
   if (subjects.length > 1) {
     note.textContent = `You picked ${picked.length} classes across ${subjects.length} subjects. `
-      + `On the free plan you can study one subject at a time and 5 questions a day.`;
+      + `On the free plan you can study one subject at a time, 15 Learn and 10 Review questions a day.`;
   } else {
-    note.textContent = 'On the free plan you will hit the daily limit after 5 questions.';
+    note.textContent = 'On the free plan you get 15 Learn and 10 Review questions a day, free.';
   }
 });
 
@@ -2361,7 +2361,72 @@ function renderBreadcrumb(el, q) {
   el.innerHTML = parts.join('');
 }
 
+/* --------------------------------------------------------- question reports
+ *
+ * A student who meets a wrong answer either reports it in one tap or quietly
+ * decides the app cannot be trusted. So this is two taps from the question,
+ * needs no typing, and never leaves the screen: opening a form and losing your
+ * place is the same as not having a report button at all.
+ */
+const QUESTION_REPORT_REASONS = [
+  { id: 'wrong-answer', label: 'The answer marked correct is wrong' },
+  { id: 'bad-explanation', label: 'The explanation is wrong' },
+  { id: 'typo', label: 'Typo or formatting' },
+  { id: 'confusing', label: 'Unclear or ambiguous' },
+  { id: 'off-topic', label: 'Not part of this course' },
+];
+
+let reportReason = null;
+
+function renderReportReasons() {
+  $('#q-report-reasons').innerHTML = QUESTION_REPORT_REASONS.map((r) =>
+    `<button type="button" class="q-report-reason" data-reason="${esc(r.id)}">${esc(r.label)}</button>`).join('');
+  $$('#q-report-reasons .q-report-reason').forEach((b) => b.addEventListener('click', () => {
+    reportReason = b.dataset.reason;
+    $$('#q-report-reasons .q-report-reason').forEach((o) => o.classList.toggle('is-on', o === b));
+    $('#q-report-send').disabled = false;
+  }));
+}
+
+function closeReportPanel() {
+  reportReason = null;
+  $('#q-report-panel').classList.add('hidden');
+  $('#q-report-send').disabled = true;
+  $('#q-report-note').value = '';
+  $$('#q-report-reasons .q-report-reason').forEach((o) => o.classList.remove('is-on'));
+}
+
+if ($('#q-report')) {
+  renderReportReasons();
+  $('#q-report').addEventListener('click', () => {
+    if (!state.question) return;
+    const panel = $('#q-report-panel');
+    if (panel.classList.contains('hidden')) panel.classList.remove('hidden');
+    else closeReportPanel();
+  });
+  $('#q-report-cancel').addEventListener('click', closeReportPanel);
+  $('#q-report-send').addEventListener('click', async () => {
+    if (!state.question || !reportReason) return;
+    const btn = $('#q-report-send');
+    btn.disabled = true;
+    try {
+      await api('POST', '/api/questions/report', {
+        questionId: state.question.id,
+        reason: reportReason,
+        note: $('#q-report-note').value.trim() || undefined,
+        page: location.pathname,
+      });
+      closeReportPanel();
+      toast('Thanks. That question is flagged for review.', 'good');
+    } catch (err) {
+      toast(err.message, 'bad');
+      btn.disabled = false;
+    }
+  });
+}
+
 async function loadQuestion() {
+  closeReportPanel();
   $('#q-feedback').classList.add('hidden');
   $('#next-btn').classList.add('hidden');
   state.answered = false;
@@ -2809,18 +2874,23 @@ function renderCourseGroups(groups) {
     <div class="card">
       <h2>${esc(g.category)}</h2>
       <div class="stack u-g-p4rem u-mt-p75rem">
-        ${g.courses.map((c) => `
-          <div class="course-row-wrap">
+        ${g.courses.map((c) => {
+          // hasQuestions is undefined on older responses; only an explicit
+          // false marks a course as unstocked, so a missing field never hides
+          // a course that actually works.
+          const empty = c.hasQuestions === false;
+          return `
+          <div class="course-row-wrap${empty ? ' is-empty' : ''}">
             <button class="course-row course-open" data-id="${esc(c.id)}">
               <span class="course-row-name">${esc(c.name)}</span>
-              <span class="dim">${c.units.length} units</span>
+              <span class="dim">${empty ? 'Questions coming soon' : `${c.units.length} units`}</span>
               ${levelPill(c.levelLabel)}
             </button>
-            <button class="course-add${mine.has(c.id) ? ' is-added' : ''}"
+            ${empty ? `<span class="course-add is-disabled" aria-hidden="true" title="No questions in this class yet">&middot;</span>` : `<button class="course-add${mine.has(c.id) ? ' is-added' : ''}"
                     data-add="${esc(c.id)}"
                     title="${mine.has(c.id) ? 'Remove from my classes' : 'Add to my classes'}"
-                    aria-pressed="${mine.has(c.id)}">${mine.has(c.id) ? '✓' : '+'}<span class="sr-only">${mine.has(c.id) ? 'Remove' : 'Add'} ${esc(c.name)}</span></button>
-          </div>`).join('')}
+                    aria-pressed="${mine.has(c.id)}">${mine.has(c.id) ? '✓' : '+'}<span class="sr-only">${mine.has(c.id) ? 'Remove' : 'Add'} ${esc(c.name)}</span></button>`}
+          </div>`; }).join('')}
       </div>
     </div>`).join('');
   $$('#course-groups .course-open').forEach((b) =>

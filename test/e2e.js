@@ -684,6 +684,48 @@ check('the reset and verify pages are served', async () => {
   }
 });
 
+check('a student can report the question they are looking at', async () => {
+  // The report has to capture the question itself, not just "something is
+  // wrong": a report that says only "wrong answer" costs more to action than
+  // it saves, so the stored body must carry the prompt and the marked answer.
+  const next = await call('GET', '/api/quiz/next');
+  assert.strictEqual(next.status, 200, 'could not fetch a question to report');
+  const q = next.data.question;
+
+  const res = await call('POST', '/api/questions/report', {
+    questionId: q.id,
+    reason: 'wrong-answer',
+    note: 'B is also correct',
+  });
+  assert.strictEqual(res.status, 201, `report was rejected: ${JSON.stringify(res.data)}`);
+
+  const social = require('../lib/social');
+  const filed = social.listBugs({ limit: 5 }).find((b) => b.questionId === q.id);
+  assert.ok(filed, 'the report was not stored');
+  assert.strictEqual(filed.kind, 'question');
+  assert.ok(filed.body.includes(q.prompt), 'the stored report does not include the question prompt');
+  assert.ok(filed.body.includes('Marked correct:'), 'the stored report does not include the marked answer');
+  assert.ok(filed.body.includes('B is also correct'), 'the student note was dropped');
+});
+
+check('a report with no reason, or for a question that does not exist, is refused', async () => {
+  const next = await call('GET', '/api/quiz/next');
+  const q = next.data.question;
+
+  const noReason = await call('POST', '/api/questions/report', { questionId: q.id });
+  assert.strictEqual(noReason.status, 400, 'a report with no reason was accepted');
+
+  const bogus = await call('POST', '/api/questions/report', {
+    questionId: 'no-such-question', reason: 'wrong-answer',
+  });
+  assert.strictEqual(bogus.status, 400, 'a report for an unknown question was accepted');
+
+  const badReason = await call('POST', '/api/questions/report', {
+    questionId: q.id, reason: 'because-i-said-so',
+  });
+  assert.strictEqual(badReason.status, 400, 'an unknown reason was accepted');
+});
+
 check('path traversal on static files is blocked', async () => {
   const res = await fetch(`${BASE}/../lib/config.js`);
   assert.ok(res.status === 403 || res.status === 404, `expected block, got ${res.status}`);

@@ -235,8 +235,8 @@
           <h3>Free</h3>
           <div class="tier-price">$0</div>
           <ul class="tier-points">
-            <li><span class="tick">✓</span> 3 adaptive questions a day</li>
-            <li><span class="tick">✓</span> 5 review questions a day</li>
+            <li><span class="tick">✓</span> 15 Learn questions a day</li>
+            <li><span class="tick">✓</span> 10 Review questions a day</li>
             <li><span class="tick">✓</span> Unlimited flashcards</li>
             <li><span class="tick">✓</span> One subject at a time</li>
             <li><span class="tick tick-no">✕</span> Match, practice tests, AP exams</li>
@@ -399,10 +399,10 @@
               <div class="price">$0</div>
             </div>
             <ul class="plan-points">
-              <li><span class="tick tick-muted">✓</span> 5 questions a day</li>
+              <li><span class="tick tick-muted">✓</span> 15 Learn + 10 Review a day</li>
               <li><span class="tick tick-muted">✓</span> 1 subject at a time</li>
               <li><span class="tick tick-muted">✓</span> Flashcards and Learn</li>
-              <li><span class="tick tick-no">✕</span> Match, Test and Review</li>
+              <li><span class="tick tick-no">✕</span> Match, Test and AP exams</li>
               <li><span class="tick tick-no">✕</span> Full mastery dashboard</li>
             </ul>
           </div>
@@ -571,8 +571,19 @@
         <p id="q-prompt" class="q-prompt"></p>
         <div id="q-choices" class="choices"></div>
         <div id="q-feedback" class="feedback hidden"></div>
-        <div class="row u-jc-flex-end u-mt-1p3rem">
+        <div class="row-between u-mt-1p3rem">
+          <button id="q-report" class="btn btn-ghost btn-sm q-report" type="button">Report this question</button>
           <button id="next-btn" class="btn btn-primary hidden">Next question →</button>
+        </div>
+        <div id="q-report-panel" class="q-report-panel hidden">
+          <p class="u-m-0"><strong>What is wrong with it?</strong></p>
+          <div id="q-report-reasons" class="q-report-reasons"></div>
+          <label class="sr-only" for="q-report-note">Anything else (optional)</label>
+          <input id="q-report-note" type="text" maxlength="200" placeholder="Anything else? (optional)">
+          <div class="row u-jc-flex-end u-g-p4rem">
+            <button id="q-report-cancel" class="btn btn-ghost btn-sm" type="button">Cancel</button>
+            <button id="q-report-send" class="btn btn-primary btn-sm" type="button" disabled>Send report</button>
+          </div>
         </div>
       </div>
 

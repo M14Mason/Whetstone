@@ -667,20 +667,31 @@ const routes = {
     const search = url.searchParams.get('search');
     const level = url.searchParams.get('level');
 
-    sendJson(res, 200, {
-      groups: courses.byCategory({
-        grade: grade ? Number(grade) : undefined,
-        search: search || undefined,
-        level: level || undefined,
-      }),
-      stats: courses.stats(),
-    });
+    // A course with no questions behind it is still worth listing - students
+    // look for their real timetable - but it must say so, because adding one
+    // and finding nothing there is how a student decides the app is broken.
+    const stocked = questions.stockedBanks();
+    const groups = courses.byCategory({
+      grade: grade ? Number(grade) : undefined,
+      search: search || undefined,
+      level: level || undefined,
+    }).map((g) => ({
+      ...g,
+      courses: g.courses.map((c) => ({ ...c, hasQuestions: stocked.has(courses.bankFor(c.id)) })),
+    }));
+
+    sendJson(res, 200, { groups, stats: courses.stats() });
   },
 
   'GET /api/courses/suggested': async (req, res) => {
     const url = new URL(req.url, `http://${req.headers.host || 'localhost'}`);
     const grade = Number(url.searchParams.get('grade'));
-    sendJson(res, 200, { courses: courses.suggestedForGrade(grade) });
+    // Onboarding is the worst place to suggest an empty course: it is the one
+    // screen where the student has no reason yet to give the app a second try.
+    const stocked = questions.stockedBanks();
+    sendJson(res, 200, {
+      courses: courses.suggestedForGrade(grade).filter((c) => stocked.has(courses.bankFor(c.id))),
+    });
   },
 
   'GET /api/course': async (req, res) => {
@@ -1019,6 +1030,30 @@ const routes = {
       appVersion: TOS_VERSION,
     });
     sendJson(res, 201, { ...result, message: 'Thanks. Your report was saved locally.' });
+  },
+
+  // Reporting the question you are looking at. Same storage as bug reports,
+  // same rate limit, but one tap instead of a form: a student who has to write
+  // a paragraph will just move on and keep believing the wrong answer.
+  'POST /api/questions/report': async (req, res) => {
+    const user = currentUser(req);
+    if (!enforceLimit(req, res, 'bugs', ratelimit.LIMITS.bugs)) return;
+    const body = await readJsonBody(req);
+    const result = social.reportQuestion(user ? user.id : null, {
+      questionId: body.questionId,
+      reason: body.reason,
+      note: body.note,
+      page: body.page,
+      userAgent: req.headers['user-agent'],
+      appVersion: TOS_VERSION,
+    });
+    sendJson(res, 201, { ...result, message: 'Thanks. We will check this question.' });
+  },
+
+  'GET /api/questions/report-reasons': async (req, res) => {
+    sendJson(res, 200, {
+      reasons: Object.entries(social.QUESTION_REPORT_REASONS).map(([id, label]) => ({ id, label })),
+    });
   },
 
   'GET /api/bugs/mine': async (req, res) => {

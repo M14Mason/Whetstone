@@ -2296,9 +2296,9 @@ body.is-reordering .course-tile { pointer-events: none; }
 .renewal-notice {
   margin: 1rem 0 .85rem;
   padding: .9rem 1rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: 14px;
-  background: var(--surface-2, rgba(255, 255, 255, .04));
+  background: var(--track);
   text-align: left;
 }
 .renewal-title {
@@ -2498,3 +2498,31 @@ body.is-reordering .course-tile { pointer-events: none; }
    under it. That ragged bottom edge is the "weird spacing". */
 .course-board .course-tile-wrap { height: 100%; }
 .course-board .course-tile { height: 100%; }
+
+/* A class with no questions behind it yet. Listed so a student can find their
+   real timetable, dimmed so they do not add it and meet an empty screen. */
+.course-row-wrap.is-empty .course-row-name { opacity: 0.62; }
+.course-add.is-disabled {
+  display: inline-flex; align-items: center; justify-content: center;
+  opacity: 0.35; cursor: default; background: none; border: none;
+}
+
+/* Reporting the question you are looking at. Deliberately quiet until tapped:
+   it must be findable without competing with the answer buttons. */
+.q-report { color: var(--text-muted); }
+.q-report-panel {
+  margin-top: 0.9rem; padding: 0.9rem; border-radius: 12px;
+  border: 1px solid var(--border); background: var(--track);
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.q-report-reasons { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.q-report-reason {
+  border: 1px solid var(--border); background: var(--field); color: inherit;
+  border-radius: 999px; padding: 0.4rem 0.75rem; font: inherit; font-size: 0.85rem;
+  cursor: pointer; min-height: 38px;
+}
+.q-report-reason.is-on { border-color: var(--accent); background: var(--accent); color: #fff; }
+.q-report-panel input[type="text"] {
+  width: 100%; padding: 0.55rem 0.7rem; border-radius: 10px;
+  border: 1px solid var(--border); background: var(--field); color: var(--text);
+}

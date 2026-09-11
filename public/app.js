@@ -571,16 +571,51 @@ function startOnboarding() {
     $('#ob-next-1').disabled = false;
   }));
 
+  // Goals are multi-select. A student revising for AP exams is also being
+  // graded on the same material, and forcing one answer made the question
+  // feel like a quiz with a wrong answer rather than a setting.
   $('#goal-choices').innerHTML = GOALS.map((g) => `
-    <button class="choice" data-goal="${g.v}">
+    <button type="button" class="choice" data-goal="${g.v}" aria-pressed="false">
       <span class="choice-title">${g.t}</span><span class="choice-sub">${g.s}</span>
     </button>`).join('');
-  $$('#goal-choices .choice').forEach((b) => b.addEventListener('click', () => {
-    $$('#goal-choices .choice').forEach((x) => x.classList.remove('selected'));
-    b.classList.add('selected');
-    state.onboarding.goal = b.dataset.goal;
-    $('#ob-next-3').disabled = false;
+
+  const goalButtons = () => $$('#goal-choices .choice');
+  const syncGoals = () => {
+    const picked = goalButtons().filter((b) => b.classList.contains('selected'));
+    // Stored in the existing single goal column as a comma-separated list, so
+    // accounts created before this still read back correctly.
+    state.onboarding.goal = picked.map((b) => b.dataset.goal).join(',');
+    $('#ob-next-3').disabled = picked.length === 0;
+    const count = $('#goal-count');
+    if (count) {
+      count.textContent = picked.length === 0
+        ? 'None selected'
+        : `${picked.length} of ${goalButtons().length} selected`;
+    }
+    const all = $('#goal-all');
+    if (all) all.textContent = picked.length === goalButtons().length ? 'Clear all' : 'Select all';
+  };
+
+  goalButtons().forEach((b) => b.addEventListener('click', () => {
+    const on = !b.classList.contains('selected');
+    b.classList.toggle('selected', on);
+    b.setAttribute('aria-pressed', String(on));
+    syncGoals();
   }));
+
+  const allBtn = $('#goal-all');
+  if (allBtn) {
+    allBtn.addEventListener('click', () => {
+      const selectAll = goalButtons().some((b) => !b.classList.contains('selected'));
+      goalButtons().forEach((b) => {
+        b.classList.toggle('selected', selectAll);
+        b.setAttribute('aria-pressed', String(selectAll));
+      });
+      syncGoals();
+    });
+  }
+
+  syncGoals();
 }
 
 function setSteps(n) {

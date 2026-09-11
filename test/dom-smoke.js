@@ -133,6 +133,20 @@ async function loadPage(base, cookie) {
     /if \(!returning\) showView\('landing'\);/.test(js),
     'boot() must paint before awaiting /api/me, or a slow server shows a blank page');
 
+  // ---- form fields must follow the theme, not a hardcoded colour
+  //
+  // Every input was hardcoded to #0d0f1a, a blue-black from the old dark
+  // theme. Once the light theme landed that was a near-black box containing
+  // near-black text: invisible while typing, on the signup form. A theme
+  // change must never be able to strand a field colour again.
+  const css = fs.readFileSync(path.join(PUBLIC_DIR, 'styles.css'), 'utf8');
+  check('no dead hardcoded field colour remains',
+    !/background:\s*#0d0f1a/.test(css),
+    'a field still hardcodes the old dark-theme colour');
+  check('field and track colours are defined for both themes',
+    (css.match(/--field:/g) || []).length >= 2 && (css.match(/--track:/g) || []).length >= 2,
+    'both themes must define --field and --track');
+
   // ---- nothing third-party may block the first paint
   //
   // This is the bug that made the site look dead: a render-blocking stylesheet

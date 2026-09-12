@@ -1270,7 +1270,17 @@ body.onboarding-lock::before {
 .modal-doc blockquote p:last-child { margin-bottom: 0; }
 .modal-doc hr { border: 0; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 
-/* Stop the page behind the dialog from scrolling. */
+/* Stopping the page behind a dialog from scrolling is done in JS, not here.
+ *
+ * `overflow: hidden` on <body> never locked anything: <html> is what scrolls,
+ * so the gesture chained straight past body. It only LOOKED like a lock while
+ * the scroll bug above froze the page for unrelated reasons, which is why a
+ * broken lock went unnoticed for so long. Measured in Chrome: with the lock
+ * "on", the page still scrolled 1000px.
+ *
+ * `overflow: hidden` on <html> does not hold it either, and on iOS Safari it
+ * is famously ignored. What does work, everywhere, is taking body out of flow
+ * at a compensating offset - see syncScrollLock() in app.js. */
 body.modal-open { overflow: hidden; }
 
 /* ---- motion ----
@@ -1351,8 +1361,15 @@ input, textarea, select { font-size: 16px; }
 * { -webkit-tap-highlight-color: transparent; }
 button, .choice-btn, .match-tile, .course-card, .nav-btn { touch-action: manipulation; }
 
-/* Stop the whole page rubber-banding when a scrollable panel hits its end. */
-body { overscroll-behavior-y: none; }
+/* Stop the whole page rubber-banding when a scrollable panel hits its end.
+ *
+ * This belongs on the element that actually scrolls the viewport, which is
+ * <html>, not <body>. On <body> it was the second half of the scroll bug
+ * described at the max-width rule below: body was an accidental scroll
+ * container with nothing in it to scroll, and overscroll-behavior:none told
+ * the browser not to pass the gesture on to <html> either. The wheel landed
+ * on a dead end, so the page only moved if you dragged the scrollbar. */
+html { overscroll-behavior-y: none; }
 
 @media (max-width: 720px) {
   /* Respect the notch and the home indicator. Without this the bottom nav
@@ -1491,8 +1508,21 @@ body { overscroll-behavior-y: none; }
 }
 
 /* Nothing should ever scroll sideways. One overflowing flex child used to push
-   the whole page, which on a phone reads as the layout being broken. */
-html, body { max-width: 100%; overflow-x: hidden; }
+   the whole page, which on a phone reads as the layout being broken.
+ *
+ * overflow-x MUST stay off <body>. Setting overflow on one axis forces the
+ * other axis from `visible` to `auto`, so `overflow-x: hidden` on body quietly
+ * made body a scroll container whose content exactly fits it - nothing to
+ * scroll, ever. A wheel or trackpad gesture over the page landed on that dead
+ * container instead of on <html>, which is what actually scrolls. Dragging the
+ * scrollbar still worked, because that drives <html> directly and never
+ * consults the element under the pointer. That is the whole bug: scrollbar
+ * fine, page frozen.
+ *
+ * Clipping on <html> alone does the same job, because <html> is the viewport
+ * scroller and already has a real scroll position to clip against. */
+html { max-width: 100%; overflow-x: hidden; }
+body { max-width: 100%; }
 
 /* ---- browse-and-add rows -------------------------------------------------
    A course row is two targets: the name opens the course, the button adds it.

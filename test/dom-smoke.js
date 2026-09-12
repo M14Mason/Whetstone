@@ -147,6 +147,43 @@ async function loadPage(base, cookie) {
     (css.match(/--field:/g) || []).length >= 2 && (css.match(/--track:/g) || []).length >= 2,
     'both themes must define --field and --track');
 
+  // ---- the page must stay scrollable -------------------------------------
+  //
+  // Five scroll-bug reports came from one line: `html, body { overflow-x:
+  // hidden }`. Setting overflow on one axis forces the other axis from
+  // `visible` to `auto`, so that rule quietly made <body> a scroll container
+  // whose content exactly fits it. Nothing to scroll, ever. Paired with
+  // `overscroll-behavior-y: none` on the same element, a wheel or trackpad
+  // gesture over the page hit that dead container and was refused permission
+  // to chain up to <html>, which is what actually scrolls. Dragging the
+  // scrollbar still worked, because that drives <html> directly.
+  //
+  // Both halves are needed for the freeze, so both are asserted.
+  const bodyRules = [...css.matchAll(/(^|\})\s*([^{}]+)\{([^}]*)\}/g)]
+    .map((m) => ({ selector: m[2].replace(/\s+/g, ' ').trim(), body: m[3] }))
+    .filter((r) => /(^|,\s*)body\s*$/.test(r.selector));
+
+  check('body never clips an axis, which would make it a phantom scroll container',
+    !bodyRules.some((r) => /overflow(-x|-y)?\s*:/.test(r.body)),
+    'a bare `body` rule sets overflow: that forces the other axis to auto and freezes wheel scrolling');
+  check('body never blocks scroll chaining to the page',
+    !bodyRules.some((r) => /overscroll-behavior(-y)?\s*:\s*(none|contain)/.test(r.body)),
+    'overscroll-behavior on body stops the wheel reaching <html>, so only the scrollbar works');
+  check('sideways overflow is still clipped, on html',
+    /html\s*\{[^}]*overflow-x:\s*hidden/.test(css),
+    'nothing clips horizontal overflow any more');
+
+  // The lock that replaced `body.modal-open { overflow: hidden }`, which never
+  // worked: body is not the scrolling element, so the gesture went straight
+  // past it. Measured at 1000px of movement with the lock supposedly on.
+  const appJs = fs.readFileSync(path.join(PUBLIC_DIR, 'app.js'), 'utf8');
+  check('a dialog locks the page by taking body out of flow',
+    /position\s*=\s*'fixed'/.test(appJs) && /syncScrollLock/.test(appJs),
+    'the modal scroll lock is missing');
+  check('the lock is driven by an observer, not by each call site',
+    /MutationObserver\(syncScrollLock\)/.test(appJs),
+    'eight call sites add and remove modal-open; any one of them can forget to unlock');
+
   // ---- nothing third-party may block the first paint
   //
   // This is the bug that made the site look dead: a render-blocking stylesheet

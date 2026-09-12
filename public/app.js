@@ -268,6 +268,53 @@ window.addEventListener('pointercancel', releasePointer, true);
 // every finger lifting, because it effectively is.
 window.addEventListener('blur', () => { pointersDown = 0; });
 
+/* The scroll lock that actually holds.
+ *
+ * Everything before this trusted `body { overflow: hidden }` to stop the page
+ * scrolling behind a dialog. It never did. <html> is what scrolls this
+ * document, so a wheel or trackpad gesture chained past body and moved the
+ * page anyway - measured in Chrome at 1000px with the lock supposedly on.
+ * `overflow: hidden` on <html> does not hold it either, and iOS Safari ignores
+ * it outright.
+ *
+ * Taking body out of flow at a compensating offset does work, on every engine.
+ * The page cannot move because there is nothing left to move, and the offset
+ * means the reader sees no jump. The scroll position is remembered here rather
+ * than read back on unlock, because once body is fixed the browser has already
+ * reset the document scroll to zero.
+ *
+ * Driven by a MutationObserver rather than by the eight places that add and
+ * remove the class. Those eight are exactly why this bug kept coming back: any
+ * path that forgets to call the unlock leaves the page dead. An observer
+ * cannot be forgotten by a new call site.
+ */
+let lockedScrollY = null;
+
+function syncScrollLock() {
+  // Only dialogs lock. A tile drag is held by touch-action on the handle, and
+  // pinning body mid-drag risks moving the coordinates the drag is using.
+  const shouldLock = document.body.classList.contains('modal-open');
+
+  if (shouldLock && lockedScrollY === null) {
+    lockedScrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${lockedScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+  } else if (!shouldLock && lockedScrollY !== null) {
+    const y = lockedScrollY;
+    lockedScrollY = null;
+    for (const prop of ['position', 'top', 'left', 'right', 'width']) {
+      document.body.style.removeProperty(prop);
+    }
+    window.scrollTo(0, y);
+  }
+}
+
+new MutationObserver(syncScrollLock)
+  .observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
 function assertScrollable() {
   const paywallOpen = isReallyVisible($('#paywall'));
   const host = $('#modal-host');
@@ -276,6 +323,10 @@ function assertScrollable() {
   const dragging = pointersDown > 0 && Boolean(document.querySelector('.course-tile-wrap.dragging'));
   if (!paywallOpen && !modalOpen) document.body.classList.remove('modal-open');
   if (!dragging) document.body.classList.remove('is-reordering');
+  // The observer normally handles this, but call it directly too: if the class
+  // was already absent while the inline styles were somehow still set, no
+  // mutation fires and nothing would ever clear them.
+  syncScrollLock();
 }
 
 // pointerup fires at the end of every click and every drag, anywhere on the

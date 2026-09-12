@@ -726,6 +726,93 @@ check('a report with no reason, or for a question that does not exist, is refuse
   assert.strictEqual(badReason.status, 400, 'an unknown reason was accepted');
 });
 
+check('the metrics dashboard is invisible to everyone but the owner', async () => {
+  // A 404, not a 403: telling a stranger that an admin page exists here is an
+  // invitation to go and try it. This is the test that matters most in this
+  // file, because the page behind it reports on real students.
+  const saved = cookie;
+
+  cookie = '';
+  const anon = await fetch(`${BASE}/admin`);
+  assert.strictEqual(anon.status, 404, 'a signed-out visitor could see /admin');
+  const anonApi = await call('GET', '/api/admin/metrics');
+  assert.strictEqual(anonApi.status, 404, 'a signed-out visitor could read the metrics API');
+
+  cookie = saved;
+  const student = await call('GET', '/api/admin/metrics');
+  assert.strictEqual(student.status, 404, 'an ordinary signed-in student could read the metrics API');
+  const studentPage = await fetch(`${BASE}/admin`, { headers: { Cookie: cookie } });
+  assert.strictEqual(studentPage.status, 404, 'an ordinary signed-in student could see /admin');
+});
+
+check('the owner sees the dashboard, and an unconfirmed owner does not', async () => {
+  const saved = cookie;
+  cookie = '';
+  ratelimit.reset();
+
+  const { config } = require('../lib/config');
+  const signup = await call('POST', '/api/auth/signup', {
+    displayName: 'Owner',
+    email: config.adminEmail,
+    password: 'a-good-long-password',
+    birthYear: 2008,
+    acceptTerms: true,
+  });
+  assert.strictEqual(signup.status, 201,
+    `could not create the owner account: ${JSON.stringify(signup.data)}`);
+
+  // Knowing the address is not enough: the inbox has to have been confirmed.
+  const beforeVerify = await fetch(`${BASE}/admin`, { headers: { Cookie: cookie } });
+  assert.strictEqual(beforeVerify.status, 404, 'an unconfirmed owner account could see /admin');
+
+  db.getDb().prepare('UPDATE users SET email_verified_at = ? WHERE email = ?')
+    .run(new Date().toISOString(), config.adminEmail);
+
+  const page = await fetch(`${BASE}/admin`, { headers: { Cookie: cookie } });
+  assert.strictEqual(page.status, 200, 'the owner could not reach /admin');
+  const html = await page.text();
+  assert.ok(html.includes('The retest metric'), 'the dashboard is missing the retest section');
+  assert.ok(html.includes('noindex'), 'the dashboard is indexable');
+
+  const api = await call('GET', '/api/admin/metrics');
+  assert.strictEqual(api.status, 200);
+  assert.ok(api.data.retest, 'metrics response has no retest block');
+  assert.ok(Array.isArray(api.data.funnel), 'metrics response has no funnel');
+
+  cookie = saved;
+});
+
+check('the retest metric counts a recovery only when the second answer is right', async () => {
+  const analytics = require('../lib/analytics');
+  const handle = db.getDb();
+  const rows = handle.prepare('SELECT id, subject, topic FROM questions LIMIT 2').all();
+  const user = handle.prepare('SELECT id FROM users WHERE email = ?').get('e2e@example.com');
+  const insert = handle.prepare(
+    "INSERT INTO attempts (user_id, question_id, subject, topic, correct, chosen, mode, answered_at)"
+    + " VALUES (?, ?, ?, ?, ?, 0, 'learn', ?)"
+  );
+
+  const before = analytics.retest(handle);
+
+  // Wrong first, right later: one recovery.
+  insert.run(user.id, rows[0].id, rows[0].subject, rows[0].topic, 0, '2026-01-01T10:00:00.000Z');
+  insert.run(user.id, rows[0].id, rows[0].subject, rows[0].topic, 1, '2026-01-02T10:00:00.000Z');
+  // Wrong, and never seen again: a miss that has not recovered.
+  insert.run(user.id, rows[1].id, rows[1].subject, rows[1].topic, 0, '2026-01-01T10:01:00.000Z');
+
+  const after = analytics.retest(handle);
+  assert.strictEqual(after.missed - before.missed, 2, 'missed questions were not counted');
+  assert.strictEqual(after.recovered - before.recovered, 1, 'recovery was miscounted');
+  assert.strictEqual(after.retried - before.retried, 1, 'retries were miscounted');
+});
+
+check('the dashboard never reports an individual student', async () => {
+  const analytics = require('../lib/analytics');
+  const serialised = JSON.stringify(analytics.snapshot());
+  assert.ok(!serialised.includes('e2e@example.com'), 'a student email reached the metrics payload');
+  assert.ok(!serialised.includes('E2E Student'), 'a student name reached the metrics payload');
+});
+
 check('path traversal on static files is blocked', async () => {
   const res = await fetch(`${BASE}/../lib/config.js`);
   assert.ok(res.status === 403 || res.status === 404, `expected block, got ${res.status}`);

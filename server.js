@@ -15,6 +15,8 @@ const progression = require('./lib/progression');
 const groups = require('./lib/groups');
 const billing = require('./lib/billing');
 const questions = require('./lib/questions');
+const analytics = require('./lib/analytics');
+const adminpage = require('./lib/adminpage');
 const ratelimit = require('./lib/ratelimit');
 const tokens = require('./lib/tokens');
 const mailer = require('./lib/mailer');
@@ -212,6 +214,22 @@ function currentUser(req) {
 function requireUser(req) {
   const user = currentUser(req);
   if (!user) throw Object.assign(new Error('You need to sign in.'), { statusCode: 401 });
+  return user;
+}
+
+/**
+ * The owner-only gate.
+ *
+ * Deliberately a 404 rather than a 403: telling an anonymous visitor that an
+ * admin page exists here is an invitation. Requiring a confirmed email means
+ * simply knowing the address is not enough - you need the inbox.
+ */
+function requireAdmin(req) {
+  const user = currentUser(req);
+  const notFound = Object.assign(new Error('Not found.'), { statusCode: 404 });
+  if (!user) throw notFound;
+  if (String(user.email || '').trim().toLowerCase() !== config.adminEmail) throw notFound;
+  if (!user.emailVerifiedAt && !user.email_verified_at) throw notFound;
   return user;
 }
 
@@ -1015,6 +1033,25 @@ const routes = {
       skipped,
       total: set.cards.length,
     });
+  },
+
+  // ------------------------------------------------------------ launch metrics
+  'GET /admin': async (req, res) => {
+    requireAdmin(req);
+    sendText(res, 200, adminpage.adminPageHtml(analytics.snapshot()), MIME['.html']);
+  },
+
+  'GET /api/admin/metrics': async (req, res) => {
+    requireAdmin(req);
+    sendJson(res, 200, analytics.snapshot());
+  },
+
+  // Every question reported by a student, with the question attached, so they
+  // can be read and fixed in one pass rather than looked up one at a time.
+  'GET /api/admin/reports': async (req, res) => {
+    requireAdmin(req);
+    const reports = social.listBugs({ limit: 200 });
+    sendJson(res, 200, { reports });
   },
 
   // ----------------------------------------------------------- bug reports
